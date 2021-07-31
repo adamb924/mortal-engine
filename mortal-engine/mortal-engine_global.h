@@ -1,0 +1,12 @@
+#ifndef MORTALENGINE_GLOBAL_H
+#define MORTALENGINE_GLOBAL_H
+
+#include <QtCore/qglobal.h>
+
+#if defined(MORTALENGINE_LIBRARY)
+#  define MORTAL_ENGINE_EXPORT Q_DECL_EXPORT
+#else
+#  define MORTAL_ENGINE_EXPORT Q_DECL_IMPORT
+#endif
+
+#endif // MORTALENGINE_GLOBAL_H
