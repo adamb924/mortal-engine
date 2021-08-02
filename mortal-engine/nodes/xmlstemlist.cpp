@@ -27,7 +27,8 @@ void XmlStemList::setFilename(const QString &filename)
 void XmlStemList::readStems(const QHash<QString, WritingSystem> &writingSystems)
 {
     QFile file(mFilename);
-    Allomorph allomorph(Allomorph::Original);
+    LexicalStem * stem = nullptr;
+    Allomorph allomorph(Allomorph::Null);
 
     if( file.open( QFile::ReadOnly ) )
     {
@@ -37,14 +38,24 @@ void XmlStemList::readStems(const QHash<QString, WritingSystem> &writingSystems)
         {
             in.readNext();
 
-            if( in.tokenType() == QXmlStreamReader::StartElement )
+            if( in.isStartElement() )
             {
                 if( in.name() == "stem" )
+                {
+                    stem = new LexicalStem();
+                }
+                else if( in.name() == "allomorph" )
                 {
                     allomorph = Allomorph(Allomorph::Original);
                 }
                 else if( in.name() == "form" )
                 {
+                    /// if we haven't yet read an allomorph tag, we need to create a new allomorph right now
+                    if( allomorph.type() == Allomorph::Null )
+                    {
+                        allomorph = Allomorph(Allomorph::Original);
+                    }
+
                     QXmlStreamAttributes attr = in.attributes();
                     if( attr.hasAttribute("lang") )
                     {
@@ -57,11 +68,23 @@ void XmlStemList::readStems(const QHash<QString, WritingSystem> &writingSystems)
                     allomorph.addTag( in.readElementText() );
                 }
             }
-            if( in.tokenType() == QXmlStreamReader::EndElement && in.name() == "stem" )
+            else if( in.isEndElement() )
             {
-                if( match( allomorph ) )
+                if( in.name() == "stem" )
                 {
-                    mStems.insert( new LexicalStem(allomorph) );
+                    if( allomorph.type() != Allomorph::Null && match( allomorph ) )
+                    {
+                        stem->insert( allomorph );
+                    }
+                    mStems.insert( stem );
+                }
+                else if (in.name() == "allomorph")
+                {
+                    if( match( allomorph ) )
+                    {
+                        stem->insert( allomorph );
+                    }
+                    allomorph = Allomorph(Allomorph::Null);
                 }
             }
         }
