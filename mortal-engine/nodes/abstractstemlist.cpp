@@ -276,7 +276,7 @@ QString AbstractStemList::summary() const
 
     dbg.unindent();
 
-    dbg << ")";
+    dbg << ")" << newline;
 
     if( hasNext() )
     {
