@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+xmlns:me="https://www.adambaker.org/mortal-engine.php"
+targetNamespace="https://www.adambaker.org/mortal-engine.php">
+
+
+    <!-- Definition for a writing system -->
+    <xs:complexType name="writing-systems">
+        <xs:sequence>
+            <xs:element name="writing-system" type="me:writing-system" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute type="xs:string" name="src" use="optional"/>
+    </xs:complexType>
+
+
+    <xs:complexType name="writing-system">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute type="xs:string" name="name" use="required"/>
+                <xs:attribute type="xs:ID" name="lang" use="required"/>
+                <xs:attribute type="xs:string" name="font" use="required"/>
+                <xs:attribute type="xs:byte" name="font-size" use="required"/>
+                <xs:attribute type="xs:boolean" name="RightToLeft" use="required"/>
+                <xs:attribute type="xs:string" name="keyboard-command" use="optional"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    
+
+</xs:schema>

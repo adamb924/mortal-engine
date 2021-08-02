@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+xmlns:me="https://www.adambaker.org/mortal-engine.php"
+targetNamespace="https://www.adambaker.org/mortal-engine.php">
+
+    <xs:element name="tests">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="sqlite-database" type="me:database" minOccurs="0" maxOccurs="1"/>
+                <xs:choice>
+                    <xs:choice maxOccurs="unbounded">
+                        <xs:element name="schema" type="me:schema"/>
+                    </xs:choice>
+                </xs:choice>
+            </xs:sequence>
+        </xs:complexType>    
+    </xs:element>
+    
+    <xs:complexType name="schema" mixed="true">
+        <xs:sequence>
+            <xs:element name="morphology-file" type="xs:string"/>
+            <xs:choice>
+                <xs:choice maxOccurs="unbounded">
+                    <xs:element name="transduction-test" type="me:transduction-test"/>
+                    <xs:element name="parsing-test" type="me:parsing-test"/>
+                    <xs:element name="recognition-test" type="me:recognition-test"/>
+                    <xs:element name="suggestion-test" type="me:suggestion-test"/>
+                    <xs:element name="stem-replacement-test" type="me:stem-replacement-test"/>
+                    <xs:element name="blank" type="xs:string" fixed=""/>
+                </xs:choice>
+            </xs:choice>    
+        </xs:sequence>
+        <xs:attribute name="sound-and-fury" type="xs:string"/>
+        <xs:attribute name="label" type="xs:string"/>
+    </xs:complexType>
+
+    <xs:complexType name="test">
+        <xs:attribute name="label" type="xs:string" use="required"/>
+        <xs:attribute name="debug" type="me:true-false-type" use="optional"/>
+    </xs:complexType>
+
+    <xs:complexType name="transduction-test">
+        <xs:complexContent>
+            <xs:extension base="me:test">
+                <xs:sequence>
+                    <xs:element name="input" type="me:form"/>
+                    <xs:element name="output" type="me:form" minOccurs="1" maxOccurs="unbounded"/>
+                </xs:sequence>        
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="parsing-test">
+        <xs:complexContent>
+            <xs:extension base="me:test">
+                <xs:sequence>
+                    <xs:element name="input" type="me:form"/>
+                    <xs:element name="output" type="me:label-list" minOccurs="1" maxOccurs="unbounded"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="suggestion-test">
+        <xs:complexContent>
+            <xs:extension base="me:test">
+                <xs:sequence>
+                    <xs:element name="input" type="me:form"/>
+                    <xs:element name="output" type="me:stem-label-list" minOccurs="1" maxOccurs="unbounded"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="recognition-test">
+        <xs:complexContent>
+            <xs:extension base="me:test">
+                <xs:sequence>
+                    <xs:element name="input" type="me:form"/>
+                    <xs:element name="should-be-accepted" type="me:yes-no-type"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    
+    <xs:complexType name="stem-replacement-test">
+        <xs:complexContent>
+            <xs:extension base="me:test">
+                <xs:sequence>
+                    <xs:element name="input" type="me:form"/>
+                    <xs:element name="replacement-stem" type="me:stem"/>
+                    <xs:element name="output" type="me:form"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="database">
+        <xs:attribute name="filename" type="xs:string"/>
+        <xs:attribute name="database-name" type="xs:string"/>
+    </xs:complexType>
+
+    <xs:complexType name="label-list">
+        <xs:sequence>
+            <xs:element name="label" type="xs:string" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="stem-label-list">
+        <xs:sequence>
+            <xs:element name="label" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="stem" type="xs:string" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="label" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="stem">
+        <xs:sequence>
+            <xs:element name="form" type="me:form" maxOccurs="unbounded"/>
+            <xs:element name="tag" type="xs:string" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="form">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="lang" type="xs:string" use="required"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:simpleType name="true-false-type">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="true"/>
+            <xs:enumeration value="false"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="yes-no-type">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="yes"/>
+            <xs:enumeration value="no"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>

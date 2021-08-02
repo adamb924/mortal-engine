@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+xmlns:me="https://www.adambaker.org/mortal-engine.php"
+targetNamespace="https://www.adambaker.org/mortal-engine.php">
+
+    <xs:include schemaLocation="writing-systems.xsd"></xs:include>
+
+    <xs:element name="morphology">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="writing-systems" type="me:writing-systems"/>
+                <xs:element name="shared-conditions" minOccurs="0">
+                    <xs:complexType>
+                        <xs:group ref="me:conditions"></xs:group>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="shared-create-allomorphs" minOccurs="0">
+                    <xs:complexType>
+                        <xs:group ref="me:create-allomorph-list"></xs:group>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="model" type="me:model" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- Definition for a list of conditions -->
+    <xs:group name="conditions">
+        <xs:choice>
+            <xs:choice maxOccurs="unbounded">
+                <xs:element name="phonological-condition" type="me:phonological-condition"/>
+                <xs:element name="tag-match" type="me:tag-match"/>
+                <xs:element name="or" type="me:or"/>
+                <xs:element name="and" type="me:and"/>
+                <xs:element name="not" type="me:not"/>
+                <xs:element name="condition" type="me:condition"/>
+                <xs:element name="following-node" type="me:following-node"/>
+                <xs:element name="preceding-node" type="me:preceding-node"/>
+                <xs:element name="word-final"/>
+                <xs:element name="bound-morpheme"/>
+            </xs:choice>
+        </xs:choice>
+    </xs:group>
+
+    <!-- Definition for a list of shared create allomorphs -->
+    <xs:group name="create-allomorph-list">
+        <xs:choice>
+            <xs:choice maxOccurs="unbounded">
+                <xs:element name="create-allomorphs" type="me:create-allomorphs"/>
+            </xs:choice>
+        </xs:choice>
+    </xs:group>
+    
+    
+    <!-- phonological-condition -->
+    <xs:complexType name="phonological-condition">
+      <xs:sequence>
+        <xs:element ref="me:match-expression" maxOccurs="unbounded" minOccurs="1"/>
+      </xs:sequence>
+      <!-- TODO: Check if this is ever used -->
+      <!-- of course, why wouldn't it be? -->
+      <xs:attribute type="me:match-expression-type" name="type" use="required"/>
+      <xs:attribute type="xs:ID" name="id" use="optional"/>
+    </xs:complexType>
+    <xs:element name="match-expression">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:string">
+              <xs:attribute type="me:match-expression-type" name="type" use="optional" default="preceding"/>
+              <xs:attribute type="xs:string" name="lang" use="required"/>
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+      <xs:simpleType name="match-expression-type">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="preceding"/>
+            <xs:enumeration value="following"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- tag-match -->
+    <xs:complexType name="tag-match">
+        <xs:choice maxOccurs="unbounded">
+            <xs:element name="match-tag" minOccurs="0"/>
+            <xs:element name="interrupted-by" minOccurs="0"/>
+        </xs:choice>
+        <xs:attribute type="xs:ID" name="id" use="optional"/>
+        <xs:attribute type="me:tag-match-scope" name="scope" use="required"/>
+        <xs:attribute type="me:tag-match-type" name="type" use="required"/>
+    </xs:complexType>
+    <xs:simpleType name="tag-match-scope">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="immediately-preceding"/>
+            <xs:enumeration value="any-preceding"/>
+            <xs:enumeration value="immediately-following"/>
+            <xs:enumeration value="any-following"/>
+            <xs:enumeration value="self"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="tag-match-type">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="all"/>
+            <xs:enumeration value="any"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- or -->
+    <xs:complexType name="or">
+        <xs:group ref="me:conditions"></xs:group>
+        <xs:attribute name="id" type="xs:ID" use="optional"/>
+    </xs:complexType>
+
+    <!-- and -->
+    <xs:complexType name="and">
+        <xs:group ref="me:conditions"></xs:group>
+        <xs:attribute name="id" type="xs:ID" use="optional"/>
+    </xs:complexType>
+
+    <!-- not -->
+    <xs:complexType name="not">
+        <xs:group ref="me:conditions"></xs:group>
+        <xs:attribute name="id" type="xs:ID" use="optional"/>
+    </xs:complexType>
+
+    <!-- condition -->
+    <xs:complexType name="condition">
+        <xs:attribute name="id" type="xs:IDREF" use="required"></xs:attribute>
+    </xs:complexType>
+
+    <!-- following-node -->
+    <xs:complexType name="following-node">
+        <xs:attribute name="label" type="xs:string" use="required"></xs:attribute>
+    </xs:complexType>
+
+    <!-- preceding-node -->
+    <xs:complexType name="preceding-node">
+        <xs:attribute name="label" type="xs:string" use="required"></xs:attribute>
+    </xs:complexType>
+    
+    <!-- model -->
+    <xs:complexType name="model">
+        <xs:group ref="me:nodes"></xs:group>
+        <xs:attribute name="label" type="xs:string" use="required"></xs:attribute>
+    </xs:complexType>
+
+    <!-- Definition for a list of morpheme nodes -->
+    <xs:group name="nodes">
+        <xs:choice>
+            <xs:choice maxOccurs="unbounded">
+                <xs:element name="stem-list" type="me:stem-list"/>
+                <xs:element name="sqlite-stem-list" type="me:sqlite-stem-list"/>
+                <xs:element name="morpheme" type="me:morpheme"/>
+                <xs:element name="mutually-exclusive-morphemes" type="me:mutually-exclusive-morphemes"/>
+                <xs:element name="fork" type="me:fork"/>
+                <xs:element name="sequence" type="me:optional-path"/>
+                <xs:element name="jump">
+                    <xs:complexType>
+                        <xs:attribute name="to" use="required" type="xs:IDREF"></xs:attribute>
+                        <xs:attribute name="optional" use="optional" type="me:true-false"></xs:attribute>
+                        <xs:attribute name="target-node-required" use="optional" type="me:true-false"></xs:attribute>
+                    </xs:complexType>
+                </xs:element>
+            </xs:choice>
+        </xs:choice>
+    </xs:group>
+
+    <!-- stem-list -->
+    <xs:complexType name="stem-list">
+        <xs:sequence>
+            <xs:element name="filename" type="xs:string"/>
+            <xs:element name="matching-tag" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="create-allomorphs" type="me:create-allomorphs" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:ID" use="optional"></xs:attribute>
+        <xs:attribute name="label" type="xs:string" use="required"></xs:attribute>
+    </xs:complexType>
+
+    <!-- sqlite-stem-list -->
+    <xs:complexType name="sqlite-stem-list">
+        <xs:sequence>
+            <xs:choice>
+                <xs:element name="filename" type="xs:string"/>
+                <xs:element name="external-database" type="xs:string"/>
+            </xs:choice>
+            <xs:element name="matching-tag" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="create-allomorphs" type="me:create-allomorphs" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:ID" use="optional"></xs:attribute>
+        <xs:attribute name="label" type="xs:string" use="required"></xs:attribute>
+        <xs:attribute name="accepts-stems" type="xs:boolean" use="optional"></xs:attribute>
+    </xs:complexType>
+
+    <!-- morpheme -->
+    <xs:complexType name="morpheme">
+        <xs:sequence>
+            <xs:element name="optional" type="xs:string" minOccurs="0"/>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:group ref="me:conditions"></xs:group>
+            </xs:choice>    
+            <xs:element name="allomorph" type="me:allomorph" minOccurs="1" maxOccurs="unbounded"/>
+            <xs:element name="add-allomorphs" type="me:create-allomorphs-link" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="gloss" type="me:form" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:ID" use="optional"></xs:attribute>
+        <xs:attribute name="label" type="xs:string" use="required"></xs:attribute>
+    </xs:complexType>
+
+    <!-- morpheme -->
+    <xs:complexType name="non-optional-morpheme">
+        <xs:sequence>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:group ref="me:conditions"></xs:group>
+            </xs:choice>    
+            <xs:element name="allomorph" type="me:allomorph" minOccurs="1" maxOccurs="unbounded"/>
+            <xs:element name="add-allomorphs" type="me:create-allomorphs-link" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="gloss" type="me:form" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:ID" use="optional"></xs:attribute>
+        <xs:attribute name="label" type="xs:string" use="required"></xs:attribute>
+    </xs:complexType>
+
+    <!-- mutually-exclusive-morphemes -->
+    <xs:complexType name="mutually-exclusive-morphemes">
+        <xs:sequence>
+            <xs:element name="optional" type="xs:string" minOccurs="0"/>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:group ref="me:conditions"></xs:group>
+            </xs:choice>    
+            <xs:element name="morpheme" type="me:non-optional-morpheme" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:ID" use="optional"></xs:attribute>
+        <xs:attribute name="label" type="xs:string" use="required"></xs:attribute>
+    </xs:complexType>
+
+    <!-- fork -->
+    <xs:complexType name="fork">
+        <xs:sequence>
+            <xs:element name="optional" type="xs:string" minOccurs="0"/>
+            <xs:element name="path" type="me:path" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:ID" use="optional"></xs:attribute>
+        <xs:attribute name="label" type="xs:string" use="required"></xs:attribute>
+    </xs:complexType>
+
+    <!-- path -->
+    <xs:complexType name="path">
+        <xs:group ref="me:nodes"></xs:group>
+        <xs:attribute name="id" type="xs:ID" use="optional"></xs:attribute>
+        <xs:attribute name="label" type="xs:string" use="required"></xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="optional-path">
+        <xs:sequence>
+            <xs:element name="optional" type="xs:string" minOccurs="0"/>
+            <xs:group ref="me:nodes"></xs:group>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:ID" use="optional"></xs:attribute>
+        <xs:attribute name="label" type="xs:string" use="required"></xs:attribute>    
+</xs:complexType>
+
+    <!-- allomorph -->
+    <xs:complexType name="allomorph">
+        <xs:choice maxOccurs="unbounded">
+            <xs:group ref="me:conditions"></xs:group>
+            <xs:element name="form" type="me:form"/>
+            <xs:element name="tag" type="xs:string"/>
+        </xs:choice>
+        <xs:attribute name="portmanteau" type="xs:string" use="optional"></xs:attribute>
+    </xs:complexType>
+
+    <!-- form -->
+    <xs:complexType name="form">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="lang" type="xs:string" use="required"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="form-list">
+        <xs:choice minOccurs="1" maxOccurs="unbounded">
+            <xs:element name="form" type="me:form"/>
+        </xs:choice>
+    </xs:complexType>
+
+    <!-- add-condition -->
+    <xs:complexType name="add-condition">
+        <xs:sequence>
+            <xs:element name="matching-tag" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="add" minOccurs="1" maxOccurs="1">
+                <xs:complexType>
+                    <xs:group ref="me:conditions"/>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- create-allomorphs -->
+    <xs:complexType name="create-allomorphs">
+        <xs:sequence>
+            <xs:element name="case" type="me:case" minOccurs="1" maxOccurs="unbounded"/>
+            <!-- <xs:element name="otherwise" type="me:form-list" minOccurs="1" maxOccurs="1"/> -->
+            <xs:choice>
+                <xs:element name="no-otherwise" type="xs:string" minOccurs="0" maxOccurs="1"/>
+                <xs:element name="override-otherwise" minOccurs="0" maxOccurs="1">
+                    <xs:complexType>
+                        <xs:group ref="me:conditions"/>
+                    </xs:complexType>
+                </xs:element>
+            </xs:choice>
+        </xs:sequence>
+        <xs:attribute type="xs:ID" name="id" use="optional"/>
+    </xs:complexType>
+
+    <xs:complexType name="case">
+        <xs:sequence>
+            <xs:choice minOccurs="0">
+                <xs:choice maxOccurs="unbounded">
+                    <xs:element name="match-tag" type="xs:string"/>
+                    <xs:element name="without-tag" type="xs:string"/>
+                </xs:choice>
+            </xs:choice>
+            <xs:element name="when" minOccurs="0" maxOccurs="1">
+                <xs:complexType>
+                    <xs:group ref="me:conditions"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="then" type="me:then" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute type="me:case-mode" name="mode" use="optional" default="include-all-forms"/>
+    </xs:complexType>
+
+    <xs:complexType name="then">
+        <xs:sequence minOccurs="1" maxOccurs="unbounded">
+            <xs:element name="replace-this" type="me:form-list"></xs:element>
+            <xs:element name="with-this" type="me:form-list"></xs:element>
+            <xs:group ref="me:add-remove-tag-list" minOccurs="0" maxOccurs="unbounded"></xs:group>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="create-allomorphs-link">
+        <xs:attribute name="with" type="xs:string" use="required"></xs:attribute>
+    </xs:complexType>
+
+    <xs:simpleType name="case-mode">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="include-all-forms"/>
+            <xs:enumeration value="include-only-changed-forms"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:group name="add-remove-tag-list">
+        <xs:choice>
+            <xs:choice maxOccurs="unbounded">
+                <xs:element name="add-tag" type="xs:string"/>
+                <xs:element name="remove-tag" type="xs:string"/>
+            </xs:choice>
+        </xs:choice>
+    </xs:group>
+
+    <xs:simpleType name="true-false">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="true"/>
+            <xs:enumeration value="false"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>
