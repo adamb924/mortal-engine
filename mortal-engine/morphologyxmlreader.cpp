@@ -103,9 +103,9 @@ void MorphologyXmlReader::parseXml(const QString &path)
         QXmlStreamReader in(&file);
 
         in.readNextStartElement();
-        if( in.name() != "models" )
+        if( in.name() != "morphology" )
         {
-            throw std::runtime_error( "Expected 'models' as a root element" );
+            throw std::runtime_error( "Expected 'morphology' as a root element" );
         }
 
         while(!in.atEnd())
