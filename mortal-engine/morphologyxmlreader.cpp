@@ -117,9 +117,9 @@ void MorphologyXmlReader::parseXml(const QString &path)
                 QString name = in.name().toString();
                 QXmlStreamAttributes attr = in.attributes();
 
-                if ( name == "languages" )
+                if ( name == WritingSystem::XML_WRITING_SYSTEMS )
                 {
-                    mMorphology->mWritingSystems.insert( readWritingSystems(in) );
+                    mMorphology->mWritingSystems.insert( WritingSystem::readWritingSystems(in) );
                 }
                 else if( name == "shared-conditions" )
                 {
@@ -315,66 +315,6 @@ void MorphologyXmlReader::readMorphologicalModels(QXmlStreamReader &in)
 
         /// try to read the next one
         node = dynamic_cast<MorphologicalModel *>( tryToReadMorphemeNode( in, nullptr ) );
-    }
-}
-
-QHash<QString, WritingSystem> MorphologyXmlReader::readWritingSystems(QXmlStreamReader &in)
-{
-    Q_ASSERT( in.isStartElement() );
-    Q_ASSERT( in.name() == "languages" );
-
-    /// follow the src attribute to a filename if there is one
-    if( in.attributes().hasAttribute("src") )
-    {
-        QHash<QString, WritingSystem> wss = readWritingSystems( in.attributes().value("src").toString() );
-        while( notAtEndOf("languages", in) )
-            in.readNext();
-        return wss;
-    }
-
-    QHash<QString,WritingSystem> languages;
-    while( notAtEndOf("languages", in) )
-    {
-        in.readNextStartElement();
-        if ( in.name() == "language" )
-        {
-            QXmlStreamAttributes attr = in.attributes();
-            if( attr.hasAttribute("name")
-                    && attr.hasAttribute("lang")
-                    && attr.hasAttribute("font")
-                    && attr.hasAttribute("font-size")
-                    && attr.hasAttribute("RightToLeft") )
-            {
-                WritingSystem ws( attr.value("name").toString(),
-                               attr.value("lang").toString(),
-                               attr.value("RightToLeft").toString() == "true" ? Qt::RightToLeft : Qt::LeftToRight,
-                               attr.value("font").toString(),
-                               attr.value("font-size").toInt() );
-                if( attr.hasAttribute("keyboard-command") ) {
-                    ws.setKeyboardCommand( attr.value("keyboard-command").toString() );
-                }
-                languages.insert(ws.abbreviation(), ws);
-            }
-        }
-    }
-
-    return languages;
-}
-
-QHash<QString, WritingSystem> MorphologyXmlReader::readWritingSystems(const QString &path)
-{
-    QFile file(path);
-    if( file.open( QFile::ReadOnly ) )
-    {
-        QXmlStreamReader in(&file);
-        in.readNextStartElement();
-        return readWritingSystems(in);
-    }
-    else
-    {
-        std::string message = "Can't open file: ";
-        message += path.toUtf8().constData();
-        throw std::runtime_error( message );
     }
 }
 

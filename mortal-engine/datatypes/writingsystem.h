@@ -19,6 +19,7 @@
 #include <QtDebug>
 
 class QFont;
+class QXmlStreamReader;
 
 #include "mortal-engine_global.h"
 
@@ -136,6 +137,15 @@ public:
      * @return QString The logging output.
      */
     QString summary() const;
+
+    static QHash<QString,WritingSystem> readWritingSystems(QXmlStreamReader &in);
+    static QHash<QString,WritingSystem> readWritingSystems(const QString & path);
+    /// convenience method
+    static bool notAtEndOf(const QString & tagName, QXmlStreamReader &in);
+
+    /// XML Strings
+    static QString XML_WRITING_SYSTEMS;
+    static QString XML_WRITING_SYSTEM;
 
 private:
     QString mName, mAbbreviation, mFontFamily;

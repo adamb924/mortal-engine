@@ -56,9 +56,6 @@ public:
     void registerNode( AbstractNode * node) const;
     void registerNestedConstraint(const AbstractNestedConstraint *c);
 
-    static QHash<QString,WritingSystem> readWritingSystems(QXmlStreamReader &in);
-    static QHash<QString,WritingSystem> readWritingSystems(const QString & path);
-
     QHash<QString,WritingSystem> writingSystems() const;
 
 private:
