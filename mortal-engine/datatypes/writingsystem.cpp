@@ -3,6 +3,7 @@
 #include <QFont>
 #include <QXmlStreamReader>
 #include <QFile>
+#include <stdexcept>
 
 QString WritingSystem::XML_WRITING_SYSTEMS = "writing-systems";
 QString WritingSystem::XML_WRITING_SYSTEM = "writing-system";
