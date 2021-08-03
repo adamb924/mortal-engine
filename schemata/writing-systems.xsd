@@ -20,7 +20,7 @@ targetNamespace="https://www.adambaker.org/mortal-engine.php">
                 <xs:attribute type="xs:ID" name="lang" use="required"/>
                 <xs:attribute type="xs:string" name="font" use="required"/>
                 <xs:attribute type="xs:byte" name="font-size" use="required"/>
-                <xs:attribute type="xs:boolean" name="RightToLeft" use="required"/>
+                <xs:attribute type="xs:boolean" name="right-to-left" use="required"/>
                 <xs:attribute type="xs:string" name="keyboard-command" use="optional"/>
             </xs:extension>
         </xs:simpleContent>

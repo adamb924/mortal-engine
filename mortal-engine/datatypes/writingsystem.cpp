@@ -109,11 +109,11 @@ QHash<QString, WritingSystem> WritingSystem::readWritingSystems(QXmlStreamReader
                     && attr.hasAttribute("lang")
                     && attr.hasAttribute("font")
                     && attr.hasAttribute("font-size")
-                    && attr.hasAttribute("RightToLeft") )
+                    && attr.hasAttribute("right-to-left") )
             {
                 WritingSystem ws( attr.value("name").toString(),
                                attr.value("lang").toString(),
-                               attr.value("RightToLeft").toString() == "true" ? Qt::RightToLeft : Qt::LeftToRight,
+                               attr.value("right-to-left").toString() == "true" ? Qt::RightToLeft : Qt::LeftToRight,
                                attr.value("font").toString(),
                                attr.value("font-size").toInt() );
                 if( attr.hasAttribute("keyboard-command") ) {
