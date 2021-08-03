@@ -77,6 +77,7 @@ void XmlStemList::readStems(const QHash<QString, WritingSystem> &writingSystems)
                         stem->insert( allomorph );
                     }
                     mStems.insert( stem );
+                    allomorph = Allomorph(Allomorph::Null);
                 }
                 else if (in.name() == "allomorph")
                 {
