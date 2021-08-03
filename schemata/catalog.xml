@@ -1,0 +1,20 @@
+<!-- This file can be used to help Visual Studio Code find your
+XSD files. It's sort of documented here:
+https://developers.redhat.com/blog/2020/07/08/improved-xml-grammar-binding-and-more-in-red-hat-vs-code-xml-extension-0-13-0#binding_and_generating_xsd_and_dtd_grammars
+
+With the XML plugin installed, you go to Settings, search for 'xml.catalog'
+and then 'Add Item' and enter the path to this file on your computer.
+-->
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+
+    <uri
+      name="https://www.adambaker.org/mortal-engine"
+      uri="./morphology.xsd" />
+    <uri
+      name="https://www.adambaker.org/mortal-engine/stems"
+      uri="./stems.xsd" />
+    <uri
+      name="https://www.adambaker.org/mortal-engine/tests"
+      uri="./tests.xsd" />
+
+</catalog>

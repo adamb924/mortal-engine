@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" 
-xmlns:me="https://www.adambaker.org/mortal-engine.php"
-targetNamespace="https://www.adambaker.org/mortal-engine.php">
+xmlns:mes="https://www.adambaker.org/mortal-engine/stems"
+targetNamespace="https://www.adambaker.org/mortal-engine/stems">
 
-
-    <!-- Definition for a writing system -->
     <xs:element name="stems">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="stem" type="me:stem" minOccurs="0" maxOccurs="unbounded"/>
+                <xs:element name="stem" type="mes:stem" minOccurs="0" maxOccurs="unbounded"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -16,17 +14,17 @@ targetNamespace="https://www.adambaker.org/mortal-engine.php">
     <xs:complexType name="stem">
         <xs:choice>
             <xs:choice maxOccurs="unbounded">
-                <xs:element name="form" type="me:form" minOccurs="1"/>
+                <xs:element name="form" type="mes:form" minOccurs="1"/>
                 <xs:element name="tag" type="xs:string"/>
             </xs:choice>
-            <xs:element name="allomorph" type="me:allomorph" maxOccurs="unbounded"/>
+            <xs:element name="allomorph" type="mes:allomorph" maxOccurs="unbounded"/>
         </xs:choice>
     </xs:complexType>
     
     <!-- form -->
     <xs:complexType name="allomorph">
         <xs:choice maxOccurs="unbounded">
-            <xs:element name="form" type="me:form" minOccurs="1"/>
+            <xs:element name="form" type="mes:form" minOccurs="1"/>
             <xs:element name="tag" type="xs:string"/>
         </xs:choice>
     </xs:complexType>
