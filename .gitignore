@@ -1,2 +1,8 @@
 mortal-engine-test/mortal-engine-test.pro.user
 mortal-engine.pro.user
+examples/.vscode/tasks.json
+examples/examples.code-workspace
+examples/ignored/*
+examples/log
+examples/me-log.txt
+examples/output.txt

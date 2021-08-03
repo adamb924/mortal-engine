@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<morphology
+    xmlns="https://www.adambaker.org/mortal-engine"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="https://www.adambaker.org/mortal-engine morphology.xsd">
+    <writing-systems src="writing-systems.xml"/>
+    <model label="All Stems">
+        <!-- stem-list is the only node in the model -->
+        <!-- this model will only accept words that are bare stems -->
+        <stem-list label="Stem">
+            <filename>01-stems.xml</filename>
+        </stem-list>
+    </model>
+</morphology>

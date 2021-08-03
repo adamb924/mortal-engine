@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<stems
+    xmlns="https://www.adambaker.org/mortal-engine/stems"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="https://www.adambaker.org/mortal-engine/stems stems.xsd">
+    <stem>
+        <form lang="wk-AR">بیل</form>
+        <form lang="wk-LA">bil</form>
+        <tag>verb</tag>
+        <tag>front</tag>
+    </stem>
+    <stem>
+        <form lang="wk-AR">گؤر‍</form>
+        <form lang="wk-LA">göl</form>
+        <tag>verb</tag>
+        <tag>front</tag>
+    </stem>
+    <stem>
+        <form lang="wk-AR">سال</form>
+        <form lang="wk-LA">sal</form>
+        <tag>verb</tag>
+        <tag>back</tag>
+    </stem>
+    <stem>
+        <form lang="wk-AR">سال</form>
+        <form lang="wk-LA">sal</form>
+        <tag>noun</tag>
+        <tag>back</tag>
+    </stem>
+    <stem>
+        <form lang="wk-AR">آی</form>
+        <form lang="wk-LA">aý</form>
+        <tag>noun</tag>
+        <tag>back</tag>
+    </stem>
+    <stem>
+        <form lang="wk-AR">آتا</form>
+        <form lang="wk-LA">ata</form>
+        <tag>noun</tag>
+        <tag>back</tag>
+    </stem>
+    <stem>
+        <form lang="wk-AR">دوْن</form>
+        <form lang="wk-LA">don</form>
+        <tag>noun</tag>
+        <tag>back</tag>
+    </stem>
+    <stem>
+        <form lang="wk-AR">گؤر</form>
+        <form lang="wk-LA">gör</form>
+        <tag>verb</tag>
+        <tag>front</tag>
+    </stem>
+    <stem>
+        <form lang="wk-AR">کؤیناک</form>
+        <form lang="wk-LA">köýnek</form>
+        <tag>noun</tag>
+        <tag>front</tag>
+    </stem>
+    <stem>
+        <form lang="wk-AR">گؤز</form>
+        <form lang="wk-LA">göz</form>
+        <tag>noun</tag>
+        <tag>front</tag>
+    </stem>
+</stems>

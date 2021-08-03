@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<morphology
+    xmlns="https://www.adambaker.org/mortal-engine"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="https://www.adambaker.org/mortal-engine morphology.xsd">
+    <writing-systems src="writing-systems.xml"/>
+    <model label="Nouns">
+        <stem-list label="Stem">
+            <filename>01-stems.xml</filename>
+            <!-- using the matching tag element, you can select only stems that have, e.g., the 'noun' tag -->
+            <matching-tag>noun</matching-tag>
+        </stem-list>
+    </model>
+</morphology>

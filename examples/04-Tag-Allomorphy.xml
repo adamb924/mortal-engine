@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<morphology
+    xmlns="https://www.adambaker.org/mortal-engine"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="https://www.adambaker.org/mortal-engine morphology.xsd">
+    <writing-systems src="writing-systems.xml"/>
+    <model label="Nouns">
+        <stem-list label="Stem">
+            <filename>01-stems.xml</filename>
+            <matching-tag>noun</matching-tag>
+        </stem-list>
+        <morpheme label="Plural">
+            <optional/>
+            <!-- Here we have two allomorphs for one morpheme. One will
+                occur after front words, the other after back words. In 
+                this example this is done with tags, rather than with
+                a regular expression, but both are possible. -->
+            <allomorph>
+                <!-- This means, “this allomorph will match if the immediately preceding morpheme has all of the morphemes in the set {front}” -->
+                <tag-match scope="immediately-preceding" type="all">
+                    <match-tag>front</match-tag>
+                </tag-match>
+                <form lang="wk-AR">لر</form>
+                <form lang="wk-LA">ler</form>
+            </allomorph>
+            <allomorph>
+                <!-- This means, “this allomorph will match if the immediately preceding morpheme has all of the morphemes in the set {back}” -->
+                <tag-match scope="immediately-preceding" type="all">
+                    <match-tag>back</match-tag>
+                </tag-match>
+                <form lang="wk-AR">لار</form>
+                <form lang="wk-LA">lar</form>
+            </allomorph>
+        </morpheme>
+    </model>
+</morphology>

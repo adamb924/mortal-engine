@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<morphology
+    xmlns="https://www.adambaker.org/mortal-engine"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="https://www.adambaker.org/mortal-engine morphology.xsd">
+    <writing-systems src="writing-systems.xml"/>
+    <model label="Nouns">
+        <stem-list label="Stem">
+            <filename>01-stems.xml</filename>
+            <matching-tag>noun</matching-tag>
+        </stem-list>
+        <!-- As you would expect, the <morpheme> tag below comes after the <stem>, i.e., it is a suffix.
+            The label attribute is what will appear in parsings, e.g., [Stem][Plural] -->
+        <morpheme label="Plural">
+            <!-- every <morpheme> tag will have at least one <allomorph> -->
+            <allomorph>
+                <!-- having different <form> tags in the allomorph means that the morpheme
+                    can be parsed in multiple writing systems. See example 02a-Missing-Form.xml. -->
+                <form lang="wk-AR">لار</form>
+                <form lang="wk-LA">lar</form>
+            </allomorph>
+        </morpheme>
+    </model>
+</morphology>

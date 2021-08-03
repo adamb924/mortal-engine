@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<morphology
+    xmlns="https://www.adambaker.org/mortal-engine"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="https://www.adambaker.org/mortal-engine morphology.xsd">
+    <writing-systems src="writing-systems.xml"/>
+    <model label="Nouns">
+        <stem-list label="Stem">
+            <filename>01-stems.xml</filename>
+            <matching-tag>noun</matching-tag>
+        </stem-list>
+        <morpheme label="Plural">
+            <optional/>
+            <allomorph>
+                <tag-match scope="immediately-preceding" type="all">
+                    <match-tag>front</match-tag>
+                </tag-match>
+                <form lang="wk-AR">لر</form>
+                <form lang="wk-LA">ler</form>
+                <!-- In this example, where we're going to see vowel harmony
+                    over several suffixes, we need to add the front-tag to
+                    each front allomorph. This will let us pick the correct
+                    allomorph for the possessive suffixes. -->
+                <tag>front</tag>
+            </allomorph>
+            <allomorph>
+                <tag-match scope="immediately-preceding" type="all">
+                    <match-tag>back</match-tag>
+                </tag-match>
+                <form lang="wk-AR">لار</form>
+                <form lang="wk-LA">lar</form>
+                <!-- As above, we specify that this is a back suffix. -->
+                <tag>back</tag>
+            </allomorph>
+        </morpheme>
+        <mutually-exclusive-morphemes label="Possessive Suffixes">
+            <optional/>
+            <morpheme label="1s-Possessive">
+                <allomorph>
+                    <!-- This allomorph is selected when the preceding 
+                        morpheme is a back morpheme. -->
+                    <tag-match scope="immediately-preceding" type="all">
+                        <match-tag>back</match-tag>
+                    </tag-match>
+                    <form lang="wk-AR">ېم</form>
+                    <form lang="wk-LA">ym</form>
+                    <!-- At this point it's not necessary for this allomorph
+                        to have a bag-tag, but we'll be adding more suffixes
+                        in the future, so we'll include it. -->
+                    <tag>back</tag>
+                </allomorph>
+                <allomorph>
+                    <!-- This allomorph is selected when the preceding 
+                        morpheme is a front morpheme. -->
+                        <tag-match scope="immediately-preceding" type="all">
+                        <match-tag>front</match-tag>
+                    </tag-match>
+                    <form lang="wk-AR">يم</form>
+                    <form lang="wk-LA">im</form>
+                    <tag>front</tag>
+                </allomorph>
+            </morpheme>
+            <morpheme label="3s-Possessive">
+                <allomorph>
+                    <tag-match scope="immediately-preceding" type="all">
+                        <match-tag>front</match-tag>
+                    </tag-match>
+                    <form lang="wk-AR">ي</form>
+                    <form lang="wk-LA">i</form>
+                    <tag>front</tag>
+                </allomorph>
+                <allomorph>
+                    <tag-match scope="immediately-preceding" type="all">
+                        <match-tag>back</match-tag>
+                    </tag-match>
+                    <form lang="wk-AR">ې</form>
+                    <form lang="wk-LA">y</form>
+                    <tag>back</tag>
+                </allomorph>
+            </morpheme>    
+        </mutually-exclusive-morphemes>
+    </model>
+</morphology>

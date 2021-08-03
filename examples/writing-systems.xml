@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<writing-systems
+    xmlns="https://www.adambaker.org/mortal-engine"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="https://www.adambaker.org/mortal-engine writing-systems.xsd">
+    <writing-system name="Kiwakanda Arabic Orthography" lang="wk-AR" font="Adobe Arabic" font-size="24" right-to-left="true"/>
+    <writing-system name="Kiwakanda IPA" lang="wk-IPA" font="Times New Roman" font-size="18" right-to-left="false"/>
+    <writing-system name="Kiwakanda Latin Orthography" lang="wk-LA" font="Times New Roman" font-size="18" right-to-left="false"/>
+    <writing-system name="English" lang="en-US" font="Times New Roman" font-size="12" right-to-left="false"/>
+</writing-systems>

@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tests
+    xmlns="https://www.adambaker.org/mortal-engine/tests"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="https://www.adambaker.org/mortal-engine/tests tests.xsd">
+    <schema label="Minimal Example">
+        <morphology-file>00-Minimal.xml</morphology-file>
+        <recognition-test>
+            <input lang="wk-LA">bil</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">ata</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <message>Any writing system is accepted:</message>
+        <recognition-test>
+            <input lang="wk-AR">آی</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <message>Words not on the list are rejected:</message>
+        <recognition-test>
+            <input lang="wk-LA">banana</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+    </schema>
+    <schema label="Filtering Example">
+        <morphology-file>01-Filtered.xml</morphology-file>
+        <message>Nouns are accepted, but not verbs:</message>
+        <recognition-test>
+            <input lang="wk-LA">ata</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">bil</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+    </schema>
+    <schema label="Affix Example">
+        <morphology-file>02-Affixes.xml</morphology-file>
+        <message>Admittedly, obligatory affixes are kind of silly:</message>
+        <recognition-test>
+            <input lang="wk-LA">ata</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">atalar</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+    </schema>
+    <schema label="Missing Form Example">
+        <morphology-file>02a-Missing-Form.xml</morphology-file>
+        <recognition-test>
+            <input lang="wk-LA">ata</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-AR">آتا</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">atalar</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-AR">آتالار</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+    </schema>
+    <schema label="Optional Affix Example">
+        <morphology-file>03-Optional-Affixes.xml</morphology-file>
+        <message>Most affixes are optional:</message>
+        <recognition-test>
+            <input lang="wk-LA">ata</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">atalar</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+    </schema>
+    <schema label="Tag-Based Allomorphy Example">
+        <morphology-file>04-Tag-Allomorphy.xml</morphology-file>
+        <recognition-test>
+            <input lang="wk-LA">ata</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">atalar</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">ataler</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">gözler</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">gözlar</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+    </schema>
+    <schema label="Mutually Exclusive Morphemes Example">
+        <morphology-file>05-Mutually-Exclusive.xml</morphology-file>
+        <recognition-test>
+            <input lang="wk-LA">ata</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">atalar</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">atalary</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">atalarym</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">atalarymy</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+    </schema>
+    <schema label="Mutually Exclusive Morphemes Example 2">
+        <morphology-file>06-Mutually-Exclusive-2.xml</morphology-file>
+        <recognition-test>
+            <input lang="wk-LA">ata</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">atalar</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">atalary</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">atalarym</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">atalarymy</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">göz</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">gözler</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">gözleri</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">gözlerim</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">gözlarim</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">gözlerym</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">gözlerimi</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+    </schema>
+</tests>
