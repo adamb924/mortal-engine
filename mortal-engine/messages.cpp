@@ -1,7 +1,6 @@
 #include "messages.h"
 
 #include <QtGlobal>
-#include <QApplication>
 #include <QCoreApplication>
 #include <QtDebug>
 #include <QTextStream>
