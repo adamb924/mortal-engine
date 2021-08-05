@@ -67,6 +67,33 @@
             <should-be-accepted>no</should-be-accepted>
         </recognition-test>
     </schema>
+    <schema label="Missing Form Example">
+        <morphology-file>02b-Missing-Form-2.xml</morphology-file>
+        <recognition-test>
+            <input lang="wk-LA">ata</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-AR">آتا</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">atalar</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">atalary</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">atay</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-AR">آتاش</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+    </schema>
     <schema label="Optional Affix Example">
         <morphology-file>03-Optional-Affixes.xml</morphology-file>
         <message>Most affixes are optional:</message>
