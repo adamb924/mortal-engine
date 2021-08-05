@@ -176,4 +176,140 @@
             <should-be-accepted>no</should-be-accepted>
         </recognition-test>
     </schema>
+    <schema label="Forks">
+        <morphology-file>07-Forks.xml</morphology-file>
+        <recognition-test>
+            <input lang="wk-LA">bil_PRESENT_present.1s</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">bil_PRESENT_present.2s</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">bil_FUTURE_present.1s</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">bil_FUTURE_present.2s</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">bil_PRESENT_future.1s</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">bil_PRESENT_future.2s</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">bil_FUTURE_future.1s</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">bil_FUTURE_future.2s</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+    </schema>
+    <schema label="Forks">
+        <morphology-file>08-Sequences.xml</morphology-file>
+        <recognition-test>
+            <input lang="wk-LA">bil</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">bilOneTwo</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">bilOne</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">bilTwo</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+    </schema>
+    <schema label="Multiple Models">
+        <morphology-file>09-Multiple-Models.xml</morphology-file>
+        <recognition-test>
+            <input lang="wk-LA">bilTense</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">bilCase</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">ataTense</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">ataCase</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+    </schema>
+    <schema label="Jumps">
+        <morphology-file>10-Jumps.xml</morphology-file>
+        <message>Case suffixes can go on nouns</message>
+        <recognition-test>
+            <input lang="wk-LA">don</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">donCase</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <message>Case suffixes don't go on verbs</message>
+        <recognition-test>
+            <input lang="wk-LA">bilCase</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <message>Infinitive suffixation, with subsequent case affixation</message>
+        <recognition-test>
+            <input lang="wk-LA">bilinf</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">bilinfCase</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <message>(Obviously) Infinitive suffixes don't go on nouns</message>
+        <recognition-test>
+            <input lang="wk-LA">doninf</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+    </schema>
+    <schema label="Jumps 2">
+        <morphology-file>11-Jumps-2.xml</morphology-file>
+        <message>Case suffixes go on nouns</message>
+        <recognition-test>
+            <input lang="wk-LA">don</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">donCase</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <message>Case suffixes don't go on verbs</message>
+        <recognition-test>
+            <input lang="wk-LA">bilCase</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <message>Infinitive suffixation, without a case suffix, is no longer possible</message>
+        <recognition-test debug="true">
+            <input lang="wk-LA">bilinf</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <message>Infinitive suffixation, with subsequent case affixation</message>
+        <recognition-test>
+            <input lang="wk-LA">bilinfCase</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <message>(Obviously) Infinitive suffixes don't go on nouns</message>
+        <recognition-test>
+            <input lang="wk-LA">doninf</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+    </schema>
 </tests>

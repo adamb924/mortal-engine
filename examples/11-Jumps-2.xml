@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<morphology
+    xmlns="https://www.adambaker.org/mortal-engine"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="https://www.adambaker.org/mortal-engine morphology.xsd">
+    <writing-systems src="writing-systems.xml"/>
+    <model label="Nouns">
+        <stem-list label="Stem">
+            <filename>01-stems.xml</filename>
+            <matching-tag>noun</matching-tag>
+        </stem-list>
+        <morpheme label="Case" id="case-suffix">
+            <optional/>
+            <allomorph>
+                <form lang="wk-LA">Case</form>
+            </allomorph>
+        </morpheme>
+    </model>
+    <model label="Verbs">
+        <stem-list label="Stem">
+            <filename>01-stems.xml</filename>
+            <matching-tag>verb</matching-tag>
+        </stem-list>
+        <sequence label="Infinitive Sequence">
+            <optional/>
+            <morpheme label="Infinitive">
+                <allomorph>
+                    <form lang="wk-LA">inf</form>
+                </allomorph>
+            </morpheme>
+            <jump to="case-suffix" optional="false" target-node-required="true"/>
+        </sequence>
+    </model>
+</morphology>
