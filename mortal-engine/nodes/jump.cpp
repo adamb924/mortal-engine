@@ -147,6 +147,8 @@ bool Jump::checkHasOptionalCompletionPath() const
     }
     else
     {
+        /// there is only an optional completion path if the target node
+        /// has such a path, *and* if the target node is not required.
         return mNodeTarget->checkHasOptionalCompletionPath() && !mTargetNodeRequired;
     }
 }
