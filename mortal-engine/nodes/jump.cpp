@@ -147,6 +147,6 @@ bool Jump::checkHasOptionalCompletionPath() const
     }
     else
     {
-        return mNodeTarget->checkHasOptionalCompletionPath();
+        return mNodeTarget->checkHasOptionalCompletionPath() && !mTargetNodeRequired;
     }
 }
