@@ -423,6 +423,7 @@ QString MorphemeNode::summaryWithoutFollowing() const
     dbg << "Label: " << label() << newline;
     dbg << "Type: " << AbstractNode::typeToString(type()) << newline;
     dbg << "Optional: " << (optional() ? "true" : "false" ) << newline;
+    dbg << "Has path to end: " << ( hasPathToEnd() ? "true" : "false" ) << newline;
 
     dbg << mAllomorphs.count() << " allomorph(s)," << newline;
     foreach( Allomorph a, mAllomorphs )

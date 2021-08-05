@@ -64,6 +64,11 @@ void Jump::setTargetNodeRequired(bool targetNodeRequired)
     mTargetNodeRequired = targetNodeRequired;
 }
 
+bool Jump::isJump() const
+{
+    return true;
+}
+
 void Jump::setNodeTarget(const AbstractNode *nodeTarget)
 {
     mNodeTarget = nodeTarget;

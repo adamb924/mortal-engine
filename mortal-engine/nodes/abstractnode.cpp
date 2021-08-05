@@ -345,7 +345,7 @@ bool AbstractNode::checkHasOptionalCompletionPath() const
     {
         /// forks need to be evalated, because they might not be optional
         /// although there would be some path that offers a completion path
-        if( next()->optional() || next()->isFork() )
+        if( next()->optional() || next()->isFork() || next()->isSequence() || next()->isJump() )
         {
             return next()->checkHasOptionalCompletionPath();
         }
@@ -361,12 +361,22 @@ bool AbstractNode::isFork() const
     return false;
 }
 
+bool AbstractNode::isSequence() const
+{
+    return false;
+}
+
 bool AbstractNode::isModel() const
 {
     return false;
 }
 
 bool AbstractNode::isMorphemeNode() const
+{
+    return false;
+}
+
+bool AbstractNode::isJump() const
 {
     return false;
 }

@@ -33,6 +33,8 @@ public:
 
     void setTargetNodeRequired(bool targetNodeRequired);
 
+    bool isJump() const override;
+
 private:
     QList<Parsing> parsingsUsingThisNode(const Parsing & parsing, Parsing::Flags flags) const override;
     QList<Generation> generateFormsUsingThisNode( const Generation & parsing) const override;

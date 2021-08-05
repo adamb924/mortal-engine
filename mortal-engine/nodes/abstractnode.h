@@ -93,8 +93,10 @@ public:
 
     virtual bool checkHasOptionalCompletionPath() const;
     virtual bool isFork() const;
+    virtual bool isSequence() const;
     virtual bool isModel() const;
     virtual bool isMorphemeNode() const;
+    virtual bool isJump() const;
 
     virtual bool nodeCanAppendMorphemes() const;
 

@@ -36,6 +36,11 @@ QString Sequence::summary() const
     return dbgString;
 }
 
+bool Sequence::isSequence() const
+{
+    return true;
+}
+
 QString Sequence::elementName()
 {
     return "sequence";
