@@ -339,4 +339,383 @@
             <should-be-accepted>no</should-be-accepted>
         </recognition-test>
     </schema>
+    <schema label="Phonological Allomorphy">
+        <morphology-file>12-Phonological-Allomorphy.xml</morphology-file>
+        <message>Classifiers are obligatory (i.e., no bare stems)</message>
+        <recognition-test>
+            <input lang="wk-LA">sɪn</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <message>Words with ATR vowels get an ATR classifier</message>
+        <recognition-test>
+            <input lang="wk-LA">esit</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">eben</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">emot</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <message>Words with ATR vowels can't take a non-ATR classifier</message>
+        <recognition-test>
+            <input lang="wk-LA">ɛsit</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">ɛben</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">ɛmot</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <message>Non-ATR words take a non-ATR classifier</message>
+        <recognition-test>
+            <input lang="wk-LA">ɛsɪn</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">ɛkɛm</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">ɛkɔŋ</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <message>Non-ATR words cannot take an ATR classifier</message>
+        <recognition-test>
+            <input lang="wk-LA">esɪn</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">ekɛm</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">ekɔŋ</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>    
+    </schema>
+    <schema label="Phonological Allomorphy">
+        <morphology-file>13-Shared-Conditions.xml</morphology-file>
+        <message>Previous behavior</message>
+        <recognition-test>
+            <input lang="wk-LA">sɪn</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">esit</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">eben</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">emot</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">ɛsit</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">ɛben</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">ɛmot</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">ɛsɪn</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">ɛkɛm</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">ɛkɔŋ</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">esɪn</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">ekɛm</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">ekɔŋ</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <message>New behavior</message>
+        <recognition-test>
+            <input lang="wk-LA">enosit</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">enoben</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">enomot</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">ɛnɔsit</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">ɛnɔben</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">ɛnɔmot</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">ɛnɔsɪn</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">ɛnɔkɛm</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">ɛnɔkɔŋ</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">enosɪn</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">enokɛm</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">enokɔŋ</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+    </schema>
+    <schema label="Create Allomorphs">
+        <morphology-file>14-Create-Allomorphs.xml</morphology-file>
+        <message>Success means identical output to 13-Shared-Conditions.xml</message>
+        <recognition-test>
+            <input lang="wk-LA">sɪn</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">esit</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">eben</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">emot</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">ɛsit</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">ɛben</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">ɛmot</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">ɛsɪn</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">ɛkɛm</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">ɛkɔŋ</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">esɪn</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">ekɛm</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">ekɔŋ</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">enosit</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">enoben</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">enomot</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">ɛnɔsit</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">ɛnɔben</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">ɛnɔmot</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">ɛnɔsɪn</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">ɛnɔkɛm</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">ɛnɔkɔŋ</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">enosɪn</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">enokɛm</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">enokɔŋ</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+    </schema>
+    <schema label="Create Allomorphs 2">
+        <morphology-file>15-Create-Allomorphs-2.xml</morphology-file>
+        <message>Following non-velars have nOn:</message>
+        <recognition-test>
+            <input lang="wk-LA">enonsit</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">enonben</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">enonmot</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">ɛnɔnsɪn</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <message>Following non-velars cannot have nOŋ:</message>
+        <recognition-test>
+            <input lang="wk-LA">enoŋsit</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">enoŋben</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">enoŋmot</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">ɛnɔŋsɪn</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <message>Following velars show nasal place assimilation</message>
+        <recognition-test>
+            <input lang="wk-LA">ɛnɔŋkɛm</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">ɛnɔŋkɔŋ</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <message>Following velars cannot be preceded by coronals</message>
+        <recognition-test>
+            <input lang="wk-LA">ɛnɔnkɛm</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">ɛnɔnkɔŋ</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+    </schema>
+    <schema label="Create Allomorphs 3">
+        <morphology-file>16-Create-Allomorphs-3.xml</morphology-file>
+        <message>Following coronals have nOn:</message>
+        <recognition-test>
+            <input lang="wk-LA">enonsit</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">ɛnɔnsɪn</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <message>Following labials have nOm:</message>
+        <recognition-test>
+            <input lang="wk-LA">enomben</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">enommot</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <message>Following velars have nOŋ</message>
+        <recognition-test>
+            <input lang="wk-LA">ɛnɔŋkɛm</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">ɛnɔŋkɔŋ</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <message>Non-assimilated nasals are not allowed</message>
+        <recognition-test>
+            <input lang="wk-LA">enoŋsit</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">enoŋben</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">enoŋmot</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">ɛnɔŋsɪn</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">ɛnɔmkɛm</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">ɛnɔnkɔŋ</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+    </schema>
 </tests>

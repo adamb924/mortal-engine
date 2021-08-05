@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<stems
+    xmlns="https://www.adambaker.org/mortal-engine/stems"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="https://www.adambaker.org/mortal-engine/stems stems.xsd">
+    <stem>
+        <form lang="wk-LA">sit</form>
+        <tag>noun</tag>
+    </stem>
+    <stem>
+        <form lang="wk-LA">sɪn</form>
+        <tag>noun</tag>
+    </stem>
+    <stem>
+        <form lang="wk-LA">ben</form>
+        <tag>noun</tag>
+    </stem>
+    <stem>
+        <form lang="wk-LA">kɛm</form>
+        <tag>noun</tag>
+    </stem>
+    <stem>
+        <form lang="wk-LA">mot</form>
+        <tag>noun</tag>
+    </stem>
+    <stem>
+        <form lang="wk-LA">kɔŋ</form>
+        <tag>noun</tag>
+    </stem>
+    <!-- <stem>
+        <form lang="wk-LA">göl</form>
+        <tag>verb</tag>
+    </stem> -->
+</stems>
