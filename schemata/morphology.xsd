@@ -311,7 +311,7 @@ targetNamespace="https://www.adambaker.org/mortal-engine">
                 </xs:element>
             </xs:choice>
         </xs:sequence>
-        <xs:attribute type="xs:ID" name="id" use="optional"/>
+        <xs:attribute type="xs:ID" name="id" use="required"/>
     </xs:complexType>
 
     <xs:complexType name="case">
