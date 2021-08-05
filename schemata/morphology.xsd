@@ -38,7 +38,6 @@ targetNamespace="https://www.adambaker.org/mortal-engine">
                 <xs:element name="preceding-node" type="me:preceding-node"/>
                 <xs:element name="word-final"/>
                 <xs:element name="bound-morpheme"/>
-                <xs:element name="sequence" type="me:optional-path"/>
             </xs:choice>
         </xs:choice>
     </xs:group>
@@ -162,6 +161,7 @@ targetNamespace="https://www.adambaker.org/mortal-engine">
                         <xs:attribute name="target-node-required" use="optional" type="me:true-false"></xs:attribute>
                     </xs:complexType>
                 </xs:element>
+                <xs:element name="sequence" type="me:optional-path"/>
             </xs:choice>
         </xs:choice>
     </xs:group>
