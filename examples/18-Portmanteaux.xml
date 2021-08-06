@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<morphology
+    xmlns="https://www.adambaker.org/mortal-engine"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="https://www.adambaker.org/mortal-engine morphology.xsd">
+    <writing-systems src="writing-systems.xml"/>
+    <!-- see 06-Mutually-Exclusive-2.xml for further explanation about the non-portmanteau parts of this -->
+    <model label="Nouns">
+        <stem-list label="Stem">
+            <filename>01-stems.xml</filename>
+            <matching-tag>noun</matching-tag>
+        </stem-list>
+        <morpheme label="Plural">
+            <optional/>
+            <allomorph>
+                <tag-match scope="immediately-preceding" type="all">
+                    <match-tag>front</match-tag>
+                </tag-match>
+                <form lang="wk-AR">لر</form>
+                <form lang="wk-LA">ler</form>
+                <tag>front</tag>
+            </allomorph>
+            <allomorph>
+                <tag-match scope="immediately-preceding" type="all">
+                    <match-tag>back</match-tag>
+                </tag-match>
+                <form lang="wk-AR">لار</form>
+                <form lang="wk-LA">lar</form>
+                <tag>back</tag>
+            </allomorph>
+            <!-- These are the portmanteau allomorphs -->
+            <!-- the 'portmanteau' attribute give the morphological string that the portmanteau covers -->
+            <!-- (this can be any number of morphemes) -->
+            <!-- the first morpheme indicated in the 'portmanteau' attribute has to be the label of the current morpheme -->
+            <allomorph portmanteau="[Plural][1s-Possessive]">
+                <tag-match scope="immediately-preceding" type="all">
+                    <match-tag>back</match-tag>
+                </tag-match>
+                <form lang="wk-LA">laaaaaam</form>
+            </allomorph>
+            <allomorph portmanteau="[Plural][1s-Possessive]">
+                <tag-match scope="immediately-preceding" type="all">
+                    <match-tag>front</match-tag>
+                </tag-match>
+                <form lang="wk-LA">leeeeeem</form>
+            </allomorph>
+            <!-- END -->
+        </morpheme>
+        <mutually-exclusive-morphemes label="Possessive Suffixes">
+            <optional/>
+            <morpheme label="1s-Possessive">
+                <allomorph>
+                    <tag-match scope="immediately-preceding" type="all">
+                        <match-tag>back</match-tag>
+                    </tag-match>
+                    <form lang="wk-AR">ېم</form>
+                    <form lang="wk-LA">ym</form>
+                    <tag>back</tag>
+                </allomorph>
+                <allomorph>
+                        <tag-match scope="immediately-preceding" type="all">
+                        <match-tag>front</match-tag>
+                    </tag-match>
+                    <form lang="wk-AR">يم</form>
+                    <form lang="wk-LA">im</form>
+                    <tag>front</tag>
+                </allomorph>
+            </morpheme>
+            <morpheme label="3s-Possessive">
+                <allomorph>
+                    <tag-match scope="immediately-preceding" type="all">
+                        <match-tag>front</match-tag>
+                    </tag-match>
+                    <form lang="wk-AR">ي</form>
+                    <form lang="wk-LA">i</form>
+                    <tag>front</tag>
+                </allomorph>
+                <allomorph>
+                    <tag-match scope="immediately-preceding" type="all">
+                        <match-tag>back</match-tag>
+                    </tag-match>
+                    <form lang="wk-AR">ې</form>
+                    <form lang="wk-LA">y</form>
+                    <tag>back</tag>
+                </allomorph>
+            </morpheme>    
+        </mutually-exclusive-morphemes>
+    </model>
+</morphology>

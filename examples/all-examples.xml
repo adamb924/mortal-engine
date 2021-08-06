@@ -718,4 +718,104 @@
             <should-be-accepted>no</should-be-accepted>
         </recognition-test>
     </schema>
+    <schema>
+        <morphology-file>17-Create-Allomorphs-4.xml</morphology-file>
+        <message>Consonants don't occur at the end of a word</message>
+        <recognition-test>
+            <input lang="wk-LA">sit</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">ben</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <message>Epenthetic vowels:</message>
+        <recognition-test>
+            <input lang="wk-LA">site</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">bene</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <message>A case suffix:</message>
+        <recognition-test>
+            <input lang="wk-LA">sitana</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">benana</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+    </schema>
+    <schema label="Portmanteau Morphemes">
+        <morphology-file>18-Portmanteaux.xml</morphology-file>
+        <message>Same behavior as 06-Mutually-Exclusive-2.xml</message>
+        <recognition-test>
+            <input lang="wk-LA">ata</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">atalar</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">atalary</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">atalarymy</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">göz</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">gözler</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">gözleri</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">gözlarim</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">gözlerym</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">gözlerimi</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <message>The [Plural][1s-Possessive] can only be parsed with a portmanteau form:</message>
+        <recognition-test>
+            <input lang="wk-LA">atalaaaaaam</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">atalarym</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">gözleeeeeem</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">gözlerim</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <message>The wk-AR writing system is unaffect (these are 'atalarym' and 'gözlerim'):</message>
+        <recognition-test>
+            <input lang="wk-AR">آتالارېم</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-AR">گؤزلريم</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+    </schema>
 </tests>
