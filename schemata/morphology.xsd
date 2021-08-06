@@ -166,6 +166,11 @@ targetNamespace="https://www.adambaker.org/mortal-engine">
         </xs:choice>
     </xs:group>
 
+    <xs:attributeGroup name="node-attributes">
+        <xs:attribute name="id" type="xs:ID" use="optional"></xs:attribute>
+        <xs:attribute name="label" type="xs:string" use="required"></xs:attribute>
+    </xs:attributeGroup>
+
     <!-- stem-list -->
     <xs:complexType name="stem-list">
         <xs:sequence>
@@ -173,8 +178,7 @@ targetNamespace="https://www.adambaker.org/mortal-engine">
             <xs:element name="matching-tag" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="create-allomorphs" type="me:create-allomorphs" minOccurs="0" maxOccurs="1"/>
         </xs:sequence>
-        <xs:attribute name="id" type="xs:ID" use="optional"></xs:attribute>
-        <xs:attribute name="label" type="xs:string" use="required"></xs:attribute>
+        <xs:attributeGroup ref="me:node-attributes"/>
     </xs:complexType>
 
     <!-- sqlite-stem-list -->
@@ -187,8 +191,7 @@ targetNamespace="https://www.adambaker.org/mortal-engine">
             <xs:element name="matching-tag" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="create-allomorphs" type="me:create-allomorphs" minOccurs="0" maxOccurs="1"/>
         </xs:sequence>
-        <xs:attribute name="id" type="xs:ID" use="optional"></xs:attribute>
-        <xs:attribute name="label" type="xs:string" use="required"></xs:attribute>
+        <xs:attributeGroup ref="me:node-attributes"/>
         <xs:attribute name="accepts-stems" type="xs:boolean" use="optional"></xs:attribute>
     </xs:complexType>
 
@@ -209,14 +212,12 @@ targetNamespace="https://www.adambaker.org/mortal-engine">
 			<xs:element name="optional" type="xs:string" minOccurs="0"/>
 			<xs:group ref="me:morpheme-elements"></xs:group>
 		</xs:sequence>
-		<xs:attribute name="id" type="xs:ID" use="optional"></xs:attribute>
-		<xs:attribute name="label" type="xs:string" use="required"></xs:attribute>
+		<xs:attributeGroup ref="me:node-attributes"/>
 	</xs:complexType>
 
     <xs:complexType name="non-optional-morpheme">
         <xs:group ref="me:morpheme-elements"></xs:group>
-        <xs:attribute name="id" type="xs:ID" use="optional"></xs:attribute>
-        <xs:attribute name="label" type="xs:string" use="required"></xs:attribute>
+        <xs:attributeGroup ref="me:node-attributes"/>
     </xs:complexType>
 
     <!-- mutually-exclusive-morphemes -->
@@ -228,8 +229,7 @@ targetNamespace="https://www.adambaker.org/mortal-engine">
             </xs:choice>    
             <xs:element name="morpheme" type="me:non-optional-morpheme" minOccurs="1" maxOccurs="unbounded"/>
         </xs:sequence>
-        <xs:attribute name="id" type="xs:ID" use="optional"></xs:attribute>
-        <xs:attribute name="label" type="xs:string" use="required"></xs:attribute>
+        <xs:attributeGroup ref="me:node-attributes"/>
     </xs:complexType>
 
     <!-- fork -->
@@ -238,15 +238,13 @@ targetNamespace="https://www.adambaker.org/mortal-engine">
             <xs:element name="optional" type="xs:string" minOccurs="0"/>
             <xs:element name="path" type="me:path" minOccurs="1" maxOccurs="unbounded"/>
         </xs:sequence>
-        <xs:attribute name="id" type="xs:ID" use="optional"></xs:attribute>
-        <xs:attribute name="label" type="xs:string" use="required"></xs:attribute>
+        <xs:attributeGroup ref="me:node-attributes"/>
     </xs:complexType>
 
     <!-- path -->
     <xs:complexType name="path">
         <xs:group ref="me:nodes"></xs:group>
-        <xs:attribute name="id" type="xs:ID" use="optional"></xs:attribute>
-        <xs:attribute name="label" type="xs:string" use="required"></xs:attribute>
+        <xs:attributeGroup ref="me:node-attributes"/>
     </xs:complexType>
 
     <xs:complexType name="optional-path">
@@ -254,8 +252,7 @@ targetNamespace="https://www.adambaker.org/mortal-engine">
             <xs:element name="optional" type="xs:string" minOccurs="0"/>
             <xs:group ref="me:nodes"></xs:group>
         </xs:sequence>
-        <xs:attribute name="id" type="xs:ID" use="optional"></xs:attribute>
-        <xs:attribute name="label" type="xs:string" use="required"></xs:attribute>    
+        <xs:attributeGroup ref="me:node-attributes"/>    
 </xs:complexType>
 
     <!-- allomorph -->
