@@ -18,7 +18,6 @@
 #include <QHash>
 #include <QtDebug>
 
-class QFont;
 class QXmlStreamReader;
 
 #include "mortal-engine_global.h"
@@ -67,13 +66,6 @@ public:
      * @return Qt::LayoutDirection the layout direction of the WritingSystem
      */
     Qt::LayoutDirection layoutDirection() const;
-
-    /**
-     * @brief Returns a font object built using fontFamily() and fontSize().
-     * 
-     * @return QFont Constructed object
-     */
-    QFont font() const;
 
     /**
      * @brief Returns true if the abbreviations of the two WritingSystems are identical, otherwise returns false.

@@ -1,6 +1,5 @@
 #include "writingsystem.h"
 
-#include <QFont>
 #include <QXmlStreamReader>
 #include <QFile>
 #include <stdexcept>
@@ -42,11 +41,6 @@ QString WritingSystem::abbreviation() const
 Qt::LayoutDirection WritingSystem::layoutDirection() const
 {
     return mLayoutDirection;
-}
-
-QFont WritingSystem::font() const
-{
-    return QFont( mFontFamily, mFontSize );
 }
 
 QString WritingSystem::fontFamily() const
