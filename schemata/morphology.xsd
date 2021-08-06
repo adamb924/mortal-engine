@@ -46,7 +46,7 @@ targetNamespace="https://www.adambaker.org/mortal-engine">
     <xs:group name="create-allomorph-list">
         <xs:choice>
             <xs:choice maxOccurs="unbounded">
-                <xs:element name="create-allomorphs" type="me:create-allomorphs"/>
+                <xs:element name="create-allomorphs" type="me:create-allomorphs-with-id"/>
             </xs:choice>
         </xs:choice>
     </xs:group>
@@ -298,7 +298,7 @@ targetNamespace="https://www.adambaker.org/mortal-engine">
     </xs:complexType>
 
     <!-- create-allomorphs -->
-    <xs:complexType name="create-allomorphs">
+    <xs:complexType name="create-allomorphs-base">
         <xs:sequence>
             <xs:element name="case" type="me:case" minOccurs="1" maxOccurs="unbounded"/>
             <!-- <xs:element name="otherwise" type="me:form-list" minOccurs="1" maxOccurs="1"/> -->
@@ -311,7 +311,20 @@ targetNamespace="https://www.adambaker.org/mortal-engine">
                 </xs:element>
             </xs:choice>
         </xs:sequence>
-        <xs:attribute type="xs:ID" name="id" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="create-allomorphs">
+        <xs:complexContent>
+            <xs:extension base="me:create-allomorphs-base"></xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="create-allomorphs-with-id">
+        <xs:complexContent>
+            <xs:extension base="me:create-allomorphs-base">
+                <xs:attribute type="xs:ID" name="id" use="required"/>
+            </xs:extension>
+        </xs:complexContent>
     </xs:complexType>
 
     <xs:complexType name="case">
