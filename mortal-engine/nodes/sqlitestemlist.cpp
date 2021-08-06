@@ -389,7 +389,7 @@ void SqliteStemList::openDatabase(const QString &filename, const QString &databa
 {
     if(!QSqlDatabase::isDriverAvailable("QSQLITE"))
     {
-        qWarning() << "SFXmlReader::openDatabase()" << "Driver failed to open.";
+        qWarning() << "SqliteStemList::openDatabase()" << "Driver failed to open.";
         return;
     }
 
@@ -407,12 +407,12 @@ void SqliteStemList::openDatabase(const QString &filename, const QString &databa
 
     if(!db.open())
     {
-        qWarning() << "SFXmlReader::openDatabase()" << "Database failed to open." << filename;
+        qWarning() << "SqliteStemList::openDatabase()" << "Database failed to open." << filename;
         return;
     }
     if( !db.isValid() )
     {
-        qWarning() << "SFXmlReader::openDatabase()" << "Invalid database: " << filename;
+        qWarning() << "SqliteStemList::openDatabase()" << "Invalid database: " << filename;
     }
 }
 
