@@ -193,30 +193,28 @@ targetNamespace="https://www.adambaker.org/mortal-engine">
     </xs:complexType>
 
     <!-- morpheme -->
-    <xs:complexType name="morpheme">
-        <xs:sequence>
-            <xs:element name="optional" type="xs:string" minOccurs="0"/>
-            <xs:choice minOccurs="0" maxOccurs="unbounded">
-                <xs:group ref="me:conditions"></xs:group>
-            </xs:choice>    
-            <xs:element name="allomorph" type="me:allomorph" minOccurs="1" maxOccurs="unbounded"/>
-            <xs:element name="add-allomorphs" type="me:create-allomorphs-link" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="gloss" type="me:form" minOccurs="0" maxOccurs="unbounded"/>
-        </xs:sequence>
-        <xs:attribute name="id" type="xs:ID" use="optional"></xs:attribute>
-        <xs:attribute name="label" type="xs:string" use="required"></xs:attribute>
-    </xs:complexType>
+	<xs:group name="morpheme-elements">
+		<xs:sequence>
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:group ref="me:conditions"></xs:group>
+			</xs:choice>    
+			<xs:element name="allomorph" type="me:allomorph" minOccurs="1" maxOccurs="unbounded"/>
+			<xs:element name="add-allomorphs" type="me:create-allomorphs-link" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="gloss" type="me:form" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:group>
 
-    <!-- morpheme -->
+	<xs:complexType name="morpheme">
+		<xs:sequence>
+			<xs:element name="optional" type="xs:string" minOccurs="0"/>
+			<xs:group ref="me:morpheme-elements"></xs:group>
+		</xs:sequence>
+		<xs:attribute name="id" type="xs:ID" use="optional"></xs:attribute>
+		<xs:attribute name="label" type="xs:string" use="required"></xs:attribute>
+	</xs:complexType>
+
     <xs:complexType name="non-optional-morpheme">
-        <xs:sequence>
-            <xs:choice minOccurs="0" maxOccurs="unbounded">
-                <xs:group ref="me:conditions"></xs:group>
-            </xs:choice>    
-            <xs:element name="allomorph" type="me:allomorph" minOccurs="1" maxOccurs="unbounded"/>
-            <xs:element name="add-allomorphs" type="me:create-allomorphs-link" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="gloss" type="me:form" minOccurs="0" maxOccurs="unbounded"/>
-        </xs:sequence>
+        <xs:group ref="me:morpheme-elements"></xs:group>
         <xs:attribute name="id" type="xs:ID" use="optional"></xs:attribute>
         <xs:attribute name="label" type="xs:string" use="required"></xs:attribute>
     </xs:complexType>
