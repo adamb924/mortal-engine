@@ -54,7 +54,7 @@ AbstractConstraint *FollowingPhonologicalCondition::readFromXml(QXmlStreamReader
         in.readNext();
         if( in.tokenType() == QXmlStreamReader::StartElement )
         {
-            if( in.name() == "match-expression" )
+            if( in.name() == AbstractConstraint::XML_MATCH_EXPRESSION )
             {
                 /// this'll all get optimized by the compiler I assume
                 WritingSystem ws = morphologyReader->morphology()->writingSystem( in.attributes().value("lang").toString() );

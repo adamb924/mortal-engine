@@ -11,6 +11,9 @@
 #include "morphologyxmlreader.h"
 #include "debug.h"
 
+QString CreateAllomorphs::XML_NO_OTHERWISE = "no-otherwise";
+QString CreateAllomorphs::XML_OVERRIDE_OTHERWISE = "override-otherwise";
+
 CreateAllomorphs::CreateAllomorphs() : mOtherwiseMode(Default)
 {
 
@@ -104,14 +107,14 @@ CreateAllomorphs CreateAllomorphs::readFromXml(QXmlStreamReader &in, MorphologyX
         {
             ca.addCase( CreateAllomorphsCase::readFromXml(in, morphologyReader) );
         }
-        else if( in.isStartElement() && in.name() == "no-otherwise" )
+        else if( in.isStartElement() && in.name() == XML_NO_OTHERWISE )
         {
             ca.setOtherwiseMode(None);
         }
-        else if( in.isStartElement() && in.name() == "override-otherwise" )
+        else if( in.isStartElement() && in.name() == XML_OVERRIDE_OTHERWISE )
         {
             in.readNextStartElement();
-            QSet<const AbstractConstraint *> constraints = morphologyReader->readConstraints("override-otherwise", in);
+            QSet<const AbstractConstraint *> constraints = morphologyReader->readConstraints(XML_OVERRIDE_OTHERWISE, in);
             CreateAllomorphsCase otherwiseOverride;
             otherwiseOverride.addConstraints( constraints );
             ca.setOtherwiseOverride(otherwiseOverride);

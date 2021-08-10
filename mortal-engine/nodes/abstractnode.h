@@ -105,6 +105,9 @@ public:
     Form gloss(const WritingSystem & ws) const;
     QHash<WritingSystem,Form> glosses() const;
 
+    static QString XML_OPTIONAL;
+    static QString XML_ADD_ALLOMORPHS;
+
 protected:
     QHash<WritingSystem,Form> mGlosses;
 

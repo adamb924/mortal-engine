@@ -8,6 +8,10 @@
 #include "datatypes/parsingstep.h"
 #include "debug.h"
 
+QString TagMatchCondition::XML_TAG_MATCH = "tag-match";
+QString TagMatchCondition::XML_MATCH_TAG = "match-tag";
+QString TagMatchCondition::XML_INTERUPTED_BY = "interrupted-by";
+
 TagMatchCondition::TagMatchCondition(TagMatchCondition::Scope searchScope, TagMatchCondition::TagMatchType type) :
     AbstractConstraint(AbstractConstraint::MatchCondition),
     mSearchScope(searchScope),
@@ -156,17 +160,17 @@ AbstractConstraint *TagMatchCondition::readFromXml(QXmlStreamReader &in, Morphol
 
     TagMatchCondition * tmc = new TagMatchCondition(scope, type);
     tmc->readId(in);
-    while(!in.atEnd() && !(in.tokenType() == QXmlStreamReader::EndElement && in.name() == "tag-match") )
+    while(!in.atEnd() && !(in.tokenType() == QXmlStreamReader::EndElement && in.name() == XML_TAG_MATCH ) )
     {
         in.readNext();
 
         if( in.tokenType() == QXmlStreamReader::StartElement )
         {
-            if( in.name() == "match-tag" )
+            if( in.name() == XML_MATCH_TAG )
             {
                 tmc->addTag( in.readElementText() );
             }
-            else if( in.name() == "interrupted-by" )
+            else if( in.name() == XML_INTERUPTED_BY )
             {
                 tmc->addInteruptTag( in.readElementText() );
             }

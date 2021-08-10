@@ -97,7 +97,7 @@ AbstractNode *Jump::readFromXml(QXmlStreamReader &in, MorphologyXmlReader *morph
     j->readInitialNodeAttributes(in, morphologyReader);
     j->setTargetId( in.attributes().value("to").toString() );
 
-    if( in.attributes().value("optional").toString() == "false" )
+    if( in.attributes().value(AbstractNode::XML_OPTIONAL).toString() == "false" )
     {
         j->setOptional(false);
     }

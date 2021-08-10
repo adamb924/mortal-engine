@@ -86,6 +86,10 @@ private:
     template <class T> void registerConstraintMatcher();
     template <class T> void registerNodeMatcher();
 
+    static QString XML_MORPHOLOGY;
+    static QString XML_SHARED_CREATE_ALLOMORPHS;
+    static QString XML_SHARED_CONDITIONS;
+
 private:
     Morphology * mMorphology;
     QHash<QString, const AbstractConstraint *> mConstraintsById;

@@ -229,6 +229,11 @@ public:
 
     bool hasZeroLengthForms() const;
 
+    static QString XML_ALLOMORPH;
+    static QString XML_FORM;
+    static QString XML_TAG;
+    static QString XML_STEM;
+
 private:
     QHash<WritingSystem,Form> mForms;
     QSet<const AbstractConstraint *> mConstraints;

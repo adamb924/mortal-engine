@@ -40,6 +40,10 @@
 
 #include <stdexcept>
 
+QString MorphologyXmlReader::XML_MORPHOLOGY = "morphology";
+QString MorphologyXmlReader::XML_SHARED_CREATE_ALLOMORPHS = "shared-create-allomorphs";
+QString MorphologyXmlReader::XML_SHARED_CONDITIONS = "interrupted-by";
+
 MorphologyXmlReader::MorphologyXmlReader(Morphology *morphology) : mMorphology(morphology)
 {
     registerConstraintMatcher<TagMatchCondition>();
@@ -103,7 +107,7 @@ void MorphologyXmlReader::parseXml(const QString &path)
         QXmlStreamReader in(&file);
 
         in.readNextStartElement();
-        if( in.name() != "morphology" )
+        if( in.name() != XML_MORPHOLOGY )
         {
             throw std::runtime_error( "Expected 'morphology' as a root element" );
         }
@@ -201,11 +205,11 @@ void MorphologyXmlReader::readSharedConditions(QXmlStreamReader &in)
 
 void MorphologyXmlReader::readSharedCreateAllomorphs(QXmlStreamReader &in)
 {
-    Q_ASSERT( in.isStartElement() && in.name() == "shared-create-allomorphs" );
+    Q_ASSERT( in.isStartElement() && in.name() == XML_SHARED_CREATE_ALLOMORPHS );
 
     mCreateAllomorphsById = CreateAllomorphs::readListFromXml(in, this, "shared-create-allomorphs");
 
-    Q_ASSERT( in.isEndElement() && in.name() == "shared-create-allomorphs" );
+    Q_ASSERT( in.isEndElement() && in.name() == XML_SHARED_CREATE_ALLOMORPHS );
 }
 
 void MorphologyXmlReader::recordStemAcceptingNewStems(AbstractStemList *stemList) const

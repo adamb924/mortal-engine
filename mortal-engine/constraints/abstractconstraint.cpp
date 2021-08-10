@@ -8,6 +8,9 @@
 #include <QXmlStreamReader>
 #include <QRegularExpression>
 
+QString AbstractConstraint::XML_MATCH_EXPRESSION = "match-expression";
+QString AbstractConstraint::XML_OPTIONAL = "optional";
+
 AbstractConstraint::AbstractConstraint(AbstractConstraint::Type t) : mType(t)
 {
 

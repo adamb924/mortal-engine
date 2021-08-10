@@ -8,6 +8,15 @@
 
 #include <QXmlStreamReader>
 
+QString CreateAllomorphsCase::XML_MATCH_TAG = "match-tag";
+QString CreateAllomorphsCase::XML_WITHOUT_TAG = "without-tag";
+QString CreateAllomorphsCase::XML_WHEN = "when";
+QString CreateAllomorphsCase::XML_THEN = "then";
+QString CreateAllomorphsCase::XML_REPLACE_THIS = "replace-this";
+QString CreateAllomorphsCase::XML_WITH_THIS = "with-this";
+QString CreateAllomorphsCase::XML_ADD_TAG = "add-tag";
+QString CreateAllomorphsCase::XML_REMOVE_TAG = "remove-tag";
+
 CreateAllomorphsCase::CreateAllomorphsCase() : mFormsMode(IncludeAllForms)
 {
 
@@ -109,44 +118,44 @@ CreateAllomorphsCase CreateAllomorphsCase::readFromXml(QXmlStreamReader &in, Mor
 
         if( in.tokenType() == QXmlStreamReader::StartElement )
         {
-            if( in.name() == "match-tag" )
+            if( in.name() == XML_MATCH_TAG )
             {
                 c.addMatchTag( Tag( in.readElementText() ) );
             }
-            if( in.name() == "without-tag" )
+            if( in.name() == XML_WITHOUT_TAG )
             {
                 c.addNotMatchTag( Tag( in.readElementText() ) );
             }
-            else if( in.name() == "when" )
+            else if( in.name() == XML_WHEN )
             {
                 in.readNextStartElement();
                 QSet<const AbstractConstraint *> constraints = morphologyReader->readConstraints("when", in);
                 c.addConstraints( constraints );
             }
-            else if( in.name() == "then" )
+            else if( in.name() == XML_THEN )
             {
                 /// create an empty list of replace-this
                 QList<Form> replaceThis;
 
-                while( !in.atEnd() && !(in.tokenType() == QXmlStreamReader::EndElement && in.name() == "then" ) )
+                while( !in.atEnd() && !(in.tokenType() == QXmlStreamReader::EndElement && in.name() == XML_THEN ) )
                 {
                     in.readNext();
 
                     if( in.tokenType() == QXmlStreamReader::StartElement )
                     {
-                        if( in.name() == "replace-this")
+                        if( in.name() == XML_REPLACE_THIS)
                         {
                             replaceThis = Form::readListFromXml( in, morphologyReader->morphology(), "replace-this", "form" );
                         }
-                        else if( in.name() == "with-this")
+                        else if( in.name() == XML_WITH_THIS)
                         {
                             c.addReplacement( CreateAllomorphsReplacement( replaceThis, Form::readListFromXml( in, morphologyReader->morphology(), "with-this", "form" ) ) );
                         }
-                        else if( in.name() == "add-tag")
+                        else if( in.name() == XML_ADD_TAG)
                         {
                             c.addAddTag( Tag(in.readElementText()) );
                         }
-                        else if( in.name() == "remove-tag")
+                        else if( in.name() == XML_REMOVE_TAG)
                         {
                             c.addRemoveTag( Tag(in.readElementText()) );
                         }

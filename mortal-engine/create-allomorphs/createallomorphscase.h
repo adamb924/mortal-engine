@@ -48,6 +48,15 @@ public:
     void addAddTag( const Tag & t );
     void addRemoveTag( const Tag & t );
 
+    static QString XML_MATCH_TAG;
+    static QString XML_WITHOUT_TAG;
+    static QString XML_WHEN;
+    static QString XML_THEN;
+    static QString XML_REPLACE_THIS;
+    static QString XML_WITH_THIS;
+    static QString XML_ADD_TAG;
+    static QString XML_REMOVE_TAG;
+
 private:
     QSet<const AbstractConstraint *> mConstraints;
     QList<CreateAllomorphsReplacement> mReplacements;

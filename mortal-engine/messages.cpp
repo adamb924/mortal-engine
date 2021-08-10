@@ -31,7 +31,13 @@ void myMessageHandler(QtMsgType type, const QMessageLogContext &, const QString 
     QFile outFile(MortalEngineDebug::logFilename);
     outFile.open(QIODevice::WriteOnly | QIODevice::Append);
     QTextStream ts(&outFile);
+
+#if (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
+    ts.setEncoding( QStringConverter::Utf8 );
+#else
     ts.setCodec("UTF-8");
+#endif
+
     ts << txt << Qt::endl;
 }
 
@@ -47,7 +53,13 @@ void redirectMessagesTo(const QString &outfile, bool resetFile)
         QFile debugFile(MortalEngineDebug::logFilename);
         debugFile.open(QIODevice::WriteOnly);
         QTextStream ts(&debugFile);
+
+#if (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
+        ts.setEncoding( QStringConverter::Utf8 );
+#else
         ts.setCodec("UTF-8");
+#endif
+
         ts << "";
         debugFile.close();
     }

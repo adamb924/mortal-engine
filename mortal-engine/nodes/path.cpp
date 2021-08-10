@@ -30,7 +30,7 @@ AbstractNode *Path::readFromXml(QXmlStreamReader &in, MorphologyXmlReader *morph
     /// move past the initial node
     in.readNextStartElement();
 
-    if( in.name() == "optional" )
+    if( in.name() == AbstractNode::XML_OPTIONAL )
     {
         p->setOptional(true);
         /// move past the optional node

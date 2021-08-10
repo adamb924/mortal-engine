@@ -55,7 +55,7 @@ AbstractNode *Sequence::readFromXml(QXmlStreamReader &in, MorphologyXmlReader *m
     /// move past the initial node
     in.readNextStartElement();
 
-    if( in.name() == "optional" )
+    if( in.name() == AbstractNode::XML_OPTIONAL )
     {
         s->setOptional(true);
         /// move past the optional node

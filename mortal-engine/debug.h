@@ -15,6 +15,7 @@ public:
 
     Debug operator <<(const QString & output);
     Debug operator <<(const int & output);
+    Debug operator <<(const long long & output);
     Debug operator <<(Control c);
 
     void indent();

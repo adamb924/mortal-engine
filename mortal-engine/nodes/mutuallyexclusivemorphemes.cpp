@@ -86,7 +86,7 @@ AbstractNode *MutuallyExclusiveMorphemes::readFromXml(QXmlStreamReader &in, Morp
 
         if( in.tokenType() == QXmlStreamReader::StartElement )
         {
-            if( in.name() == "optional" )
+            if( in.name() == AbstractNode::XML_OPTIONAL )
             {
                 mem->setOptional(true);
             }

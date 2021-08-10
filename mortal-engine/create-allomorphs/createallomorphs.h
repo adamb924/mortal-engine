@@ -43,6 +43,9 @@ public:
 
     QString overrideModeAsString() const;
 
+    static QString XML_NO_OTHERWISE;
+    static QString XML_OVERRIDE_OTHERWISE;
+
 private:
     Allomorph createOtherwiseAllomorph(const Allomorph &original, QSet<Allomorph> allomorphs ) const;
 

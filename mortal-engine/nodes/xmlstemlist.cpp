@@ -40,15 +40,15 @@ void XmlStemList::readStems(const QHash<QString, WritingSystem> &writingSystems)
 
             if( in.isStartElement() )
             {
-                if( in.name() == "stem" )
+                if( in.name() == Allomorph::XML_STEM )
                 {
                     stem = new LexicalStem();
                 }
-                else if( in.name() == "allomorph" )
+                else if( in.name() == Allomorph::XML_ALLOMORPH )
                 {
                     allomorph = Allomorph(Allomorph::Original);
                 }
-                else if( in.name() == "form" )
+                else if( in.name() == Allomorph::XML_FORM )
                 {
                     /// if we haven't yet read an allomorph tag, we need to create a new allomorph right now
                     if( allomorph.type() == Allomorph::Null )
@@ -63,14 +63,14 @@ void XmlStemList::readStems(const QHash<QString, WritingSystem> &writingSystems)
                         allomorph.setForm( Form( ws, in.readElementText() ) );
                     }
                 }
-                else if( in.name() == "tag" )
+                else if( in.name() == Allomorph::XML_TAG )
                 {
                     allomorph.addTag( in.readElementText() );
                 }
             }
             else if( in.isEndElement() )
             {
-                if( in.name() == "stem" )
+                if( in.name() == Allomorph::XML_STEM )
                 {
                     if( allomorph.type() != Allomorph::Null && match( allomorph ) )
                     {
@@ -79,7 +79,7 @@ void XmlStemList::readStems(const QHash<QString, WritingSystem> &writingSystems)
                     mStems.insert( stem );
                     allomorph = Allomorph(Allomorph::Null);
                 }
-                else if (in.name() == "allomorph")
+                else if (in.name() == Allomorph::XML_ALLOMORPH )
                 {
                     if( match( allomorph ) )
                     {
@@ -112,11 +112,11 @@ AbstractNode *XmlStemList::readFromXml(QXmlStreamReader &in, MorphologyXmlReader
 
         if( in.tokenType() == QXmlStreamReader::StartElement )
         {
-            if( in.name() == "filename" )
+            if( in.name() == AbstractStemList::XML_FILENAME )
             {
                 node->setFilename( in.readElementText() );
             }
-            else if( in.name() == "matching-tag" )
+            else if( in.name() == AbstractStemList::XML_MATCHING_TAG )
             {
                 node->addConditionTag( in.readElementText() );
             }
@@ -124,7 +124,7 @@ AbstractNode *XmlStemList::readFromXml(QXmlStreamReader &in, MorphologyXmlReader
             {
                 node->addCreateAllomorphs( CreateAllomorphs::readFromXml(in, morphologyReader) );
             }
-            else if( in.name() == "add-allomorphs" )
+            else if( in.name() == AbstractNode::XML_ADD_ALLOMORPHS )
             {
                 node->addCreateAllomorphs( morphologyReader->createAllomorphsFromId( in.attributes().value("with").toString() ) );
             }

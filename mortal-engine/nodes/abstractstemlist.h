@@ -58,6 +58,9 @@ public:
 
     bool nodeCanAppendMorphemes() const override;
 
+    static QString XML_FILENAME;
+    static QString XML_MATCHING_TAG;
+
 private:
     QList<Parsing> parsingsUsingThisNode(const Parsing & parsing, Parsing::Flags flags) const override;
     QList<QPair<Allomorph, LexicalStem>> possibleStemForms(const Parsing & parsing) const;

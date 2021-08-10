@@ -25,6 +25,8 @@ public:
 
     static void openDatabase(const QString & filename, const QString & databaseName);
 
+    static QString XML_EXTERNAL_DATABASE;
+
 private:
     void insertStemIntoDataModel( LexicalStem * stem ) override;
     void removeStemFromDataModel( qlonglong id ) override;

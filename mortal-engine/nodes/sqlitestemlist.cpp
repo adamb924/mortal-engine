@@ -13,6 +13,7 @@
 #include <QtDebug>
 
 QString SqliteStemList::DEFAULT_DBNAME = "SQLITE_STEM_LIST";
+QString SqliteStemList::XML_EXTERNAL_DATABASE = "external-database";
 
 SqliteStemList::SqliteStemList(const MorphologicalModel *model) : AbstractStemList(model), mDbName(DEFAULT_DBNAME)
 {
@@ -355,19 +356,19 @@ AbstractNode *SqliteStemList::readFromXml(QXmlStreamReader &in, MorphologyXmlRea
 
         if( in.tokenType() == QXmlStreamReader::StartElement )
         {
-            if( in.name() == "filename" )
+            if( in.name() == AbstractStemList::XML_FILENAME )
             {
                 sl->setDatabasePath( in.readElementText() );
             }
-            else if( in.name() == "external-database" )
+            else if( in.name() == XML_EXTERNAL_DATABASE )
             {
                 sl->setExternalDatabase( in.readElementText() );
             }
-            else if( in.name() == "matching-tag" )
+            else if( in.name() == AbstractStemList::XML_MATCHING_TAG )
             {
                 sl->addConditionTag( in.readElementText() );
             }
-            else if( in.name() == "add-allomorphs" )
+            else if( in.name() == AbstractNode::XML_ADD_ALLOMORPHS )
             {
                 sl->addCreateAllomorphs( morphologyReader->createAllomorphsFromId( in.attributes().value("with").toString() ) );
             }

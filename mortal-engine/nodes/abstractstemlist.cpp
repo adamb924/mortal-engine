@@ -7,6 +7,10 @@
 
 #include "debug.h"
 
+QString AbstractStemList::XML_FILENAME = "filename";
+QString AbstractStemList::XML_MATCHING_TAG = "matching-tag";
+
+
 AbstractStemList::AbstractStemList(const MorphologicalModel *model) : AbstractNode(model, AbstractNode::StemNodeType)
 {
 

@@ -45,6 +45,10 @@ public:
     static TagMatchCondition::TagMatchType tagMatchTypeFromString(const QString & string);
     static QString tagMatchTypeString(TagMatchCondition::TagMatchType type);
 
+    static QString XML_TAG_MATCH;
+    static QString XML_MATCH_TAG;
+    static QString XML_INTERUPTED_BY;
+
 private:
     bool match(const Allomorph &allomorph ) const;
     bool matchInterrupt(const Allomorph &allomorph ) const;

@@ -12,6 +12,9 @@
 #include "morphology.h"
 #include "datatypes/generation.h"
 
+QString AbstractNode::XML_OPTIONAL = "optional";
+QString AbstractNode::XML_ADD_ALLOMORPHS = "add-allomorphs";
+
 AbstractNode::AbstractNode(const MorphologicalModel *model, Type t) :
     mModel(model),
     mType(t),
@@ -253,7 +256,7 @@ void AbstractNode::serialize(QXmlStreamWriter &out) const
     {
         out.writeAttribute("id", mId);
     }
-    out.writeAttribute("optional", (mOptional ? "true" : "false" ) );
+    out.writeAttribute(AbstractNode::XML_OPTIONAL, (mOptional ? "true" : "false" ) );
     out.writeEndElement(); /// node
 }
 
@@ -265,7 +268,7 @@ void AbstractNode::serialize(QDomElement &out) const
     {
         out.setAttribute("id", mId);
     }
-    out.setAttribute("optional", (mOptional ? "true" : "false" ) );
+    out.setAttribute(AbstractNode::XML_OPTIONAL, (mOptional ? "true" : "false" ) );
 }
 
 void AbstractNode::readInitialNodeAttributes(QXmlStreamReader &in, MorphologyXmlReader *morphologyReader)

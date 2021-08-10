@@ -77,7 +77,7 @@ AbstractNode *Fork::readFromXml(QXmlStreamReader &in, MorphologyXmlReader *morph
             Path * p = dynamic_cast<Path*>( Path::readFromXml(in, morphologyReader, model) );
             f->addPath( p );
         }
-        if( in.tokenType() == QXmlStreamReader::StartElement && in.name() == "optional" )
+        if( in.tokenType() == QXmlStreamReader::StartElement && in.name() == AbstractConstraint::XML_OPTIONAL )
         {
             f->setOptional(true);
         }

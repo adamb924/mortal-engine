@@ -51,6 +51,9 @@ public:
 
     virtual bool isNot() const;
 
+    static QString XML_MATCH_EXPRESSION;
+    static QString XML_OPTIONAL;
+
 protected:
     void readId(QXmlStreamReader &in);
     void setType(const Type &type);

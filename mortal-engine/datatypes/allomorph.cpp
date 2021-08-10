@@ -15,6 +15,11 @@
 #include <QRegularExpression>
 #include <QDomElement>
 
+QString Allomorph::XML_ALLOMORPH = "allomorph";
+QString Allomorph::XML_FORM = "form";
+QString Allomorph::XML_TAG = "tag";
+QString Allomorph::XML_STEM = "stem";
+
 Allomorph::Allomorph(Allomorph::Type type) : mType(type), mId(-1)
 {
 
@@ -219,11 +224,11 @@ Allomorph Allomorph::readFromXml(QXmlStreamReader &in, const Morphology *morphol
 
         if( in.tokenType() == QXmlStreamReader::StartElement )
         {
-            if( in.name() == "form" )
+            if( in.name() == XML_FORM )
             {
                 allomorph.setForm( Form::readFromXml(in, morphology) );
             }
-            else if( in.name() == "tag" )
+            else if( in.name() == XML_TAG )
             {
                 allomorph.addTag( in.readElementText() );
             }

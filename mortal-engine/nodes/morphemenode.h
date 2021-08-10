@@ -64,6 +64,9 @@ public:
 
     bool hasZeroLengthForms() const;
 
+    static QString XML_ALLOMORPH;
+    static QString XML_GLOSS;
+
 private:
     QList<Parsing> parsingsUsingThisNode(const Parsing & parsing, Parsing::Flags flags) const override;
     void filterOutPortmanteauClashes(QList<Parsing> &candidates, const WritingSystem &ws) const;

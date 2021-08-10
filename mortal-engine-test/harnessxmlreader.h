@@ -36,6 +36,22 @@ private:
     SuggestionTest *readSuggestionTest(QXmlStreamReader &in, const TestSchema * schema);
 
     TestHarness *mHarness;
+
+    static QString XML_SHOW_MODEL;
+    static QString XML_TRUE;
+    static QString XML_INPUT;
+    static QString XML_OUTPUT;
+    static QString XML_SHOULD_BE_ACCEPTED;
+    static QString XML_YES;
+    static QString XML_RECOGNITION_TEST;
+    static QString XML_TRANSDUCTION_TEST;
+    static QString XML_PARSING_TEST;
+    static QString XML_SUGGESTION_TEST;
+    static QString XML_STEM_REPLACEMENT_TEST;
+    static QString XML_LABEL;
+    static QString XML_STEM;
+    static QString XML_FORM;
+    static QString XML_TAG;
 };
 
 #endif // HARNESSXMLREADER_H

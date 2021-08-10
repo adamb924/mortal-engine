@@ -2,6 +2,7 @@
 
 #include <QtDebug>
 #include <QTextStream>
+#include <QIODevice>
 
 int Debug::indentLevel = 0;
 bool Debug::atBeginning = true;
@@ -35,6 +36,18 @@ Debug Debug::operator <<(const int &output)
     {
 //        qDebug() << output;
 //        stream << "T" << QString("\t").repeated(indentLevel);
+        stream << QString("\t").repeated(indentLevel);
+        atBeginning = false;
+    }
+    stream << output;
+    return *this;
+}
+
+Debug Debug::operator <<(const long long &output)
+{
+    QTextStream stream(mString);
+    if(atBeginning)
+    {
         stream << QString("\t").repeated(indentLevel);
         atBeginning = false;
     }

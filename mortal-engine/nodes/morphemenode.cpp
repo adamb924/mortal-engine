@@ -13,6 +13,9 @@
 #include <QXmlStreamReader>
 #include "debug.h"
 
+QString MorphemeNode::XML_ALLOMORPH = "allomorph";
+QString MorphemeNode::XML_GLOSS = "gloss";
+
 MorphemeNode::MorphemeNode(const MorphologicalModel *model) : AbstractNode(model)
 {
 
@@ -146,7 +149,7 @@ void MorphemeNode::addGloss(const Form &gloss)
 
 int MorphemeNode::glossCount() const
 {
-    return mGlosses.count();
+    return static_cast<int>( mGlosses.count() );
 }
 
 void MorphemeNode::addConstraintsToAllAllomorphs(const QSet<const AbstractConstraint *> &constraints)
@@ -258,19 +261,19 @@ AbstractNode *MorphemeNode::readFromXml(QXmlStreamReader &in, MorphologyXmlReade
 
         if( in.tokenType() == QXmlStreamReader::StartElement )
         {
-            if( in.name() == "optional" )
+            if( in.name() == AbstractNode::XML_OPTIONAL )
             {
                 morpheme->setOptional(true);
             }
-            else if( in.name() == "allomorph" )
+            else if( in.name() == XML_ALLOMORPH )
             {
                 morpheme->addAllomorph( readAllomorphTag(morpheme, in, morphologyReader) );
             }
-            else if( in.name() == "add-allomorphs" )
+            else if( in.name() == AbstractNode::XML_ADD_ALLOMORPHS )
             {
                 morpheme->addCreateAllomorphs( morphologyReader->createAllomorphsFromId( in.attributes().value("with").toString() ) );
             }
-            else if( in.name() == "gloss" )
+            else if( in.name() == XML_GLOSS )
             {
                 morpheme->addGloss( Form::readFromXml(in, morphologyReader->morphology(), "gloss") );
             }
@@ -303,13 +306,13 @@ Allomorph MorphemeNode::readAllomorphTag(MorphemeNode* morpheme, QXmlStreamReade
         allomorph.setPortmanteau( Portmanteau( in.attributes().value("portmanteau").toString(), morpheme ) );
     }
 
-    while(!in.atEnd() && !(in.tokenType() == QXmlStreamReader::EndElement && in.name() == "allomorph") )
+    while(!in.atEnd() && !(in.tokenType() == QXmlStreamReader::EndElement && in.name() == XML_ALLOMORPH ) )
     {
         in.readNext();
 
         if( in.tokenType() == QXmlStreamReader::StartElement )
         {
-            if( in.name() == "form" )
+            if( in.name() == Allomorph::XML_FORM )
             {
                 QXmlStreamAttributes attr = in.attributes();
                 if( attr.hasAttribute("lang") )
@@ -318,7 +321,7 @@ Allomorph MorphemeNode::readAllomorphTag(MorphemeNode* morpheme, QXmlStreamReade
                     allomorph.setForm( Form( ws, in.readElementText() ) );
                 }
             }
-            else if( in.name() == "tag" )
+            else if( in.name() == Allomorph::XML_TAG )
             {
                 allomorph.addTag( in.readElementText() );
             }
@@ -329,7 +332,7 @@ Allomorph MorphemeNode::readAllomorphTag(MorphemeNode* morpheme, QXmlStreamReade
         }
     }
 
-    Q_ASSERT( in.isEndElement() && in.name() == "allomorph" );
+    Q_ASSERT( in.isEndElement() && in.name() == XML_ALLOMORPH );
     return allomorph;
 }
 
