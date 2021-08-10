@@ -46,11 +46,18 @@ public:
     //! \brief Returns filename of the morphology file of the TestSchema.
     QString morphologyFile() const;
 
+    //! \brief Set whether the schema should print the model to the output
+    void setShowModel(bool showModel);
+
+    //! \brief Get whether the schema should print the model to the output
+    bool showModel() const;
+
 private:
     QString mLabel;
     QString mMorphologyFile;
     QList<AbstractTest*> mTests;
     Morphology * mMorphology;
+    bool mShowModel;
 };
 
 #endif // TESTSCHEMA_H

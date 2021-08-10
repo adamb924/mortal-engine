@@ -39,7 +39,12 @@ void HarnessXmlReader::readTestFile(const QString &filename)
 
                 if ( name == "schema" )
                 {
-                    mHarness->mSchemata.append( new TestSchema( attr.value("label").toString() ) );
+                    TestSchema * schema = new TestSchema( attr.value("label").toString() );
+                    if( attr.hasAttribute("show-model") && attr.value("show-model") == "true" )
+                    {
+                        schema->setShowModel(true);
+                    }
+                    mHarness->mSchemata.append( schema );
                 }
                 else if ( name == "morphology-file" )
                 {

@@ -4,7 +4,7 @@
 
 #include "../mortal-engine/morphology.h"
 
-TestSchema::TestSchema(const QString &label) : mLabel(label), mMorphology(nullptr)
+TestSchema::TestSchema(const QString &label) : mLabel(label), mMorphology(nullptr), mShowModel(false)
 {
 
 }
@@ -59,4 +59,14 @@ const Morphology *TestSchema::morphology() const
 QString TestSchema::morphologyFile() const
 {
     return mMorphologyFile;
+}
+
+void TestSchema::setShowModel(bool showModel)
+{
+    mShowModel = showModel;
+}
+
+bool TestSchema::showModel() const
+{
+    return mShowModel;
 }

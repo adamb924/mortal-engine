@@ -33,6 +33,7 @@ targetNamespace="https://www.adambaker.org/mortal-engine/tests">
         </xs:sequence>
         <xs:attribute name="sound-and-fury" type="xs:string"/>
         <xs:attribute name="label" type="xs:string" use="optional"/>
+        <xs:attribute name="show-model" type="met:true-false-type" use="optional" default="true"/>
     </xs:complexType>
 
     <xs:complexType name="test">
