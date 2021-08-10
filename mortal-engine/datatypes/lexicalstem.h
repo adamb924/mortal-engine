@@ -33,6 +33,7 @@ public:
     QSetIterator<Allomorph> allomorphIterator() const;
 
     void generateAllomorphs(const CreateAllomorphs & ca);
+    void generateAllomorphs(const QList<CreateAllomorphs> & cas);
 
     bool hasAllomorph(const Allomorph &allomorph, bool matchConstraints = true ) const;
     bool hasAllomorph(const Form & form, const QSet<Tag> containing = QSet<Tag>() , bool includeDerivedAllomorphs = false) const;

@@ -265,13 +265,12 @@ QString AbstractStemList::summary() const
         dbg << s->summary() << newline;
     }
 
-    if( mCreateAllomorphs.hasCases() )
+    foreach( CreateAllomorphs ca, mCreateAllomorphs )
     {
-        dbg << mCreateAllomorphs.summary() << newline;
-    }
-    else
-    {
-        dbg << "No CreateAllomorphs";
+        if( ca.hasCases() )
+        {
+            dbg << ca.summary() << newline;
+        }
     }
 
     dbg.unindent();
@@ -291,9 +290,9 @@ bool AbstractStemList::match(const Allomorph &allomorph) const
     return allomorph.tags().contains(mTags);
 }
 
-void AbstractStemList::setCreateAllomorphs(const CreateAllomorphs &createAllomorphs)
+void AbstractStemList::addCreateAllomorphs(const CreateAllomorphs &createAllomorphs)
 {
-    mCreateAllomorphs = createAllomorphs;
+    mCreateAllomorphs << createAllomorphs;
 }
 
 bool AbstractStemList::someStemContainsForm(const Form &f) const

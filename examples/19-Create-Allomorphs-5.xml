@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<morphology
+    xmlns="https://www.adambaker.org/mortal-engine"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="https://www.adambaker.org/mortal-engine morphology.xsd">
+    <writing-systems src="writing-systems.xml"/>
+    <shared-create-allomorphs>
+        <!-- epenthesize an e at the end of a word -->
+        <create-allomorphs id="epenthesis">
+            <case>
+                <when>
+                    <word-final/>
+                </when>
+                <then>
+                    <replace-this>
+                        <form lang="wk-LA">$</form>
+                    </replace-this>
+                    <with-this>
+                        <form lang="wk-LA">e</form>
+                    </with-this>
+                </then>
+            </case>
+        </create-allomorphs>
+    </shared-create-allomorphs>
+    <model label="Nouns">
+        <stem-list label="Stem">
+            <filename>12-stems.xml</filename>
+            <matching-tag>noun</matching-tag>
+            <!-- This refers to <create-allomorphs id="epenthesis"> above.  -->
+            <add-allomorphs with="epenthesis" />
+        </stem-list>
+        <morpheme label="Case">
+            <optional/>
+            <allomorph>
+                <form lang="wk-LA">ana</form>
+            </allomorph>
+        </morpheme>
+    </model>
+    <model label="Verbs">
+        <stem-list label="Stem">
+            <filename>12-stems.xml</filename>
+            <matching-tag>verb</matching-tag>
+            <!-- This refers to <create-allomorphs id="epenthesis"> above.  -->
+                <add-allomorphs with="epenthesis" />
+        </stem-list>
+        <morpheme label="Tense">
+            <optional/>
+            <allomorph>
+                <form lang="wk-LA">ono</form>
+            </allomorph>
+        </morpheme>
+    </model>
+</morphology>

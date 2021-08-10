@@ -68,6 +68,20 @@ void LexicalStem::generateAllomorphs(const CreateAllomorphs &ca)
     mAllomorphs = replacementAllomorphs;
 }
 
+void LexicalStem::generateAllomorphs(const QList<CreateAllomorphs> &cas)
+{
+    for(int i=0; i < cas.count(); i++ )
+    {
+        QSet<Allomorph> newAllomorphs;
+        QSetIterator<Allomorph> iter(mAllomorphs);
+        while( iter.hasNext() )
+        {
+            newAllomorphs.unite( cas.at(i).generateAllomorphs( iter.next() ) );
+        }
+        mAllomorphs = newAllomorphs;
+    }
+}
+
 bool LexicalStem::hasAllomorph(const Allomorph & allomorph, bool matchConstraints) const
 {
     QSetIterator<Allomorph> i(mAllomorphs);

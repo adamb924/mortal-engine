@@ -367,9 +367,13 @@ AbstractNode *SqliteStemList::readFromXml(QXmlStreamReader &in, MorphologyXmlRea
             {
                 sl->addConditionTag( in.readElementText() );
             }
+            else if( in.name() == "add-allomorphs" )
+            {
+                sl->addCreateAllomorphs( morphologyReader->createAllomorphsFromId( in.attributes().value("with").toString() ) );
+            }
             else if( CreateAllomorphs::matchesElement(in) )
             {
-                sl->setCreateAllomorphs( CreateAllomorphs::readFromXml(in, morphologyReader) );
+                sl->addCreateAllomorphs( CreateAllomorphs::readFromXml(in, morphologyReader) );
             }
         }
     }

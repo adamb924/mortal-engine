@@ -122,7 +122,11 @@ AbstractNode *XmlStemList::readFromXml(QXmlStreamReader &in, MorphologyXmlReader
             }
             else if( CreateAllomorphs::matchesElement(in) )
             {
-                node->setCreateAllomorphs( CreateAllomorphs::readFromXml(in, morphologyReader) );
+                node->addCreateAllomorphs( CreateAllomorphs::readFromXml(in, morphologyReader) );
+            }
+            else if( in.name() == "add-allomorphs" )
+            {
+                node->addCreateAllomorphs( morphologyReader->createAllomorphsFromId( in.attributes().value("with").toString() ) );
             }
         }
     }

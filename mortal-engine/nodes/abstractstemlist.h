@@ -52,7 +52,7 @@ public:
 
     void generateAllomorphsFromRules();
 
-    void setCreateAllomorphs(const CreateAllomorphs &createAllomorphs);
+    void addCreateAllomorphs(const CreateAllomorphs &createAllomorphs);
 
     bool someStemContainsForm(const Form & f) const;
 
@@ -71,7 +71,7 @@ protected:
 
     QSet<LexicalStem*> mStems;
     QSet<Tag> mTags;
-    CreateAllomorphs mCreateAllomorphs;
+    QList<CreateAllomorphs> mCreateAllomorphs;
 };
 
 #endif // ABSTRACTSTEMLIST_H

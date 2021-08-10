@@ -818,4 +818,119 @@
             <should-be-accepted>yes</should-be-accepted>
         </recognition-test>
     </schema>
+    <schema>
+        <morphology-file>19-Create-Allomorphs-5.xml</morphology-file>
+        <message>Identical behavior to 17-Create-Allomorphs-4.xml</message>
+        <recognition-test>
+            <input lang="wk-LA">sit</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">ben</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">site</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">bene</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">sitana</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">benana</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <message>Analogous behavior for verbs as well:</message>
+        <recognition-test>
+            <input lang="wk-LA">sep</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">pop</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">sepe</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">pope</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">sepono</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">popono</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+    </schema>
+    <schema>
+        <morphology-file>20-Create-Allomorphs-6.xml</morphology-file>
+        <message>Identical behavior to 19-Create-Allomorphs-5.xml</message>
+        <recognition-test>
+            <input lang="wk-LA">sit</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">ben</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">site</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">sitana</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <message>But labials are prenasalized:</message>
+        <recognition-test debug="false">
+            <input lang="wk-LA">bene</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">ᵐbene</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">benana</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">ᵐbenana</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <message>But identical behavior for verbs as well:</message>
+        <recognition-test>
+            <input lang="wk-LA">sep</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">pop</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">sepe</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">pope</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">sepono</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+        <recognition-test>
+            <input lang="wk-LA">popono</input>
+            <should-be-accepted>yes</should-be-accepted>
+        </recognition-test>
+    </schema>
 </tests>
