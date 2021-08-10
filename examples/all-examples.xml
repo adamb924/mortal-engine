@@ -324,7 +324,7 @@
             <should-be-accepted>no</should-be-accepted>
         </recognition-test>
         <message>Infinitive suffixation, without a case suffix, is no longer possible</message>
-        <recognition-test debug="true">
+        <recognition-test>
             <input lang="wk-LA">bilinf</input>
             <should-be-accepted>no</should-be-accepted>
         </recognition-test>
@@ -891,7 +891,7 @@
             <should-be-accepted>yes</should-be-accepted>
         </recognition-test>
         <message>But labials are prenasalized:</message>
-        <recognition-test debug="false">
+        <recognition-test>
             <input lang="wk-LA">bene</input>
             <should-be-accepted>no</should-be-accepted>
         </recognition-test>
