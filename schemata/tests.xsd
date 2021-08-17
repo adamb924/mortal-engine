@@ -26,6 +26,8 @@ targetNamespace="https://www.adambaker.org/mortal-engine/tests">
                     <xs:element name="recognition-test" type="met:recognition-test"/>
                     <xs:element name="suggestion-test" type="met:suggestion-test"/>
                     <xs:element name="stem-replacement-test" type="met:stem-replacement-test"/>
+                    <xs:element name="accept" type="met:acceptance-test"/>
+                    <xs:element name="reject" type="met:acceptance-test"/>
                     <xs:element name="blank" type="xs:string" fixed=""/>
                     <xs:element name="message" type="xs:string"/>
                 </xs:choice>
@@ -84,7 +86,17 @@ targetNamespace="https://www.adambaker.org/mortal-engine/tests">
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    
+
+    <xs:complexType name="acceptance-test">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="lang" type="xs:string" use="required"/>
+                <xs:attribute name="label" type="xs:string" use="optional"/>
+                <xs:attribute name="debug" type="met:true-false-type" use="optional"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
     <xs:complexType name="stem-replacement-test">
         <xs:complexContent>
             <xs:extension base="met:test">

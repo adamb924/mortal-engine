@@ -99,6 +99,14 @@ void HarnessXmlReader::readTestFile(const QString &filename)
                 {
                     mHarness->mSchemata.last()->addTest( readSuggestionTest(in, mHarness->mSchemata.last()) );
                 }
+                else if ( name == "accept" )
+                {
+                    mHarness->mSchemata.last()->addTest( readQuickAcceptanceTest( in, mHarness->mSchemata.last() ) );
+                }
+                else if ( name == "reject" )
+                {
+                    mHarness->mSchemata.last()->addTest( readQuickRejectionTest( in, mHarness->mSchemata.last() ) );
+                }
                 else if ( name == "sqlite-database" )
                 {
                     SqliteStemList::openDatabase( attr.value("filename").toString(), attr.value("database-name").toString() );
@@ -136,6 +144,40 @@ RecognitionTest *HarnessXmlReader::readRecognitionTest(QXmlStreamReader &in, con
 
     test->evaluate();
 
+    return test;
+}
+
+RecognitionTest *HarnessXmlReader::readQuickAcceptanceTest(QXmlStreamReader &in, const TestSchema *schema)
+{
+    RecognitionTest* test = new RecognitionTest(schema->morphology());
+
+    if( in.attributes().hasAttribute("label") )
+        test->setLabel( in.attributes().value("label").toString() );
+    if( in.attributes().hasAttribute("debug") )
+        test->setShowDebug( in.attributes().value("debug").toString() == XML_TRUE );
+
+    WritingSystem ws = schema->morphology()->writingSystem( in.attributes().value("lang").toString() );
+    Form f = Form( ws, in.readElementText() );
+    test->setInput( f );
+    test->setShouldBeAccepted( true );
+    test->evaluate();
+    return test;
+}
+
+RecognitionTest *HarnessXmlReader::readQuickRejectionTest(QXmlStreamReader &in, const TestSchema *schema)
+{
+    RecognitionTest* test = new RecognitionTest(schema->morphology());
+
+    if( in.attributes().hasAttribute("label") )
+        test->setLabel( in.attributes().value("label").toString() );
+    if( in.attributes().hasAttribute("debug") )
+        test->setShowDebug( in.attributes().value("debug").toString() == XML_TRUE );
+
+    WritingSystem ws = schema->morphology()->writingSystem( in.attributes().value("lang").toString() );
+    Form f = Form( ws, in.readElementText() );
+    test->setInput( f );
+    test->setShouldBeAccepted( false );
+    test->evaluate();
     return test;
 }
 

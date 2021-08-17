@@ -30,6 +30,8 @@ public:
 
 private:
     RecognitionTest *readRecognitionTest(QXmlStreamReader &in, const TestSchema * schema);
+    RecognitionTest *readQuickAcceptanceTest(QXmlStreamReader &in, const TestSchema * schema);
+    RecognitionTest *readQuickRejectionTest(QXmlStreamReader &in, const TestSchema * schema);
     TransductionTest *readTransductionTest(QXmlStreamReader &in, const TestSchema * schema);
     ParsingTest *readParsingTest(QXmlStreamReader &in, const TestSchema * schema);
     StemReplacementTest *readStemReplacementTest(QXmlStreamReader &in, const TestSchema * schema);
