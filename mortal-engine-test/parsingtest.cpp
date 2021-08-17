@@ -36,7 +36,7 @@ QString ParsingTest::message() const
                       setToString(mTargetParsings) );
     }
     if( mTotalParsingCount != mUniqueParsingCount )
-        ret += QObject::tr( " (%1 unique parsings out of %2)").arg(mUniqueParsingCount, mTotalParsingCount);
+        ret += QObject::tr( " (%1 unique parsings out of %2)").arg(mUniqueParsingCount).arg(mTotalParsingCount);
     return ret;
 }
 
