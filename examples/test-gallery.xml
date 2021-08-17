@@ -21,6 +21,15 @@
             <should-be-accepted>yes</should-be-accepted>
         </recognition-test>
 
+        <recognition-test label="Acceptance of a correctly affixed form">
+            <input lang="wk-LA">this-is-not-a-good-input</input>
+            <should-be-accepted>no</should-be-accepted>
+        </recognition-test>
+
+        <!-- The following two shorthands are equivalent to the two previous tests -->
+        <accept lang="wk-LA">atalar</accept>
+        <reject lang="wk-LA">this-is-not-a-good-input</reject>
+
         <!-- A parsing test checks whether the model produces correct
             morphological analyses of your input. The <label> elements
             contain the labels of morphemes, which are specified in your
