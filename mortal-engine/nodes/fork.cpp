@@ -137,6 +137,19 @@ const AbstractNode *Fork::followingNodeHavingLabel(const QString &targetLabel) c
 
 bool Fork::checkHasOptionalCompletionPath() const
 {
+    /// if the fork is optional, then we either return true if this is the end of the line, or else check whatever node follows
+    if( optional() )
+    {
+        if( next() == nullptr )
+        {
+            return true;
+        }
+        else
+        {
+            return next()->checkHasOptionalCompletionPath();
+        }
+    }
+    /// if the fork is not optional, then we have to check whether one of the paths provides an optional completion path
     foreach(Path * p, mPaths)
     {
         bool hasPath = p->checkHasOptionalCompletionPath();
