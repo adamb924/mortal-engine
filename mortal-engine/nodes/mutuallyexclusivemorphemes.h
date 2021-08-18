@@ -13,6 +13,7 @@ class MutuallyExclusiveMorphemes : public AbstractNode
 public:
     explicit MutuallyExclusiveMorphemes(const MorphologicalModel * model);
     ~MutuallyExclusiveMorphemes() override;
+    MutuallyExclusiveMorphemes * copy(MorphologyXmlReader *morphologyReader, const QString & idSuffix) const override;
 
     void addMorpheme( MorphemeNode * m );
 

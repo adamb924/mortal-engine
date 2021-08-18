@@ -933,4 +933,40 @@
             <should-be-accepted>yes</should-be-accepted>
         </recognition-test>
     </schema>
+    <schema label="Copies 1">
+        <morphology-file>21-Copies-1.xml</morphology-file>
+        <message>Same as 09-Multiple-Models.xml</message>
+        <accept lang="wk-LA">bilTense</accept>
+        <reject lang="wk-LA">bilCase</reject>
+        <reject lang="wk-LA">ataTense</reject>
+        <accept lang="wk-LA">ataCase</accept>
+        <message>Plurals on nouns</message>
+        <accept lang="wk-LA">ataCasePlural</accept>
+        <message>Same suffix on verbs</message>
+        <accept lang="wk-LA">bilTensePlural</accept>
+    </schema>
+    <schema label="Copies 2">
+        <morphology-file>22-Copies-2.xml</morphology-file>
+        <message>Here's how nouns work:</message>
+        <accept lang="wk-LA">ataFooPlural</accept>
+        <accept lang="wk-LA">ataBar</accept>
+        <reject lang="wk-LA">ata</reject>
+        <accept lang="wk-LA">ataCaseFooPlural</accept>
+        <accept lang="wk-LA">ataCaseBar</accept>
+        <reject lang="wk-LA">ataCase</reject>
+        <message>With copies, verbs work the same way</message>
+        <accept lang="wk-LA">bilFooPlural</accept>
+        <accept lang="wk-LA">bilBar</accept>
+        <reject lang="wk-LA">bil</reject>
+        <accept lang="wk-LA">bilTenseFooPlural</accept>
+        <accept lang="wk-LA">bilTenseBar</accept>
+        <reject lang="wk-LA">bilTense</reject>
+        <message>And with a following suffix</message>
+        <accept lang="wk-LA">bilFooPluralMi</accept>
+        <accept lang="wk-LA">bilBarMi</accept>
+        <reject lang="wk-LA">bilMi</reject>
+        <accept lang="wk-LA">bilTenseFooPluralMi</accept>
+        <accept lang="wk-LA">bilTenseBarMi</accept>
+        <reject lang="wk-LA">bilTenseMi</reject>
+    </schema>
 </tests>

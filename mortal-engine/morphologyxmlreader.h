@@ -25,6 +25,7 @@ class AbstractConstraint;
 class MorphologicalModel;
 class MorphemeNode;
 class Jump;
+class CopyNode;
 
 #include "create-allomorphs/createallomorphs.h"
 #include "nodes/nodematcher.h"
@@ -100,6 +101,7 @@ private:
     QList<ConstraintMatcher> mConstraintMatchers;
 
     QSet<Jump*> mJumps;
+    QSet<CopyNode*> mCopyNodes;
     QSet<PointerToConstraint *> mPointers;
     QSet<AbstractNode*> mStemNodes;
     QSet<const AbstractNestedConstraint*> mNestedConstraints;

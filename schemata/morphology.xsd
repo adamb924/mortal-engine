@@ -161,6 +161,12 @@ targetNamespace="https://www.adambaker.org/mortal-engine">
                         <xs:attribute name="target-node-required" use="optional" type="me:true-false"></xs:attribute>
                     </xs:complexType>
                 </xs:element>
+                <xs:element name="copy-of">
+                    <xs:complexType>
+                        <xs:attribute name="target-id" use="required" type="xs:IDREF"></xs:attribute>
+                        <xs:attribute name="id-suffix" use="required" type="xs:string"></xs:attribute>
+                    </xs:complexType>
+                </xs:element>
                 <xs:element name="sequence" type="me:optional-path"/>
             </xs:choice>
         </xs:choice>

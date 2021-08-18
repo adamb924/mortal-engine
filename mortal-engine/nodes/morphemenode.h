@@ -12,6 +12,7 @@ class MorphemeNode : public AbstractNode
 public:
     explicit MorphemeNode(const MorphologicalModel * model);
     ~MorphemeNode() override;
+    MorphemeNode * copy(MorphologyXmlReader *morphologyReader, const QString & idSuffix) const override;
 
     void addAllomorph(const Allomorph &allomorph );
 

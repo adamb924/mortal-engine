@@ -25,6 +25,32 @@ MorphemeNode::~MorphemeNode()
 {
 }
 
+MorphemeNode *MorphemeNode::copy(MorphologyXmlReader *morphologyReader, const QString &idSuffix) const
+{
+    MorphemeNode * m = new MorphemeNode( model() );
+
+    /// copy AbstractNode properties
+    m->setLabel( label() );
+    /// mType will be set by the constructor
+    /// mNext will be set by the constructor
+    m->setOptional( optional() );
+    if( !id().isEmpty() )
+    {
+        m->setId( id() + idSuffix );
+    }
+    /// mHasPathToEnd should be calculated automatically
+    m->mGlosses = mGlosses;
+
+    /// copy local data
+    m->mAllomorphs = mAllomorphs;
+    m->mCreateAllomorphs = mCreateAllomorphs;
+    m->mPortmanteauSequences = mPortmanteauSequences;
+
+    morphologyReader->registerNode(m);
+
+    return m;
+}
+
 void MorphemeNode::addAllomorph(const Allomorph & allomorph)
 {
     mAllomorphs.append( allomorph );
@@ -36,14 +62,14 @@ QList<Parsing> MorphemeNode::parsingsUsingThisNode(const Parsing &parsing, Parsi
 
     if( Morphology::DebugOutput )
     {
-        qInfo() << "In " << label() << "with" << parsing.intermediateSummary();
+        qInfo().noquote() << "In " << label() << "with" << parsing.intermediateSummary();
     }
 
     QSet<Allomorph> matches = matchingAllomorphs(parsing);
 
     if( Morphology::DebugOutput )
     {
-        qInfo() << label() << " has " << matches.count() << " allomorph matches.";
+        qInfo().noquote() << label() << " has " << matches.count() << " allomorph matches.";
     }
 
     QSetIterator<Allomorph> matchesIterator( matches );
@@ -60,7 +86,7 @@ QList<Parsing> MorphemeNode::parsingsUsingThisNode(const Parsing &parsing, Parsi
         {
             if( Morphology::DebugOutput )
             {
-                qInfo() << "Moving from" << label() << " to " << next(a, p.writingSystem())->label() << "having appended" << a.oneLineSummary();
+                qInfo().noquote() << "Moving from" << label() << " to " << next(a, p.writingSystem())->label() << "having appended" << a.oneLineSummary();
             }
             candidates.append( next(a, p.writingSystem())->possibleParsings( p, flags ) );
             MAYBE_RETURN_EARLY
@@ -424,9 +450,10 @@ QString MorphemeNode::summaryWithoutFollowing() const
     dbg << "MorphemeNode(" << newline;
     dbg.indent();
     dbg << "Label: " << label() << newline;
+    dbg << "ID: " << id() << newline;
     dbg << "Type: " << AbstractNode::typeToString(type()) << newline;
     dbg << "Optional: " << (optional() ? "true" : "false" ) << newline;
-    dbg << "Has path to end: " << ( hasPathToEnd() ? "true" : "false" ) << newline;
+    dbg << "Has optional completion path: " << ( hasPathToEnd() ? "true" : "false" ) << newline;
 
     dbg << mAllomorphs.count() << " allomorph(s)," << newline;
     foreach( Allomorph a, mAllomorphs )

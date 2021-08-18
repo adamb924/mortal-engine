@@ -33,7 +33,7 @@ QList<Parsing> AbstractNode::possibleParsings(const Parsing &parsing, Parsing::F
     if( Morphology::DebugOutput )
     {
         /// only add this data if we're in debug mode; no reason to slow down all those deep copies
-        p.addToStackTrace( QString("%1, %2").arg(label(), id()) );
+        p.addToStackTrace( QString("%1, %2").arg(debugIdentifier(), id()) );
     }
 
     /// TODO keep thinking about this logic. This means that we only stop requiring a node when a
@@ -43,11 +43,10 @@ QList<Parsing> AbstractNode::possibleParsings(const Parsing &parsing, Parsing::F
 
     if( Morphology::DebugOutput )
     {
-        qInfo() << "CURRENT NODE:" << label() << id();
         if( next() != nullptr )
-        {
-            qInfo() << qPrintable("\t") << "NEXT NODE:" << next()->label() << next()->id();
-        }
+            qInfo().noquote() << QString("CURRENT NODE: %1 (NEXT NODE: %2)").arg( debugIdentifier(), next()->debugIdentifier() );
+        else
+            qInfo().noquote() << QString("CURRENT NODE: %1").arg( debugIdentifier() );
     }
 
     QList<Parsing> candidates;
@@ -60,7 +59,7 @@ QList<Parsing> AbstractNode::possibleParsings(const Parsing &parsing, Parsing::F
         {
             if( Morphology::DebugOutput )
             {
-                qInfo() << "Attempting parse without optional node:" << label() << "with" << p.intermediateSummary();
+                qInfo().noquote() << "Attempting parse without optional node:" << debugIdentifier() << "with" << p.intermediateSummary();
             }
             candidates.append( AbstractNode::next()->possibleParsings( p, flags ) );
             MAYBE_RETURN_EARLY
@@ -69,7 +68,7 @@ QList<Parsing> AbstractNode::possibleParsings(const Parsing &parsing, Parsing::F
         {
             if( Morphology::DebugOutput )
             {
-                qInfo() << "No following node here:" << label() << typeToString(type()) << "with" << p.intermediateSummary();
+                qInfo().noquote() << "No following node here:" << debugIdentifier() << typeToString(type()) << "with" << p.intermediateSummary();
             }
             appendIfComplete(candidates, p);
         }
@@ -77,7 +76,7 @@ QList<Parsing> AbstractNode::possibleParsings(const Parsing &parsing, Parsing::F
 
     if( Morphology::DebugOutput )
     {
-        qInfo() << "Attempting parse with node:" << label() << "with" << p.intermediateSummary();
+        qInfo().noquote() << "Attempting parse with node:" << debugIdentifier() << "with" << p.intermediateSummary();
     }
     candidates.append( parsingsUsingThisNode(p, flags) );
 
@@ -88,10 +87,10 @@ QList<Generation> AbstractNode::generateForms(const Generation &generation) cons
 {
     if( Morphology::DebugOutput )
     {
-        qInfo() << "GENERATION CURRENT NODE:" << label() << id();
+        qInfo() << "GENERATION CURRENT NODE:" << debugIdentifier() << id();
         if( next() != nullptr )
         {
-            qInfo() << qPrintable("\t") << "NEXT NODE:" << next()->label() << next()->id();
+            qInfo() << qPrintable("\t") << "NEXT NODE:" << next()->debugIdentifier() << next()->id();
         }
     }
 
@@ -108,7 +107,7 @@ QList<Generation> AbstractNode::generateForms(const Generation &generation) cons
         {
             if( Morphology::DebugOutput )
             {
-                qInfo() << "Attempting generate without optional node:" << label() << "with" << generation.intermediateSummary();
+                qInfo() << "Attempting generate without optional node:" << debugIdentifier() << "with" << generation.intermediateSummary();
             }
             candidates.append( AbstractNode::next()->generateForms( generation ) );
         }
@@ -116,7 +115,7 @@ QList<Generation> AbstractNode::generateForms(const Generation &generation) cons
         {
             if( Morphology::DebugOutput )
             {
-                qInfo() << "No following node here:" << label() << "with" << generation.intermediateSummary();
+                qInfo() << "No following node here:" << debugIdentifier() << "with" << generation.intermediateSummary();
             }
             appendIfComplete(candidates, generation);
         }
@@ -125,7 +124,7 @@ QList<Generation> AbstractNode::generateForms(const Generation &generation) cons
 
     if( Morphology::DebugOutput )
     {
-        qInfo() << "Attempting generation with node:" << label() << "with" << generation.intermediateSummary();
+        qInfo() << "Attempting generation with node:" << debugIdentifier() << "with" << generation.intermediateSummary();
     }
     candidates << generateFormsUsingThisNode(generation);
 
@@ -402,6 +401,14 @@ Form AbstractNode::gloss(const WritingSystem &ws) const
 QHash<WritingSystem, Form> AbstractNode::glosses() const
 {
     return mGlosses;
+}
+
+QString AbstractNode::debugIdentifier() const
+{
+    if( id().isEmpty() )
+        return label();
+    else
+        return QString("%1[%2]").arg( label(), id() );
 }
 
 bool AbstractNode::hasPathToEnd() const

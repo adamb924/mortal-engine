@@ -21,6 +21,14 @@ AbstractStemList::~AbstractStemList()
     qDeleteAll(mStems);
 }
 
+AbstractStemList *AbstractStemList::copy(MorphologyXmlReader *morphologyReader, const QString &idSuffix) const
+{
+    Q_UNUSED(morphologyReader)
+    Q_UNUSED(idSuffix)
+    qCritical() << "Don't try to copy stem lists. The program is probably going to crash now.";
+    return nullptr;
+}
+
 bool AbstractStemList::addStem(LexicalStem *stem)
 {
     bool shouldInsert = false;
@@ -156,7 +164,7 @@ QList<Parsing> AbstractStemList::parsingsUsingThisNode(const Parsing &parsing, P
 
         if( Morphology::DebugOutput && p.hasNotFailed() )
         {
-            qInfo() << "\n\nStem match:" << a.oneLineSummary();
+            qInfo().noquote() << "\n\nStem match:" << a.oneLineSummary();
         }
 
         /// we want to move to the next node either 1) the parse hasn't been completed, or 2) there
@@ -193,7 +201,7 @@ QList<Generation> AbstractStemList::generateFormsUsingThisNode(const Generation 
             {
                 if( Morphology::DebugOutput )
                 {
-                    qInfo() << "GENERATION Stem Match:" << a.oneLineSummary();
+                    qInfo().noquote() << "GENERATION Stem Match:" << a.oneLineSummary();
                 }
 
                 Generation g = generation;
@@ -261,6 +269,7 @@ QString AbstractStemList::summary() const
     dbg << "Label: " << label() << Debug::endl;
     dbg << "Type: " << AbstractNode::typeToString(type()) << Debug::endl;
     dbg << "Optional: " << (optional() ? "true" : "false" ) << Debug::endl;
+    dbg << "Has optional completion path: " << ( hasPathToEnd() ? "true" : "false" ) << Debug::endl;
 
     dbg << mStems.count() << " stems(s)" << Debug::endl;
 

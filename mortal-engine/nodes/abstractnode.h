@@ -38,6 +38,11 @@ public:
     virtual ~AbstractNode() = 0;
 
     /**
+     * @brief Returns a deep copy of the object.
+     */
+    virtual AbstractNode * copy(MorphologyXmlReader *morphologyReader, const QString & idSuffix) const = 0;
+
+    /**
      * @brief Returns a string representation of the Form for logging purposes.
      * 
      * @return QString The logging output.
@@ -64,7 +69,7 @@ public:
     const AbstractNode *next() const;
     bool hasNext() const;
 
-    bool optional() const;
+    virtual bool optional() const;
     void setOptional(bool optional);
 
 
@@ -107,6 +112,8 @@ public:
 
     static QString XML_OPTIONAL;
     static QString XML_ADD_ALLOMORPHS;
+
+    QString debugIdentifier() const;
 
 protected:
     QHash<WritingSystem,Form> mGlosses;

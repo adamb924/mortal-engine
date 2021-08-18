@@ -8,6 +8,7 @@ class Jump : public AbstractNode
 public:
     explicit Jump(const MorphologicalModel * model);
     ~Jump() override;
+    Jump * copy(MorphologyXmlReader *morphologyReader, const QString &idSuffix) const override;
 
     /**
      * @brief Returns a string representation of the Form for logging purposes.

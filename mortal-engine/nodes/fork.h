@@ -9,6 +9,7 @@ class Fork : public AbstractNode
 public:
     explicit Fork(const MorphologicalModel * model);
     ~Fork() override;
+    Fork * copy(MorphologyXmlReader *morphologyReader, const QString & idSuffix) const override;
 
     /**
      * @brief Returns a string representation of the Form for logging purposes.

@@ -370,7 +370,7 @@ void Parsing::append(const AbstractNode *node, const Allomorph &allomorph, const
                 setStatus( Parsing::Completed );
                 if( Morphology::DebugOutput )
                 {
-                    qInfo() << "Parse completed:" << intermediateSummary();
+                    qInfo().noquote() << "Parse completed:" << intermediateSummary();
                     qInfo() << "------ Stack Trace ------\n" << qPrintable( mStackTrace.join("\n") ) << "\n-------------------------";
                 }
             }
@@ -378,7 +378,7 @@ void Parsing::append(const AbstractNode *node, const Allomorph &allomorph, const
             {
                 if( Morphology::DebugOutput )
                 {
-                    qInfo() << "Parse failed because not all constraints were satisfied:" << intermediateSummary() << "Trying to append:" << allomorph.focusedSummary( writingSystem() );
+                    qInfo().noquote() << "Parse failed because not all constraints were satisfied:" << intermediateSummary() << "Trying to append:" << allomorph.focusedSummary( writingSystem() );
                 }
                 setStatus( Parsing::Failed );
             }
@@ -387,7 +387,7 @@ void Parsing::append(const AbstractNode *node, const Allomorph &allomorph, const
         {
             if( Morphology::DebugOutput )
             {
-                qInfo() << "Parse continuing:" << intermediateSummary();
+                qInfo().noquote() << "Parse continuing:" << intermediateSummary();
             }
             setStatus( Parsing::Ongoing );
         }
@@ -397,8 +397,8 @@ void Parsing::append(const AbstractNode *node, const Allomorph &allomorph, const
         setStatus( Parsing::Failed );
         if( Morphology::DebugOutput )
         {
-            qInfo() << "Parse failed because local constraints were not satisfied:" << intermediateSummary() << "Trying to append:" << allomorph.focusedSummary( writingSystem() );
-            qInfo() << qPrintable("\t\t") << constraintsSetSatisfactionSummary( mLocalConstraints, node, allomorph);
+            qInfo().noquote() << "Parse failed because local constraints were not satisfied:" << intermediateSummary() << "Trying to append:" << allomorph.focusedSummary( writingSystem() );
+            qInfo().noquote() << qPrintable("\t\t") << constraintsSetSatisfactionSummary( mLocalConstraints, node, allomorph);
         }
     }
 }
@@ -673,20 +673,20 @@ bool Parsing::allomorphMatches(const Allomorph &allomorph) const
     {
         if( segmentalMatch && conditionMatch )
         {
-            qInfo() << qPrintable("\t") << allomorph.form( writingSystem() ).text() << "Segmental and Condition Match:" << allomorph.oneLineSummary();
+            qInfo().noquote() << qPrintable("\t") << allomorph.form( writingSystem() ).text() << "Segmental and Condition Match:" << allomorph.oneLineSummary();
         }
         else if( segmentalMatch && !conditionMatch )
         {
-            qInfo() << qPrintable("\t") << allomorph.form( writingSystem() ).text() << "Segmental Match but Conditional Fail:" << allomorph.oneLineSummary();
+            qInfo().noquote() << qPrintable("\t") << allomorph.form( writingSystem() ).text() << "Segmental Match but Conditional Fail:" << allomorph.oneLineSummary();
             allomorphConditionMatchStringSummary(allomorph);
         }
         else if( !segmentalMatch && conditionMatch )
         {
-            qInfo() << qPrintable("\t") << allomorph.form( writingSystem() ).text() << "Conditional Match but Segmental Fail:" << allomorph.oneLineSummary();
+            qInfo().noquote() << qPrintable("\t") << allomorph.form( writingSystem() ).text() << "Conditional Match but Segmental Fail:" << allomorph.oneLineSummary();
         }
         else if( !segmentalMatch && !conditionMatch )
         {
-            qInfo() << qPrintable("\t") << allomorph.form( writingSystem() ).text() << "Segmental Fail and Conditional Fail:" << allomorph.oneLineSummary();
+            qInfo().noquote() << qPrintable("\t") << allomorph.form( writingSystem() ).text() << "Segmental Fail and Conditional Fail:" << allomorph.oneLineSummary();
             allomorphConditionMatchStringSummary(allomorph);
         }
     }

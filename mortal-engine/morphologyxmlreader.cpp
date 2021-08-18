@@ -24,6 +24,7 @@
 #include "nodes/path.h"
 #include "nodes/jump.h"
 #include "nodes/sequence.h"
+#include "nodes/copynode.h"
 
 /// these includes need to be there so we get the derived version of the static functions
 #include "constraints/tagmatchcondition.h"
@@ -70,6 +71,7 @@ MorphologyXmlReader::MorphologyXmlReader(Morphology *morphology) : mMorphology(m
     registerNodeMatcher<Path>();
     registerNodeMatcher<Jump>();
     registerNodeMatcher<Sequence>();
+    registerNodeMatcher<CopyNode>();
 }
 
 

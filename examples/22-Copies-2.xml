@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<morphology
+    xmlns="https://www.adambaker.org/mortal-engine"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="https://www.adambaker.org/mortal-engine morphology.xsd">
+    <writing-systems src="writing-systems.xml"/>
+    <!-- this model is for nouns, which can take the 'Case' suffix -->
+    <model label="Nouns">
+        <stem-list label="Stem">
+            <filename>01-stems.xml</filename>
+            <matching-tag>noun</matching-tag>
+        </stem-list>
+        <morpheme label="Case">
+            <optional/>
+            <allomorph>
+                <form lang="wk-LA">Case</form>
+            </allomorph>
+        </morpheme>
+        <!-- This is silly, but suffice it to say this is not something you would want to have twice in your code -->
+        <fork label="Plural or Die" id="plural-or-bar">
+            <path label="Plural" id="plural-path">
+                <morpheme label="Foo" id="foo">
+                    <allomorph>
+                        <form lang="wk-LA">Foo</form>
+                    </allomorph>
+                </morpheme>
+                <morpheme label="Plural" id="plural">
+                    <allomorph>
+                        <form lang="wk-LA">Plural</form>
+                    </allomorph>
+                </morpheme>
+            </path>
+            <path label="NonPlural" id="non-plural-path">
+                <morpheme label="Bar" id="bar">
+                    <allomorph>
+                        <form lang="wk-LA">Bar</form>
+                    </allomorph>
+                </morpheme>
+            </path>
+        </fork>
+    </model>
+    <!-- this model is for nouns, which can take the 'Tense' suffix -->
+    <model label="Verbs">
+        <stem-list label="Stem">
+            <filename>01-stems.xml</filename>
+            <matching-tag>verb</matching-tag>
+        </stem-list>
+        <morpheme label="Tense">
+            <optional/>
+            <allomorph>
+                <form lang="wk-LA">Tense</form>
+            </allomorph>
+        </morpheme>
+        <copy-of target-id="plural-or-bar" id-suffix="-verbs" />
+        <morpheme label="Clitic">
+            <optional/>
+            <allomorph>
+                <form lang="wk-LA">Mi</form>
+            </allomorph>
+        </morpheme>
+    </model>
+</morphology>

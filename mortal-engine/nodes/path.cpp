@@ -16,6 +16,45 @@ Path::~Path()
 
 }
 
+Path *Path::copy(MorphologyXmlReader *morphologyReader, const QString &idSuffix) const
+{
+    Path * p = new Path( model() );
+
+    /// copy AbstractNode properties
+    p->setLabel( label() );
+    /// mType will be set by the constructor
+    /// mNext will be set by the constructor
+    p->setOptional( optional() );
+    if( !id().isEmpty() )
+    {
+        p->setId( id() + idSuffix );
+    }
+    /// mHasPathToEnd should be calculated automaticall
+    p->mGlosses = mGlosses;
+
+    /// copy AbstractPath properties
+    ///
+    /// this means copying all of the nodes that follow from this one
+
+    Q_ASSERT(mInitialNode != nullptr);
+    p->setInitialNode( mInitialNode->copy(morphologyReader, idSuffix) );
+    AbstractNode * previous = p->initialNode();
+    const AbstractNode * current = mInitialNode->next(); /// this needs to refer to mInitialNode, because p->initialNode()->next() will be zero
+    /// as long as the current node has a next node, copy it
+    while( current != nullptr )
+    {
+        AbstractNode * copyOfCurrent = current->copy(morphologyReader, idSuffix);
+        previous->setNext(copyOfCurrent);
+        morphologyReader->registerNode(copyOfCurrent);
+        previous = copyOfCurrent;
+        current = copyOfCurrent->next();
+    }
+
+    morphologyReader->registerNode(p);
+
+    return p;
+}
+
 QString Path::elementName()
 {
     return "path";

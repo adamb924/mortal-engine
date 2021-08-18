@@ -10,6 +10,7 @@ class Path : public AbstractPath
 public:
     explicit Path(const MorphologicalModel * model);
     ~Path() override;
+    Path * copy(MorphologyXmlReader *morphologyReader, const QString & idSuffix) const override;
 
     /**
      * @brief Returns a string representation of the Form for logging purposes.

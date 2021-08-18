@@ -17,6 +17,35 @@ Fork::~Fork()
 {
 }
 
+Fork *Fork::copy(MorphologyXmlReader *morphologyReader, const QString &idSuffix) const
+{
+    Fork * f = new Fork( model() );
+
+    /// copy AbstractNode properties
+    f->setLabel( label() );
+    /// mType will be set by the constructor
+    /// mNext will be set by the constructor
+    f->setOptional( optional() );
+    if( !id().isEmpty() )
+    {
+        f->setId( id() + idSuffix );
+    }
+    /// mHasPathToEnd should be calculated automatically
+    f->mGlosses = mGlosses;
+
+    /// copy base class properties
+    foreach(Path * p, mPaths)
+    {
+        Path * np = p->copy(morphologyReader, idSuffix);
+        f->addPath( np );
+        morphologyReader->registerNode( np );
+    }
+
+    morphologyReader->registerNode(f);
+
+    return f;
+}
+
 QList<Parsing> Fork::parsingsUsingThisNode(const Parsing &parsing, Parsing::Flags flags) const
 {
     QList<Parsing> candidates;
@@ -132,8 +161,10 @@ QString Fork::summary() const
     dbg << "Fork(" << newline;
     dbg.indent();
     dbg << "Label: " << label() << newline;
+    dbg << "ID: " << id() << newline;
     dbg << "Type: " << AbstractNode::typeToString(type()) << newline;
-    dbg << "Optional: " << (optional() ? "true" : "false" ) << newline << newline;
+    dbg << "Optional: " << (optional() ? "true" : "false" ) << newline;
+    dbg << "Has optional completion path: " << ( hasPathToEnd() ? "true" : "false" ) << newline << newline;
 
     dbg << mPaths.count() << " paths(s)," << newline;
     foreach( Path* p, mPaths )

@@ -17,6 +17,32 @@ Jump::~Jump()
 
 }
 
+Jump *Jump::copy(MorphologyXmlReader *morphologyReader, const QString &idSuffix) const
+{
+    Jump * j = new Jump( model() );
+
+    /// copy AbstractNode properties
+    j->setLabel( label() );
+    /// mType will be set by the constructor
+    /// mNext will be set by the constructor
+    j->setOptional( optional() );
+    if( !id().isEmpty() )
+    {
+        j->setId( id() + idSuffix );
+    }
+    /// mHasPathToEnd should be calculated automatically
+    j->mGlosses = mGlosses;
+
+    /// set local properties
+    j->setNodeTarget( mNodeTarget );
+    j->setTargetId( targetId() );
+    j->setTargetNodeRequired( mTargetNodeRequired );
+
+    morphologyReader->registerNode(j);
+
+    return j;
+}
+
 QString Jump::summary() const
 {
     return QObject::tr("Jump(ID: %1, Pointer: %2, optional: %3, target node required: %4)")

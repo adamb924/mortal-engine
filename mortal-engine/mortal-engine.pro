@@ -47,6 +47,7 @@ SOURCES += \
     datatypes/form.cpp \
     nodes/abstractpath.cpp \
     nodes/abstractstemlist.cpp \
+    nodes/copynode.cpp \
     nodes/fork.cpp \
     nodes/jump.cpp \
     nodes/morphemenode.cpp \
@@ -98,6 +99,7 @@ HEADERS += \
     datatypes/form.h \
     nodes/abstractpath.h \
     nodes/abstractstemlist.h \
+    nodes/copynode.h \
     nodes/fork.h \
     nodes/jump.h \
     nodes/morphemenode.h \

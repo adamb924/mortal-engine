@@ -8,6 +8,7 @@ class Sequence : public AbstractPath
 public:
     Sequence(const MorphologicalModel *model);
     ~Sequence() override;
+    Sequence * copy(MorphologyXmlReader *morphologyReader, const QString & idSuffix) const override;
 
     /**
      * @brief Returns a string representation of the Form for logging purposes.

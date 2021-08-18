@@ -18,6 +18,35 @@ MutuallyExclusiveMorphemes::~MutuallyExclusiveMorphemes()
 {
 }
 
+MutuallyExclusiveMorphemes *MutuallyExclusiveMorphemes::copy(MorphologyXmlReader *morphologyReader, const QString &idSuffix) const
+{
+    MutuallyExclusiveMorphemes * mem = new MutuallyExclusiveMorphemes( model() );
+
+    /// copy AbstractNode properties
+    mem->setLabel( label() );
+    /// mType will be set by the constructor
+    /// mNext will be set by the constructor
+    mem->setOptional( optional() );
+    if( !id().isEmpty() )
+    {
+        mem->setId( id() + idSuffix );
+    }
+    /// mHasPathToEnd should be calculated automatically
+    mem->mGlosses = mGlosses;
+
+    /// copy base class properties
+    foreach(MorphemeNode * n, mMorphemes)
+    {
+        MorphemeNode * np = n->copy(morphologyReader, idSuffix);
+        mem->addMorpheme( np );
+        morphologyReader->registerNode( np );
+    }
+
+    morphologyReader->registerNode(mem);
+
+    return mem;
+}
+
 void MutuallyExclusiveMorphemes::addMorpheme(MorphemeNode *m)
 {
     mMorphemes.insert(m);

@@ -13,6 +13,14 @@ MorphologicalModel::MorphologicalModel() : AbstractPath(nullptr), mHasZeroLength
 
 }
 
+MorphologicalModel *MorphologicalModel::copy(MorphologyXmlReader *morphologyReader, const QString & idSuffix) const
+{
+    Q_UNUSED(morphologyReader)
+    Q_UNUSED(idSuffix)
+    qCritical() << "Don't try to copy an entire morphological model. The program is probably going to crash now.";
+    return nullptr;
+}
+
 QString MorphologicalModel::elementName()
 {
     return "model";
