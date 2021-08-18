@@ -1,11 +1,13 @@
 #ifndef DEBUG_H
 #define DEBUG_H
 
+#include "mortal-engine_global.h"
+
 class QString;
 
 #include <QTextStream>
 
-class Debug {
+class MORTAL_ENGINE_EXPORT Debug {
 public:
     enum Control { endl };
 

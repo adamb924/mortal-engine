@@ -6,6 +6,7 @@
 #include "morphologyxmlreader.h"
 #include <QXmlStreamReader>
 #include <QtDebug>
+#include "debug.h"
 
 Jump::Jump(const MorphologicalModel *model) : AbstractNode(model), mNodeTarget(nullptr), mTargetNodeRequired(false)
 {
@@ -45,11 +46,18 @@ Jump *Jump::copy(MorphologyXmlReader *morphologyReader, const QString &idSuffix)
 
 QString Jump::summary() const
 {
-    return QObject::tr("Jump(ID: %1, Pointer: %2, optional: %3, target node required: %4)")
+    QString dbgString;
+    Debug dbg(&dbgString);
+    Debug::atBeginning = false;
+
+    dbg << QObject::tr("Jump(ID: %1, Pointer: %2, optional: %3, target node required: %4)")
             .arg(mTargetId,
                  mNodeTarget == nullptr ? "null" : "not null",
                  optional() ? "true" : "false",
                  mTargetNodeRequired ? "true" : "false" );
+
+    Debug::atBeginning = true;
+    return dbgString;
 }
 
 QList<Parsing> Jump::parsingsUsingThisNode(const Parsing &parsing, Parsing::Flags flags) const

@@ -63,14 +63,14 @@ QString Sequence::summary() const
     dbg << "Optional: " << (optional() ? "true" : "false" ) << newline;
     if( mInitialNode == nullptr )
     {
-        dbg << "No initial node.";
+        dbg << "No initial node." << newline;
     }
     else
     {
-        dbg << mInitialNode->summary();
+        dbg << mInitialNode->summary() << newline;
     }
-    dbg.unindent();
     dbg << ") (End of " << label() << ")";
+    dbg.unindent();
 
     return dbgString;
 }

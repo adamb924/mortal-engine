@@ -94,20 +94,20 @@ QString Path::summary() const
     QString dbgString;
     Debug dbg(&dbgString);
 
-    dbg << "Path(" << label() << ")" << newline;
+    dbg << "Path[" << label() << "] (" << newline;
     dbg.indent();
     dbg << "Optional: " << (optional() ? "true" : "false" ) << newline;
     dbg << "Has optional completion path: " << ( hasPathToEnd() ? "true" : "false" ) << newline;
     if( mInitialNode == nullptr )
     {
-        dbg << "No initial node.";
+        dbg << "No initial node." << newline;
     }
     else
     {
-        dbg << mInitialNode->summary();
+        dbg << mInitialNode->summary() << newline;
     }
-    dbg.unindent();
     dbg << ") (End of " << label() << ")";
+    dbg.unindent();
 
     return dbgString;
 }

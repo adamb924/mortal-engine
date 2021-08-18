@@ -264,6 +264,7 @@ QString AbstractStemList::summary() const
 {
     QString dbgString;
     Debug dbg(&dbgString);
+    Debug::atBeginning = false;
     dbg << "StemList(" << Debug::endl;
     dbg.indent();
     dbg << "Label: " << label() << Debug::endl;
@@ -294,6 +295,8 @@ QString AbstractStemList::summary() const
     {
         dbg << next()->summary();
     }
+
+    Debug::atBeginning = true;
 
     return dbgString;
 }

@@ -1,5 +1,7 @@
 #include "abstracttest.h"
 
+#include "debug.h"
+
 AbstractTest::AbstractTest(const Morphology *morphology) : mMorphology(morphology), mShowDebug(false)
 {
 
@@ -18,8 +20,13 @@ bool AbstractTest::fails() const
 void AbstractTest::evaluate()
 {
     bool oldShowDebugValue = Morphology::DebugOutput;
+
     Morphology::DebugOutput = mShowDebug;
+    Debug::indentLevel = 0;
+    Debug::atBeginning = true;
+
     runTest();
+
     Morphology::DebugOutput = oldShowDebugValue;
 }
 

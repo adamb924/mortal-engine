@@ -190,6 +190,7 @@ QString MutuallyExclusiveMorphemes::summary() const
 {
     QString dbgString;
     Debug dbg(&dbgString);
+    Debug::atBeginning = false;
 
     dbg << "MutuallyExclusiveMorphemes(" << newline;
     dbg.indent();
@@ -197,7 +198,7 @@ QString MutuallyExclusiveMorphemes::summary() const
     dbg << "Type: " << AbstractNode::typeToString(type()) << newline;
     dbg << "Optional: " << (optional() ? "true" : "false" ) << newline;
 
-    dbg << mMorphemes.count() << " morphemes(s)" << newline;
+    dbg << mMorphemes.count() << " morphemes(s)" << newline << newline;
     foreach( MorphemeNode* m, mMorphemes )
     {
         /// call the summary function rather than using the QString cast
@@ -212,6 +213,8 @@ QString MutuallyExclusiveMorphemes::summary() const
     {
         dbg << next()->summary();
     }
+
+    Debug::atBeginning = true;
 
     return dbgString;
 }

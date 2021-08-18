@@ -20,8 +20,6 @@ Debug Debug::operator <<(const QString &output)
     QTextStream stream(mString);
     if(atBeginning)
     {
-//        qDebug() << output;
-//        stream << "T" << QString("\t").repeated(indentLevel);
         stream << QString("\t").repeated(indentLevel);
         atBeginning = false;
     }
@@ -34,8 +32,6 @@ Debug Debug::operator <<(const int &output)
     QTextStream stream(mString);
     if(atBeginning)
     {
-//        qDebug() << output;
-//        stream << "T" << QString("\t").repeated(indentLevel);
         stream << QString("\t").repeated(indentLevel);
         atBeginning = false;
     }
@@ -59,7 +55,6 @@ Debug Debug::operator <<(Debug::Control c)
 {
     if( c == Debug::endl )
     {
-//        qDebug() << "NEWLINE";
         QTextStream stream(mString);
         stream << Qt::endl;
         atBeginning = true;

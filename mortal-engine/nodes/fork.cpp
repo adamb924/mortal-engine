@@ -170,6 +170,7 @@ QString Fork::summary() const
 {
     QString dbgString;
     Debug dbg(&dbgString);
+    Debug::atBeginning = false;
 
     dbg << "Fork(" << newline;
     dbg.indent();
@@ -192,5 +193,6 @@ QString Fork::summary() const
         dbg << next()->summary();
     }
 
+    Debug::atBeginning = true;
     return dbgString;
 }

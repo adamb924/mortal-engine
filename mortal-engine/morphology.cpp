@@ -406,6 +406,4 @@ QString Morphology::summary() const
     dbg.unindent();
 
     return dbgString;
-
-//    return "test";
 }

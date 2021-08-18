@@ -71,8 +71,9 @@ QString MorphologicalModel::summary() const
 {
     QString dbgString;
     Debug dbg(&dbgString);
+    Debug::atBeginning = false;
 
-    dbg << QString("MorphologicalModel (%1)").arg(label()) << Debug::endl << Debug::endl;
+    dbg << QString("MorphologicalModel[%1] (").arg(label()) << Debug::endl << Debug::endl;
     dbg.indent();
     if( mInitialNode == nullptr )
     {
@@ -80,9 +81,13 @@ QString MorphologicalModel::summary() const
     }
     else
     {
-        dbg << mInitialNode->summary() << newline;
+        const QString debugString = mInitialNode->summary();
+        dbg << debugString << newline;
     }
     dbg.unindent();
+    dbg << ")" << newline;
+
+    Debug::atBeginning = true;
 
     return dbgString;
 }

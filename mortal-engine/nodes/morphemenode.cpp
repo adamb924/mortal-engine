@@ -446,6 +446,7 @@ QString MorphemeNode::summaryWithoutFollowing() const
 {
     QString dbgString;
     Debug dbg(&dbgString);
+    Debug::atBeginning = false;
 
     dbg << "MorphemeNode(" << newline;
     dbg.indent();
@@ -466,6 +467,8 @@ QString MorphemeNode::summaryWithoutFollowing() const
     }
     dbg.unindent();
     dbg << ")" << newline;
+
+    Debug::atBeginning = true;
 
     return dbgString;
 }
