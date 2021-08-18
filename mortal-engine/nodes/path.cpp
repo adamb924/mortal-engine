@@ -58,6 +58,7 @@ QString Path::summary() const
     dbg << "Path(" << label() << ")" << newline;
     dbg.indent();
     dbg << "Optional: " << (optional() ? "true" : "false" ) << newline;
+    dbg << "Has optional completion path: " << ( hasPathToEnd() ? "true" : "false" ) << newline;
     if( mInitialNode == nullptr )
     {
         dbg << "No initial node.";
@@ -70,4 +71,17 @@ QString Path::summary() const
     dbg << ") (End of " << label() << ")";
 
     return dbgString;
+}
+
+bool Path::checkHasOptionalCompletionPath() const
+{
+    /// this is like AbstractNode::checkHasOptionalCompletionPath(), but here the 'next' node is the initial node of the path
+    if( mInitialNode->optional() || mInitialNode->isFork() || mInitialNode->isSequence() || mInitialNode->isJump() )
+    {
+        return mInitialNode->checkHasOptionalCompletionPath();
+    }
+    else
+    {
+        return false;
+    }
 }

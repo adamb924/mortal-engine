@@ -18,6 +18,8 @@ public:
      */
     QString summary() const override;
 
+    bool checkHasOptionalCompletionPath() const override;
+
     static QString elementName();
     static AbstractNode *readFromXml(QXmlStreamReader &in, MorphologyXmlReader * morphologyReader, const MorphologicalModel * model);
     static bool matchesElement(QXmlStreamReader &in);
