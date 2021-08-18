@@ -29,7 +29,7 @@ public:
     void setCopy(AbstractNode *copy);
     void setNext(AbstractNode *next) override;
 
-    QString summary() const override;
+    QString summary(const AbstractNode *doNotFollow) const override;
 
     bool optional() const override;
 

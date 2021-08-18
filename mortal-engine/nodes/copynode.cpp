@@ -98,9 +98,9 @@ void CopyNode::setNext(AbstractNode *next)
     mCopy->setNext(next);
 }
 
-QString CopyNode::summary() const
+QString CopyNode::summary(const AbstractNode *doNotFollow) const
 {
-    return mCopy->summary();
+    return mCopy->summary(doNotFollow);
 }
 
 bool CopyNode::optional() const

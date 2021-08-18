@@ -44,8 +44,10 @@ Jump *Jump::copy(MorphologyXmlReader *morphologyReader, const QString &idSuffix)
     return j;
 }
 
-QString Jump::summary() const
+QString Jump::summary(const AbstractNode *doNotFollow) const
 {
+    Q_UNUSED(doNotFollow)
+
     QString dbgString;
     Debug dbg(&dbgString);
     Debug::atBeginning = false;

@@ -47,7 +47,7 @@ public:
      * 
      * @return QString The logging output.
      */
-    virtual QString summary() const;
+    virtual QString summary(const AbstractNode * doNotFollow = nullptr) const;
     QString oneLineSummary() const;
 
     QList<Parsing> possibleParsings( const Parsing & parsing, Parsing::Flags flags) const;

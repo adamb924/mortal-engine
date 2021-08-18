@@ -21,7 +21,7 @@ public:
      * 
      * @return QString The logging output.
      */
-    QString summary() const override;
+    QString summary(const AbstractNode *doNotFollow) const override;
 
     /**
      * @brief Returns a string representation of the MorphemeNode for logging purposes. This method does not display the following function, which makes it appropriate for use in a MEM context.

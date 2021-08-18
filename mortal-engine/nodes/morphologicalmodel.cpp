@@ -67,7 +67,7 @@ void MorphologicalModel::setHasZeroLengthForms(bool hasNullForms)
     mHasZeroLengthForms = hasNullForms;
 }
 
-QString MorphologicalModel::summary() const
+QString MorphologicalModel::summary(const AbstractNode *doNotFollow) const
 {
     QString dbgString;
     Debug dbg(&dbgString);
@@ -81,7 +81,7 @@ QString MorphologicalModel::summary() const
     }
     else
     {
-        const QString debugString = mInitialNode->summary();
+        const QString debugString = mInitialNode->summary(doNotFollow);
         dbg << debugString << newline;
     }
     dbg.unindent();

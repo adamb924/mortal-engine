@@ -53,8 +53,9 @@ Sequence *Sequence::copy(MorphologyXmlReader *morphologyReader, const QString &i
     return s;
 }
 
-QString Sequence::summary() const
+QString Sequence::summary(const AbstractNode *doNotFollow) const
 {
+    Q_UNUSED(doNotFollow)
     QString dbgString;
     Debug dbg(&dbgString);
 
@@ -67,7 +68,7 @@ QString Sequence::summary() const
     }
     else
     {
-        dbg << mInitialNode->summary() << newline;
+        dbg << mInitialNode->summary( next() ) << newline;
     }
     dbg << ") (End of " << label() << ")";
     dbg.unindent();

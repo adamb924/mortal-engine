@@ -166,7 +166,7 @@ bool Fork::isFork() const
     return true;
 }
 
-QString Fork::summary() const
+QString Fork::summary(const AbstractNode *doNotFollow) const
 {
     QString dbgString;
     Debug dbg(&dbgString);
@@ -183,14 +183,14 @@ QString Fork::summary() const
     dbg << mPaths.count() << " paths(s)," << newline;
     foreach( Path* p, mPaths )
     {
-        dbg << p->summary() << newline;
+        dbg << p->summary( next() ) << newline;
     }
     dbg.unindent();
     dbg << ")" << newline;
 
-    if( hasNext() )
+    if( hasNext() && next() != doNotFollow )
     {
-        dbg << next()->summary();
+        dbg << next()->summary( doNotFollow );
     }
 
     Debug::atBeginning = true;

@@ -401,7 +401,7 @@ QString Morphology::summary() const
     dbg.indent();
     foreach( MorphologicalModel * mm, morphologicalModels() )
     {
-        dbg << mm->summary() << newline;
+        dbg << mm->summary(nullptr) << newline;
     }
     dbg.unindent();
 

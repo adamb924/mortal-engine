@@ -26,7 +26,7 @@ public:
      * 
      * @return QString The logging output.
      */
-    QString summary() const override;
+    QString summary(const AbstractNode *doNotFollow) const override;
 
     static QString elementName();
     static AbstractNode *readFromXml(QXmlStreamReader &in, MorphologyXmlReader * morphologyReader, const MorphologicalModel * model = nullptr);

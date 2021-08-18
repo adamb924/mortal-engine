@@ -260,7 +260,7 @@ void AbstractStemList::addConditionTag(const QString &tag)
     mTags.insert( Tag(tag) );
 }
 
-QString AbstractStemList::summary() const
+QString AbstractStemList::summary(const AbstractNode *doNotFollow) const
 {
     QString dbgString;
     Debug dbg(&dbgString);
@@ -291,9 +291,9 @@ QString AbstractStemList::summary() const
 
     dbg << ")" << newline;
 
-    if( hasNext() )
+    if( hasNext() && next() != doNotFollow )
     {
-        dbg << next()->summary();
+        dbg << next()->summary(doNotFollow);
     }
 
     Debug::atBeginning = true;

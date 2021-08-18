@@ -49,7 +49,7 @@ public:
      * 
      * @return QString The logging output.
      */
-    QString summary() const override;
+    QString summary(const AbstractNode * doNotFollow) const override;
 
     void generateAllomorphsFromRules();
 

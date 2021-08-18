@@ -9,13 +9,6 @@ public:
     explicit AbstractPath(const MorphologicalModel * model);
     ~AbstractPath() override;
 
-    /**
-     * @brief Returns a string representation of the Form for logging purposes.
-     * 
-     * @return QString The logging output.
-     */
-    virtual QString summary() const override = 0;
-
     AbstractNode *initialNode() const;
     void setInitialNode(AbstractNode *initialNode);
 

@@ -228,8 +228,9 @@ void AbstractNode::setOptional(bool optional)
     mOptional = optional;
 }
 
-QString AbstractNode::summary() const
+QString AbstractNode::summary(const AbstractNode *doNotFollow) const
 {
+    Q_UNUSED(doNotFollow)
     QString dbgString;
     QTextStream dbg(&dbgString);
 

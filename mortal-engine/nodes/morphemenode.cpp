@@ -473,14 +473,14 @@ QString MorphemeNode::summaryWithoutFollowing() const
     return dbgString;
 }
 
-QString MorphemeNode::summary() const
+QString MorphemeNode::summary(const AbstractNode *doNotFollow) const
 {
     QString dbgString;
     Debug dbg(&dbgString);
 
     dbg << summaryWithoutFollowing();
 
-    if( AbstractNode::hasNext() )
+    if( AbstractNode::hasNext() && AbstractNode::next() != doNotFollow )
     {
         dbg << AbstractNode::next()->summary();
     }

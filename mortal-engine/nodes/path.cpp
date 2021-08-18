@@ -89,8 +89,10 @@ bool Path::matchesElement(QXmlStreamReader &in)
     return in.isStartElement() && in.name() == elementName();
 }
 
-QString Path::summary() const
+QString Path::summary(const AbstractNode *doNotFollow) const
 {
+    Q_UNUSED(doNotFollow)
+
     QString dbgString;
     Debug dbg(&dbgString);
 
@@ -104,7 +106,7 @@ QString Path::summary() const
     }
     else
     {
-        dbg << mInitialNode->summary() << newline;
+        dbg << mInitialNode->summary( next() ) << newline;
     }
     dbg << ") (End of " << label() << ")";
     dbg.unindent();

@@ -186,7 +186,7 @@ void MutuallyExclusiveMorphemes::addConstraintsToAllMorphemes(const QSet<const A
     }
 }
 
-QString MutuallyExclusiveMorphemes::summary() const
+QString MutuallyExclusiveMorphemes::summary(const AbstractNode *doNotFollow) const
 {
     QString dbgString;
     Debug dbg(&dbgString);
@@ -195,6 +195,7 @@ QString MutuallyExclusiveMorphemes::summary() const
     dbg << "MutuallyExclusiveMorphemes(" << newline;
     dbg.indent();
     dbg << "Label: " << label() << newline;
+    dbg << "ID: " << id() << newline;
     dbg << "Type: " << AbstractNode::typeToString(type()) << newline;
     dbg << "Optional: " << (optional() ? "true" : "false" ) << newline;
 
@@ -209,9 +210,9 @@ QString MutuallyExclusiveMorphemes::summary() const
     dbg.unindent();
     dbg << ")" << newline;
 
-    if( hasNext() )
+    if( hasNext() && next() != doNotFollow )
     {
-        dbg << next()->summary();
+        dbg << next()->summary(doNotFollow);
     }
 
     Debug::atBeginning = true;
