@@ -76,7 +76,10 @@ void XmlStemList::readStems(const QHash<QString, WritingSystem> &writingSystems)
                     {
                         stem->insert( allomorph );
                     }
-                    mStems.insert( stem );
+                    if( stem->allomorphCount() > 0 )
+                    {
+                        mStems.insert( stem );
+                    }
                     allomorph = Allomorph(Allomorph::Null);
                 }
                 else if (in.name() == Allomorph::XML_ALLOMORPH )
