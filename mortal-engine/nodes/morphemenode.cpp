@@ -86,7 +86,7 @@ QList<Parsing> MorphemeNode::parsingsUsingThisNode(const Parsing &parsing, Parsi
         {
             if( Morphology::DebugOutput )
             {
-                qInfo().noquote() << "Moving from" << label() << " to " << next(a, p.writingSystem())->label() << "having appended" << a.oneLineSummary();
+                qInfo().noquote() << "Moving from" << debugIdentifier() << " to " << next(a, p.writingSystem())->label() << "having appended" << a.oneLineSummary();
             }
             candidates.append( next(a, p.writingSystem())->possibleParsings( p, flags ) );
             MAYBE_RETURN_EARLY
@@ -213,7 +213,7 @@ QList<Generation> MorphemeNode::generateFormsWithAllomorphs(const Generation &ge
         {
             if( Morphology::DebugOutput )
             {
-                qInfo() << "Moving from" << label() << " to " << next(a, g.writingSystem())->label() << "having appended" << a.oneLineSummary();
+                qInfo().noquote() << "Moving from" << debugIdentifier() << " to " << next(a, g.writingSystem())->label() << "having appended" << a.oneLineSummary();
             }
             candidates.append( next(a, g.writingSystem())->generateForms(g) );
         }
