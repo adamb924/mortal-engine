@@ -159,6 +159,8 @@ targetNamespace="https://www.adambaker.org/mortal-engine">
                         <xs:attribute name="to" use="required" type="xs:IDREF"></xs:attribute>
                         <xs:attribute name="optional" use="required" type="me:true-false"></xs:attribute>
                         <xs:attribute name="target-node-required" use="optional" type="me:true-false"></xs:attribute>
+                        <xs:attribute name="id" type="xs:IDREF" use="optional"></xs:attribute>
+                        <xs:attribute name="label" type="xs:string" use="optional"></xs:attribute>
                     </xs:complexType>
                 </xs:element>
                 <xs:element name="copy-of">
