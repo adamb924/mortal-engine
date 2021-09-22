@@ -3,6 +3,7 @@
 #include <QCommandLineParser>
 #include <QTextStream>
 #include <QFile>
+#include <QElapsedTimer>
 
 #include "testharness.h"
 #include "morphology.h"
@@ -13,6 +14,9 @@ int main(int argc, char *argv[])
     QCoreApplication a(argc, argv);
     QCoreApplication::setApplicationName("Mortal Engine Tester");
     QCoreApplication::setApplicationVersion("1.0");
+
+    QElapsedTimer timer;
+    timer.start();
 
     QCommandLineParser parser;
     parser.setApplicationDescription("Program to process tests of Mortal Engine files.");
@@ -88,6 +92,8 @@ int main(int argc, char *argv[])
         harness.printReport(out, verbose ? TestHarness::AllResults : TestHarness::ErrorsOnly, showModel, check );
         outFile.close();
     }
+
+    qInfo().noquote() << QString("Completed in %1 ms").arg(timer.elapsed());
 
     return 0;
 }
