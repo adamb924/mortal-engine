@@ -375,6 +375,7 @@ void MorphologyXmlReader::registerPointer(PointerToConstraint *pointer)
 void MorphologyXmlReader::registerNode(AbstractNode *node) const
 {
     mMorphology->mNodes << node;
+    mMorphology->mNodesById.insert( node->id(), node );
     if( node->isMorphemeNode() )
     {
         MorphemeNode * mn = dynamic_cast<MorphemeNode*>(node);
