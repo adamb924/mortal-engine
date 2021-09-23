@@ -182,6 +182,8 @@ public:
 
     void setSteps(const QList<ParsingStep> &steps);
 
+    uint hash() const;
+
 protected:
     void setPosition(int position);
 
@@ -207,6 +209,8 @@ protected:
     QSet<const AbstractConstraint *> mLocalConstraints;
     QSet<const AbstractConstraint *> mLongDistanceConstraints;
 
+    void calculateHash();
+
 private:
     Status mStatus;
     const MorphologicalModel * mMorphologicalModel;
@@ -214,6 +218,7 @@ private:
     QHash<const Jump*,int> mJumpCounts;
     bool mNextNodeRequired;
     QStringList mStackTrace;
+    uint mHash;
 };
 
 Q_DECL_EXPORT uint qHash(const Parsing & key);

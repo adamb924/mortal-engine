@@ -5,7 +5,7 @@
 #include <QDomElement>
 
 Tag::Tag(const QString &label)
-    : mLabel(label)
+    : mLabel(label), mHash( qHash(mLabel) )
 {
 
 }
@@ -17,7 +17,7 @@ QString Tag::label() const
 
 bool Tag::operator==(const Tag &other) const
 {
-    return mLabel == other.label();
+    return mHash == other.hash();
 }
 
 void Tag::serialize(QXmlStreamWriter &out) const
@@ -31,6 +31,11 @@ void Tag::serialize(QDomElement &out) const
     out.appendChild(textNode);
 }
 
+uint Tag::hash() const
+{
+    return mHash;
+}
+
 QString Tag::summary() const
 {
     return mLabel;
@@ -38,5 +43,5 @@ QString Tag::summary() const
 
 uint qHash(const Tag &key)
 {
-    return qHash( key.label() );
+    return key.hash();
 }

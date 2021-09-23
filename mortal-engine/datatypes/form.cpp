@@ -8,9 +8,11 @@
 #include "morphologyxmlreader.h"
 #include "morphology.h"
 
+QRegularExpression Form::whitespaceAndNonWordExpression("^[\\W\\s\\d]+$", QRegularExpression::UseUnicodePropertiesOption);
+
 Form::Form() : mId(-1)
 {
-
+    calculateHash();
 }
 
 Form::Form(const WritingSystem &ws, const QString &text)
@@ -18,7 +20,7 @@ Form::Form(const WritingSystem &ws, const QString &text)
       mText(text),
       mId(-1)
 {
-
+    calculateHash();
 }
 
 Form::Form(const WritingSystem &ws, const QString &text, qlonglong id)
@@ -26,7 +28,7 @@ Form::Form(const WritingSystem &ws, const QString &text, qlonglong id)
       mText(text),
       mId(id)
 {
-
+    calculateHash();
 }
 
 bool Form::operator==(const Form &other) const
@@ -43,12 +45,14 @@ Form Form::operator+=(const Form &other)
 {
     if( other.writingSystem() == mWritingSystem )
         mText += other.mText;
+    calculateHash();
     return *this;
 }
 
 Form Form::operator+=(const QString &other)
 {
     mText += other;
+    calculateHash();
     return *this;
 }
 
@@ -65,6 +69,7 @@ QString Form::text() const
 void Form::setText(const QString &text)
 {
     mText = text;
+    calculateHash();
 }
 
 Form Form::mid(int position, int n) const
@@ -121,8 +126,7 @@ void Form::setId(const qlonglong &id)
 
 bool Form::isWhitespaceAndNonWordCharacters() const
 {
-    QRegularExpression re("^[\\W\\s\\d]+$", QRegularExpression::UseUnicodePropertiesOption);
-    return re.match(mText).hasMatch();
+    return whitespaceAndNonWordExpression.match(mText).hasMatch();
 }
 
 Form Form::readFromXml(QXmlStreamReader &in, const Morphology *morphology, const QString &elementName)
@@ -175,6 +179,16 @@ QList<Form> Form::readListFromXml(QXmlStreamReader &in, const Morphology *morpho
     return forms;
 }
 
+uint Form::hash() const
+{
+    return mHash;
+}
+
+void Form::calculateHash()
+{
+    mHash = mWritingSystem.hash() ^ qHash(mText);
+}
+
 QString Form::summary(const QString &label) const
 {
     QString dbgString;
@@ -189,5 +203,5 @@ QString Form::summary(const QString &label) const
 
 uint qHash(const Form &key)
 {
-    return qHash(key.id()) ^ qHash(key.writingSystem().abbreviation()) ^ qHash(key.text());
+    return key.hash();
 }

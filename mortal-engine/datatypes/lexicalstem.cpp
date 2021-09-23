@@ -228,5 +228,7 @@ QString LexicalStem::oneLineSummary() const
 
 uint qHash(const LexicalStem &key)
 {
-    return qHash( key.glosses() ) ^ qHash( key.allomorphs() ) ^ qHash( key.id() );
+    /// 2021-09-22: This hash is very rarely used, and never in this code,
+    /// so I am not going to store a hash value.
+    return qHash( key.glosses() ) ^ qHash( key.allomorphs() ) ^ qHash(key.id());
 }

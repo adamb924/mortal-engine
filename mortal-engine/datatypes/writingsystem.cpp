@@ -8,22 +8,22 @@ QString WritingSystem::XML_WRITING_SYSTEMS = "writing-systems";
 QString WritingSystem::XML_WRITING_SYSTEM = "writing-system";
 
 
-WritingSystem::WritingSystem() : mName(""), mAbbreviation(""), mFontFamily(""), mFontSize(0), mLayoutDirection(Qt::LeftToRight)
+WritingSystem::WritingSystem() : mName(""), mAbbreviation(""), mFontFamily(""), mFontSize(0), mLayoutDirection(Qt::LeftToRight), mHash( qHash(mAbbreviation) )
 {
 }
 
 WritingSystem::WritingSystem(const QString & name, const QString & abbreviation, Qt::LayoutDirection layoutDirection, QString fontFamily, int fontSize)
-     : mName(name), mAbbreviation(abbreviation), mFontFamily(fontFamily), mFontSize(fontSize), mLayoutDirection(layoutDirection)
+     : mName(name), mAbbreviation(abbreviation), mFontFamily(fontFamily), mFontSize(fontSize), mLayoutDirection(layoutDirection), mHash( qHash(mAbbreviation) )
 {
 }
 
 WritingSystem::WritingSystem(const QString &name, const QString &abbreviation, Qt::LayoutDirection layoutDirection, QString fontFamily, int fontSize, const QString &keyboardCommand)
-    : mName(name), mAbbreviation(abbreviation), mFontFamily(fontFamily), mFontSize(fontSize), mLayoutDirection(layoutDirection), mKeyboardCommand(keyboardCommand)
+    : mName(name), mAbbreviation(abbreviation), mFontFamily(fontFamily), mFontSize(fontSize), mLayoutDirection(layoutDirection), mKeyboardCommand(keyboardCommand), mHash( qHash(mAbbreviation) )
 {
 
 }
 
-WritingSystem::WritingSystem(const QString &abbreviation) : mName(""), mAbbreviation(abbreviation), mFontFamily(""), mFontSize(0), mLayoutDirection(Qt::LeftToRight)
+WritingSystem::WritingSystem(const QString &abbreviation) : mName(""), mAbbreviation(abbreviation), mFontFamily(""), mFontSize(0), mLayoutDirection(Qt::LeftToRight), mHash( qHash(mAbbreviation) )
 {
 
 }
@@ -143,14 +143,19 @@ bool WritingSystem::notAtEndOf(const QString &tagName, QXmlStreamReader &in)
     return !in.atEnd() && !(in.isEndElement() && in.name() == tagName);
 }
 
+uint WritingSystem::hash() const
+{
+    return mHash;
+}
+
 bool WritingSystem::operator==(const WritingSystem & other) const
 {
-    return mAbbreviation == other.mAbbreviation;
+    return mHash == other.mHash;
 }
 
 bool WritingSystem::operator!=(const WritingSystem & other) const
 {
-    return mAbbreviation != other.mAbbreviation;
+    return mHash != other.mHash;
 }
 
 bool WritingSystem::operator==(const QString & flexString) const
@@ -162,6 +167,7 @@ WritingSystem& WritingSystem::operator=(const WritingSystem & other)
 {
     mName = other.mName;
     mAbbreviation = other.mAbbreviation;
+    mHash = other.mHash;
     mLayoutDirection = other.mLayoutDirection;
     mFontFamily = other.mFontFamily;
     mFontSize = other.mFontSize;
@@ -171,5 +177,5 @@ WritingSystem& WritingSystem::operator=(const WritingSystem & other)
 
 uint qHash(const WritingSystem & key)
 {
-    return qHash(key.abbreviation());
+    return key.hash();
 }

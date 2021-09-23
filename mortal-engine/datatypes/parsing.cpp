@@ -49,7 +49,8 @@ Parsing::Parsing(const Parsing &other) :
       mMorphologicalModel(other.mMorphologicalModel),
       mJumpCounts(other.mJumpCounts),
       mNextNodeRequired(other.mNextNodeRequired),
-      mStackTrace(other.mStackTrace)
+      mStackTrace(other.mStackTrace),
+      mHash(other.mHash)
 {
 }
 
@@ -65,6 +66,7 @@ Parsing &Parsing::operator=(const Parsing &other)
     mJumpCounts = other.mJumpCounts;
     mNextNodeRequired = other.mNextNodeRequired;
     mStackTrace = other.mStackTrace;
+    mHash = other.mHash;
 
     return *this;
 }
@@ -401,6 +403,7 @@ void Parsing::append(const AbstractNode *node, const Allomorph &allomorph, const
             qInfo().noquote() << qPrintable("\t\t") << constraintsSetSatisfactionSummary( mLocalConstraints, node, allomorph);
         }
     }
+    calculateHash();
 }
 
 int Parsing::position() const
@@ -475,9 +478,20 @@ QString Parsing::longDistanceConstraintsSatisfactionSummary() const
     return summary;
 }
 
+void Parsing::calculateHash()
+{
+    mHash = qHash(labelSummary());
+}
+
+uint Parsing::hash() const
+{
+    return mHash;
+}
+
 void Parsing::setSteps(const QList<ParsingStep> &steps)
 {
     mSteps = steps;
+    calculateHash();
 }
 
 void Parsing::setPosition(int position)
@@ -923,5 +937,5 @@ bool parsingLessThanStepwise(const Parsing &p1, const Parsing &p2)
 
 uint qHash(const Parsing & key)
 {
-    return qHash(key.labelSummary());
+    return key.hash();
 }

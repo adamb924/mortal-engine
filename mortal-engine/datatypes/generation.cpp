@@ -58,6 +58,7 @@ void Generation::append(const AbstractNode *node, const Allomorph & allomorph, c
     {
         setStatus( Parsing::Failed );
     }
+    calculateHash();
 }
 
 void Generation::setCompleteIfAllConstraintsSatisfied()

@@ -41,8 +41,11 @@ public:
     void serialize(QXmlStreamWriter & out) const;
     void serialize(QDomElement & out) const;
 
+    uint hash() const;
+
 private:
     QString mLabel;
+    uint mHash;
 };
 
 Q_DECL_EXPORT uint qHash(const Tag & key);

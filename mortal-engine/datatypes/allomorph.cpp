@@ -22,12 +22,13 @@ QString Allomorph::XML_STEM = "stem";
 
 Allomorph::Allomorph(Allomorph::Type type) : mType(type), mId(-1)
 {
-
+    calculateHash();
 }
 
 Allomorph::Allomorph(const Form &f, Type type) : mType(type), mId(-1)
 {
     mForms.insert( f.writingSystem(), f );
+    calculateHash();
 }
 
 Allomorph::Allomorph(const Allomorph &other) :
@@ -36,7 +37,8 @@ Allomorph::Allomorph(const Allomorph &other) :
     mTags(other.mTags),
     mType(other.mType),
     mPortmanteau(other.mPortmanteau),
-    mId(other.mId)
+    mId(other.mId),
+    mHash(other.mHash)
 {
 }
 
@@ -51,6 +53,7 @@ bool Allomorph::operator==(const Allomorph &other) const
 void Allomorph::setForm(const Form &f)
 {
     mForms.insert( f.writingSystem(), f );
+    calculateHash();
 }
 
 void Allomorph::addConstraint(const AbstractConstraint *constraint)
@@ -58,31 +61,37 @@ void Allomorph::addConstraint(const AbstractConstraint *constraint)
     /// convenience
     if( constraint != nullptr )
         mConstraints.insert(constraint);
+    calculateHash();
 }
 
 void Allomorph::addConstraints(const QSet<const AbstractConstraint *> &constraints)
 {
     mConstraints.unite(constraints);
+    calculateHash();
 }
 
 void Allomorph::addTag(const QString &tag)
 {
     mTags.insert( Tag(tag) );
+    calculateHash();
 }
 
 void Allomorph::addTags(const QSet<Tag> tags)
 {
     mTags.unite(tags);
+    calculateHash();
 }
 
 void Allomorph::removeTags(const QSet<Tag> &tags)
 {
     mTags.subtract(tags);
+    calculateHash();
 }
 
 void Allomorph::setTags(const QSet<Tag> tags)
 {
     mTags = tags;
+    calculateHash();
 }
 
 QSet<Tag> Allomorph::tags() const
@@ -113,6 +122,7 @@ Form Allomorph::form(const WritingSystem &ws, bool *ok) const
 void Allomorph::clearForms()
 {
     mForms.clear();
+    calculateHash();
 }
 
 bool Allomorph::hasForm(const WritingSystem &ws) const
@@ -287,6 +297,7 @@ Allomorph::Type Allomorph::type() const
 void Allomorph::setType(const Allomorph::Type &type)
 {
     mType = type;
+    calculateHash();
 }
 
 QString Allomorph::typeToString(Allomorph::Type type)
@@ -342,6 +353,7 @@ bool Allomorph::hasPortmanteau(const WritingSystem & ws) const
 
 void Allomorph::setPortmanteau(const Portmanteau &portmanteau)
 {
+    /// 2021: TODO question: should the portmanteau be included in the hash?
     mPortmanteau = portmanteau;
 }
 
@@ -366,6 +378,7 @@ qlonglong Allomorph::id() const
 void Allomorph::setId(const qlonglong &id)
 {
     mId = id;
+    calculateHash();
 }
 
 bool Allomorph::hasZeroLengthForms() const
@@ -380,6 +393,16 @@ bool Allomorph::hasZeroLengthForms() const
         }
     }
     return false;
+}
+
+uint Allomorph::hash() const
+{
+    return mHash;
+}
+
+void Allomorph::calculateHash()
+{
+    mHash = mType ^ qHash( mForms ) ^ qHash( mConstraints ) ^ qHash( mTags );
 }
 
 QString Allomorph::summary() const
@@ -462,5 +485,5 @@ QString Allomorph::focusedSummary(const WritingSystem &ws) const
 
 uint qHash(const Allomorph &key)
 {
-    return qHash( key.type() ) ^ qHash( key.forms() ) ^ qHash( key.constraints() ) ^ qHash( key.tags() );
+    return key.hash();
 }

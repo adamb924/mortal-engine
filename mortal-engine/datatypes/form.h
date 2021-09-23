@@ -211,10 +211,17 @@ public:
      */
     static QList<Form> readListFromXml(QXmlStreamReader &in, const Morphology *morphology, const QString & untilElement, const QString & elementName = "form");
 
+    uint hash() const;
+
+private:
+    void calculateHash();
+    static QRegularExpression whitespaceAndNonWordExpression;
+
 private:
     WritingSystem mWritingSystem;
     QString mText;
     qlonglong mId;
+    uint mHash;
 };
 
 Q_DECL_EXPORT uint qHash(const Form &key);

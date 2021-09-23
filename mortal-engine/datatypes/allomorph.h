@@ -234,6 +234,11 @@ public:
     static QString XML_TAG;
     static QString XML_STEM;
 
+    uint hash() const;
+
+private:
+    void calculateHash();
+
 private:
     QHash<WritingSystem,Form> mForms;
     QSet<const AbstractConstraint *> mConstraints;
@@ -241,6 +246,7 @@ private:
     Allomorph:: Type mType;
     Portmanteau mPortmanteau;
     qlonglong mId;
+    uint mHash;
 };
 
 Q_DECL_EXPORT uint qHash(const Allomorph &key);

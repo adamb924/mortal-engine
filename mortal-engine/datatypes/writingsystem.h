@@ -139,11 +139,14 @@ public:
     static QString XML_WRITING_SYSTEMS;
     static QString XML_WRITING_SYSTEM;
 
+    uint hash() const;
+
 private:
     QString mName, mAbbreviation, mFontFamily;
     int mFontSize;
     Qt::LayoutDirection mLayoutDirection;
     QString mKeyboardCommand;
+    uint mHash;
 };
 
 Q_DECL_EXPORT uint qHash(const WritingSystem & key);
