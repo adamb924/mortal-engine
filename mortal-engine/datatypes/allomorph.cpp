@@ -402,7 +402,7 @@ uint Allomorph::hash() const
 
 void Allomorph::calculateHash()
 {
-    mHash = mType ^ qHash( mForms ) ^ qHash( mConstraints ) ^ qHash( mTags );
+    mHash = mType ^ qHash( mForms, static_cast<uint>(qGlobalQHashSeed()) ) ^ qHash( mConstraints, static_cast<uint>(qGlobalQHashSeed()) ) ^ qHash( mTags, static_cast<uint>(qGlobalQHashSeed()) );
 }
 
 QString Allomorph::summary() const

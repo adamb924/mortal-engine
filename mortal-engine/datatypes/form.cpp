@@ -186,7 +186,7 @@ uint Form::hash() const
 
 void Form::calculateHash()
 {
-    mHash = mWritingSystem.hash() ^ qHash(mText);
+    mHash = mWritingSystem.hash() ^ qHash(mText, static_cast<uint>(qGlobalQHashSeed()));
 }
 
 QString Form::summary(const QString &label) const

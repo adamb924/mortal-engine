@@ -5,7 +5,7 @@
 #include <QDomElement>
 
 Tag::Tag(const QString &label)
-    : mLabel(label), mHash( qHash(mLabel) )
+    : mLabel(label), mHash( qHash(mLabel, static_cast<uint>(qGlobalQHashSeed())) )
 {
 
 }

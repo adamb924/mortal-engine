@@ -230,5 +230,5 @@ uint qHash(const LexicalStem &key)
 {
     /// 2021-09-22: This hash is very rarely used, and never in this code,
     /// so I am not going to store a hash value.
-    return qHash( key.glosses() ) ^ qHash( key.allomorphs() ) ^ qHash(key.id());
+    return qHash( key.glosses(), static_cast<uint>(qGlobalQHashSeed()) ) ^ qHash( key.allomorphs(), static_cast<uint>(qGlobalQHashSeed()) ) ^ qHash(key.id(), static_cast<uint>(qGlobalQHashSeed()));
 }

@@ -8,22 +8,22 @@ QString WritingSystem::XML_WRITING_SYSTEMS = "writing-systems";
 QString WritingSystem::XML_WRITING_SYSTEM = "writing-system";
 
 
-WritingSystem::WritingSystem() : mName(""), mAbbreviation(""), mFontFamily(""), mFontSize(0), mLayoutDirection(Qt::LeftToRight), mHash( qHash(mAbbreviation) )
+WritingSystem::WritingSystem() : mName(""), mAbbreviation(""), mFontFamily(""), mFontSize(0), mLayoutDirection(Qt::LeftToRight), mHash( qHash(mAbbreviation, static_cast<uint>(qGlobalQHashSeed())) )
 {
 }
 
 WritingSystem::WritingSystem(const QString & name, const QString & abbreviation, Qt::LayoutDirection layoutDirection, QString fontFamily, int fontSize)
-     : mName(name), mAbbreviation(abbreviation), mFontFamily(fontFamily), mFontSize(fontSize), mLayoutDirection(layoutDirection), mHash( qHash(mAbbreviation) )
+     : mName(name), mAbbreviation(abbreviation), mFontFamily(fontFamily), mFontSize(fontSize), mLayoutDirection(layoutDirection), mHash( qHash(mAbbreviation, static_cast<uint>(qGlobalQHashSeed())) )
 {
 }
 
 WritingSystem::WritingSystem(const QString &name, const QString &abbreviation, Qt::LayoutDirection layoutDirection, QString fontFamily, int fontSize, const QString &keyboardCommand)
-    : mName(name), mAbbreviation(abbreviation), mFontFamily(fontFamily), mFontSize(fontSize), mLayoutDirection(layoutDirection), mKeyboardCommand(keyboardCommand), mHash( qHash(mAbbreviation) )
+    : mName(name), mAbbreviation(abbreviation), mFontFamily(fontFamily), mFontSize(fontSize), mLayoutDirection(layoutDirection), mKeyboardCommand(keyboardCommand), mHash( qHash(mAbbreviation, static_cast<uint>(qGlobalQHashSeed())) )
 {
 
 }
 
-WritingSystem::WritingSystem(const QString &abbreviation) : mName(""), mAbbreviation(abbreviation), mFontFamily(""), mFontSize(0), mLayoutDirection(Qt::LeftToRight), mHash( qHash(mAbbreviation) )
+WritingSystem::WritingSystem(const QString &abbreviation) : mName(""), mAbbreviation(abbreviation), mFontFamily(""), mFontSize(0), mLayoutDirection(Qt::LeftToRight), mHash( qHash(mAbbreviation, static_cast<uint>(qGlobalQHashSeed())) )
 {
 
 }

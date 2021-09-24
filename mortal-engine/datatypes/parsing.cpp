@@ -480,7 +480,7 @@ QString Parsing::longDistanceConstraintsSatisfactionSummary() const
 
 void Parsing::calculateHash()
 {
-    mHash = qHash(labelSummary());
+    mHash = qHash(labelSummary(), static_cast<uint>(qGlobalQHashSeed()));
 }
 
 uint Parsing::hash() const
