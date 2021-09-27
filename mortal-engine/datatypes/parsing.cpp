@@ -682,6 +682,14 @@ QList<ParsingStep> Parsing::steps() const
 bool Parsing::allomorphMatches(const Allomorph &allomorph) const
 {
     bool segmentalMatch = allomorphMatchesSegmentally(allomorph);
+    if( !segmentalMatch )
+    {
+        if( Morphology::DebugOutput )
+        {
+            qInfo().noquote() << qPrintable("\t") << allomorph.form( writingSystem() ).text() << "Segmental Fail: " << allomorph.oneLineSummary();
+        }
+        return false;
+    }
     bool conditionMatch = allomorphMatchConditionsSatisfied(allomorph);
     if( Morphology::DebugOutput )
     {
