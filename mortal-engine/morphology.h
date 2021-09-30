@@ -51,7 +51,7 @@ public:
 
     LexicalStemInsertResult addLexicalStem(const LexicalStem & stem);
     LexicalStemInsertResult replaceLexicalStem(const LexicalStem & stem);
-    const LexicalStem * getLexicalStem(qlonglong id);
+    const LexicalStem * getLexicalStem(qlonglong id) const;
     void removeLexicalStem(qlonglong id);
 
     void printModelCheck(QTextStream &out) const;
