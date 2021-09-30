@@ -16,6 +16,11 @@ Generation::Generation(const WritingSystem &outputWs, const MorphologicalModel *
 
 }
 
+Generation::Generation()
+{
+
+}
+
 Generation::~Generation()
 {
 
