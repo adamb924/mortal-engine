@@ -4,7 +4,7 @@
 #include "create-allomorphs/createallomorphs.h"
 #include "debug.h"
 
-LexicalStem::LexicalStem() : mId(-1)
+LexicalStem::LexicalStem() : mId(-1), mOriginalAllomorph(Allomorph::Null)
 {
 
 }
@@ -13,12 +13,14 @@ LexicalStem::~LexicalStem()
 {
 }
 
-LexicalStem::LexicalStem(const Allomorph & allomorph) : mId(-1)
+LexicalStem::LexicalStem(const Allomorph & allomorph) : mId(-1), mOriginalAllomorph(Allomorph::Null)
 {
     mAllomorphs.insert(allomorph);
+    if( allomorph.isOriginal() )
+        mOriginalAllomorph = allomorph;
 }
 
-LexicalStem::LexicalStem(const LexicalStem &other)
+LexicalStem::LexicalStem(const LexicalStem &other) : mOriginalAllomorph(other.mOriginalAllomorph)
 {
     /// make a deep copy of the Allomorphs since those are pointers
     mAllomorphs.clear();
@@ -41,6 +43,8 @@ bool LexicalStem::operator==(const LexicalStem &other) const
 void LexicalStem::insert(const Allomorph & allomorph)
 {
     mAllomorphs.insert(allomorph);
+    if( allomorph.isOriginal() )
+        mOriginalAllomorph = allomorph;
 }
 
 void LexicalStem::remove(const Allomorph &allomorph)
@@ -182,6 +186,11 @@ QString LexicalStem::liftGuid() const
 void LexicalStem::setLiftGuid(const QString &liftGuid)
 {
     mLiftGuid = liftGuid;
+}
+
+Allomorph LexicalStem::displayAllomorph() const
+{
+    return mOriginalAllomorph;
 }
 
 QString LexicalStem::summary() const

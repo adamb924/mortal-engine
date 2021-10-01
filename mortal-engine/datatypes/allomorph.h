@@ -204,6 +204,8 @@ public:
      */
     bool isHypothetical() const;
 
+    bool isOriginal() const;
+
     /**
      * @brief Returns true if the Allomorph has no Form objects; otherwise returns false.
      * 

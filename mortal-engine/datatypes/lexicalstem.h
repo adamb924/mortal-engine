@@ -56,11 +56,15 @@ public:
     QString liftGuid() const;
     void setLiftGuid(const QString &liftGuid);
 
+    /// I don't like this, but I need a quick way to get a display form
+    Allomorph displayAllomorph() const;
+
 private:
     QSet<Allomorph> mAllomorphs;
     QHash<WritingSystem,Form> mGlosses;
     qlonglong mId;
     QString mLiftGuid;
+    Allomorph mOriginalAllomorph;
 };
 
 Q_DECL_EXPORT uint qHash(const LexicalStem & key);

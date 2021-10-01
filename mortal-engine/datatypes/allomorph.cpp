@@ -279,6 +279,11 @@ bool Allomorph::isHypothetical() const
     return mType == Allomorph::Hypothetical;
 }
 
+bool Allomorph::isOriginal() const
+{
+    return mType == Allomorph::Original;
+}
+
 QSet<const AbstractConstraint *> Allomorph::constraints() const
 {
     return mConstraints;
