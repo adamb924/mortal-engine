@@ -105,6 +105,25 @@ bool Jump::isJump() const
     return true;
 }
 
+QList<const AbstractNode *> Jump::availableMorphemeNodes(QHash<const Jump *, int> &jumps) const
+{
+    QList<const AbstractNode *> list;
+
+    if( jumps.value(this,0) < Parsing::MAXIMUM_JUMPS )
+    {
+        jumps[ this ] = jumps.value(this,0) + 1;
+        list.append( mNodeTarget->availableMorphemeNodes(jumps) );
+
+        /// move on to the next node if this one is optional
+        if( optional() && AbstractNode::next() != nullptr )
+        {
+            list.append( AbstractNode::next()->availableMorphemeNodes(jumps) );
+        }
+    }
+
+    return list;
+}
+
 void Jump::setNodeTarget(const AbstractNode *nodeTarget)
 {
     mNodeTarget = nodeTarget;

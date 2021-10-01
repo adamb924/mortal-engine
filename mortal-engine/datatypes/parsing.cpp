@@ -13,6 +13,8 @@
 #include "generation-constraints/morphemesequenceconstraint.h"
 #include "generation-constraints/stemidentityconstraint.h"
 
+int Parsing::MAXIMUM_JUMPS = 1;
+
 Parsing::Parsing() :
     mForm( WritingSystem(), "" ),
     mPosition(0),
@@ -573,8 +575,7 @@ void Parsing::incrementJumpCounter(const Jump *jump)
 
 bool Parsing::jumpPermitted(const Jump *jump) const
 {
-    /// TODO HACK this value should not be hard-coded in
-    return mJumpCounts.value(jump, 0) < 1;
+    return mJumpCounts.value(jump, 0) < MAXIMUM_JUMPS;
 }
 
 LexicalStem Parsing::firstLexicalStem() const

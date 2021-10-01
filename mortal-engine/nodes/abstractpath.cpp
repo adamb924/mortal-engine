@@ -59,6 +59,20 @@ bool AbstractPath::checkHasOptionalCompletionPath() const
     }
 }
 
+QList<const AbstractNode *> AbstractPath::availableMorphemeNodes(QHash<const Jump *, int> &jumps) const
+{
+    QList<const AbstractNode *> list;
+    list << mInitialNode->availableMorphemeNodes(jumps);
+
+    /// move on to the next node if this one is optional
+    if( optional() && AbstractNode::next() != nullptr )
+    {
+        list.append( AbstractNode::next()->availableMorphemeNodes(jumps) );
+    }
+
+    return list;
+}
+
 QList<Parsing> AbstractPath::parsingsUsingThisNode(const Parsing &parsing, Parsing::Flags flags) const
 {
     if( mInitialNode == nullptr )

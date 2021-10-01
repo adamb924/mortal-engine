@@ -198,6 +198,20 @@ bool MorphemeNode::hasZeroLengthForms() const
     return false;
 }
 
+QList<const AbstractNode *> MorphemeNode::availableMorphemeNodes(QHash<const Jump *, int> &jumps) const
+{
+    QList<const AbstractNode *> list;
+    list << this;
+
+    /// move on to the next node if this one is optional
+    if( optional() && AbstractNode::next() != nullptr )
+    {
+        list.append( AbstractNode::next()->availableMorphemeNodes(jumps) );
+    }
+
+    return list;
+}
+
 QList<Generation> MorphemeNode::generateFormsWithAllomorphs(const Generation &generation, QSet<Allomorph> &potentialAllomorphs) const
 {
     QList<Generation> candidates;

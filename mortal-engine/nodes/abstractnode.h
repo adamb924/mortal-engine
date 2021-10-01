@@ -115,6 +115,10 @@ public:
 
     QString debugIdentifier() const;
 
+    /// NB: in these function names "morpheme nodes" refers to morphemes that can contribute segments
+    QList<const AbstractNode*> nextMorphemeNodes() const;
+    virtual QList<const AbstractNode*> availableMorphemeNodes(QHash<const Jump*,int> &jumps) const = 0;
+
 protected:
     QHash<WritingSystem,Form> mGlosses;
 

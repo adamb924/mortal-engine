@@ -327,6 +327,20 @@ bool AbstractStemList::nodeCanAppendMorphemes() const
     return true;
 }
 
+QList<const AbstractNode *> AbstractStemList::availableMorphemeNodes(QHash<const Jump *, int> &jumps) const
+{
+    QList<const AbstractNode *> list;
+    list << this;
+
+    /// move on to the next node if this one is optional
+    if( optional() && AbstractNode::next() != nullptr )
+    {
+        list.append( AbstractNode::next()->availableMorphemeNodes(jumps) );
+    }
+
+    return list;
+}
+
 QList<QPair<Allomorph, LexicalStem> > AbstractStemList::possibleStemForms(const Parsing &parsing) const
 {
     QList<QPair<Allomorph, LexicalStem> > allomorphMatches;

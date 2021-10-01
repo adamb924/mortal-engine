@@ -59,6 +59,8 @@ public:
 
     bool nodeCanAppendMorphemes() const override;
 
+    QList<const AbstractNode *> availableMorphemeNodes(QHash<const Jump*,int> &jumps) const override;
+
     static QString XML_FILENAME;
     static QString XML_MATCHING_TAG;
 

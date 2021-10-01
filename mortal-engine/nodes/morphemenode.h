@@ -65,6 +65,8 @@ public:
 
     bool hasZeroLengthForms() const;
 
+    QList<const AbstractNode *> availableMorphemeNodes(QHash<const Jump*,int> &jumps) const override;
+
     static QString XML_ALLOMORPH;
     static QString XML_GLOSS;
 

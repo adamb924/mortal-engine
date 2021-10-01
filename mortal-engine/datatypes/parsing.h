@@ -184,6 +184,8 @@ public:
 
     uint hash() const;
 
+    static int MAXIMUM_JUMPS;
+
 protected:
     void setPosition(int position);
 

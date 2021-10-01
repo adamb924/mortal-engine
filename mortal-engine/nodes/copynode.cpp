@@ -107,3 +107,17 @@ bool CopyNode::optional() const
 {
     return mCopy->optional();
 }
+
+QList<const AbstractNode *> CopyNode::availableMorphemeNodes(QHash<const Jump *, int> &jumps) const
+{
+    QList<const AbstractNode *> list;
+    list.append( mCopy->availableMorphemeNodes(jumps) );
+
+    /// move on to the next node if this one is optional
+    if( optional() && AbstractNode::next() != nullptr )
+    {
+        list.append( AbstractNode::next()->availableMorphemeNodes(jumps) );
+    }
+
+    return list;
+}

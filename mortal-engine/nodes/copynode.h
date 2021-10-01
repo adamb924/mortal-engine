@@ -33,6 +33,8 @@ public:
 
     bool optional() const override;
 
+    QList<const AbstractNode *> availableMorphemeNodes(QHash<const Jump*,int> &jumps) const override;
+
 private:
     AbstractNode * mCopy;
 };

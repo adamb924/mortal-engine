@@ -166,6 +166,25 @@ bool Fork::isFork() const
     return true;
 }
 
+QList<const AbstractNode *> Fork::availableMorphemeNodes(QHash<const Jump *, int> &jumps) const
+{
+    QList<const AbstractNode *> list;
+    foreach(Path * path, mPaths)
+    {
+        list << path->availableMorphemeNodes(jumps);
+    }
+
+
+    /// move on to the next node if this one is optional
+    if( optional() && next() != nullptr )
+    {
+        list.append( next()->availableMorphemeNodes(jumps) );
+    }
+
+
+    return list;
+}
+
 QString Fork::summary(const AbstractNode *doNotFollow) const
 {
     QString dbgString;

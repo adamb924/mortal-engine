@@ -213,6 +213,19 @@ bool AbstractNode::hasNext() const
     return mNext != nullptr;
 }
 
+QList<const AbstractNode *> AbstractNode::nextMorphemeNodes() const
+{
+    QHash<const Jump*,int> jumpCounts;
+    if( mNext == nullptr )
+    {
+        return QList<const AbstractNode *>();
+    }
+    else
+    {
+        return mNext->availableMorphemeNodes(jumpCounts);
+    }
+}
+
 void AbstractNode::setNext(AbstractNode *next)
 {
     mNext = next;
