@@ -28,6 +28,8 @@ targetNamespace="https://www.adambaker.org/mortal-engine/tests">
                     <xs:element name="stem-replacement-test" type="met:stem-replacement-test"/>
                     <xs:element name="accept" type="met:acceptance-test"/>
                     <xs:element name="reject" type="met:acceptance-test"/>
+                    <xs:element name="generation-test" type="met:generation-test"/>
+                    <xs:element name="generate" type="met:quick-generation-test"/>
                     <xs:element name="blank" type="xs:string" fixed=""/>
                     <xs:element name="message" type="xs:string"/>
                 </xs:choice>
@@ -104,6 +106,33 @@ targetNamespace="https://www.adambaker.org/mortal-engine/tests">
                     <xs:element name="input" type="met:form"/>
                     <xs:element name="replacement-stem" type="met:stem"/>
                     <xs:element name="output" type="met:form"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="quick-generation-test">
+        <xs:complexContent>
+            <xs:extension base="met:test">
+                <xs:attribute name="morphemes" type="xs:string"/>
+                <xs:attribute name="stem" type="xs:unsignedLong"/>
+                <xs:attribute name="lang" type="xs:string"/>
+                <xs:attribute name="output" type="xs:string"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="generation-test">
+        <xs:complexContent>
+            <xs:extension base="met:test">
+                <xs:sequence>
+                    <xs:element name="morphemes" type="xs:string"/>
+                    <xs:element name="stem">
+                        <xs:complexType>
+                            <xs:attribute name="id" type="xs:unsignedLong" use="required"/>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="output" type="met:form" minOccurs="1" maxOccurs="unbounded"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
