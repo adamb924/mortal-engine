@@ -32,6 +32,8 @@ public:
     //! \brief Returns a message about the test (e.g., a plain text summary of what happened and whether that was correct). Whether the test succeeds or fails is entirely implementation-dependent.
     virtual QString message() const = 0;
 
+    virtual QString barebonesOutput() const = 0;
+
     //! \brief Evaluate the function using the input provided by setInput().
     void evaluate();
     virtual void runTest() = 0;
@@ -53,6 +55,9 @@ protected:
     //! \brief Converts a set of QString objects to a comma-delimited list
     QString setToString( QSet<Form> forms ) const;
     QString setToString( QSet<QString> forms ) const;
+
+    QString setToBarebonesString( QSet<Form> forms ) const;
+    QString setToBarebonesString( QSet<QString> forms ) const;
 
     const Morphology * mMorphology;
     Form mInput;

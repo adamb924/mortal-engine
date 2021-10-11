@@ -18,7 +18,7 @@ class TestHarness
 public:
     friend class HarnessXmlReader;
 
-    enum VerbosityLevel{ AllResults, ErrorsOnly };
+    enum VerbosityLevel{ AllResults, ErrorsOnly, BareBones };
 
     TestHarness();
     ~TestHarness();

@@ -20,6 +20,8 @@ public:
     //! \brief Returns mMessage.
     QString message() const override;
 
+    QString barebonesOutput() const override;
+
     //! \brief Empty. Implementation required by AbstractTest.
     void runTest() override;
 

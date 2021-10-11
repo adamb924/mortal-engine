@@ -37,6 +37,11 @@ QString SuggestionTest::message() const
 
 }
 
+QString SuggestionTest::barebonesOutput() const
+{
+    return setToBarebonesString(mActualParsings);
+}
+
 void SuggestionTest::runTest()
 {
     mActualParsings.clear();

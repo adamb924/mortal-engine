@@ -20,6 +20,11 @@ QString Message::message() const
     return mMessage;
 }
 
+QString Message::barebonesOutput() const
+{
+    return mMessage;
+}
+
 void Message::runTest()
 {
 

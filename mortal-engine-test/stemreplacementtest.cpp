@@ -42,6 +42,11 @@ QString StemReplacementTest::message() const
     }
 }
 
+QString StemReplacementTest::barebonesOutput() const
+{
+    return setToBarebonesString(mActualOutputs);
+}
+
 void StemReplacementTest::runTest()
 {
     mActualOutputs.clear();

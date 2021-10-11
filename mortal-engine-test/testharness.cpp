@@ -24,7 +24,8 @@ void TestHarness::printReport(QTextStream &out, VerbosityLevel verbosity, bool s
 {
     foreach(TestSchema *ts, mSchemata)
     {
-        out << QObject::tr("Schema: %1 [%2]\n").arg(ts->label(), ts->morphologyFile());
+        if( verbosity != TestHarness::BareBones )
+            out << QObject::tr("Schema: %1 [%2]\n").arg(ts->label(), ts->morphologyFile());
         if( showModel || ts->showModel() )
         {
             out << ts->morphology()->summary() << Qt::endl << Qt::endl;

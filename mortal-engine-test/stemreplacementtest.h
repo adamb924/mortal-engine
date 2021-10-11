@@ -16,6 +16,8 @@ public:
     //! \brief Returns a message about the test (e.g., a plain text summary of what happened and whether that was correct). Whether the test succeeds or fails is entirely implementation-dependent.
     QString message() const override;
 
+    QString barebonesOutput() const override;
+
     //! \brief Evaluate the function using the input provided by setInput().
     void runTest() override;
 

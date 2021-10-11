@@ -99,6 +99,45 @@ QString AbstractTest::setToString(QSet<QString> forms) const
     }
 }
 
+QString AbstractTest::setToBarebonesString(QSet<Form> forms) const
+{
+    if( forms.isEmpty() )
+    {
+        return QObject::tr("(empty)");
+    }
+    QString result;
+    QSetIterator<Form> i(forms);
+    while(i.hasNext())
+    {
+        Form f = i.next();
+        result += f.text();
+        if( i.hasNext() )
+        {
+            result += ", ";
+        }
+    }
+    return result;
+}
+
+QString AbstractTest::setToBarebonesString(QSet<QString> forms) const
+{
+    if( forms.isEmpty() )
+    {
+        return QObject::tr("(empty)");
+    }
+    QString result;
+    QSetIterator<QString> i(forms);
+    while(i.hasNext())
+    {
+        result += i.next();
+        if( i.hasNext() )
+        {
+            result += ", ";
+        }
+    }
+    return result;
+}
+
 bool AbstractTest::showDebug() const
 {
     return mShowDebug;

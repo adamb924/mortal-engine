@@ -14,6 +14,8 @@ public:
     //! \brief Returns a summary of results of the test.
     QString message() const override;
 
+    QString barebonesOutput() const override;
+
     //! \brief Runs the test.
     void runTest() override;
 

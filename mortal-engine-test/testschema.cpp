@@ -32,7 +32,11 @@ void TestSchema::printReport(QTextStream &out, TestHarness::VerbosityLevel verbo
 {
     foreach (AbstractTest * t, mTests)
     {
-        if( verbosity == TestHarness::AllResults || t->fails() )
+        if( verbosity == TestHarness::BareBones )
+        {
+            out << t->barebonesOutput() << "\n";
+        }
+        else if( verbosity == TestHarness::AllResults || t->fails() )
         {
             out << t->message() << "\n";
         }

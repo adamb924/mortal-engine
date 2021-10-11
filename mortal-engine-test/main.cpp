@@ -28,6 +28,9 @@ int main(int argc, char *argv[])
     QCommandLineOption verborseOutputOption(QStringList() << "f" << "verbose", QCoreApplication::translate("main", "Verbose output."));
     parser.addOption(verborseOutputOption);
 
+    QCommandLineOption barebonesOutputOption(QStringList() << "b" << "barebones", QCoreApplication::translate("main", "Barebones output."));
+    parser.addOption(barebonesOutputOption);
+
     QCommandLineOption showModelOption(QStringList() << "m" << "model", QCoreApplication::translate("main", "Display the model."));
     parser.addOption(showModelOption);
 
@@ -44,6 +47,7 @@ int main(int argc, char *argv[])
 
     const bool showModel = parser.isSet(showModelOption);
     const bool verbose = parser.isSet(verborseOutputOption);
+    const bool barebones = parser.isSet(barebonesOutputOption);
     Morphology::DebugOutput = parser.isSet(debugOption);
     const bool check = parser.isSet(checkOption);
     const QString logfile = parser.value(debugOutputOption);
@@ -55,6 +59,25 @@ int main(int argc, char *argv[])
     }
     const QString input = args.at(0);
     const QString output = args.length() > 1 ? args.at(1) : "";
+
+    TestHarness::VerbosityLevel verbosity;
+    if( verbose && barebones )
+    {
+        qInfo() << "You can't do verbose and barebones at the same time.";
+        parser.showHelp();
+    }
+    else if ( verbose )
+    {
+        verbosity = TestHarness::AllResults;
+    }
+    else if ( barebones )
+    {
+        verbosity = TestHarness::BareBones;
+    }
+    else
+    {
+        verbosity = TestHarness::ErrorsOnly;
+    }
 
     redirectMessagesTo(logfile);
 
@@ -71,7 +94,7 @@ int main(int argc, char *argv[])
         out.setCodec("UTF-8");
 #endif
 
-        harness.printReport(out, verbose ? TestHarness::AllResults : TestHarness::ErrorsOnly, showModel, check );
+        harness.printReport(out, verbosity, showModel, check );
     }
     else
     {
@@ -89,7 +112,7 @@ int main(int argc, char *argv[])
         out.setCodec("UTF-8");
 #endif
 
-        harness.printReport(out, verbose ? TestHarness::AllResults : TestHarness::ErrorsOnly, showModel, check );
+        harness.printReport(out, verbosity, showModel, check );
         outFile.close();
     }
 

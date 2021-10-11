@@ -35,6 +35,11 @@ QString GenerationTest::message() const
     }
 }
 
+QString GenerationTest::barebonesOutput() const
+{
+    return setToBarebonesString(mActualOutputs);
+}
+
 void GenerationTest::runTest()
 {
     const LexicalStem * ls = mMorphology->getLexicalStem( mLexicalStemId );

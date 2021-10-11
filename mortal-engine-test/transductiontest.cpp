@@ -33,6 +33,11 @@ QString TransductionTest::message() const
     }
 }
 
+QString TransductionTest::barebonesOutput() const
+{
+    return setToBarebonesString(mActualOutputs);
+}
+
 void TransductionTest::runTest()
 {
     mActualOutputs.clear();

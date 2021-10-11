@@ -40,6 +40,11 @@ QString ParsingTest::message() const
     return ret;
 }
 
+QString ParsingTest::barebonesOutput() const
+{
+    return setToBarebonesString(mActualParsings);
+}
+
 void ParsingTest::runTest()
 {
     mActualParsings.clear();

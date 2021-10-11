@@ -20,6 +20,8 @@ public:
     //! \brief Summary message of how/whether the test succeeded or failed.
     QString message() const override;
 
+    QString barebonesOutput() const override;
+
     //! \brief Runs the test
     void runTest() override;
 

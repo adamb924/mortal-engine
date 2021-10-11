@@ -30,6 +30,11 @@ QString RecognitionTest::message() const
     return ret;
 }
 
+QString RecognitionTest::barebonesOutput() const
+{
+    return mInputIsAccepted ? "accepted" : "rejected";
+}
+
 void RecognitionTest::runTest()
 {
     QList<Parsing> parsings = mMorphology->possibleParsings( mInput );
