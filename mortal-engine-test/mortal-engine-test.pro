@@ -18,6 +18,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         abstracttest.cpp \
+        generationtest.cpp \
         harnessxmlreader.cpp \
         main.cpp \
         message.cpp \
@@ -36,6 +37,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     abstracttest.h \
+    generationtest.h \
     harnessxmlreader.h \
     message.h \
     parsingtest.h \

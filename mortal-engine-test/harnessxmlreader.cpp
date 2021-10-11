@@ -10,6 +10,7 @@
 #include "datatypes/lexicalstem.h"
 #include "suggestiontest.h"
 #include "nodes/sqlitestemlist.h"
+#include "generationtest.h"
 
 #include <QTextStream>
 #include <QXmlStreamReader>
@@ -24,12 +25,18 @@ QString HarnessXmlReader::XML_YES = "yes";
 QString HarnessXmlReader::XML_RECOGNITION_TEST = "recognition-test";
 QString HarnessXmlReader::XML_TRANSDUCTION_TEST = "transduction-test";
 QString HarnessXmlReader::XML_PARSING_TEST = "parsing-test";
+QString HarnessXmlReader::XML_GENERATION_TEST = "generation-test";
+QString HarnessXmlReader::XML_GENERATION_TEST_SHORT = "generate";
 QString HarnessXmlReader::XML_LABEL = "label";
 QString HarnessXmlReader::XML_STEM = "stem";
+QString HarnessXmlReader::XML_ID = "id";
 QString HarnessXmlReader::XML_FORM = "form";
 QString HarnessXmlReader::XML_SUGGESTION_TEST = "suggestion-test";
 QString HarnessXmlReader::XML_STEM_REPLACEMENT_TEST = "stem-replacement-test";
 QString HarnessXmlReader::XML_TAG = "tag";
+QString HarnessXmlReader::XML_MORPHEMES = "morphemes";
+QString HarnessXmlReader::XML_LANG = "lang";
+
 
 HarnessXmlReader::HarnessXmlReader(TestHarness *harness) : mHarness(harness)
 {
@@ -98,6 +105,14 @@ void HarnessXmlReader::readTestFile(const QString &filename)
                 else if ( name == "suggestion-test" )
                 {
                     mHarness->mSchemata.last()->addTest( readSuggestionTest(in, mHarness->mSchemata.last()) );
+                }
+                else if ( name == XML_GENERATION_TEST )
+                {
+                    mHarness->mSchemata.last()->addTest( readGenerationTest(in, mHarness->mSchemata.last()) );
+                }
+                else if ( name == XML_GENERATION_TEST_SHORT )
+                {
+                    mHarness->mSchemata.last()->addTest( readQuickGenerationTest(in, mHarness->mSchemata.last()) );
                 }
                 else if ( name == "accept" )
                 {
@@ -370,6 +385,59 @@ SuggestionTest *HarnessXmlReader::readSuggestionTest(QXmlStreamReader &in, const
             }
         }
     }
+
+    test->evaluate();
+
+    return test;
+}
+
+GenerationTest *HarnessXmlReader::readGenerationTest(QXmlStreamReader &in, const TestSchema *schema)
+{
+    GenerationTest* test = new GenerationTest(schema->morphology());
+    test->setLabel( in.attributes().value("label").toString() );
+    test->setShowDebug( in.attributes().value("debug").toString() == XML_TRUE );
+
+    while(!in.atEnd() && !(in.tokenType() == QXmlStreamReader::EndElement && in.name() == XML_GENERATION_TEST ) )
+    {
+        in.readNext();
+
+        if( in.tokenType() == QXmlStreamReader::StartElement )
+        {
+            if( in.name() == XML_MORPHEMES )
+            {
+                test->setMorphologicalString( in.readElementText() );
+            }
+            else if( in.name() == XML_STEM )
+            {
+                test->setLexicalStemId( in.attributes().value( XML_ID ).toLongLong() );
+            }
+            else if( in.name() == XML_OUTPUT )
+            {
+                /// this'll all get optimized by the compiler I assume
+                WritingSystem ws = schema->morphology()->writingSystem( in.attributes().value("lang").toString() );
+                Form f = Form( ws, in.readElementText() );
+                test->addTargetOutput( f );
+            }
+        }
+    }
+
+    test->evaluate();
+
+    return test;
+}
+
+GenerationTest *HarnessXmlReader::readQuickGenerationTest(QXmlStreamReader &in, const TestSchema *schema)
+{
+    GenerationTest* test = new GenerationTest(schema->morphology());
+    test->setLabel( in.attributes().value("label").toString() );
+    test->setShowDebug( in.attributes().value("debug").toString() == XML_TRUE );
+
+    test->setMorphologicalString( in.attributes().value( XML_MORPHEMES ).toString() );
+    test->setLexicalStemId( in.attributes().value( XML_STEM ).toLongLong() );
+
+    WritingSystem ws = schema->morphology()->writingSystem( in.attributes().value( XML_LANG ).toString() );
+    Form f = Form( ws, in.attributes().value( XML_OUTPUT ).toString() );
+    test->addTargetOutput( f );
 
     test->evaluate();
 
