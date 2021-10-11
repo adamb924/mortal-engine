@@ -62,6 +62,7 @@ private:
     static QString XML_TAG;
     static QString XML_MORPHEMES;
     static QString XML_LANG;
+    static QString XML_DEBUG;
 };
 
 #endif // HARNESSXMLREADER_H

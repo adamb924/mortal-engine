@@ -36,6 +36,7 @@ QString HarnessXmlReader::XML_STEM_REPLACEMENT_TEST = "stem-replacement-test";
 QString HarnessXmlReader::XML_TAG = "tag";
 QString HarnessXmlReader::XML_MORPHEMES = "morphemes";
 QString HarnessXmlReader::XML_LANG = "lang";
+QString HarnessXmlReader::XML_DEBUG = "debug";
 
 
 HarnessXmlReader::HarnessXmlReader(TestHarness *harness) : mHarness(harness)
@@ -62,7 +63,7 @@ void HarnessXmlReader::readTestFile(const QString &filename)
 
                 if ( name == "schema" )
                 {
-                    TestSchema * schema = new TestSchema( attr.value("label").toString() );
+                    TestSchema * schema = new TestSchema( attr.value(XML_LANG).toString() );
                     if( attr.hasAttribute(XML_SHOW_MODEL) && attr.value(XML_SHOW_MODEL) == XML_TRUE )
                     {
                         schema->setShowModel(true);
@@ -78,15 +79,15 @@ void HarnessXmlReader::readTestFile(const QString &filename)
                         return;
                     }
                 }
-                else if ( name == "recognition-test" )
+                else if ( name == XML_RECOGNITION_TEST )
                 {
                     mHarness->mSchemata.last()->addTest( readRecognitionTest(in, mHarness->mSchemata.last() ) );
                 }
-                else if ( name == "transduction-test" )
+                else if ( name == XML_TRANSDUCTION_TEST )
                 {
                     mHarness->mSchemata.last()->addTest( readTransductionTest(in, mHarness->mSchemata.last() ) );
                 }
-                else if ( name == "parsing-test" )
+                else if ( name == XML_PARSING_TEST )
                 {
                     mHarness->mSchemata.last()->addTest( readParsingTest(in, mHarness->mSchemata.last() ) );
                 }
@@ -98,11 +99,11 @@ void HarnessXmlReader::readTestFile(const QString &filename)
                 {
                     mHarness->mSchemata.last()->addTest( new Message( in.readElementText(), mHarness->mSchemata.last()->morphology()) );
                 }
-                else if ( name == "stem-replacement-test" )
+                else if ( name == XML_STEM_REPLACEMENT_TEST )
                 {
                     mHarness->mSchemata.last()->addTest( readStemReplacementTest(in, mHarness->mSchemata.last()) );
                 }
-                else if ( name == "suggestion-test" )
+                else if ( name == XML_SUGGESTION_TEST )
                 {
                     mHarness->mSchemata.last()->addTest( readSuggestionTest(in, mHarness->mSchemata.last()) );
                 }
@@ -134,8 +135,8 @@ void HarnessXmlReader::readTestFile(const QString &filename)
 RecognitionTest *HarnessXmlReader::readRecognitionTest(QXmlStreamReader &in, const TestSchema *schema)
 {
     RecognitionTest* test = new RecognitionTest(schema->morphology());
-    test->setLabel( in.attributes().value("label").toString() );
-    test->setShowDebug( in.attributes().value("debug").toString() == XML_TRUE );
+    test->setLabel( in.attributes().value(XML_LABEL).toString() );
+    test->setShowDebug( in.attributes().value(XML_DEBUG).toString() == XML_TRUE );
 
     while(!in.atEnd() && !(in.tokenType() == QXmlStreamReader::EndElement && in.name() == XML_RECOGNITION_TEST ) )
     {
@@ -146,7 +147,7 @@ RecognitionTest *HarnessXmlReader::readRecognitionTest(QXmlStreamReader &in, con
             if( in.name() == XML_INPUT )
             {
                 /// this'll all get optimized by the compiler I assume
-                WritingSystem ws = schema->morphology()->writingSystem( in.attributes().value("lang").toString() );
+                WritingSystem ws = schema->morphology()->writingSystem( in.attributes().value(XML_LANG).toString() );
                 Form f = Form( ws, in.readElementText() );
                 test->setInput( f );
             }
@@ -166,12 +167,12 @@ RecognitionTest *HarnessXmlReader::readQuickAcceptanceTest(QXmlStreamReader &in,
 {
     RecognitionTest* test = new RecognitionTest(schema->morphology());
 
-    if( in.attributes().hasAttribute("label") )
-        test->setLabel( in.attributes().value("label").toString() );
-    if( in.attributes().hasAttribute("debug") )
-        test->setShowDebug( in.attributes().value("debug").toString() == XML_TRUE );
+    if( in.attributes().hasAttribute(XML_LABEL) )
+        test->setLabel( in.attributes().value(XML_LABEL).toString() );
+    if( in.attributes().hasAttribute(XML_DEBUG) )
+        test->setShowDebug( in.attributes().value(XML_DEBUG).toString() == XML_TRUE );
 
-    WritingSystem ws = schema->morphology()->writingSystem( in.attributes().value("lang").toString() );
+    WritingSystem ws = schema->morphology()->writingSystem( in.attributes().value(XML_LANG).toString() );
     Form f = Form( ws, in.readElementText() );
     test->setInput( f );
     test->setShouldBeAccepted( true );
@@ -183,12 +184,12 @@ RecognitionTest *HarnessXmlReader::readQuickRejectionTest(QXmlStreamReader &in, 
 {
     RecognitionTest* test = new RecognitionTest(schema->morphology());
 
-    if( in.attributes().hasAttribute("label") )
-        test->setLabel( in.attributes().value("label").toString() );
-    if( in.attributes().hasAttribute("debug") )
-        test->setShowDebug( in.attributes().value("debug").toString() == XML_TRUE );
+    if( in.attributes().hasAttribute(XML_LABEL) )
+        test->setLabel( in.attributes().value(XML_LABEL).toString() );
+    if( in.attributes().hasAttribute(XML_DEBUG) )
+        test->setShowDebug( in.attributes().value(XML_DEBUG).toString() == XML_TRUE );
 
-    WritingSystem ws = schema->morphology()->writingSystem( in.attributes().value("lang").toString() );
+    WritingSystem ws = schema->morphology()->writingSystem( in.attributes().value(XML_LANG).toString() );
     Form f = Form( ws, in.readElementText() );
     test->setInput( f );
     test->setShouldBeAccepted( false );
@@ -199,8 +200,8 @@ RecognitionTest *HarnessXmlReader::readQuickRejectionTest(QXmlStreamReader &in, 
 TransductionTest *HarnessXmlReader::readTransductionTest(QXmlStreamReader &in, const TestSchema *schema)
 {
     TransductionTest* test = new TransductionTest(schema->morphology());
-    test->setLabel( in.attributes().value("label").toString() );
-    test->setShowDebug( in.attributes().value("debug").toString() == XML_TRUE );
+    test->setLabel( in.attributes().value(XML_LABEL).toString() );
+    test->setShowDebug( in.attributes().value(XML_DEBUG).toString() == XML_TRUE );
 
     while(!in.atEnd() && !(in.tokenType() == QXmlStreamReader::EndElement && in.name() == XML_TRANSDUCTION_TEST ) )
     {
@@ -211,14 +212,14 @@ TransductionTest *HarnessXmlReader::readTransductionTest(QXmlStreamReader &in, c
             if( in.name() == XML_INPUT )
             {
                 /// this'll all get optimized by the compiler I assume
-                WritingSystem ws = schema->morphology()->writingSystem( in.attributes().value("lang").toString() );
+                WritingSystem ws = schema->morphology()->writingSystem( in.attributes().value(XML_LANG).toString() );
                 Form f = Form( ws, in.readElementText() );
                 test->setInput( f );
 
             }
             else if( in.name() == XML_OUTPUT )
             {
-                WritingSystem ws = schema->morphology()->writingSystem( in.attributes().value("lang").toString() );
+                WritingSystem ws = schema->morphology()->writingSystem( in.attributes().value(XML_LANG).toString() );
                 Form f = Form( ws, in.readElementText() );
                 test->addTargetOutput( f );
             }
@@ -233,8 +234,8 @@ TransductionTest *HarnessXmlReader::readTransductionTest(QXmlStreamReader &in, c
 ParsingTest *HarnessXmlReader::readParsingTest(QXmlStreamReader &in, const TestSchema *schema)
 {
     ParsingTest* test = new ParsingTest(schema->morphology());
-    test->setLabel( in.attributes().value("label").toString() );
-    test->setShowDebug( in.attributes().value("debug").toString() == XML_TRUE );
+    test->setLabel( in.attributes().value(XML_LABEL).toString() );
+    test->setShowDebug( in.attributes().value(XML_DEBUG).toString() == XML_TRUE );
 
     QStringList outputList;
 
@@ -247,7 +248,7 @@ ParsingTest *HarnessXmlReader::readParsingTest(QXmlStreamReader &in, const TestS
             if( in.name() == XML_INPUT )
             {
                 /// this'll all get optimized by the compiler I assume
-                WritingSystem ws = schema->morphology()->writingSystem( in.attributes().value("lang").toString() );
+                WritingSystem ws = schema->morphology()->writingSystem( in.attributes().value(XML_LANG).toString() );
                 Form f = Form( ws, in.readElementText() );
                 test->setInput( f );
 
@@ -280,7 +281,7 @@ StemReplacementTest *HarnessXmlReader::readStemReplacementTest(QXmlStreamReader 
     StemReplacementTest* test = new StemReplacementTest(schema->morphology());
     test->setLabel( in.attributes().value(XML_LABEL).toString() );
     test->setOutputWritingSystem( WritingSystem( in.attributes().value("output-lang").toString() ) );
-    test->setShowDebug( in.attributes().value("debug").toString() == XML_TRUE );
+    test->setShowDebug( in.attributes().value(XML_DEBUG).toString() == XML_TRUE );
 
     Allomorph allomorph(Allomorph::Original);
 
@@ -293,23 +294,23 @@ StemReplacementTest *HarnessXmlReader::readStemReplacementTest(QXmlStreamReader 
             if( in.name() == XML_INPUT )
             {
                 /// this'll all get optimized by the compiler I assume
-                WritingSystem ws = schema->morphology()->writingSystem( in.attributes().value("lang").toString() );
+                WritingSystem ws = schema->morphology()->writingSystem( in.attributes().value(XML_LANG).toString() );
                 Form f = Form( ws, in.readElementText() );
                 test->setInput( f );
 
             }
             else if( in.name() == XML_OUTPUT )
             {
-                WritingSystem ws = schema->morphology()->writingSystem( in.attributes().value("lang").toString() );
+                WritingSystem ws = schema->morphology()->writingSystem( in.attributes().value(XML_LANG).toString() );
                 Form f = Form( ws, in.readElementText() );
                 test->addTargetOutput( f );
             }
             else if( in.name() == XML_FORM )
             {
                 QXmlStreamAttributes attr = in.attributes();
-                if( attr.hasAttribute("lang") )
+                if( attr.hasAttribute(XML_LANG) )
                 {
-                    WritingSystem ws(in.attributes().value("lang").toString());
+                    WritingSystem ws(in.attributes().value(XML_LANG).toString());
                     allomorph.setForm( Form( ws, in.readElementText() ) );
                 }
             }
@@ -333,7 +334,7 @@ SuggestionTest *HarnessXmlReader::readSuggestionTest(QXmlStreamReader &in, const
 {
     SuggestionTest* test = new SuggestionTest(schema->morphology());
     test->setLabel( in.attributes().value(XML_LABEL).toString() );
-    test->setShowDebug( in.attributes().value("debug").toString() == XML_TRUE );
+    test->setShowDebug( in.attributes().value(XML_DEBUG).toString() == XML_TRUE );
 
     QStringList outputList;
     QStringList stemList;
@@ -347,7 +348,7 @@ SuggestionTest *HarnessXmlReader::readSuggestionTest(QXmlStreamReader &in, const
             if( in.name() == XML_INPUT )
             {
                 /// this'll all get optimized by the compiler I assume
-                WritingSystem ws = schema->morphology()->writingSystem( in.attributes().value("lang").toString() );
+                WritingSystem ws = schema->morphology()->writingSystem( in.attributes().value(XML_LANG).toString() );
                 Form f = Form( ws, in.readElementText() );
                 test->setInput( f );
             }
@@ -394,8 +395,8 @@ SuggestionTest *HarnessXmlReader::readSuggestionTest(QXmlStreamReader &in, const
 GenerationTest *HarnessXmlReader::readGenerationTest(QXmlStreamReader &in, const TestSchema *schema)
 {
     GenerationTest* test = new GenerationTest(schema->morphology());
-    test->setLabel( in.attributes().value("label").toString() );
-    test->setShowDebug( in.attributes().value("debug").toString() == XML_TRUE );
+    test->setLabel( in.attributes().value(XML_LABEL).toString() );
+    test->setShowDebug( in.attributes().value(XML_DEBUG).toString() == XML_TRUE );
 
     while(!in.atEnd() && !(in.tokenType() == QXmlStreamReader::EndElement && in.name() == XML_GENERATION_TEST ) )
     {
@@ -414,7 +415,7 @@ GenerationTest *HarnessXmlReader::readGenerationTest(QXmlStreamReader &in, const
             else if( in.name() == XML_OUTPUT )
             {
                 /// this'll all get optimized by the compiler I assume
-                WritingSystem ws = schema->morphology()->writingSystem( in.attributes().value("lang").toString() );
+                WritingSystem ws = schema->morphology()->writingSystem( in.attributes().value(XML_LANG).toString() );
                 Form f = Form( ws, in.readElementText() );
                 test->addTargetOutput( f );
             }
@@ -429,8 +430,8 @@ GenerationTest *HarnessXmlReader::readGenerationTest(QXmlStreamReader &in, const
 GenerationTest *HarnessXmlReader::readQuickGenerationTest(QXmlStreamReader &in, const TestSchema *schema)
 {
     GenerationTest* test = new GenerationTest(schema->morphology());
-    test->setLabel( in.attributes().value("label").toString() );
-    test->setShowDebug( in.attributes().value("debug").toString() == XML_TRUE );
+    test->setLabel( in.attributes().value(XML_LABEL).toString() );
+    test->setShowDebug( in.attributes().value(XML_DEBUG).toString() == XML_TRUE );
 
     test->setMorphologicalString( in.attributes().value( XML_MORPHEMES ).toString() );
     test->setLexicalStemId( in.attributes().value( XML_STEM ).toLongLong() );
