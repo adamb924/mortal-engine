@@ -270,7 +270,16 @@ Parsing Parsing::readFromXml(QXmlStreamReader &in, const Morphology *morphology,
     p.setStatus( Parsing::statusFromString(status) );
     p.setPosition(position);
 
-    p.setSteps( ParsingStep::readListFromXml(in, morphology, elementName ) );
+    bool stepsOk = true;
+    const QList<ParsingStep> steps = ParsingStep::readListFromXml(in, morphology, elementName, stepsOk );
+    if( stepsOk )
+    {
+        p.setSteps( steps );
+    }
+    else
+    {
+        p = Parsing();
+    }
 
     Q_ASSERT( in.isEndElement() && in.name() == elementName );
     return p;
@@ -318,7 +327,16 @@ Parsing Parsing::readFromXml(QDomElement parsing, const Morphology *morphology)
     p.setStatus( Parsing::statusFromString(status) );
     p.setPosition(position);
 
-    p.setSteps( ParsingStep::readListFromXml(parsing, morphology ) );
+    bool stepsOk = true;
+    const QList<ParsingStep> steps = ParsingStep::readListFromXml(parsing, morphology, stepsOk );
+    if( stepsOk )
+    {
+        p.setSteps( steps );
+    }
+    else
+    {
+        p = Parsing();
+    }
 
     return p;
 }
@@ -329,7 +347,7 @@ QList<Parsing> Parsing::readListFromXml(QDomElement list, const Morphology *morp
     QDomNodeList parsingElements = list.elementsByTagName("parsing");
     for(int i=0; i< parsingElements.count(); i++)
     {
-        parsings << Parsing::readFromXml( parsingElements.at(i).toElement(), morphology );
+        parsings << Parsing::readFromXml( parsingElements.at(i).toElement(), morphology);
     }
     return parsings;
 }

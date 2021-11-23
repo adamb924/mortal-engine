@@ -185,7 +185,7 @@ QString ParsingStep::summaryPortion(ParsingStep::SummaryType type, const Writing
     return "";
 }
 
-ParsingStep ParsingStep::readFromXml(QXmlStreamReader &in, const Morphology *morphology, const QString &elementName)
+ParsingStep ParsingStep::readFromXml(QXmlStreamReader &in, const Morphology *morphology, bool &ok, const QString &elementName)
 {
     Q_ASSERT( in.isStartElement() && in.name() == elementName );
 
@@ -202,6 +202,7 @@ ParsingStep ParsingStep::readFromXml(QXmlStreamReader &in, const Morphology *mor
         if( node == nullptr )
         {
             qCritical() << "ParsingStep::readFromXml: Null node for id" << in.attributes().value("id").toString();
+            ok = false;
         }
     }
     else
@@ -210,10 +211,12 @@ ParsingStep ParsingStep::readFromXml(QXmlStreamReader &in, const Morphology *mor
         if( nodes.size() == 0 )
         {
             qCritical() << "ParsingStep::readFromXml: No node with label:" << label << label.length();
+            ok = false;
         }
         else if( nodes.size() > 1 )
         {
             qCritical() << "ParsingStep::readFromXml: Multiple nodes with label:" << label << "(choosing first)";
+            ok = false;
             node = nodes.first();
         }
         else
@@ -240,11 +243,13 @@ ParsingStep ParsingStep::readFromXml(QXmlStreamReader &in, const Morphology *mor
         if( lss.size() == 0 )
         {
             qCritical() << "ParsingStep::readFromXml: No stem for allomorph:" << a.summary();
+            ok = false;
             Q_ASSERT(lss.size() != 0);
         }
         else if( lss.size() > 1 )
         {
             qCritical() << "ParsingStep::readFromXml: Multiple nodes for allomorph:" << a.summary() << "(choosing first)";
+            ok = false;
         }
 
         return ParsingStep( node, a, * lss.first() );
@@ -255,7 +260,7 @@ ParsingStep ParsingStep::readFromXml(QXmlStreamReader &in, const Morphology *mor
     }
 }
 
-QList<ParsingStep> ParsingStep::readListFromXml(QXmlStreamReader &in, const Morphology *morphology, const QString &untilElement, const QString &elementName)
+QList<ParsingStep> ParsingStep::readListFromXml(QXmlStreamReader &in, const Morphology *morphology, const QString &untilElement, bool &ok, const QString &elementName)
 {
     Q_ASSERT( in.isStartElement() && in.name() == untilElement );
 
@@ -266,7 +271,13 @@ QList<ParsingStep> ParsingStep::readListFromXml(QXmlStreamReader &in, const Morp
 
         if( in.isStartElement() && in.name() == elementName )
         {
-            steps << ParsingStep::readFromXml(in, morphology, elementName);
+            bool localOk = true;
+            steps << ParsingStep::readFromXml(in, morphology, localOk, elementName);
+            if( !localOk )
+            {
+                ok = false;
+                break;
+            }
         }
     }
 
@@ -275,7 +286,7 @@ QList<ParsingStep> ParsingStep::readListFromXml(QXmlStreamReader &in, const Morp
 
 }
 
-ParsingStep ParsingStep::readFromXml(QDomElement parsing, const Morphology *morphology)
+ParsingStep ParsingStep::readFromXml(QDomElement parsing, const Morphology *morphology, bool &ok)
 {
     QDomNodeList nodes = parsing.elementsByTagName("node");
     Q_ASSERT(!nodes.isEmpty());
@@ -293,6 +304,7 @@ ParsingStep ParsingStep::readFromXml(QDomElement parsing, const Morphology *morp
         if( node == nullptr )
         {
             qCritical() << "ParsingStep::readFromXml(QDomElement): Null node for id" << nodeElement.attribute("id");
+            ok = false;
         }
     }
     else
@@ -301,11 +313,13 @@ ParsingStep ParsingStep::readFromXml(QDomElement parsing, const Morphology *morp
         if( nodes.size() == 0 )
         {
             qCritical() << "ParsingStep::readFromXml(QDomElement): No node with label:" << label << label.length();
+            ok = false;
         }
         else if( nodes.size() > 1 )
         {
             qCritical() << "ParsingStep::readFromXml(QDomElement): Multiple nodes with label:" << label << "(choosing first)";
             node = nodes.first();
+            ok = false;
         }
         else
         {
@@ -323,11 +337,13 @@ ParsingStep ParsingStep::readFromXml(QDomElement parsing, const Morphology *morp
         if( lss.size() == 0 )
         {
             qCritical() << "ParsingStep::readFromXml(QDomElement): No stem for allomorph:" << a.summary();
+            ok = false;
             return ParsingStep( node, a );
         }
         else if( lss.size() > 1 )
         {
             qCritical() << "ParsingStep::readFromXml(QDomElement): Multiple stems for allomorph:" << a.summary() << "(choosing first)";
+            ok = false;
             foreach(LexicalStem * s, lss)
             {
                 qCritical() << "\t" << s->summary();
@@ -342,13 +358,19 @@ ParsingStep ParsingStep::readFromXml(QDomElement parsing, const Morphology *morp
     }
 }
 
-QList<ParsingStep> ParsingStep::readListFromXml(QDomElement list, const Morphology *morphology)
+QList<ParsingStep> ParsingStep::readListFromXml(QDomElement list, const Morphology *morphology, bool &ok)
 {
     QList<ParsingStep> parsingSteps;
     QDomNodeList parsingStepElements = list.elementsByTagName("parsing-step");
     for(int i=0; i< parsingStepElements.count(); i++)
     {
-        parsingSteps << ParsingStep::readFromXml( parsingStepElements.at(i).toElement(), morphology );
+        bool localOk = true;
+        parsingSteps << ParsingStep::readFromXml( parsingStepElements.at(i).toElement(), morphology, localOk );
+        if( !localOk )
+        {
+            ok = false;
+            break;
+        }
     }
     return parsingSteps;
 }

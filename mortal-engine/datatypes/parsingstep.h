@@ -40,11 +40,11 @@ public:
 
     QString summaryPortion(ParsingStep::SummaryType type, const WritingSystem & summaryDisplayWritingSystem, const WritingSystem &parsingWritingSystem) const;
 
-    static ParsingStep readFromXml(QXmlStreamReader &in, const Morphology * morphology, const QString & elementName = "parsing-step");
-    static QList<ParsingStep> readListFromXml(QXmlStreamReader &in, const Morphology * morphology, const QString & untilElement, const QString & elementName = "parsing-step");
+    static ParsingStep readFromXml(QXmlStreamReader &in, const Morphology * morphology, bool &ok, const QString & elementName = "parsing-step");
+    static QList<ParsingStep> readListFromXml(QXmlStreamReader &in, const Morphology * morphology, const QString & untilElement, bool &ok, const QString & elementName = "parsing-step");
 
-    static ParsingStep readFromXml(QDomElement parsing, const Morphology * morphology);
-    static QList<ParsingStep> readListFromXml(QDomElement list, const Morphology * morphology);
+    static ParsingStep readFromXml(QDomElement parsing, const Morphology * morphology, bool &ok);
+    static QList<ParsingStep> readListFromXml(QDomElement list, const Morphology * morphology, bool &ok);
 
     QString label(const WritingSystem &ws) const;
 
