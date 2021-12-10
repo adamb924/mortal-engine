@@ -45,7 +45,7 @@ public:
     bool hasNext(const Allomorph & appendedAllomorph, const WritingSystem &ws) const;
     const AbstractNode *next(const Allomorph & appendedAllomorph, const WritingSystem & ws) const;
 
-    void initializePortmanteaux(const Morphology *morphology);
+    void initializePortmanteaux();
 
     void addCreateAllomorphs( const CreateAllomorphs & ca );
     void generateAllomorphs();

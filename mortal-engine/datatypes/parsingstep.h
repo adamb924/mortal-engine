@@ -38,7 +38,7 @@ public:
 
     bool isStem() const;
 
-    QString summaryPortion(ParsingStep::SummaryType type, const WritingSystem & summaryDisplayWritingSystem, const WritingSystem &parsingWritingSystem) const;
+    QString summaryPortion(ParsingStep::SummaryType type, const WritingSystem & summaryDisplayWritingSystem, const WritingSystem &parsingWritingSystem, const QString & betweenMorphemes) const;
 
     static ParsingStep readFromXml(QXmlStreamReader &in, const Morphology * morphology, bool &ok, const QString & elementName = "parsing-step");
     static QList<ParsingStep> readListFromXml(QXmlStreamReader &in, const Morphology * morphology, const QString & untilElement, bool &ok, const QString & elementName = "parsing-step");

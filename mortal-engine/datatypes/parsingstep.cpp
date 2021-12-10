@@ -150,7 +150,7 @@ bool ParsingStep::isStem() const
     return mIsStem;
 }
 
-QString ParsingStep::summaryPortion(ParsingStep::SummaryType type, const WritingSystem &summaryDisplayWritingSystem, const WritingSystem &parsingWritingSystem) const
+QString ParsingStep::summaryPortion(ParsingStep::SummaryType type, const WritingSystem &summaryDisplayWritingSystem, const WritingSystem &parsingWritingSystem, const QString &betweenMorphemes) const
 {
     if( isStem() )
     {
@@ -174,7 +174,10 @@ QString ParsingStep::summaryPortion(ParsingStep::SummaryType type, const Writing
         case ParsingStep::MorphemeForm:
             return mAllomorph.form( summaryDisplayWritingSystem ).text();
         case ParsingStep::MorphemeGloss:
-            return mNode->gloss(summaryDisplayWritingSystem).text();
+            if( mAllomorph.hasPortmanteau(parsingWritingSystem) )
+                return mAllomorph.portmanteau().morphemeGlosses(summaryDisplayWritingSystem, betweenMorphemes);
+            else
+                return mNode->gloss(summaryDisplayWritingSystem).text();
         case ParsingStep::MorphemeLabel:
             if( mAllomorph.hasPortmanteau(parsingWritingSystem) )
                 return mAllomorph.portmanteau().label();

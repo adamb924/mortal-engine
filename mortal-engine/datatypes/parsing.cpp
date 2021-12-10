@@ -858,11 +858,11 @@ QString Parsing::stringSummary(ParsingStep::SummaryType stemType, const WritingS
 
         if( s.isStem() )
         {
-            string += s.summaryPortion(stemType, stemWs, writingSystem() );
+            string += s.summaryPortion(stemType, stemWs, writingSystem(), betweenMorphemes );
         }
         else
         {
-            string += s.summaryPortion(affixType, affixWs, writingSystem());
+            string += s.summaryPortion(affixType, affixWs, writingSystem(), betweenMorphemes );
         }
 
         /// e.g., ]

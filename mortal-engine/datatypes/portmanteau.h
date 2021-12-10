@@ -6,6 +6,7 @@
 class MorphemeNode;
 class AbstractNode;
 class Morphology;
+class WritingSystem;
 
 #include <QStringList>
 
@@ -19,7 +20,7 @@ public:
     bool operator==(const Portmanteau & other) const;
 
     /// this needs to be called after all the nodes are read, so they can be searched
-    void initialize(const Morphology * morphology);
+    void initialize();
 
     Portmanteau::Status status() const;
     bool isValid() const;
@@ -35,6 +36,8 @@ public:
      */
     QString summary() const;
 
+    QString morphemeGlosses(const WritingSystem & summaryDisplayWritingSystem, const QString & delimiter) const;
+
     const AbstractNode *lastNode() const;
 
     int count() const;
@@ -45,8 +48,8 @@ private:
     Portmanteau::Status mStatus;
     QString mInitializationString;
     const MorphemeNode * mParent;
-    const AbstractNode * mLastNode;
     QStringList mMorphemes;
+    QList<const MorphemeNode*> mMorphemeNodes;
 };
 
 #endif // PORTMANTEAU_H

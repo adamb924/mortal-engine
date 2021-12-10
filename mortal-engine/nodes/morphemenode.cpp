@@ -405,7 +405,7 @@ const AbstractNode *MorphemeNode::next(const Allomorph &appendedAllomorph, const
     }
 }
 
-void MorphemeNode::initializePortmanteaux(const Morphology *morphology)
+void MorphemeNode::initializePortmanteaux()
 {
     for(int i=0; i<mAllomorphs.count(); i++)
     {
@@ -415,7 +415,7 @@ void MorphemeNode::initializePortmanteaux(const Morphology *morphology)
             const WritingSystem ws = wsIter.next();
             if( mAllomorphs.at(i).hasPortmanteau(ws) )
             {
-                mAllomorphs[i].portmanteau().initialize(morphology);
+                mAllomorphs[i].portmanteau().initialize();
                 /// also keep a list of the portmanteau for later
                 mPortmanteauSequences.insert(ws, mAllomorphs.at(i).portmanteau().morphemes() );
             }

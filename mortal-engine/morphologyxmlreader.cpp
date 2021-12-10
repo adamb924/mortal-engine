@@ -456,7 +456,7 @@ void MorphologyXmlReader::parsePortmanteaux()
     QSetIterator<MorphemeNode *> i(mMorphology->mMorphemeNodes);
     while( i.hasNext() )
     {
-        i.next()->initializePortmanteaux(mMorphology);
+        i.next()->initializePortmanteaux();
     }
 }
 
