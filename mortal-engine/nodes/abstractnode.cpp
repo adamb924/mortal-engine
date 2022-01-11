@@ -54,7 +54,7 @@ QList<Parsing> AbstractNode::possibleParsings(const Parsing &parsing, Parsing::F
     {
         /// we want to move to the next node either 1) the parse hasn't been completed, or 2) there
         /// are null morphemes in the model, which we might want to append
-        bool shouldTryToContinue = p.isOngoing() || model()->hasZeroLengthForms();
+        bool shouldTryToContinue = p.isOngoing() || p.isNull() || model()->hasZeroLengthForms();
         if( AbstractNode::hasNext() && shouldTryToContinue )
         {
             if( Morphology::DebugOutput )
