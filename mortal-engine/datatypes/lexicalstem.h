@@ -36,7 +36,7 @@ public:
     void generateAllomorphs(const QList<CreateAllomorphs> & cas);
 
     bool hasAllomorph(const Allomorph &allomorph, bool matchConstraints = true ) const;
-    bool hasAllomorph(const Form & form, const QSet<Tag> containing = QSet<Tag>() , bool includeDerivedAllomorphs = false) const;
+    bool hasAllomorph(const Form & form, const QSet<Tag> containingTags = QSet<Tag>(), const QSet<Tag> withoutTags = QSet<Tag>(), bool includeDerivedAllomorphs = false) const;
     bool hasAllomorphWithForm(const Form & form ) const;
 
     QHash<WritingSystem, Form> glosses() const;

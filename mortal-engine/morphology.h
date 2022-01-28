@@ -77,7 +77,7 @@ public:
 
     /// returns all matching lexicalStems
     QList<LexicalStem *> searchLexicalStems( const Form & formSearchString ) const;
-    QList<LexicalStem *> lexicalStems( const Form & form, const QSet<Tag> containing = QSet<Tag>() ) const;
+    QList<LexicalStem *> lexicalStems(const Form & form, const QSet<Tag> containingTags = QSet<Tag>(), const QSet<Tag> withoutTags = QSet<Tag>() ) const;
     QList<LexicalStem *> lexicalStems( const Allomorph & allomorph, bool matchConstraints = true ) const;
 
     /// NB: this function can throw an exception

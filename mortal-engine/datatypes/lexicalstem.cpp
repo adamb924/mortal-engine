@@ -109,13 +109,16 @@ bool LexicalStem::hasAllomorph(const Allomorph & allomorph, bool matchConstraint
     return false;
 }
 
-bool LexicalStem::hasAllomorph(const Form &form, const QSet<Tag> containing, bool includeDerivedAllomorphs) const
+bool LexicalStem::hasAllomorph(const Form &form, const QSet<Tag> containingTags, const QSet<Tag> withoutTags, bool includeDerivedAllomorphs) const
 {
     QSetIterator<Allomorph> i(mAllomorphs);
     while( i.hasNext() )
     {
         Allomorph a = i.next();
-        if( a.hasForm( form ) && a.tags().contains( containing ) && ( includeDerivedAllomorphs || a.type() != Allomorph::Derived ) )
+        if( a.hasForm( form )
+                && a.tags().contains( containingTags )
+                && !a.tags().intersects( withoutTags )
+                && ( includeDerivedAllomorphs || a.type() != Allomorph::Derived ) )
             return true;
     }
     return false;

@@ -323,19 +323,23 @@ void Morphology::setNodeId(const QString &id, AbstractNode *node)
 QList<LexicalStem *> Morphology::searchLexicalStems(const Form &formSearchString) const
 {
     /// handle tags: stem#tag1#tag2#tag3 etc.
-    QStringList elements = formSearchString.text().split("#");
+    QStringList elements = formSearchString.text().split('#');
 
     Form stemForm = Form( formSearchString.writingSystem(), elements.first() ); /// if there is no #, this contains the whole original string
-    QSet<Tag> tags;
+    QSet<Tag> containingTags;
+    QSet<Tag> withoutTags;
     for(int i=1; i<elements.count(); i++)
     {
-        tags << Tag( elements.at(i) );
+        if( elements.at(i).at(0) == '!' )
+            withoutTags << Tag( elements.at(i).right( elements.at(i).length() - 1 ) );
+        else
+            containingTags << Tag( elements.at(i) );
     }
 
-    return lexicalStems( stemForm, tags );
+    return lexicalStems( stemForm, containingTags, withoutTags );
 }
 
-QList<LexicalStem *> Morphology::lexicalStems(const Form &form, const QSet<Tag> containing) const
+QList<LexicalStem *> Morphology::lexicalStems(const Form &form, const QSet<Tag> containingTags, const QSet<Tag> withoutTags) const
 {
     QList<LexicalStem *> stems;
 
@@ -343,7 +347,7 @@ QList<LexicalStem *> Morphology::lexicalStems(const Form &form, const QSet<Tag> 
     while( iter.hasNext() )
     {
         AbstractStemList* asl = iter.next();
-        stems.append(  asl->stemsFromAllomorph( form, containing ) );
+        stems.append(  asl->stemsFromAllomorph( form, containingTags, withoutTags ) );
     }
 
     return stems;
