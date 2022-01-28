@@ -514,6 +514,17 @@ void Parsing::setSteps(const QList<ParsingStep> &steps)
     calculateHash();
 }
 
+bool Parsing::hasHypotheticalStem() const
+{
+    QListIterator<ParsingStep> i(mSteps);
+    while(i.hasNext())
+    {
+        if( i.next().allomorph().isHypothetical() )
+            return true;
+    }
+    return false;
+}
+
 void Parsing::setPosition(int position)
 {
     mPosition = position;

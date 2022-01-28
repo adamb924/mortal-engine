@@ -182,6 +182,8 @@ public:
 
     void setSteps(const QList<ParsingStep> &steps);
 
+    bool hasHypotheticalStem() const;
+
     uint hash() const;
 
     static int MAXIMUM_JUMPS;

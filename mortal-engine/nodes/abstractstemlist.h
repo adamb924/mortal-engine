@@ -32,7 +32,7 @@ public:
     //!
     const LexicalStem * getStem( qlonglong id ) const;
 
-    QList<LexicalStem *> stemsFromAllomorph(const Form & form, const QSet<Tag> containing = QSet<Tag>(), bool includeDerivedAllomorphs = false ) const;
+    QList<LexicalStem *> stemsFromAllomorph(const Form & form, const QSet<Tag> containingTags = QSet<Tag>(), const QSet<Tag> withoutTags = QSet<Tag>(), bool includeDerivedAllomorphs = false ) const;
     QList<LexicalStem *> stemsFromAllomorph(const Allomorph & allomorph, bool matchConstraints) const;
     LexicalStem * lexicalStem( const LexicalStem & stem ) const;
 

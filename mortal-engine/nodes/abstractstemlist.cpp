@@ -77,14 +77,14 @@ const LexicalStem *AbstractStemList::getStem(qlonglong id) const
     return nullptr;
 }
 
-QList<LexicalStem *> AbstractStemList::stemsFromAllomorph(const Form &form, const QSet<Tag> containing, bool includeDerivedAllomorphs) const
+QList<LexicalStem *> AbstractStemList::stemsFromAllomorph(const Form &form, const QSet<Tag> containingTags, const QSet<Tag> withoutTags, bool includeDerivedAllomorphs) const
 {
     QList<LexicalStem *> stems;
     QSetIterator<LexicalStem*> i(mStems);
     while( i.hasNext() )
     {
         LexicalStem * current = i.next();
-        if( current->hasAllomorph( form, containing, includeDerivedAllomorphs ) )
+        if( current->hasAllomorph( form, containingTags, withoutTags, includeDerivedAllomorphs ) )
         {
             stems << current;
         }
@@ -144,7 +144,9 @@ QList<Parsing> AbstractStemList::parsingsUsingThisNode(const Parsing &parsing, P
     QList< QPair<Allomorph, LexicalStem> > allomorphMatches = matchingAllomorphs(parsing);
 
     /// if the parsing is suppose to guess the stem, we should try all possible parsings
-    if( flags & Parsing::GuessStem )
+    /// but if the parsing already has a hypothetical stem, we shouldn't try to find another
+    if( flags & Parsing::GuessStem
+            && !parsing.hasHypotheticalStem() )
     {
         allomorphMatches.append( possibleStemForms(parsing) );
     }
