@@ -349,6 +349,7 @@ targetNamespace="https://www.adambaker.org/mortal-engine">
             <xs:element name="then" type="me:then" minOccurs="1" maxOccurs="unbounded"/>
         </xs:sequence>
         <xs:attribute type="me:case-mode" name="mode" use="optional" default="include-all-forms"/>
+        <xs:attribute type="me:true-false" name="tolerate-duplicates" use="optional" default="false"/>
     </xs:complexType>
 
     <xs:complexType name="then">

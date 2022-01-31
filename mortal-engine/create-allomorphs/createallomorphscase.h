@@ -56,6 +56,10 @@ public:
     static QString XML_WITH_THIS;
     static QString XML_ADD_TAG;
     static QString XML_REMOVE_TAG;
+    static QString XML_TOLERATE_DUPLICATES;
+    static QString XML_TRUE;
+
+    void setTolerateDuplicates(bool tolerateDuplicates);
 
 private:
     QSet<const AbstractConstraint *> mConstraints;
@@ -65,6 +69,7 @@ private:
     FormsMode mFormsMode;
     QSet<Tag> mAddTags;
     QSet<Tag> mRemoveTags;
+    bool mTolerateDuplicates;
 };
 
 #endif // CREATEALLOMORPHSCASE_H

@@ -16,8 +16,10 @@ QString CreateAllomorphsCase::XML_REPLACE_THIS = "replace-this";
 QString CreateAllomorphsCase::XML_WITH_THIS = "with-this";
 QString CreateAllomorphsCase::XML_ADD_TAG = "add-tag";
 QString CreateAllomorphsCase::XML_REMOVE_TAG = "remove-tag";
+QString CreateAllomorphsCase::XML_TOLERATE_DUPLICATES = "tolerate-duplicates";
+QString CreateAllomorphsCase::XML_TRUE = "true";
 
-CreateAllomorphsCase::CreateAllomorphsCase() : mFormsMode(IncludeAllForms)
+CreateAllomorphsCase::CreateAllomorphsCase() : mFormsMode(IncludeAllForms), mTolerateDuplicates(false)
 {
 
 }
@@ -56,7 +58,8 @@ Allomorph CreateAllomorphsCase::createAllomorph(const Allomorph & input, const Q
         }
 
         /// this checks whether this form is available somewhere else in the set of allomorphs
-        bool notADuplicate = ! Allomorph::hasForm(allomorphs, f);
+        /// (if the user has specified that duplicates should be tolerated, pass this requirement)
+        bool notADuplicate = mTolerateDuplicates || ! Allomorph::hasForm(allomorphs, f);
 
         /// if it's not a duplicate
         if( notADuplicate )
@@ -81,12 +84,17 @@ Allomorph CreateAllomorphsCase::createAllomorph(const Allomorph & input, const Q
         allomorphChanged = allomorphChanged || formChanged;
     }
 
+    /// it may be that there are no forms in the new Allomorph
+    if( newAllomorph.forms().isEmpty() )
+    {
+        return Allomorph(Allomorph::Null);
+    }
+
     /// if any of them have changed
     if( allomorphChanged )
     {
         newAllomorph.addTags( mAddTags );
         newAllomorph.removeTags( mRemoveTags );
-
         return newAllomorph;
     }
     else
@@ -110,6 +118,11 @@ CreateAllomorphsCase CreateAllomorphsCase::readFromXml(QXmlStreamReader &in, Mor
     if( in.attributes().hasAttribute("mode") )
     {
         c.setFormsMode( formsModeFromString( in.attributes().value("mode").toString() ) );
+    }
+
+    if( in.attributes().hasAttribute(XML_TOLERATE_DUPLICATES) )
+    {
+        c.setTolerateDuplicates( in.attributes().value(XML_TOLERATE_DUPLICATES).toString() == XML_TRUE );
     }
 
     while( !in.atEnd() && !(in.tokenType() == QXmlStreamReader::EndElement && in.name() == elementName() ) )
@@ -224,6 +237,11 @@ void CreateAllomorphsCase::addAddTag(const Tag &t)
 void CreateAllomorphsCase::addRemoveTag(const Tag &t)
 {
     mRemoveTags << t;
+}
+
+void CreateAllomorphsCase::setTolerateDuplicates(bool tolerateDuplicates)
+{
+    mTolerateDuplicates = tolerateDuplicates;
 }
 
 QString CreateAllomorphsCase::summary() const
