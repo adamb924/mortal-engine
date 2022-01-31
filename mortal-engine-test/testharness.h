@@ -30,7 +30,7 @@ public:
     //! \param out The QTextStream to print the output to.
     //! \param verbosity The level of verbosity to print (see TestHarness::VerbosityLevel)
     //! \param showModel The models are printed if this is set to true.
-    void printReport(QTextStream &out, TestHarness::VerbosityLevel verbosity, bool showModel, bool check);
+    void printReport(QTextStream &out, TestHarness::VerbosityLevel verbosity, bool showModel, bool check, const QString & inspectId );
 
 private:
     QList<TestSchema*> mSchemata;

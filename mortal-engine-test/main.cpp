@@ -43,6 +43,9 @@ int main(int argc, char *argv[])
     QCommandLineOption debugOutputOption(QStringList() << "l" << "log", QCoreApplication::translate("main", "File for debug output."), "log");
     parser.addOption(debugOutputOption);
 
+    QCommandLineOption inspectOption(QStringList() << "i" << "inspect", QCoreApplication::translate("main", "Element ID to print summary for."), "log");
+    parser.addOption(inspectOption);
+
     parser.process(a);
 
     const bool showModel = parser.isSet(showModelOption);
@@ -51,6 +54,7 @@ int main(int argc, char *argv[])
     Morphology::DebugOutput = parser.isSet(debugOption);
     const bool check = parser.isSet(checkOption);
     const QString logfile = parser.value(debugOutputOption);
+    const QString inspectId = parser.value(inspectOption);
 
     const QStringList args = parser.positionalArguments();
     if( args.count() == 0 )
@@ -94,7 +98,7 @@ int main(int argc, char *argv[])
         out.setCodec("UTF-8");
 #endif
 
-        harness.printReport(out, verbosity, showModel, check );
+        harness.printReport(out, verbosity, showModel, check, inspectId );
     }
     else
     {
@@ -112,7 +116,7 @@ int main(int argc, char *argv[])
         out.setCodec("UTF-8");
 #endif
 
-        harness.printReport(out, verbosity, showModel, check );
+        harness.printReport(out, verbosity, showModel, check, inspectId );
         outFile.close();
     }
 
