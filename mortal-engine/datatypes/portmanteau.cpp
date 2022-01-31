@@ -116,7 +116,11 @@ QStringList Portmanteau::morphemes() const
 
 QString Portmanteau::summary() const
 {
-    if( mMorphemeNodes.last()->AbstractNode::next() != nullptr )
+    if( mMorphemeNodes.isEmpty() )
+    {
+        return QString("Portmanteau([%1], not yet initialized)").arg( label() );
+    }
+    else if( mMorphemeNodes.last()->AbstractNode::next() != nullptr )
     {
         return QString("Portmanteau([%1], Next: %2)").arg( label(), next() == nullptr ? "null" : next()->label() );
     }
