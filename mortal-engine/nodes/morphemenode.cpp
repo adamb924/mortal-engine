@@ -264,7 +264,9 @@ void MorphemeNode::matchingAllomorphs(const Generation &generation, QSet<Allomor
     while( i.hasNext() )
     {
         Allomorph a = i.next();
-        if( a.hasForm(generation.writingSystem()) && generation.allomorphMatchConditionsSatisfied(a) )
+        if( a.useInGenerations() /// this allows the user to disable generations for particular allomorphs (e.g., weird portmanteaux)
+                && a.hasForm(generation.writingSystem())
+                && generation.allomorphMatchConditionsSatisfied(a) )
         {
             if( a.hasPortmanteau(generation.writingSystem()) )
             {
@@ -345,6 +347,12 @@ Allomorph MorphemeNode::readAllomorphTag(MorphemeNode* morpheme, QXmlStreamReade
     {
         allomorph.setPortmanteau( Portmanteau( in.attributes().value("portmanteau").toString(), morpheme ) );
     }
+
+    if( in.attributes().hasAttribute( Allomorph::XML_USE_IN_GENERATIONS) )
+    {
+        allomorph.setUseInGenerations( in.attributes().value(Allomorph::XML_USE_IN_GENERATIONS) == Allomorph::XML_TRUE );
+    }
+
 
     while(!in.atEnd() && !(in.tokenType() == QXmlStreamReader::EndElement && in.name() == XML_ALLOMORPH ) )
     {

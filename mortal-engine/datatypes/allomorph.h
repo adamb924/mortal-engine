@@ -235,8 +235,13 @@ public:
     static QString XML_FORM;
     static QString XML_TAG;
     static QString XML_STEM;
+    static QString XML_USE_IN_GENERATIONS;
+    static QString XML_TRUE;
 
     uint hash() const;
+
+    bool useInGenerations() const;
+    void setUseInGenerations(bool useInGenerations);
 
 private:
     void calculateHash();
@@ -249,6 +254,7 @@ private:
     Portmanteau mPortmanteau;
     qlonglong mId;
     uint mHash;
+    bool mUseInGenerations;
 };
 
 Q_DECL_EXPORT uint qHash(const Allomorph &key);

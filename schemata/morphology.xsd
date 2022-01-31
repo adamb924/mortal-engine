@@ -273,6 +273,7 @@ targetNamespace="https://www.adambaker.org/mortal-engine">
             <xs:element name="tag" type="xs:string"/>
         </xs:choice>
         <xs:attribute name="portmanteau" type="xs:string" use="optional"></xs:attribute>
+        <xs:attribute name="use-in-generations" type="me:true-false" default="false" use="optional"></xs:attribute>
     </xs:complexType>
 
     <!-- form -->

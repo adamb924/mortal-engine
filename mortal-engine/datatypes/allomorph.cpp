@@ -19,13 +19,15 @@ QString Allomorph::XML_ALLOMORPH = "allomorph";
 QString Allomorph::XML_FORM = "form";
 QString Allomorph::XML_TAG = "tag";
 QString Allomorph::XML_STEM = "stem";
+QString Allomorph::XML_USE_IN_GENERATIONS = "use-in-generations";
+QString Allomorph::XML_TRUE = "true";
 
-Allomorph::Allomorph(Allomorph::Type type) : mType(type), mId(-1)
+Allomorph::Allomorph(Allomorph::Type type) : mType(type), mId(-1), mUseInGenerations(true)
 {
     calculateHash();
 }
 
-Allomorph::Allomorph(const Form &f, Type type) : mType(type), mId(-1)
+Allomorph::Allomorph(const Form &f, Type type) : mType(type), mId(-1), mUseInGenerations(true)
 {
     mForms.insert( f.writingSystem(), f );
     calculateHash();
@@ -38,7 +40,8 @@ Allomorph::Allomorph(const Allomorph &other) :
     mType(other.mType),
     mPortmanteau(other.mPortmanteau),
     mId(other.mId),
-    mHash(other.mHash)
+    mHash(other.mHash),
+    mUseInGenerations(other.mUseInGenerations)
 {
 }
 
@@ -228,6 +231,11 @@ Allomorph Allomorph::readFromXml(QXmlStreamReader &in, const Morphology *morphol
 
     Allomorph allomorph(type);
 
+    if( in.attributes().hasAttribute(XML_USE_IN_GENERATIONS) )
+    {
+        allomorph.setUseInGenerations( in.attributes().value(XML_USE_IN_GENERATIONS) == XML_TRUE );
+    }
+
     while(!in.atEnd() && !(in.tokenType() == QXmlStreamReader::EndElement && in.name() == elementName ) )
     {
         in.readNext();
@@ -258,6 +266,11 @@ Allomorph Allomorph::readFromXml(QDomElement element, const Morphology *morpholo
     Allomorph::Type type = typeFromString( element.attribute("type") );
 
     Allomorph allomorph(type);
+
+    if( element.hasAttribute(XML_USE_IN_GENERATIONS) )
+    {
+        allomorph.setUseInGenerations( element.attribute(XML_USE_IN_GENERATIONS) == XML_TRUE );
+    }
 
     QDomNodeList forms = element.elementsByTagName("form");
     for(int i=0; i < forms.count(); i++)
@@ -410,17 +423,28 @@ void Allomorph::calculateHash()
     mHash = mType ^ qHash( mForms, static_cast<uint>(qGlobalQHashSeed()) ) ^ qHash( mConstraints, static_cast<uint>(qGlobalQHashSeed()) ) ^ qHash( mTags, static_cast<uint>(qGlobalQHashSeed()) );
 }
 
+bool Allomorph::useInGenerations() const
+{
+    return mUseInGenerations;
+}
+
+void Allomorph::setUseInGenerations(bool useInGenerations)
+{
+    mUseInGenerations = useInGenerations;
+}
+
 QString Allomorph::summary() const
 {
     QString dbgString;
     Debug dbg(&dbgString);
-
+    
     dbg << "Allomorph(" << typeToString( mType ) << ", " << mForms.count() << " form(s)," << newline;
     dbg.indent();
     if( mPortmanteau.isValid() )
     {
         dbg << " " << portmanteau().summary() << "," << newline;
     }
+    dbg << " Use in generations: " << (mUseInGenerations ? "true" : "false") << "," << newline;
     QHashIterator<WritingSystem, Form> i(mForms);
     while(i.hasNext())
     {
