@@ -123,6 +123,16 @@ QList<Generation> MorphemeNode::generateFormsUsingThisNode(const Generation &gen
     if( Morphology::DebugOutput )
     {
         qInfo().noquote() << qPrintable("\t") << QObject::tr("%1 allomorph matches (%2 normal, %3 portmanteau)").arg( portmanteaux.count() + nonPortmanteau.count() ).arg( nonPortmanteau.count() ).arg( portmanteaux.count() );
+        QSetIterator<Allomorph> matchesIterator( nonPortmanteau );
+        while( matchesIterator.hasNext() )
+        {
+            qInfo().noquote() << "\t\t" << matchesIterator.next().oneLineSummary();
+        }
+        matchesIterator = QSetIterator<Allomorph>( portmanteaux );
+        while( matchesIterator.hasNext() )
+        {
+            qInfo().noquote() << "\t\t" << matchesIterator.next().oneLineSummary();
+        }
     }
 
     QList<Generation> portmanteuGenerations = generateFormsWithAllomorphs(generation, portmanteaux);
