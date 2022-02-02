@@ -59,25 +59,22 @@ Allomorph CreateAllomorphsCase::createAllomorph(const Allomorph & input, const Q
 
         /// this checks whether this form is available somewhere else in the set of allomorphs
         /// (if the user has specified that duplicates should be tolerated, pass this requirement)
-        bool notADuplicate = mTolerateDuplicates || ! Allomorph::hasForm(allomorphs, f);
+        bool notADuplicate = ! Allomorph::hasForm(allomorphs, f);
 
         /// if it's not a duplicate
-        if( notADuplicate )
+        switch(mFormsMode)
         {
-            switch(mFormsMode)
+        case IncludeAllForms:
+            /// remember the form always
+            newAllomorph.setForm( f );
+            break;
+        case IncludeOnlyChangedForms:
+            /// remember it only if it's different
+            if( formChanged && (notADuplicate || mTolerateDuplicates) )
             {
-            case IncludeAllForms:
-                /// remember the form always
                 newAllomorph.setForm( f );
-                break;
-            case IncludeOnlyChangedForms:
-                /// remember it only if it's different
-                if( formChanged && notADuplicate )
-                {
-                    newAllomorph.setForm( f );
-                }
-                break;
             }
+            break;
         }
 
         /// remember if a form's changed
