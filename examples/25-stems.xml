@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<stems
+    xmlns="https://www.adambaker.org/mortal-engine/stems"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="https://www.adambaker.org/mortal-engine/stems stems.xsd">
+    <stem>
+        <form lang="wk-LA">sit</form>
+        <form lang="wk-AR">سیت</form>
+        <tag>noun</tag>
+    </stem>
+    <stem>
+        <form lang="wk-LA">sɪn</form>
+        <form lang="wk-AR">سین</form>
+        <tag>noun</tag>
+    </stem>
+    <stem>
+        <form lang="wk-LA">ben</form>
+        <form lang="wk-AR">بن</form>
+        <tag>noun</tag>
+    </stem>
+    <stem>
+        <form lang="wk-LA">kɛm</form>
+        <form lang="wk-AR">کم</form>
+        <tag>noun</tag>
+    </stem>
+    <stem>
+        <form lang="wk-LA">mot</form>
+        <form lang="wk-AR">موت</form>
+        <tag>noun</tag>
+    </stem>
+    <stem>
+        <form lang="wk-LA">kɔŋ</form>
+        <form lang="wk-AR">کون</form>
+        <tag>noun</tag>
+    </stem>
+    <!-- <stem>
+        <form lang="wk-LA">göl</form>
+        <tag>verb</tag>
+    </stem> -->
+    <stem>
+        <form lang="wk-LA">sep</form>
+        <form lang="wk-AR">سپ</form>
+        <tag>verb</tag>
+    </stem>
+    <stem>
+        <form lang="wk-LA">pop</form>
+        <form lang="wk-AR">پوپ</form>
+        <tag>verb</tag>
+    </stem>
+    <stem>
+        <form lang="wk-LA">kim</form>
+        <form lang="wk-AR">کیم</form>
+        <tag>verb</tag>
+    </stem>
+</stems>

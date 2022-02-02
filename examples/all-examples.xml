@@ -388,4 +388,33 @@
         <reject lang="wk-LA">sɪnka</reject>
         <reject lang="wk-LA">kɛmka</reject>
     </schema>
+    <schema label="Create Allomorphs 7">
+        <morphology-file>25-Create-Allomorphs-7.xml</morphology-file>
+        <message>nOn assimilates to a following consonant:</message>
+        <accept lang="wk-LA">nonsit</accept>
+        <accept lang="wk-LA">nomben</accept>
+        <accept lang="wk-LA">nommot</accept>
+        <accept lang="wk-LA">nonsɪn</accept>
+        <message>Following non-velars cannot have nOŋ:</message>
+        <reject lang="wk-LA">noŋsit</reject>
+        <reject lang="wk-LA">noŋben</reject>
+        <reject lang="wk-LA">noŋmot</reject>
+        <reject lang="wk-LA">noŋsɪn</reject>
+        <message>Following velars show nasal place assimilation</message>
+        <accept lang="wk-LA">noŋkɛm</accept>
+        <accept lang="wk-LA">noŋkɔŋ</accept>
+        <message>Following velars cannot be preceded by coronals</message>
+        <reject lang="wk-LA">nonkɛm</reject>
+        <reject lang="wk-LA">nonkɔŋ</reject>
+
+        <message>In Arabic, there is assimilation to [n] and [m]</message>
+        <accept lang="wk-AR">نونسیت</accept>
+        <accept lang="wk-AR">نومبن</accept>
+        <accept lang="wk-AR">نومموت</accept>
+        <accept lang="wk-AR">نونسین</accept>
+        <message>But in Arabic, velar nasal place assimilation does not occur</message>
+        <accept lang="wk-AR">نونکم</accept>
+        <accept lang="wk-AR">نونکون</accept>
+
+    </schema>
 </tests>
