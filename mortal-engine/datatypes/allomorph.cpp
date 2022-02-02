@@ -438,13 +438,12 @@ QString Allomorph::summary() const
     QString dbgString;
     Debug dbg(&dbgString);
     
-    dbg << "Allomorph(" << typeToString( mType ) << ", " << mForms.count() << " form(s)," << newline;
+    dbg << "Allomorph(" << typeToString( mType ) << ", " << mForms.count() << " form(s), Use in generations: " << (mUseInGenerations ? "true" : "false") << newline;
     dbg.indent();
     if( mPortmanteau.isValid() )
     {
         dbg << " " << portmanteau().summary() << "," << newline;
     }
-    dbg << " Use in generations: " << (mUseInGenerations ? "true" : "false") << "," << newline;
     QHashIterator<WritingSystem, Form> i(mForms);
     while(i.hasNext())
     {
