@@ -5,933 +5,318 @@
     xsi:schemaLocation="https://www.adambaker.org/mortal-engine/tests tests.xsd">
     <schema label="Minimal Example">
         <morphology-file>00-Minimal.xml</morphology-file>
-        <recognition-test>
-            <input lang="wk-LA">bil</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">ata</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
+        <accept lang="wk-LA">bil</accept>
+        <accept lang="wk-LA">ata</accept>
         <message>Any writing system is accepted:</message>
-        <recognition-test>
-            <input lang="wk-AR">آی</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
+        <accept lang="wk-AR">آی</accept>
         <message>Words not on the list are rejected:</message>
-        <recognition-test>
-            <input lang="wk-LA">banana</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
+        <reject lang="wk-LA">banana</reject>
     </schema>
     <schema label="Filtering Example">
         <morphology-file>01-Filtered.xml</morphology-file>
         <message>Nouns are accepted, but not verbs:</message>
-        <recognition-test>
-            <input lang="wk-LA">ata</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">bil</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
+        <accept lang="wk-LA">ata</accept>
+        <reject lang="wk-LA">bil</reject>
     </schema>
     <schema label="Affix Example">
         <morphology-file>02-Affixes.xml</morphology-file>
         <message>Admittedly, obligatory affixes are kind of silly:</message>
-        <recognition-test>
-            <input lang="wk-LA">ata</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">atalar</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
+        <reject lang="wk-LA">ata</reject>
+        <accept lang="wk-LA">atalar</accept>
     </schema>
     <schema label="Missing Form Example">
         <morphology-file>02a-Missing-Form.xml</morphology-file>
-        <recognition-test>
-            <input lang="wk-LA">ata</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-AR">آتا</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">atalar</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-AR">آتالار</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
+        <accept lang="wk-LA">ata</accept>
+        <accept lang="wk-AR">آتا</accept>
+        <accept lang="wk-LA">atalar</accept>
+        <reject lang="wk-AR">آتالار</reject>
     </schema>
     <schema label="Missing Form Example">
         <morphology-file>02b-Missing-Form-2.xml</morphology-file>
-        <recognition-test>
-            <input lang="wk-LA">ata</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-AR">آتا</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">atalar</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">atalary</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">atay</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-AR">آتاش</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
+        <reject lang="wk-LA">ata</reject>
+        <reject lang="wk-AR">آتا</reject>
+        <accept lang="wk-LA">atalar</accept>
+        <accept lang="wk-LA">atalary</accept>
+        <reject lang="wk-LA">atay</reject>
+        <reject lang="wk-AR">آتاش</reject>
     </schema>
     <schema label="Optional Affix Example">
         <morphology-file>03-Optional-Affixes.xml</morphology-file>
         <message>Most affixes are optional:</message>
-        <recognition-test>
-            <input lang="wk-LA">ata</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">atalar</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
+        <accept lang="wk-LA">ata</accept>
+        <accept lang="wk-LA">atalar</accept>
     </schema>
     <schema label="Tag-Based Allomorphy Example">
         <morphology-file>04-Tag-Allomorphy.xml</morphology-file>
-        <recognition-test>
-            <input lang="wk-LA">ata</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">atalar</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">ataler</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">gözler</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">gözlar</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
+        <accept lang="wk-LA">ata</accept>
+        <accept lang="wk-LA">atalar</accept>
+        <reject lang="wk-LA">ataler</reject>
+        <accept lang="wk-LA">gözler</accept>
+        <reject lang="wk-LA">gözlar</reject>
     </schema>
     <schema label="Mutually Exclusive Morphemes Example">
         <morphology-file>05-Mutually-Exclusive.xml</morphology-file>
-        <recognition-test>
-            <input lang="wk-LA">ata</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">atalar</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">atalary</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">atalarym</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">atalarymy</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
+        <accept lang="wk-LA">ata</accept>
+        <accept lang="wk-LA">atalar</accept>
+        <accept lang="wk-LA">atalary</accept>
+        <accept lang="wk-LA">atalarym</accept>
+        <reject lang="wk-LA">atalarymy</reject>
     </schema>
     <schema label="Mutually Exclusive Morphemes Example 2">
         <morphology-file>06-Mutually-Exclusive-2.xml</morphology-file>
-        <recognition-test>
-            <input lang="wk-LA">ata</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">atalar</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">atalary</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">atalarym</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">atalarymy</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">göz</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">gözler</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">gözleri</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">gözlerim</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">gözlarim</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">gözlerym</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">gözlerimi</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
+        <accept lang="wk-LA">ata</accept>
+        <accept lang="wk-LA">atalar</accept>
+        <accept lang="wk-LA">atalary</accept>
+        <accept lang="wk-LA">atalarym</accept>
+        <reject lang="wk-LA">atalarymy</reject>
+        <accept lang="wk-LA">göz</accept>
+        <accept lang="wk-LA">gözler</accept>
+        <accept lang="wk-LA">gözleri</accept>
+        <accept lang="wk-LA">gözlerim</accept>
+        <reject lang="wk-LA">gözlarim</reject>
+        <reject lang="wk-LA">gözlerym</reject>
+        <reject lang="wk-LA">gözlerimi</reject>
     </schema>
     <schema label="Forks">
         <morphology-file>07-Forks.xml</morphology-file>
-        <recognition-test>
-            <input lang="wk-LA">bil_PRESENT_present.1s</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">bil_PRESENT_present.2s</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">bil_FUTURE_present.1s</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">bil_FUTURE_present.2s</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">bil_PRESENT_future.1s</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">bil_PRESENT_future.2s</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">bil_FUTURE_future.1s</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">bil_FUTURE_future.2s</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
+        <accept lang="wk-LA">bil_PRESENT_present.1s</accept>
+        <accept lang="wk-LA">bil_PRESENT_present.2s</accept>
+        <reject lang="wk-LA">bil_FUTURE_present.1s</reject>
+        <reject lang="wk-LA">bil_FUTURE_present.2s</reject>
+        <reject lang="wk-LA">bil_PRESENT_future.1s</reject>
+        <reject lang="wk-LA">bil_PRESENT_future.2s</reject>
+        <accept lang="wk-LA">bil_FUTURE_future.1s</accept>
+        <accept lang="wk-LA">bil_FUTURE_future.2s</accept>
     </schema>
     <schema label="Forks">
         <morphology-file>08-Sequences.xml</morphology-file>
-        <recognition-test>
-            <input lang="wk-LA">bil</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">bilOneTwo</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">bilOne</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">bilTwo</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
+        <accept lang="wk-LA">bil</accept>
+        <accept lang="wk-LA">bilOneTwo</accept>
+        <reject lang="wk-LA">bilOne</reject>
+        <reject lang="wk-LA">bilTwo</reject>
     </schema>
     <schema label="Multiple Models">
         <morphology-file>09-Multiple-Models.xml</morphology-file>
-        <recognition-test>
-            <input lang="wk-LA">bilTense</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">bilCase</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">ataTense</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">ataCase</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
+        <accept lang="wk-LA">bilTense</accept>
+        <reject lang="wk-LA">bilCase</reject>
+        <reject lang="wk-LA">ataTense</reject>
+        <accept lang="wk-LA">ataCase</accept>
     </schema>
     <schema label="Jumps">
         <morphology-file>10-Jumps.xml</morphology-file>
         <message>Case suffixes can go on nouns</message>
-        <recognition-test>
-            <input lang="wk-LA">don</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">donCase</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
+        <accept lang="wk-LA">don</accept>
+        <accept lang="wk-LA">donCase</accept>
         <message>Case suffixes don't go on verbs</message>
-        <recognition-test>
-            <input lang="wk-LA">bilCase</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
+        <reject lang="wk-LA">bilCase</reject>
         <message>Infinitive suffixation, with subsequent case affixation</message>
-        <recognition-test>
-            <input lang="wk-LA">bilinf</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">bilinfCase</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
+        <accept lang="wk-LA">bilinf</accept>
+        <accept lang="wk-LA">bilinfCase</accept>
         <message>(Obviously) Infinitive suffixes don't go on nouns</message>
-        <recognition-test>
-            <input lang="wk-LA">doninf</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
+        <reject lang="wk-LA">doninf</reject>
     </schema>
     <schema label="Jumps 2">
         <morphology-file>11-Jumps-2.xml</morphology-file>
         <message>Case suffixes go on nouns</message>
-        <recognition-test>
-            <input lang="wk-LA">don</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">donCase</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
+        <accept lang="wk-LA">don</accept>
+        <accept lang="wk-LA">donCase</accept>
         <message>Case suffixes don't go on verbs</message>
-        <recognition-test>
-            <input lang="wk-LA">bilCase</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
+        <reject lang="wk-LA">bilCase</reject>
         <message>Infinitive suffixation, without a case suffix, is no longer possible</message>
-        <recognition-test>
-            <input lang="wk-LA">bilinf</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
+        <reject lang="wk-LA">bilinf</reject>
         <message>Infinitive suffixation, with subsequent case affixation</message>
-        <recognition-test>
-            <input lang="wk-LA">bilinfCase</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
+        <accept lang="wk-LA">bilinfCase</accept>
         <message>(Obviously) Infinitive suffixes don't go on nouns</message>
-        <recognition-test>
-            <input lang="wk-LA">doninf</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
+        <reject lang="wk-LA">doninf</reject>
     </schema>
     <schema label="Phonological Allomorphy">
         <morphology-file>12-Phonological-Allomorphy.xml</morphology-file>
         <message>Classifiers are obligatory (i.e., no bare stems)</message>
-        <recognition-test>
-            <input lang="wk-LA">sɪn</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
+        <reject lang="wk-LA">sɪn</reject>
         <message>Words with ATR vowels get an ATR classifier</message>
-        <recognition-test>
-            <input lang="wk-LA">esit</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">eben</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">emot</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
+        <accept lang="wk-LA">esit</accept>
+        <accept lang="wk-LA">eben</accept>
+        <accept lang="wk-LA">emot</accept>
         <message>Words with ATR vowels can't take a non-ATR classifier</message>
-        <recognition-test>
-            <input lang="wk-LA">ɛsit</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">ɛben</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">ɛmot</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
+        <reject lang="wk-LA">ɛsit</reject>
+        <reject lang="wk-LA">ɛben</reject>
+        <reject lang="wk-LA">ɛmot</reject>
         <message>Non-ATR words take a non-ATR classifier</message>
-        <recognition-test>
-            <input lang="wk-LA">ɛsɪn</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">ɛkɛm</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">ɛkɔŋ</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
+        <accept lang="wk-LA">ɛsɪn</accept>
+        <accept lang="wk-LA">ɛkɛm</accept>
+        <accept lang="wk-LA">ɛkɔŋ</accept>
         <message>Non-ATR words cannot take an ATR classifier</message>
-        <recognition-test>
-            <input lang="wk-LA">esɪn</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">ekɛm</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">ekɔŋ</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>    
+        <reject lang="wk-LA">esɪn</reject>
+        <reject lang="wk-LA">ekɛm</reject>
+        <reject lang="wk-LA">ekɔŋ</reject>    
     </schema>
     <schema label="Phonological Allomorphy">
         <morphology-file>13-Shared-Conditions.xml</morphology-file>
         <message>Previous behavior</message>
-        <recognition-test>
-            <input lang="wk-LA">sɪn</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">esit</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">eben</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">emot</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">ɛsit</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">ɛben</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">ɛmot</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">ɛsɪn</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">ɛkɛm</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">ɛkɔŋ</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">esɪn</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">ekɛm</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">ekɔŋ</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
+        <reject lang="wk-LA">sɪn</reject>
+        <accept lang="wk-LA">esit</accept>
+        <accept lang="wk-LA">eben</accept>
+        <accept lang="wk-LA">emot</accept>
+        <reject lang="wk-LA">ɛsit</reject>
+        <reject lang="wk-LA">ɛben</reject>
+        <reject lang="wk-LA">ɛmot</reject>
+        <accept lang="wk-LA">ɛsɪn</accept>
+        <accept lang="wk-LA">ɛkɛm</accept>
+        <accept lang="wk-LA">ɛkɔŋ</accept>
+        <reject lang="wk-LA">esɪn</reject>
+        <reject lang="wk-LA">ekɛm</reject>
+        <reject lang="wk-LA">ekɔŋ</reject>
         <message>New behavior</message>
-        <recognition-test>
-            <input lang="wk-LA">enosit</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">enoben</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">enomot</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">ɛnɔsit</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">ɛnɔben</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">ɛnɔmot</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">ɛnɔsɪn</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">ɛnɔkɛm</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">ɛnɔkɔŋ</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">enosɪn</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">enokɛm</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">enokɔŋ</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
+        <accept lang="wk-LA">enosit</accept>
+        <accept lang="wk-LA">enoben</accept>
+        <accept lang="wk-LA">enomot</accept>
+        <reject lang="wk-LA">ɛnɔsit</reject>
+        <reject lang="wk-LA">ɛnɔben</reject>
+        <reject lang="wk-LA">ɛnɔmot</reject>
+        <accept lang="wk-LA">ɛnɔsɪn</accept>
+        <accept lang="wk-LA">ɛnɔkɛm</accept>
+        <accept lang="wk-LA">ɛnɔkɔŋ</accept>
+        <reject lang="wk-LA">enosɪn</reject>
+        <reject lang="wk-LA">enokɛm</reject>
+        <reject lang="wk-LA">enokɔŋ</reject>
     </schema>
     <schema label="Create Allomorphs">
         <morphology-file>14-Create-Allomorphs.xml</morphology-file>
         <message>Success means identical output to 13-Shared-Conditions.xml</message>
-        <recognition-test>
-            <input lang="wk-LA">sɪn</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">esit</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">eben</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">emot</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">ɛsit</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">ɛben</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">ɛmot</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">ɛsɪn</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">ɛkɛm</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">ɛkɔŋ</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">esɪn</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">ekɛm</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">ekɔŋ</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">enosit</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">enoben</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">enomot</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">ɛnɔsit</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">ɛnɔben</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">ɛnɔmot</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">ɛnɔsɪn</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">ɛnɔkɛm</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">ɛnɔkɔŋ</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">enosɪn</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">enokɛm</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">enokɔŋ</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
+        <reject lang="wk-LA">sɪn</reject>
+        <accept lang="wk-LA">esit</accept>
+        <accept lang="wk-LA">eben</accept>
+        <accept lang="wk-LA">emot</accept>
+        <reject lang="wk-LA">ɛsit</reject>
+        <reject lang="wk-LA">ɛben</reject>
+        <reject lang="wk-LA">ɛmot</reject>
+        <accept lang="wk-LA">ɛsɪn</accept>
+        <accept lang="wk-LA">ɛkɛm</accept>
+        <accept lang="wk-LA">ɛkɔŋ</accept>
+        <reject lang="wk-LA">esɪn</reject>
+        <reject lang="wk-LA">ekɛm</reject>
+        <reject lang="wk-LA">ekɔŋ</reject>
+        <accept lang="wk-LA">enosit</accept>
+        <accept lang="wk-LA">enoben</accept>
+        <accept lang="wk-LA">enomot</accept>
+        <reject lang="wk-LA">ɛnɔsit</reject>
+        <reject lang="wk-LA">ɛnɔben</reject>
+        <reject lang="wk-LA">ɛnɔmot</reject>
+        <accept lang="wk-LA">ɛnɔsɪn</accept>
+        <accept lang="wk-LA">ɛnɔkɛm</accept>
+        <accept lang="wk-LA">ɛnɔkɔŋ</accept>
+        <reject lang="wk-LA">enosɪn</reject>
+        <reject lang="wk-LA">enokɛm</reject>
+        <reject lang="wk-LA">enokɔŋ</reject>
     </schema>
     <schema label="Create Allomorphs 2">
         <morphology-file>15-Create-Allomorphs-2.xml</morphology-file>
         <message>Following non-velars have nOn:</message>
-        <recognition-test>
-            <input lang="wk-LA">enonsit</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">enonben</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">enonmot</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">ɛnɔnsɪn</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
+        <accept lang="wk-LA">enonsit</accept>
+        <accept lang="wk-LA">enonben</accept>
+        <accept lang="wk-LA">enonmot</accept>
+        <accept lang="wk-LA">ɛnɔnsɪn</accept>
         <message>Following non-velars cannot have nOŋ:</message>
-        <recognition-test>
-            <input lang="wk-LA">enoŋsit</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">enoŋben</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">enoŋmot</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">ɛnɔŋsɪn</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
+        <reject lang="wk-LA">enoŋsit</reject>
+        <reject lang="wk-LA">enoŋben</reject>
+        <reject lang="wk-LA">enoŋmot</reject>
+        <reject lang="wk-LA">ɛnɔŋsɪn</reject>
         <message>Following velars show nasal place assimilation</message>
-        <recognition-test>
-            <input lang="wk-LA">ɛnɔŋkɛm</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">ɛnɔŋkɔŋ</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
+        <accept lang="wk-LA">ɛnɔŋkɛm</accept>
+        <accept lang="wk-LA">ɛnɔŋkɔŋ</accept>
         <message>Following velars cannot be preceded by coronals</message>
-        <recognition-test>
-            <input lang="wk-LA">ɛnɔnkɛm</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">ɛnɔnkɔŋ</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
+        <reject lang="wk-LA">ɛnɔnkɛm</reject>
+        <reject lang="wk-LA">ɛnɔnkɔŋ</reject>
     </schema>
     <schema label="Create Allomorphs 3">
         <morphology-file>16-Create-Allomorphs-3.xml</morphology-file>
         <message>Following coronals have nOn:</message>
-        <recognition-test>
-            <input lang="wk-LA">enonsit</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">ɛnɔnsɪn</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
+        <accept lang="wk-LA">enonsit</accept>
+        <accept lang="wk-LA">ɛnɔnsɪn</accept>
         <message>Following labials have nOm:</message>
-        <recognition-test>
-            <input lang="wk-LA">enomben</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">enommot</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
+        <accept lang="wk-LA">enomben</accept>
+        <accept lang="wk-LA">enommot</accept>
         <message>Following velars have nOŋ</message>
-        <recognition-test>
-            <input lang="wk-LA">ɛnɔŋkɛm</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">ɛnɔŋkɔŋ</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
+        <accept lang="wk-LA">ɛnɔŋkɛm</accept>
+        <accept lang="wk-LA">ɛnɔŋkɔŋ</accept>
         <message>Non-assimilated nasals are not allowed</message>
-        <recognition-test>
-            <input lang="wk-LA">enoŋsit</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">enoŋben</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">enoŋmot</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">ɛnɔŋsɪn</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">ɛnɔmkɛm</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">ɛnɔnkɔŋ</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
+        <reject lang="wk-LA">enoŋsit</reject>
+        <reject lang="wk-LA">enoŋben</reject>
+        <reject lang="wk-LA">enoŋmot</reject>
+        <reject lang="wk-LA">ɛnɔŋsɪn</reject>
+        <reject lang="wk-LA">ɛnɔmkɛm</reject>
+        <reject lang="wk-LA">ɛnɔnkɔŋ</reject>
     </schema>
     <schema>
         <morphology-file>17-Create-Allomorphs-4.xml</morphology-file>
         <message>Consonants don't occur at the end of a word</message>
-        <recognition-test>
-            <input lang="wk-LA">sit</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">ben</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
+        <reject lang="wk-LA">sit</reject>
+        <reject lang="wk-LA">ben</reject>
         <message>Epenthetic vowels:</message>
-        <recognition-test>
-            <input lang="wk-LA">site</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">bene</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
+        <accept lang="wk-LA">site</accept>
+        <accept lang="wk-LA">bene</accept>
         <message>A case suffix:</message>
-        <recognition-test>
-            <input lang="wk-LA">sitana</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">benana</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
+        <accept lang="wk-LA">sitana</accept>
+        <accept lang="wk-LA">benana</accept>
     </schema>
     <schema label="Portmanteau Morphemes">
         <morphology-file>18-Portmanteaux.xml</morphology-file>
         <message>Same behavior as 06-Mutually-Exclusive-2.xml</message>
-        <recognition-test>
-            <input lang="wk-LA">ata</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">atalar</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">atalary</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">atalarymy</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">göz</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">gözler</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">gözleri</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">gözlarim</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">gözlerym</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">gözlerimi</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
+        <accept lang="wk-LA">ata</accept>
+        <accept lang="wk-LA">atalar</accept>
+        <accept lang="wk-LA">atalary</accept>
+        <reject lang="wk-LA">atalarymy</reject>
+        <accept lang="wk-LA">göz</accept>
+        <accept lang="wk-LA">gözler</accept>
+        <accept lang="wk-LA">gözleri</accept>
+        <reject lang="wk-LA">gözlarim</reject>
+        <reject lang="wk-LA">gözlerym</reject>
+        <reject lang="wk-LA">gözlerimi</reject>
         <message>The [Plural][1s-Possessive] can only be parsed with a portmanteau form:</message>
-        <recognition-test>
-            <input lang="wk-LA">atalaaaaaam</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">atalarym</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">gözleeeeeem</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">gözlerim</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
+        <accept lang="wk-LA">atalaaaaaam</accept>
+        <reject lang="wk-LA">atalarym</reject>
+        <accept lang="wk-LA">gözleeeeeem</accept>
+        <reject lang="wk-LA">gözlerim</reject>
         <message>The wk-AR writing system is unaffect (these are 'atalarym' and 'gözlerim'):</message>
-        <recognition-test>
-            <input lang="wk-AR">آتالارېم</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-AR">گؤزلريم</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
+        <accept lang="wk-AR">آتالارېم</accept>
+        <accept lang="wk-AR">گؤزلريم</accept>
     </schema>
     <schema>
         <morphology-file>19-Create-Allomorphs-5.xml</morphology-file>
         <message>Identical behavior to 17-Create-Allomorphs-4.xml</message>
-        <recognition-test>
-            <input lang="wk-LA">sit</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">ben</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">site</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">bene</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">sitana</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">benana</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
+        <reject lang="wk-LA">sit</reject>
+        <reject lang="wk-LA">ben</reject>
+        <accept lang="wk-LA">site</accept>
+        <accept lang="wk-LA">bene</accept>
+        <accept lang="wk-LA">sitana</accept>
+        <accept lang="wk-LA">benana</accept>
         <message>Analogous behavior for verbs as well:</message>
-        <recognition-test>
-            <input lang="wk-LA">sep</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">pop</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">sepe</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">pope</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">sepono</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">popono</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
+        <reject lang="wk-LA">sep</reject>
+        <reject lang="wk-LA">pop</reject>
+        <accept lang="wk-LA">sepe</accept>
+        <accept lang="wk-LA">pope</accept>
+        <accept lang="wk-LA">sepono</accept>
+        <accept lang="wk-LA">popono</accept>
     </schema>
     <schema>
         <morphology-file>20-Create-Allomorphs-6.xml</morphology-file>
         <message>Identical behavior to 19-Create-Allomorphs-5.xml</message>
-        <recognition-test>
-            <input lang="wk-LA">sit</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">ben</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">site</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">sitana</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
+        <reject lang="wk-LA">sit</reject>
+        <reject lang="wk-LA">ben</reject>
+        <accept lang="wk-LA">site</accept>
+        <accept lang="wk-LA">sitana</accept>
         <message>But labials are prenasalized:</message>
-        <recognition-test>
-            <input lang="wk-LA">bene</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">ᵐbene</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">benana</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">ᵐbenana</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
+        <reject lang="wk-LA">bene</reject>
+        <accept lang="wk-LA">ᵐbene</accept>
+        <reject lang="wk-LA">benana</reject>
+        <accept lang="wk-LA">ᵐbenana</accept>
         <message>But identical behavior for verbs as well:</message>
-        <recognition-test>
-            <input lang="wk-LA">sep</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">pop</input>
-            <should-be-accepted>no</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">sepe</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">pope</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">sepono</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
-        <recognition-test>
-            <input lang="wk-LA">popono</input>
-            <should-be-accepted>yes</should-be-accepted>
-        </recognition-test>
+        <reject lang="wk-LA">sep</reject>
+        <reject lang="wk-LA">pop</reject>
+        <accept lang="wk-LA">sepe</accept>
+        <accept lang="wk-LA">pope</accept>
+        <accept lang="wk-LA">sepono</accept>
+        <accept lang="wk-LA">popono</accept>
     </schema>
     <schema label="Copies 1">
         <morphology-file>21-Copies-1.xml</morphology-file>
