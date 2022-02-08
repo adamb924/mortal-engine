@@ -199,7 +199,7 @@ QList<Generation> AbstractStemList::generateFormsUsingThisNode(const Generation 
         {
             Allomorph a = ai.next();
             /// make sure that the Allomorph has a form for the generation's writing system
-            if( a.hasForm( generation.writingSystem() ) && generation.allomorphMatchConditionsSatisfied(a) ) /// this just checks for match conditions (e.g., tags)
+            if( a.useInGenerations() && a.hasForm( generation.writingSystem() ) && generation.allomorphMatchConditionsSatisfied(a) ) /// this just checks for match conditions (e.g., tags)
             {
                 if( Morphology::DebugOutput )
                 {
