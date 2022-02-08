@@ -349,7 +349,7 @@ ParsingStep ParsingStep::readFromXml(QDomElement parsing, const Morphology *morp
             ok = false;
             foreach(LexicalStem * s, lss)
             {
-                qCritical() << "\t" << s->summary();
+                qCritical() << "\t" << s->oneLineSummary();
             }
         }
 
