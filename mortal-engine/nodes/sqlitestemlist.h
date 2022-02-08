@@ -31,7 +31,7 @@ private:
     void insertStemIntoDataModel( LexicalStem * stem ) override;
     void removeStemFromDataModel( qlonglong id ) override;
     LexicalStem * lexicalStemFromId(qlonglong stemId, const QString &liftGuid, const QHash<QString, WritingSystem> &writingSystems);
-    Allomorph allomorphFromId(qlonglong allomorphId, const QHash<QString, WritingSystem> &writingSystems);
+    Allomorph allomorphFromId(qlonglong allomorphId, const QHash<QString, WritingSystem> &writingSystems, bool useInGenerations);
 
     QString tagsInSqliteList() const;
 

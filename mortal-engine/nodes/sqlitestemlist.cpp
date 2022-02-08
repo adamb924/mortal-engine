@@ -78,14 +78,15 @@ LexicalStem *SqliteStemList::lexicalStemFromId(qlonglong stemId, const QString &
     QSqlDatabase db = QSqlDatabase::database(mDbName);
     QSqlQuery query(db);
 
-    query.prepare("SELECT _id FROM Allomorphs WHERE stem_id=?;");
+    query.prepare("SELECT _id,use_in_generations FROM Allomorphs WHERE stem_id=?;");
     query.bindValue( 0, stemId );
     if(query.exec())
     {
         while(query.next())
         {
             qlonglong allomorph_id = query.value(0).toLongLong();
-            ls->insert( allomorphFromId( allomorph_id, writingSystems ) );
+            bool useInGenerations =  query.value(1).toLongLong() > 0;
+            ls->insert( allomorphFromId( allomorph_id, writingSystems, useInGenerations ) );
         }
     }
     else
@@ -114,13 +115,14 @@ LexicalStem *SqliteStemList::lexicalStemFromId(qlonglong stemId, const QString &
     return ls;
 }
 
-Allomorph SqliteStemList::allomorphFromId(qlonglong allomorphId, const QHash<QString, WritingSystem> &writingSystems)
+Allomorph SqliteStemList::allomorphFromId(qlonglong allomorphId, const QHash<QString, WritingSystem> &writingSystems, bool useInGenerations)
 {
     QSqlDatabase db = QSqlDatabase::database(mDbName);
     QSqlQuery query(db);
 
     Allomorph a(Allomorph::Original);
     a.setId(allomorphId);
+    a.setUseInGenerations(useInGenerations);
 
     query.prepare("SELECT form, writingsystem FROM Forms WHERE allomorph_id=?;");
     query.bindValue(0, allomorphId);
@@ -163,7 +165,7 @@ void SqliteStemList::createTables()
     if( !q.exec("create table if not exists Stems ( _id integer primary key autoincrement, liftGuid text  );") )
         qWarning() << "SqliteStemList::createTables()" << q.lastError().text() << q.executedQuery();
 
-    if( !q.exec("create table if not exists Allomorphs ( _id integer primary key autoincrement, stem_id integer);") )
+    if( !q.exec("create table if not exists Allomorphs ( _id integer primary key autoincrement, stem_id integer, use_in_generations integer default 1);") )
         qWarning() << "SqliteStemList::createTables()" << q.lastError().text() << q.executedQuery();
 
     if( !q.exec("create table if not exists Forms ( _id integer primary key autoincrement, allomorph_id integer, Form text, WritingSystem text );") )
@@ -217,7 +219,7 @@ void SqliteStemList::addStemToDatabase(LexicalStem *stem)
     }
 
     QSqlQuery allomorphQuery(db);
-    allomorphQuery.prepare("INSERT INTO allomorphs (stem_id) VALUES (?);");
+    allomorphQuery.prepare("INSERT INTO allomorphs (stem_id,use_in_generations) VALUES (?,?);");
     allomorphQuery.bindValue(0, stem_id ); /// this will be the same for all subsequent calls
 
     QSqlQuery formQuery(db);
@@ -234,6 +236,7 @@ void SqliteStemList::addStemToDatabase(LexicalStem *stem)
         /// only add Original allomorphs to the SQL database, not Derived
         if( a.type() == Allomorph::Original )
         {
+            allomorphQuery.bindValue(1, a.useInGenerations() ); /// this will be the same for all subsequent calls
             allomorphQuery.exec(); /// using previously bound values
             qlonglong allomorph_id = allomorphQuery.lastInsertId().toLongLong();
 
