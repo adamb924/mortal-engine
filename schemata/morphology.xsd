@@ -38,6 +38,7 @@ targetNamespace="https://www.adambaker.org/mortal-engine">
                 <xs:element name="preceding-node" type="me:preceding-node"/>
                 <xs:element name="word-final"/>
                 <xs:element name="bound-morpheme"/>
+                <xs:element name="satisfied" type="me:satisfied"/>
             </xs:choice>
         </xs:choice>
     </xs:group>
@@ -136,6 +137,11 @@ targetNamespace="https://www.adambaker.org/mortal-engine">
     <!-- preceding-node -->
     <xs:complexType name="preceding-node">
         <xs:attribute name="label" type="xs:string" use="required"></xs:attribute>
+    </xs:complexType>
+
+    <!-- satisfied -->
+    <xs:complexType name="satisfied">
+        <xs:attribute name="id" type="xs:ID" use="required"></xs:attribute>
     </xs:complexType>
     
     <!-- model -->

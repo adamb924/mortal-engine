@@ -21,6 +21,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     constraints/precedingnodeconstraint.cpp \
+    constraints/satisfiedcondition.cpp \
     datatypes/portmanteau.cpp \
     debug.cpp \
     generation-constraints/abstractgenerationconstraint.cpp \
@@ -73,6 +74,7 @@ SOURCES += \
 HEADERS += \
     constraints/constraintmatcher.h \
     constraints/precedingnodeconstraint.h \
+    constraints/satisfiedcondition.h \
     datatypes/portmanteau.h \
     debug.h \
     generation-constraints/abstractgenerationconstraint.h \

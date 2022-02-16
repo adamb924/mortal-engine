@@ -38,6 +38,7 @@
 #include "constraints/precedingnodeconstraint.h"
 #include "constraints/wordfinalcondition.h"
 #include "constraints/boundcondition.h"
+#include "constraints/satisfiedcondition.h"
 
 #include <stdexcept>
 
@@ -61,6 +62,7 @@ MorphologyXmlReader::MorphologyXmlReader(Morphology *morphology) : mMorphology(m
     registerConstraintMatcher<PrecedingNodeConstraint>();
     registerConstraintMatcher<WordFinalCondition>();
     registerConstraintMatcher<BoundCondition>();
+    registerConstraintMatcher<SatisfiedCondition>();
 
     registerNodeMatcher<MorphologicalModel>();
     registerNodeMatcher<MorphemeNode>();
