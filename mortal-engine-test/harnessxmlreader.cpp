@@ -123,10 +123,12 @@ void HarnessXmlReader::readTestFile(const QString &filename)
                 {
                     mHarness->mSchemata.last()->addTest( readQuickRejectionTest( in, mHarness->mSchemata.last() ) );
                 }
+#ifndef Q_OS_WASM
                 else if ( name == "sqlite-database" )
                 {
                     SqliteStemList::openDatabase( attr.value("filename").toString(), attr.value("database-name").toString() );
                 }
+#endif
             }
         }
     }

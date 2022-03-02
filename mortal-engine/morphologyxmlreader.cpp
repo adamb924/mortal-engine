@@ -67,7 +67,9 @@ MorphologyXmlReader::MorphologyXmlReader(Morphology *morphology) : mMorphology(m
     registerNodeMatcher<MorphologicalModel>();
     registerNodeMatcher<MorphemeNode>();
     registerNodeMatcher<XmlStemList>();
+#ifndef Q_OS_WASM
     registerNodeMatcher<SqliteStemList>();
+#endif
     registerNodeMatcher<MutuallyExclusiveMorphemes>();
     registerNodeMatcher<Fork>();
     registerNodeMatcher<Path>();

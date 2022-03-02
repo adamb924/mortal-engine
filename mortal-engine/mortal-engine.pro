@@ -1,5 +1,8 @@
 QT -= gui
-QT += sql xml
+QT += xml
+!wasm {
+    QT += sql
+}
 
 TEMPLATE = lib
 DEFINES += MORTALENGINE_LIBRARY
@@ -55,7 +58,6 @@ SOURCES += \
     nodes/path.cpp \
     nodes/morphologicalmodel.cpp \
     nodes/sequence.cpp \
-    nodes/sqlitestemlist.cpp \
     nodes/xmlstemlist.cpp \
     generation-constraints/morphemesequenceconstraint.cpp \
     morphology.cpp \
@@ -70,6 +72,10 @@ SOURCES += \
     create-allomorphs/createallomorphsreplacement.cpp \
     datatypes/tag.cpp \
     datatypes/writingsystem.cpp
+
+!wasm {
+    SOURCES += nodes/sqlitestemlist.cpp
+}
 
 HEADERS += \
     constraints/constraintmatcher.h \
@@ -125,6 +131,10 @@ HEADERS += \
     create-allomorphs/createallomorphsreplacement.h \
     datatypes/tag.h \
     datatypes/writingsystem.h
+
+!wasm {
+    HEADERS += nodes/sqlitestemlist.h
+}
 
 FORMS +=
 

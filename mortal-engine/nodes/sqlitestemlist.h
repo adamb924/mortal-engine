@@ -1,3 +1,5 @@
+#ifndef Q_OS_WASM
+
 #ifndef SQLITESTEMLIST_H
 #define SQLITESTEMLIST_H
 
@@ -44,3 +46,9 @@ private:
 };
 
 #endif // SQLITESTEMLIST_H
+
+#else
+
+class SqliteStemList;
+
+#endif // Q_OS_WASM
