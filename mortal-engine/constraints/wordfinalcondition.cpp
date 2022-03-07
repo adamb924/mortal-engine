@@ -18,7 +18,7 @@ WordFinalCondition::~WordFinalCondition()
 
 }
 
-bool WordFinalCondition::matches(const Parsing *parsing, const AbstractNode *node, const Allomorph &allomorph) const
+bool WordFinalCondition::matchesThisConstraint(const Parsing *parsing, const AbstractNode *node, const Allomorph &allomorph) const
 {
     Q_UNUSED(node)
 

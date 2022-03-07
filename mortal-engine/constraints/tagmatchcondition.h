@@ -23,7 +23,7 @@ public:
     void addInteruptTag(Tag t);
     void addInteruptTag(const QString & t);
 
-    bool matches( const Parsing * parsing, const AbstractNode *node, const Allomorph &allomorph ) const override;
+    bool matchesThisConstraint( const Parsing * parsing, const AbstractNode *node, const Allomorph &allomorph ) const override;
 
     bool matchAnyPreceding(const Parsing * parsing) const;
     bool matchImmediatelyPreceding( const Parsing * parsing ) const;

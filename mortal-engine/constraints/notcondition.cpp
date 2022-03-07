@@ -18,7 +18,7 @@ NotCondition::~NotCondition()
 
 }
 
-bool NotCondition::matches(const Parsing *parsing, const AbstractNode *node, const Allomorph &allomorph) const
+bool NotCondition::matchesThisConstraint(const Parsing *parsing, const AbstractNode *node, const Allomorph &allomorph) const
 {
     QSetIterator<const AbstractConstraint *> i(mConstraints);
     while( i.hasNext() )
@@ -68,7 +68,7 @@ AbstractConstraint *NotCondition::readFromXml(QXmlStreamReader &in, MorphologyXm
     Q_UNUSED(morphologyReader)
     Q_ASSERT( in.isStartElement() );
     NotCondition * condition = new NotCondition;
-    condition->readId(in);
+    condition->readCommonAttributes(in);
 
     in.readNextStartElement();
 

@@ -12,7 +12,7 @@ PrecedingNodeConstraint::PrecedingNodeConstraint() : AbstractConstraint(Abstract
 
 }
 
-bool PrecedingNodeConstraint::matches(const Parsing *parsing, const AbstractNode *node, const Allomorph &allomorph) const
+bool PrecedingNodeConstraint::matchesThisConstraint(const Parsing *parsing, const AbstractNode *node, const Allomorph &allomorph) const
 {
     Q_UNUSED(node)
     Q_UNUSED(allomorph)

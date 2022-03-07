@@ -23,7 +23,7 @@ FollowingPhonologicalCondition::~FollowingPhonologicalCondition()
 
 }
 
-bool FollowingPhonologicalCondition::matches(const Parsing *parsing, const AbstractNode *node, const Allomorph &allomorph) const
+bool FollowingPhonologicalCondition::matchesThisConstraint(const Parsing *parsing, const AbstractNode *node, const Allomorph &allomorph) const
 {
     Q_UNUSED( node )
 
@@ -48,7 +48,7 @@ AbstractConstraint *FollowingPhonologicalCondition::readFromXml(QXmlStreamReader
 {
     Q_ASSERT( in.isStartElement() );
     FollowingPhonologicalCondition *c = new FollowingPhonologicalCondition;
-    c->readId(in);
+    c->readCommonAttributes(in);
     while( !in.atEnd() && !(in.tokenType() == QXmlStreamReader::EndElement && in.name() == elementName() ) )
     {
         in.readNext();

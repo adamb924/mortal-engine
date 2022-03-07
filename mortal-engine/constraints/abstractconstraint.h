@@ -3,6 +3,8 @@
 
 #include <QString>
 
+#include "ignoreflag.h"
+
 class Allomorph;
 class Parsing;
 class AbstractNode;
@@ -20,7 +22,7 @@ public:
     AbstractConstraint(Type t);
     virtual ~AbstractConstraint() = 0;
 
-    virtual bool matches( const Parsing * parsing, const AbstractNode *node, const Allomorph &allomorph ) const = 0;
+    bool matches( const Parsing * parsing, const AbstractNode *node, const Allomorph &allomorph ) const;
     virtual QString satisfactionSummary( const Parsing * parsing, const AbstractNode *node, const Allomorph &allomorph ) const;
 
     /**
@@ -53,14 +55,23 @@ public:
 
     static QString XML_MATCH_EXPRESSION;
     static QString XML_OPTIONAL;
+    static QString XML_IGNORE_WHEN_PARSING;
+    static QString XML_IGNORE_WHEN_GENERATING;
+
+private:
+    virtual bool matchesThisConstraint( const Parsing * parsing, const AbstractNode *node, const Allomorph &allomorph ) const = 0;
+    bool shouldBeIgnored( const Parsing * parsing ) const;
 
 protected:
-    void readId(QXmlStreamReader &in);
+    void readCommonAttributes(QXmlStreamReader &in);
     void setType(const Type &type);
 
 protected:
     QString mId;
     Type mType;
+
+private:
+    QList<IgnoreFlag> mIgnoreFlags;
 };
 
 #endif // ABSTRACTCONSTRAINT_H

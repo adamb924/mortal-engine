@@ -10,7 +10,7 @@ public:
 
     PrecedingNodeConstraint();
 
-    bool matches( const Parsing * parsing, const AbstractNode *node, const Allomorph &allomorph ) const override;
+    bool matchesThisConstraint( const Parsing * parsing, const AbstractNode *node, const Allomorph &allomorph ) const override;
 
     /**
      * @brief Returns a string representation of the Form for logging purposes.

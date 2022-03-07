@@ -12,7 +12,7 @@ SatisfiedCondition::~SatisfiedCondition()
 
 }
 
-bool SatisfiedCondition::matches(const Parsing *parsing, const AbstractNode *node, const Allomorph &allomorph) const
+bool SatisfiedCondition::matchesThisConstraint(const Parsing *parsing, const AbstractNode *node, const Allomorph &allomorph) const
 {
     Q_UNUSED(parsing)
 
@@ -38,7 +38,7 @@ AbstractConstraint *SatisfiedCondition::readFromXml(QXmlStreamReader &in, Morpho
 
     Q_ASSERT( in.isStartElement() );
     SatisfiedCondition *c = new SatisfiedCondition;
-    c->readId(in);
+    c->readCommonAttributes(in);
     in.readNext();
     Q_ASSERT( in.isEndElement() && in.name() == elementName() );
     return c;

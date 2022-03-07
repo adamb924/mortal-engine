@@ -19,7 +19,7 @@ PointerToConstraint::~PointerToConstraint()
 
 }
 
-bool PointerToConstraint::matches(const Parsing *parsing, const AbstractNode *node, const Allomorph &allomorph) const
+bool PointerToConstraint::matchesThisConstraint(const Parsing *parsing, const AbstractNode *node, const Allomorph &allomorph) const
 {
     if( mTheConstraint == nullptr )
     {

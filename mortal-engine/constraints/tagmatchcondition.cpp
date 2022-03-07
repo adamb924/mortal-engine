@@ -70,7 +70,7 @@ bool TagMatchCondition::matchInterrupt(const Allomorph &allomorph) const
     return mInterruptTags.intersects(allomorph.tags());
 }
 
-bool TagMatchCondition::matches(const Parsing *parsing, const AbstractNode *node, const Allomorph &allomorph) const
+bool TagMatchCondition::matchesThisConstraint(const Parsing *parsing, const AbstractNode *node, const Allomorph &allomorph) const
 {
     Q_UNUSED(node)
     switch( mSearchScope )
@@ -159,7 +159,7 @@ AbstractConstraint *TagMatchCondition::readFromXml(QXmlStreamReader &in, Morphol
     TagMatchCondition::Scope scope =  scopeFromString( attr.value("scope").toString() );
 
     TagMatchCondition * tmc = new TagMatchCondition(scope, type);
-    tmc->readId(in);
+    tmc->readCommonAttributes(in);
     while(!in.atEnd() && !(in.tokenType() == QXmlStreamReader::EndElement && in.name() == XML_TAG_MATCH ) )
     {
         in.readNext();

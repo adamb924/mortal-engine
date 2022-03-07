@@ -36,9 +36,9 @@ targetNamespace="https://www.adambaker.org/mortal-engine">
                 <xs:element name="condition" type="me:condition"/>
                 <xs:element name="following-node" type="me:following-node"/>
                 <xs:element name="preceding-node" type="me:preceding-node"/>
-                <xs:element name="word-final"/>
-                <xs:element name="bound-morpheme"/>
-                <xs:element name="satisfied" type="me:satisfied"/>
+                <xs:element name="word-final" type="me:condition-base"/>
+                <xs:element name="bound-morpheme" type="me:condition-base"/>
+                <xs:element name="satisfied" type="me:condition-base"/>
             </xs:choice>
         </xs:choice>
     </xs:group>
@@ -52,17 +52,24 @@ targetNamespace="https://www.adambaker.org/mortal-engine">
         </xs:choice>
     </xs:group>
     
+    <xs:complexType name="condition-base">
+        <xs:attribute type="xs:ID" name="id" use="optional"/>
+        <xs:attribute type="xs:string" name="ignore-when-parsing" use="optional"/>
+        <xs:attribute type="xs:string" name="ignore-when-generating" use="optional"/>
+    </xs:complexType>
     
     <!-- phonological-condition -->
     <xs:complexType name="phonological-condition">
-      <xs:sequence>
-        <xs:element ref="me:match-expression" maxOccurs="unbounded" minOccurs="1"/>
-      </xs:sequence>
-      <!-- TODO: Check if this is ever used -->
-      <!-- of course, why wouldn't it be? -->
-      <xs:attribute type="me:match-expression-type" name="type" use="required"/>
-      <xs:attribute type="xs:ID" name="id" use="optional"/>
+        <xs:complexContent>
+            <xs:extension base="me:condition-base">
+                <xs:sequence>
+                    <xs:element ref="me:match-expression" maxOccurs="unbounded" minOccurs="1"/>
+                </xs:sequence>
+                <xs:attribute type="me:match-expression-type" name="type" use="required"/>
+            </xs:extension>
+        </xs:complexContent>
     </xs:complexType>
+
     <xs:element name="match-expression">
         <xs:complexType>
           <xs:simpleContent>
@@ -82,13 +89,16 @@ targetNamespace="https://www.adambaker.org/mortal-engine">
 
     <!-- tag-match -->
     <xs:complexType name="tag-match">
-        <xs:choice maxOccurs="unbounded">
-            <xs:element name="match-tag" minOccurs="0"/>
-            <xs:element name="interrupted-by" minOccurs="0"/>
-        </xs:choice>
-        <xs:attribute type="xs:ID" name="id" use="optional"/>
-        <xs:attribute type="me:tag-match-scope" name="scope" use="required"/>
-        <xs:attribute type="me:tag-match-type" name="type" use="required"/>
+        <xs:complexContent>
+            <xs:extension base="me:condition-base">
+                <xs:choice maxOccurs="unbounded">
+                    <xs:element name="match-tag" minOccurs="0"/>
+                    <xs:element name="interrupted-by" minOccurs="0"/>
+                </xs:choice>
+                <xs:attribute type="me:tag-match-scope" name="scope" use="required"/>
+                <xs:attribute type="me:tag-match-type" name="type" use="required"/>
+            </xs:extension>
+        </xs:complexContent>
     </xs:complexType>
     <xs:simpleType name="tag-match-scope">
         <xs:restriction base="xs:string">
@@ -108,20 +118,29 @@ targetNamespace="https://www.adambaker.org/mortal-engine">
 
     <!-- or -->
     <xs:complexType name="or">
-        <xs:group ref="me:conditions"></xs:group>
-        <xs:attribute name="id" type="xs:ID" use="optional"/>
+        <xs:complexContent>
+            <xs:extension base="me:condition-base">
+                <xs:group ref="me:conditions"></xs:group>
+            </xs:extension>
+        </xs:complexContent>
     </xs:complexType>
 
     <!-- and -->
     <xs:complexType name="and">
-        <xs:group ref="me:conditions"></xs:group>
-        <xs:attribute name="id" type="xs:ID" use="optional"/>
+        <xs:complexContent>
+            <xs:extension base="me:condition-base">
+                <xs:group ref="me:conditions"></xs:group>
+            </xs:extension>
+        </xs:complexContent>        
     </xs:complexType>
 
     <!-- not -->
     <xs:complexType name="not">
-        <xs:group ref="me:conditions"></xs:group>
-        <xs:attribute name="id" type="xs:ID" use="optional"/>
+        <xs:complexContent>
+            <xs:extension base="me:condition-base">
+                <xs:group ref="me:conditions"></xs:group>
+            </xs:extension>
+        </xs:complexContent>        
     </xs:complexType>
 
     <!-- condition -->
@@ -131,19 +150,22 @@ targetNamespace="https://www.adambaker.org/mortal-engine">
 
     <!-- following-node -->
     <xs:complexType name="following-node">
-        <xs:attribute name="label" type="xs:string" use="required"></xs:attribute>
+        <xs:complexContent>
+            <xs:extension base="me:condition-base">
+                <xs:attribute name="label" type="xs:string" use="required"></xs:attribute>
+            </xs:extension>
+        </xs:complexContent>
     </xs:complexType>
 
     <!-- preceding-node -->
     <xs:complexType name="preceding-node">
-        <xs:attribute name="label" type="xs:string" use="required"></xs:attribute>
+        <xs:complexContent>
+            <xs:extension base="me:condition-base">
+                <xs:attribute name="label" type="xs:string" use="required"></xs:attribute>
+            </xs:extension>
+        </xs:complexContent>
     </xs:complexType>
 
-    <!-- satisfied -->
-    <xs:complexType name="satisfied">
-        <xs:attribute name="id" type="xs:ID" use="required"></xs:attribute>
-    </xs:complexType>
-    
     <!-- model -->
     <xs:complexType name="model">
         <xs:group ref="me:nodes"></xs:group>

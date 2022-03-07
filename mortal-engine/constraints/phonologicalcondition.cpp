@@ -21,7 +21,7 @@ PhonologicalCondition::~PhonologicalCondition()
 
 }
 
-bool PhonologicalCondition::matches(const Parsing *parsing, const AbstractNode *node, const Allomorph &allomorph) const
+bool PhonologicalCondition::matchesThisConstraint(const Parsing *parsing, const AbstractNode *node, const Allomorph &allomorph) const
 {
     Q_UNUSED(node)
     Q_UNUSED(allomorph)
@@ -45,7 +45,7 @@ AbstractConstraint *PhonologicalCondition::readFromXml(QXmlStreamReader &in, Mor
 {
     Q_ASSERT( in.isStartElement() );
     PhonologicalCondition *c = new PhonologicalCondition;
-    c->readId(in);
+    c->readCommonAttributes(in);
 
     while( !in.atEnd() && !(in.tokenType() == QXmlStreamReader::EndElement && in.name() == elementName() ) )
     {

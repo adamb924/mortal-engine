@@ -17,7 +17,7 @@ AndCondition::~AndCondition()
 
 }
 
-bool AndCondition::matches(const Parsing *parsing, const AbstractNode *node, const Allomorph &allomorph) const
+bool AndCondition::matchesThisConstraint(const Parsing *parsing, const AbstractNode *node, const Allomorph &allomorph) const
 {
     QSetIterator<const AbstractConstraint *> i(mConstraints);
     while( i.hasNext() )
@@ -39,7 +39,7 @@ AbstractConstraint *AndCondition::readFromXml(QXmlStreamReader &in, MorphologyXm
 {
     Q_ASSERT( in.isStartElement() );
     AndCondition * condition = new AndCondition;
-    condition->readId(in);
+    condition->readCommonAttributes(in);
 
     in.readNextStartElement();
 

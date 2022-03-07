@@ -9,7 +9,7 @@ public:
     AbstractLongDistanceConstraint();
 
     /// TODO this may or may not be helpful/necessary
-    bool matches( const Parsing * parsing, const AbstractNode *node, const Allomorph &allomorph ) const override;
+    bool matchesThisConstraint( const Parsing * parsing, const AbstractNode *node, const Allomorph &allomorph ) const override;
 
     virtual bool satisfied( const Parsing * p ) const = 0;
 };

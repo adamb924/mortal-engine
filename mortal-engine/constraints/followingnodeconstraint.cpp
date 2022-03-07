@@ -18,7 +18,7 @@ FollowingNodeConstraint::~FollowingNodeConstraint()
 
 }
 
-bool FollowingNodeConstraint::matches(const Parsing *parsing, const AbstractNode *node, const Allomorph &allomorph) const
+bool FollowingNodeConstraint::matchesThisConstraint(const Parsing *parsing, const AbstractNode *node, const Allomorph &allomorph) const
 {
     Q_UNUSED(parsing)
     Q_UNUSED(node)

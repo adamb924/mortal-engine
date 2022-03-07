@@ -19,7 +19,7 @@ OrCondition::~OrCondition()
 
 }
 
-bool OrCondition::matches(const Parsing *parsing, const AbstractNode *node, const Allomorph &allomorph) const
+bool OrCondition::matchesThisConstraint(const Parsing *parsing, const AbstractNode *node, const Allomorph &allomorph) const
 {
     bool returnValue = false;
     QSetIterator<const AbstractConstraint *> i(mConstraints);
@@ -81,7 +81,7 @@ AbstractConstraint *OrCondition::readFromXml(QXmlStreamReader &in, MorphologyXml
 {
     Q_ASSERT( in.isStartElement() );
     OrCondition * condition = new OrCondition;
-    condition->readId(in);
+    condition->readCommonAttributes(in);
 
     in.readNextStartElement();
 

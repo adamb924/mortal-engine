@@ -19,7 +19,7 @@ public:
     AbstractMatchCondition();
     virtual ~AbstractMatchCondition() override = 0;
 
-    virtual bool matches( const Parsing * parsing, const AbstractNode *node, const Allomorph &allomorph ) const override = 0;
+    virtual bool matchesThisConstraint( const Parsing * parsing, const AbstractNode *node, const Allomorph &allomorph ) const override = 0;
 
     static QString elementName();
     static AbstractMatchCondition *readFromXml(QXmlStreamReader &in, MorphologyXmlReader * morphologyReader);

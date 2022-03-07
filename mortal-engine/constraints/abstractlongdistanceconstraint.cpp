@@ -5,7 +5,7 @@ AbstractLongDistanceConstraint::AbstractLongDistanceConstraint() : AbstractConst
 
 }
 
-bool AbstractLongDistanceConstraint::matches(const Parsing *parsing, const AbstractNode *node, const Allomorph &allomorph) const
+bool AbstractLongDistanceConstraint::matchesThisConstraint(const Parsing *parsing, const AbstractNode *node, const Allomorph &allomorph) const
 {
     Q_UNUSED(node)
     Q_UNUSED(allomorph)
