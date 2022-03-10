@@ -2,42 +2,9 @@
 
 #include "datatypes/generation.h"
 
-GenerationTest::GenerationTest(const Morphology *morphology) : AbstractTest(morphology)
+GenerationTest::GenerationTest(const Morphology *morphology) : AbstractInputOutputTest(morphology)
 {
 
-}
-
-bool GenerationTest::succeeds() const
-{
-    return mTargetOutputs == mActualOutputs;
-}
-
-QString GenerationTest::message() const
-{
-    if( succeeds() )
-    {
-        return QObject::tr("%1The input %2, %3 (%4) produced %5, which is correct.")
-                .arg( summaryStub() )
-                .arg(mLexicalStemId)
-                .arg(mMorphologicalString,
-                      mOutputWritingSystem.abbreviation(),
-                      setToString(mActualOutputs) );
-    }
-    else
-    {
-        return QObject::tr("%1The input %2, %3 (%4) produced %5, but it should have been %6.")
-                .arg( summaryStub() )
-                .arg(mLexicalStemId)
-                .arg(mMorphologicalString,
-                      mOutputWritingSystem.abbreviation(),
-                      setToString(mActualOutputs),
-                      setToString(mTargetOutputs) );
-    }
-}
-
-QString GenerationTest::barebonesOutput() const
-{
-    return setToBarebonesString(mActualOutputs);
 }
 
 void GenerationTest::runTest()
@@ -55,12 +22,6 @@ void GenerationTest::runTest()
     {
         mActualOutputs << i.next().form();
     }
-}
-
-void GenerationTest::addTargetOutput(Form output)
-{
-    mOutputWritingSystem = output.writingSystem();
-    mTargetOutputs << output;
 }
 
 void GenerationTest::setLexicalStemId(const qlonglong &lexicalStemId)

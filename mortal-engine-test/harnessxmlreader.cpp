@@ -11,6 +11,7 @@
 #include "suggestiontest.h"
 #include "nodes/sqlitestemlist.h"
 #include "generationtest.h"
+#include "interlinearglosstest.h"
 
 #include <QTextStream>
 #include <QXmlStreamReader>
@@ -37,6 +38,7 @@ QString HarnessXmlReader::XML_TAG = "tag";
 QString HarnessXmlReader::XML_MORPHEMES = "morphemes";
 QString HarnessXmlReader::XML_LANG = "lang";
 QString HarnessXmlReader::XML_DEBUG = "debug";
+QString HarnessXmlReader::XML_INTERLINEAR_GLOSS_TEST = "interlinear-gloss-test";
 
 
 HarnessXmlReader::HarnessXmlReader(TestHarness *harness) : mHarness(harness)
@@ -114,6 +116,10 @@ void HarnessXmlReader::readTestFile(const QString &filename)
                 else if ( name == XML_GENERATION_TEST_SHORT )
                 {
                     mHarness->mSchemata.last()->addTest( readQuickGenerationTest(in, mHarness->mSchemata.last()) );
+                }
+                else if ( name == XML_INTERLINEAR_GLOSS_TEST )
+                {
+                    mHarness->mSchemata.last()->addTest( readInterlinearGlossTest(in, mHarness->mSchemata.last()) );
                 }
                 else if ( name == "accept" )
                 {
@@ -445,4 +451,39 @@ GenerationTest *HarnessXmlReader::readQuickGenerationTest(QXmlStreamReader &in, 
     test->evaluate();
 
     return test;
+}
+
+InterlinearGlossTest *HarnessXmlReader::readInterlinearGlossTest(QXmlStreamReader &in, const TestSchema *schema)
+{
+    InterlinearGlossTest* test = new InterlinearGlossTest(schema->morphology());
+    test->setLabel( in.attributes().value(XML_LABEL).toString() );
+    test->setShowDebug( in.attributes().value(XML_DEBUG).toString() == XML_TRUE );
+
+    while(!in.atEnd() && !(in.tokenType() == QXmlStreamReader::EndElement && in.name() == XML_GENERATION_TEST ) )
+    {
+        in.readNext();
+
+        if( in.tokenType() == QXmlStreamReader::StartElement )
+        {
+            if( in.name() == XML_INPUT )
+            {
+                /// this'll all get optimized by the compiler I assume
+                WritingSystem ws = schema->morphology()->writingSystem( in.attributes().value(XML_LANG).toString() );
+                Form f = Form( ws, in.readElementText() );
+                test->setInput( f );
+
+            }
+            else if( in.name() == XML_OUTPUT )
+            {
+                WritingSystem ws = schema->morphology()->writingSystem( in.attributes().value(XML_LANG).toString() );
+                Form f = Form( ws, in.readElementText() );
+                test->addTargetOutput( f );
+            }
+        }
+    }
+
+    test->evaluate();
+
+    return test;
+
 }

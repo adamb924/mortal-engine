@@ -25,6 +25,7 @@ targetNamespace="https://www.adambaker.org/mortal-engine/tests">
                     <xs:element name="parsing-test" type="met:parsing-test"/>
                     <xs:element name="recognition-test" type="met:recognition-test"/>
                     <xs:element name="suggestion-test" type="met:suggestion-test"/>
+                    <xs:element name="interlinear-gloss-test" type="met:interlinear-gloss-test"/>
                     <xs:element name="stem-replacement-test" type="met:stem-replacement-test"/>
                     <xs:element name="accept" type="met:acceptance-test"/>
                     <xs:element name="reject" type="met:acceptance-test"/>
@@ -46,6 +47,17 @@ targetNamespace="https://www.adambaker.org/mortal-engine/tests">
     </xs:complexType>
 
     <xs:complexType name="transduction-test">
+        <xs:complexContent>
+            <xs:extension base="met:test">
+                <xs:sequence>
+                    <xs:element name="input" type="met:form"/>
+                    <xs:element name="output" type="met:form" minOccurs="1" maxOccurs="unbounded"/>
+                </xs:sequence>        
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="interlinear-gloss-test">
         <xs:complexContent>
             <xs:extension base="met:test">
                 <xs:sequence>

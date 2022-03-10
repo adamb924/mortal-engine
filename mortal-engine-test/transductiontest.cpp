@@ -2,40 +2,9 @@
 
 #include "datatypes/generation.h"
 
-TransductionTest::TransductionTest(const Morphology *morphology) : AbstractTest(morphology)
+TransductionTest::TransductionTest(const Morphology *morphology) : AbstractInputOutputTest(morphology)
 {
 
-}
-
-bool TransductionTest::succeeds() const
-{
-    return mTargetOutputs == mActualOutputs;
-}
-
-QString TransductionTest::message() const
-{
-    if( succeeds() )
-    {
-        return QObject::tr("%1The input %2 (%3) produced %4, which is correct.")
-                .arg( summaryStub(),
-                      mInput.text(),
-                      mInput.writingSystem().abbreviation(),
-                      setToString(mActualOutputs) );
-    }
-    else
-    {
-        return QObject::tr("%1The input %2 (%3) produced %4, but it should have been %5.")
-                .arg( summaryStub(),
-                      mInput.text(),
-                      mInput.writingSystem().abbreviation(),
-                      setToString(mActualOutputs),
-                      setToString(mTargetOutputs) );
-    }
-}
-
-QString TransductionTest::barebonesOutput() const
-{
-    return setToBarebonesString(mActualOutputs);
 }
 
 void TransductionTest::runTest()
@@ -48,10 +17,4 @@ void TransductionTest::runTest()
     {
         mActualOutputs << i.next().form();
     }
-}
-
-void TransductionTest::addTargetOutput(Form output)
-{
-    mOutputWritingSystem = output.writingSystem();
-    mTargetOutputs << output;
 }

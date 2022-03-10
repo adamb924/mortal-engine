@@ -18,6 +18,7 @@ class ParsingTest;
 class StemReplacementTest;
 class SuggestionTest;
 class GenerationTest;
+class InterlinearGlossTest;
 
 class TestHarness;
 
@@ -39,6 +40,7 @@ private:
     SuggestionTest *readSuggestionTest(QXmlStreamReader &in, const TestSchema * schema);
     GenerationTest *readGenerationTest(QXmlStreamReader &in, const TestSchema * schema);
     GenerationTest *readQuickGenerationTest(QXmlStreamReader &in, const TestSchema * schema);
+    InterlinearGlossTest * readInterlinearGlossTest(QXmlStreamReader &in, const TestSchema * schema);
 
     TestHarness *mHarness;
 
@@ -63,6 +65,7 @@ private:
     static QString XML_MORPHEMES;
     static QString XML_LANG;
     static QString XML_DEBUG;
+    static QString XML_INTERLINEAR_GLOSS_TEST;
 };
 
 #endif // HARNESSXMLREADER_H
