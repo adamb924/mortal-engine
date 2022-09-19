@@ -3,8 +3,6 @@
 #include "abstractlongdistanceconstraint.h"
 #include "abstractnestedconstraint.h"
 
-#include "pointertoconstraint.h"
-
 #include <QXmlStreamReader>
 #include <QRegularExpression>
 

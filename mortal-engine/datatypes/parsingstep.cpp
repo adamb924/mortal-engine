@@ -6,7 +6,6 @@
 #include "nodes/abstractnode.h"
 #include "datatypes/portmanteau.h"
 #include "morphology.h"
-#include "nodes/morphemenode.h"
 
 ParsingStep::ParsingStep(const AbstractNode *node, const Allomorph & allomorph) :
     mNode(node),

@@ -1,8 +1,5 @@
 #include "stemreplacementtest.h"
 
-#include "generation-constraints/morphemesequenceconstraint.h"
-#include "generation-constraints/stemidentityconstraint.h"
-
 #include "datatypes/generation.h"
 #include "datatypes/writingsystem.h"
 

@@ -1,7 +1,6 @@
 #include "testharness.h"
 
 #include "testschema.h"
-#include "datatypes/form.h"
 #include "harnessxmlreader.h"
 
 TestHarness::TestHarness()

@@ -10,9 +10,6 @@
 #include "constraints/abstractlongdistanceconstraint.h"
 #include "morphology.h"
 
-#include "generation-constraints/morphemesequenceconstraint.h"
-#include "generation-constraints/stemidentityconstraint.h"
-
 int Parsing::MAXIMUM_JUMPS = 1;
 
 Parsing::Parsing() :

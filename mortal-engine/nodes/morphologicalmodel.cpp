@@ -2,8 +2,6 @@
 
 #include "nodes/abstractnode.h"
 
-#include "datatypes/generation.h"
-
 #include "morphologyxmlreader.h"
 #include <QXmlStreamReader>
 #include "debug.h"

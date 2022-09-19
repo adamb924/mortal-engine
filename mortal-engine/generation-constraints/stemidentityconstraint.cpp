@@ -1,6 +1,5 @@
 #include "stemidentityconstraint.h"
 
-#include "datatypes/parsing.h"
 #include "datatypes/lexicalstem.h"
 #include "nodes/abstractnode.h"
 

@@ -5,9 +5,6 @@
 #include "morphology.h"
 
 #include "datatypes/writingsystem.h"
-#include "datatypes/allomorph.h"
-#include "datatypes/tag.h"
-#include "datatypes/parsing.h"
 
 #include <QFile>
 #include <QStack>
@@ -19,7 +16,6 @@
 #include "nodes/xmlstemlist.h"
 #include "nodes/sqlitestemlist.h"
 #include "nodes/mutuallyexclusivemorphemes.h"
-#include "nodes/abstractpath.h"
 #include "nodes/fork.h"
 #include "nodes/path.h"
 #include "nodes/jump.h"

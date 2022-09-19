@@ -1,6 +1,5 @@
 #include "portmanteau.h"
 
-#include "morphology.h"
 #include "nodes/abstractnode.h"
 #include "nodes/morphemenode.h"
 

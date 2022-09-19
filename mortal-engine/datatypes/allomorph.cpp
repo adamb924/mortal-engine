@@ -7,8 +7,6 @@
 #include "debug.h"
 
 #include "constraints/abstractconstraint.h"
-#include "constraints/abstractnestedconstraint.h"
-#include "constraints/pointertoconstraint.h"
 
 #include <QXmlStreamWriter>
 #include <QtDebug>

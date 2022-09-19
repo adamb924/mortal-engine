@@ -6,7 +6,6 @@
 #include "datatypes/lexicalstem.h"
 #include "datatypes/allomorph.h"
 #include "datatypes/writingsystem.h"
-#include "datatypes/parsing.h"
 
 #include "morphology.h"
 #include "morphologyxmlreader.h"

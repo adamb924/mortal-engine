@@ -5,7 +5,6 @@
 #include <QDomElement>
 #include <stdexcept>
 
-#include "morphologyxmlreader.h"
 #include "morphology.h"
 
 QRegularExpression Form::whitespaceAndNonWordExpression("^[\\W\\s\\d]+$", QRegularExpression::UseUnicodePropertiesOption);
