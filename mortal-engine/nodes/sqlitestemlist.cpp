@@ -49,13 +49,16 @@ void SqliteStemList::readStems(const QHash<QString, WritingSystem> & writingSyst
         return;
 
     /// this is where the tag filtering takes place
-    QString inStatement = tagsInSqliteList();
-
     QSqlQuery query(db);
-    if( inStatement == "()" ) /// then there are no tags specified
-        query.prepare("SELECT DISTINCT stem_id, liftGuid from TagMembers LEFT JOIN Tags, Allomorphs,Stems ON Tags._id=TagMembers.tag_id AND Allomorphs._id=TagMembers.allomorph_id AND Stems._id=Allomorphs.stem_id;");
+    if( mTags.isEmpty() )
+    {
+        query.prepare("SELECT DISTINCT stem_id, liftGuid from Allomorphs,Stems ON Stems._id=Allomorphs.stem_id;");
+    }
     else
+    {
+        const QString inStatement = tagsInSqliteList();
         query.prepare("SELECT DISTINCT stem_id, liftGuid from TagMembers LEFT JOIN Tags, Allomorphs,Stems ON Tags._id=TagMembers.tag_id AND Allomorphs._id=TagMembers.allomorph_id AND Stems._id=Allomorphs.stem_id WHERE Label IN ("+inStatement+");");
+    }
 
     if(query.exec())
     {
