@@ -52,7 +52,11 @@ void SqliteStemList::readStems(const QHash<QString, WritingSystem> & writingSyst
     QString inStatement = tagsInSqliteList();
 
     QSqlQuery query(db);
-    query.prepare("SELECT DISTINCT stem_id, liftGuid from TagMembers LEFT JOIN Tags, Allomorphs,Stems ON Tags._id=TagMembers.tag_id AND Allomorphs._id=TagMembers.allomorph_id AND Stems._id=Allomorphs.stem_id WHERE Label IN ("+inStatement+");");
+    if( inStatement == "()" ) /// then there are no tags specified
+        query.prepare("SELECT DISTINCT stem_id, liftGuid from TagMembers LEFT JOIN Tags, Allomorphs,Stems ON Tags._id=TagMembers.tag_id AND Allomorphs._id=TagMembers.allomorph_id AND Stems._id=Allomorphs.stem_id;");
+    else
+        query.prepare("SELECT DISTINCT stem_id, liftGuid from TagMembers LEFT JOIN Tags, Allomorphs,Stems ON Tags._id=TagMembers.tag_id AND Allomorphs._id=TagMembers.allomorph_id AND Stems._id=Allomorphs.stem_id WHERE Label IN ("+inStatement+");");
+
     if(query.exec())
     {
         while(query.next())
