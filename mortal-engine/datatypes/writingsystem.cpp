@@ -28,6 +28,17 @@ WritingSystem::WritingSystem(const QString &abbreviation) : mName(""), mAbbrevia
 
 }
 
+WritingSystem::WritingSystem(const WritingSystem &other)
+    : mName(other.mName),
+      mAbbreviation(other.mAbbreviation),
+      mFontFamily(other.mFontFamily),
+      mFontSize(other.mFontSize),
+      mLayoutDirection(other.mLayoutDirection),
+      mKeyboardCommand(other.mKeyboardCommand),
+      mHash(other.mHash)
+{
+}
+
 QString WritingSystem::name() const
 {
     return mName;

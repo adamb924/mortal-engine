@@ -46,6 +46,8 @@ public:
      */
     explicit WritingSystem(const QString & abbreviation);
 
+    WritingSystem(const WritingSystem & other);
+
     /**
      * @brief Returns the name of the WritingSystem.
      * 
