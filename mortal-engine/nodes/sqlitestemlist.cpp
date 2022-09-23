@@ -52,7 +52,7 @@ void SqliteStemList::readStems(const QHash<QString, WritingSystem> & writingSyst
     QSqlQuery query(db);
     if( mTags.isEmpty() )
     {
-        query.prepare("SELECT DISTINCT stem_id, liftGuid from Allomorphs,Stems ON Stems._id=Allomorphs.stem_id;");
+        query.prepare("SELECT DISTINCT _id, liftGuid from Stems;");
     }
     else
     {
