@@ -3,6 +3,7 @@
 #include <QXmlStreamWriter>
 #include <QHash>
 #include <QDomElement>
+#include <QSet>
 
 Tag::Tag(const QString &label)
     : mLabel(label), mHash( qHash(mLabel, static_cast<uint>(qGlobalQHashSeed())) )
@@ -34,6 +35,17 @@ void Tag::serialize(QDomElement &out) const
 uint Tag::hash() const
 {
     return mHash;
+}
+
+QSet<Tag> Tag::fromString(const QString &str, const QString & delimiter)
+{
+    QSet<Tag> returnValue;
+    QStringList list = str.split(delimiter);
+    foreach(QString tag, list)
+    {
+        returnValue << Tag(tag);
+    }
+    return returnValue;
 }
 
 QString Tag::summary() const

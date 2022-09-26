@@ -43,6 +43,8 @@ public:
 
     uint hash() const;
 
+    static QSet<Tag> fromString(const QString & str, const QString & delimiter = ",");
+
 private:
     QString mLabel;
     uint mHash;
