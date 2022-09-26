@@ -186,6 +186,9 @@ void SqliteStemList::createTables()
 
     if( !q.exec("CREATE INDEX IF NOT EXISTS tagIdx ON TagMembers (allomorph_id);") )
         qWarning() << "SqliteStemList::createTables()" << q.lastError().text() << q.executedQuery();
+
+    if( !q.exec("CREATE INDEX IF NOT EXISTS tagIdxTwo ON TagMembers (tag_id);") )
+        qWarning() << "SqliteStemList::createTables()" << q.lastError().text() << q.executedQuery();
 }
 
 void SqliteStemList::addStemToDatabase(LexicalStem *stem)
