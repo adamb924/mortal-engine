@@ -1,6 +1,7 @@
 #include "testschema.h"
 
 #include <QTextStream>
+#include <QElapsedTimer>
 
 #include "../mortal-engine/morphology.h"
 
@@ -47,7 +48,11 @@ void TestSchema::setMorphologyFile(const QString &morphologyFile)
 {
     mMorphologyFile = morphologyFile;
     mMorphology = new Morphology;
+
+    QElapsedTimer timer;
+    timer.start();
     mMorphology->readXmlFile(mMorphologyFile);
+    qInfo().noquote() << QString("Mortal Engine initialized in %1 ms").arg(timer.elapsed());
 }
 
 void TestSchema::addTest(AbstractTest *test)
