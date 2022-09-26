@@ -41,10 +41,8 @@ QSet<Tag> Tag::fromString(const QString &str, const QString & delimiter)
 {
     QSet<Tag> returnValue;
     QStringList list = str.split(delimiter);
-    foreach(QString tag, list)
-    {
-        returnValue << Tag(tag);
-    }
+    for(int i=0; i < list.count(); i++)
+        returnValue << Tag( list.at(i) );
     return returnValue;
 }
 
