@@ -29,13 +29,20 @@ public:
 
     static QString XML_EXTERNAL_DATABASE;
 
+    void setReadGlosses(bool newReadGlosses);
+
 private:
+    void readStemsMultipleQueries(const QHash<QString, WritingSystem> &writingSystems);
+    void readStemsSingleQuery(const QHash<QString, WritingSystem> &writingSystems);
+
+
     void insertStemIntoDataModel( LexicalStem * stem ) override;
     void removeStemFromDataModel( qlonglong id ) override;
     LexicalStem * lexicalStemFromId(qlonglong stemId, const QString &liftGuid, const QHash<QString, WritingSystem> &writingSystems);
     Allomorph allomorphFromId(qlonglong allomorphId, const QHash<QString, WritingSystem> &writingSystems, bool useInGenerations);
 
     QString tagsInSqliteList() const;
+    QString tagIdsInSqliteList() const;
 
     void createTables();
     void addStemToDatabase( LexicalStem * stem );
@@ -43,6 +50,7 @@ private:
 
     QString mDatabasePath;
     QString mDbName;
+    bool mReadGlosses;
 };
 
 #endif // SQLITESTEMLIST_H

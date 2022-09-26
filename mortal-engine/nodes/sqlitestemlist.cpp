@@ -15,7 +15,10 @@
 QString SqliteStemList::DEFAULT_DBNAME = "SQLITE_STEM_LIST";
 QString SqliteStemList::XML_EXTERNAL_DATABASE = "external-database";
 
-SqliteStemList::SqliteStemList(const MorphologicalModel *model) : AbstractStemList(model), mDbName(DEFAULT_DBNAME)
+SqliteStemList::SqliteStemList(const MorphologicalModel *model)
+    : AbstractStemList(model),
+      mDbName(DEFAULT_DBNAME),
+      mReadGlosses(true)
 {
 
 }
@@ -48,30 +51,14 @@ void SqliteStemList::readStems(const QHash<QString, WritingSystem> & writingSyst
     if( !db.isOpen() )
         return;
 
-    /// this is where the tag filtering takes place
-    QSqlQuery query(db);
-    if( mTags.isEmpty() )
+    /// this is the default. It's about 50% slower.
+    if( mReadGlosses )
     {
-        query.prepare("SELECT DISTINCT _id, liftGuid from Stems;");
+        readStemsMultipleQueries(writingSystems);
     }
-    else
+    else /// this reads the stems about 50% faster. As a side effect it doesn't read the stem glosses.
     {
-        const QString inStatement = tagsInSqliteList();
-        query.prepare("SELECT DISTINCT stem_id, liftGuid from TagMembers LEFT JOIN Tags, Allomorphs,Stems ON Tags._id=TagMembers.tag_id AND Allomorphs._id=TagMembers.allomorph_id AND Stems._id=Allomorphs.stem_id WHERE Label IN ("+inStatement+");");
-    }
-
-    if(query.exec())
-    {
-        while(query.next())
-        {
-            const qlonglong stemId = query.value(0).toLongLong();
-            const QString liftGuid = query.value(1).toString();
-            mStems << lexicalStemFromId(stemId, liftGuid, writingSystems);
-        }
-    }
-    else
-    {
-        qWarning() << "SqliteStemList::readStems()" << query.lastError().text() << query.executedQuery();
+        readStemsSingleQuery(writingSystems);
     }
 }
 
@@ -339,6 +326,11 @@ qlonglong SqliteStemList::ensureTagInDatabase(const QString &tag)
     }
 }
 
+void SqliteStemList::setReadGlosses(bool newReadGlosses)
+{
+    mReadGlosses = newReadGlosses;
+}
+
 QString SqliteStemList::dbName() const
 {
     return mDbName;
@@ -357,6 +349,10 @@ AbstractNode *SqliteStemList::readFromXml(QXmlStreamReader &in, MorphologyXmlRea
 
     if( in.attributes().value("accepts-stems").toString() == "true" )
         morphologyReader->recordStemAcceptingNewStems( sl );
+
+    /// the default here is true
+    if( in.attributes().value("include-glosses").toString() == "false" )
+        sl->setReadGlosses(false);
 
     morphologyReader->recordStemList( sl );
 
@@ -428,6 +424,124 @@ void SqliteStemList::openDatabase(const QString &filename, const QString &databa
     if( !db.isValid() )
     {
         qWarning() << "SqliteStemList::openDatabase()" << "Invalid database: " << filename;
+    }
+}
+
+void SqliteStemList::readStemsMultipleQueries(const QHash<QString, WritingSystem> &writingSystems)
+{
+    QSqlDatabase db = QSqlDatabase::database(mDbName);
+
+    /// this is where the tag filtering takes place
+    QSqlQuery query(db);
+    if( mTags.isEmpty() )
+    {
+        query.prepare("SELECT DISTINCT _id, liftGuid from Stems;");
+    }
+    else
+    {
+        const QString inStatement = tagsInSqliteList();
+        query.prepare("SELECT DISTINCT stem_id, liftGuid from TagMembers LEFT JOIN Tags, Allomorphs,Stems ON Tags._id=TagMembers.tag_id AND Allomorphs._id=TagMembers.allomorph_id AND Stems._id=Allomorphs.stem_id WHERE Label IN ("+inStatement+");");
+    }
+
+    if(query.exec())
+    {
+        while(query.next())
+        {
+            const qlonglong stemId = query.value(0).toLongLong();
+            const QString liftGuid = query.value(1).toString();
+            mStems << lexicalStemFromId(stemId, liftGuid, writingSystems);
+        }
+    }
+    else
+    {
+        qWarning() << "SqliteStemList::readStemsMultipleQueries()" << query.lastError().text() << query.executedQuery();
+    }
+}
+
+void SqliteStemList::readStemsSingleQuery(const QHash<QString, WritingSystem> &writingSystems)
+{
+    QSqlDatabase db = QSqlDatabase::database(mDbName);
+
+    /// this is where the tag filtering takes place
+    QSqlQuery query(db);
+    if( mTags.isEmpty() )
+    {
+        query.prepare("SELECT stem_id, liftGuid,allomorphs._id AS allomorph_id,use_in_generations,Form,writingsystem,group_concat(label) "
+                      "FROM Stems, Allomorphs, Forms, Tags, TagMembers "
+                      "ON "
+                          "Stems._id=Allomorphs.stem_id "
+                          "AND Allomorphs._id=Forms.allomorph_id "
+                          "AND Tags._id=TagMembers.tag_id "
+                          "AND TagMembers.allomorph_id=Forms.allomorph_id "
+                      "GROUP BY Forms._id;");
+    }
+    else
+    {
+        const QString inStatement = tagIdsInSqliteList();
+        query.prepare("SELECT stem_id, liftGuid,allomorphs._id AS allomorph_id,use_in_generations,Form,writingsystem,group_concat(label) "
+                      "FROM Stems, Allomorphs, Forms, Tags, TagMembers "
+                      "ON "
+                          "Stems._id=Allomorphs.stem_id "
+                          "AND Allomorphs._id=Forms.allomorph_id "
+                          "AND Tags._id=TagMembers.tag_id "
+                          "AND TagMembers.allomorph_id=Forms.allomorph_id "
+                          "WHERE TagMembers.allomorph_id IN (SELECT allomorph_id FROM TagMembers WHERE tag_id IN ( " + inStatement + " ) ) "
+                      "GROUP BY Forms._id;");
+    }
+
+    if(query.exec())
+    {
+        qlonglong previousAllomorphId = -1;
+        Allomorph allomorph(Allomorph::Original);
+        qlonglong previousStemId = -1;
+        LexicalStem * stem = nullptr;
+
+        while(query.next())
+        {
+            /// every row has a new form
+            const WritingSystem ws = writingSystems.value( query.value(5).toString() );
+            const Form f( ws, query.value(4).toString() );
+
+            const qlonglong stemId = query.value(0).toLongLong();
+            if( stemId != previousStemId )
+            {
+                /// first save the previous LexicalStem
+                if( stem != nullptr )
+                {
+                    mStems << stem;
+                }
+                /// create a new LexicalStem
+                stem = new LexicalStem;
+                stem->setId(stemId);
+            }
+            previousStemId = stemId;
+
+            const qlonglong allomorphId = query.value(2).toLongLong();
+            if( allomorphId != previousAllomorphId )
+            {
+                /// first, save the previous allomorph, if it has forms
+                if( ! allomorph.isEmpty() )
+                {
+                    stem->insert( allomorph );
+                }
+                /// then reset the allomorph object, and add this form
+                allomorph = Allomorph(Allomorph::Original);
+                allomorph.setTags( Tag::fromString( query.value(6).toString() ) );
+            }
+            allomorph.setForm( f );
+            previousAllomorphId = allomorphId;
+        }
+
+        /// now at the end, add the allomorph to the stem, and the stem to the list
+        if( stem != nullptr )
+        {
+            stem->insert( allomorph );
+            mStems << stem;
+        }
+    }
+    else
+    {
+        qWarning() << "SqliteStemList::readStemsSingleQuery()" << query.lastError().text() << query.executedQuery();
     }
 }
 
@@ -514,6 +628,40 @@ QString SqliteStemList::tagsInSqliteList() const
         while( i.hasNext() )
         {
             ret += ",'" + i.next().label() + "'";
+        }
+        ret += ")";
+        return ret;
+    }
+}
+
+QString SqliteStemList::tagIdsInSqliteList() const
+{
+    if( mTags.count() == 0 )
+    {
+        return "()";
+    }
+    else /// it has at least one
+    {
+        QSqlDatabase db = QSqlDatabase::database(mDbName);
+        QSqlQuery query(db);
+        query.prepare("SELECT _id FROM Tags WHERE label=?;");
+
+
+        QString ret = "(";
+        QSetIterator<Tag> i( mTags );
+
+        while( i.hasNext() )
+        {
+            query.bindValue( 0, i.next().label() );
+            if( !query.exec() )
+            {
+                qWarning() << "SqliteStemList::tagIdsInSqliteList()" << query.lastError().text() << query.executedQuery();
+                return ret;
+            }
+            query.next();
+            ret += "'" + query.value(0).toString() + "'";
+            if( i.hasNext() )
+                ret += ",";
         }
         ret += ")";
         return ret;
