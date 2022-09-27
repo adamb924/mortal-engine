@@ -92,6 +92,11 @@ void XmlStemList::readStems(const QHash<QString, WritingSystem> &writingSystems)
             }
         }
     }
+
+    if( mStems.isEmpty() )
+    {
+        qWarning() << "No stems were read for the node" << debugIdentifier();
+    }
 }
 
 QString XmlStemList::elementName()

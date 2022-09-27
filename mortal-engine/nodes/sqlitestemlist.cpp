@@ -60,6 +60,11 @@ void SqliteStemList::readStems(const QHash<QString, WritingSystem> & writingSyst
     {
         readStemsSingleQuery(writingSystems);
     }
+
+    if( mStems.isEmpty() )
+    {
+        qWarning() << "No stems were read for the node" << debugIdentifier();
+    }
 }
 
 LexicalStem *SqliteStemList::lexicalStemFromId(qlonglong stemId, const QString & liftGuid, const QHash<QString, WritingSystem> &writingSystems)
