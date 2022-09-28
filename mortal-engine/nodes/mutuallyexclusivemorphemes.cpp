@@ -215,6 +215,7 @@ QString MutuallyExclusiveMorphemes::summary(const AbstractNode *doNotFollow) con
     dbg << "ID: " << id() << newline;
     dbg << "Type: " << AbstractNode::typeToString(type()) << newline;
     dbg << "Optional: " << (optional() ? "true" : "false" ) << newline;
+    dbg << "Has optional completion path: " << ( hasPathToEnd() ? "true" : "false" ) << newline;
 
     dbg << mMorphemes.count() << " morphemes(s)" << newline << newline;
     foreach( MorphemeNode* m, mMorphemes )
