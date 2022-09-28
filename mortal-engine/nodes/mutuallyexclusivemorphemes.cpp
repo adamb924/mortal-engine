@@ -164,20 +164,6 @@ const AbstractNode *MutuallyExclusiveMorphemes::followingNodeHavingLabel(const Q
     return nullptr;
 }
 
-bool MutuallyExclusiveMorphemes::checkHasOptionalCompletionPath() const
-{
-    /// NB: this will just return the first one, not all possible ones
-    foreach(MorphemeNode * node, mMorphemes)
-    {
-        bool hasPath = node->checkHasOptionalCompletionPath();
-        if( hasPath )
-        {
-            return true;
-        }
-    }
-    return true;
-}
-
 void MutuallyExclusiveMorphemes::addConstraintsToAllMorphemes(const QSet<const AbstractConstraint *> &constraints)
 {
     foreach(MorphemeNode * node, mMorphemes)

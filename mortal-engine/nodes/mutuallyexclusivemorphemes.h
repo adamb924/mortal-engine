@@ -33,8 +33,6 @@ public:
 
     const AbstractNode *followingNodeHavingLabel(const QString & targetLabel) const override;
 
-    bool checkHasOptionalCompletionPath() const override;
-
     void addConstraintsToAllMorphemes(const QSet<const AbstractConstraint *> &constraints);
 
     QList<const AbstractNode *> availableMorphemeNodes(QHash<const Jump*,int> &jumps) const override;
