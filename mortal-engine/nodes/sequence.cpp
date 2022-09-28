@@ -62,6 +62,7 @@ QString Sequence::summary(const AbstractNode *doNotFollow) const
     dbg << "Sequence(" << label() << ")" << newline;
     dbg.indent();
     dbg << "Optional: " << (optional() ? "true" : "false" ) << newline;
+    dbg << "Has optional completion path: " << ( hasPathToEnd() ? "true" : "false" ) << newline;
     if( mInitialNode == nullptr )
     {
         dbg << "No initial node." << newline;
