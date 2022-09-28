@@ -42,19 +42,29 @@ const AbstractNode *AbstractPath::followingNodeHavingLabel(const QString &target
 bool AbstractPath::checkHasOptionalCompletionPath() const
 {
     /// Look at the following nodes. If all of the nodes are optional, return true, otherwise return false.
+    /// if the following node is null, we're at the end of the model anyway, and the answer is "yes"
     if( next() == nullptr )
     {
         return true;
     }
     else
     {
-        if( next()->optional() )
+        /// if this node is optional, then there is an optional completion path iff the following node has an optional completion path
+        if( optional() )
         {
-            return mInitialNode->checkHasOptionalCompletionPath();
+            return next()->checkHasOptionalCompletionPath();
         }
+        /// otherwise, we need to check if there is an optional completion path for the first node
         else
         {
-            return false;
+            if( mInitialNode->optional() )
+            {
+                return mInitialNode->checkHasOptionalCompletionPath();
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }
