@@ -60,10 +60,6 @@ bool AbstractStemList::replaceStem(const LexicalStem & stem)
         mStems.insert(newStem);
         insertStemIntoDataModel(newStem);
     }
-    else
-    {
-        qWarning() << "Stem cannot be replaced because it could not be removed:" << stem.oneLineSummary();
-    }
     return removed;
 }
 
