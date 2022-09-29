@@ -200,8 +200,11 @@ QString LexicalStem::summary() const
 {
     QString dbgString;
     Debug dbg(&dbgString);
-    
-    dbg << QString("LexicalStem(%1 allomorph(s),").arg(mAllomorphs.count()) << newline;
+
+    if( mId == -1 )
+        dbg << QString("LexicalStem(%1 allomorph(s),").arg(mAllomorphs.count()) << newline;
+    else
+        dbg << QString("LexicalStem(ID: %1, %2 allomorph(s),").arg(mId).arg(mAllomorphs.count()) << newline;
 
     dbg.indent();
 
