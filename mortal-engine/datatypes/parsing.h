@@ -160,6 +160,8 @@ public:
     //! \brief Returns the first non-null LexicalStem pointer in the parsing, or an empty LexicalStem if none is found
     LexicalStem firstLexicalStem() const;
     QList<LexicalStem> lexicalStems() const;
+    bool containsStem(const LexicalStem & stem) const;
+    bool containsStem(qlonglong stemId) const;
     Allomorph firstLexicalStemAllomorph() const;
     Allomorph firstHypotheticalAllomorph() const;
 

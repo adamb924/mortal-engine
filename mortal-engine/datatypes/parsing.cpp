@@ -633,6 +633,32 @@ QList<LexicalStem> Parsing::lexicalStems() const
     return stems;
 }
 
+bool Parsing::containsStem(const LexicalStem &stem) const
+{
+    QListIterator<ParsingStep> i(mSteps);
+    while(i.hasNext())
+    {
+        if( i.next().lexicalStem() == stem )
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool Parsing::containsStem(qlonglong stemId) const
+{
+    QListIterator<ParsingStep> i(mSteps);
+    while(i.hasNext())
+    {
+        if( i.next().lexicalStem() == stemId )
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
 Allomorph Parsing::firstLexicalStemAllomorph() const
 {
     QListIterator<ParsingStep> i(mSteps);
