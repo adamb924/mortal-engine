@@ -40,6 +40,11 @@ bool LexicalStem::operator==(const LexicalStem &other) const
     return mAllomorphs == other.mAllomorphs;
 }
 
+bool LexicalStem::operator==(qlonglong stemId) const
+{
+    return mId == stemId;
+}
+
 void LexicalStem::insert(const Allomorph & allomorph)
 {
     mAllomorphs.insert(allomorph);

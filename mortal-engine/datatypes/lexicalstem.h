@@ -18,6 +18,7 @@ public:
     LexicalStem(const LexicalStem & other);
 
     bool operator==(const LexicalStem &other) const;
+    bool operator==(qlonglong stemId) const;
 
     /**
      * @brief Returns a string representation of the Form for logging purposes.
