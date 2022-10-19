@@ -39,6 +39,7 @@
 #include <stdexcept>
 
 QString MorphologyXmlReader::XML_MORPHOLOGY = "morphology";
+QString MorphologyXmlReader::XML_MAXIMUM_JUMPS = "maximum-jumps";
 QString MorphologyXmlReader::XML_SHARED_CREATE_ALLOMORPHS = "shared-create-allomorphs";
 QString MorphologyXmlReader::XML_SHARED_CONDITIONS = "interrupted-by";
 
@@ -112,6 +113,11 @@ void MorphologyXmlReader::parseXml(const QString &path)
         if( in.name() != XML_MORPHOLOGY )
         {
             throw std::runtime_error( "Expected 'morphology' as a root element" );
+        }
+
+        if( in.attributes().hasAttribute(XML_MAXIMUM_JUMPS) )
+        {
+            Parsing::MAXIMUM_JUMPS = in.attributes().value(XML_MAXIMUM_JUMPS).toInt();
         }
 
         while(!in.atEnd())
