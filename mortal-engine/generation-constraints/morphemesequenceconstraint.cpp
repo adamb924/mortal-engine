@@ -27,7 +27,7 @@ MorphemeSequenceConstraint::MorphemeSequenceConstraint(const QString &morphemeSt
     }
 }
 
-MorphemeSequenceConstraint::MorphemeSequenceConstraint(const MorphemeSequenceConstraint &other) : AbstractGenerationConstraint(AbstractGenerationConstraint::MorphemeSequence), mOriginalMorphemeString(other.mOriginalMorphemeString)
+MorphemeSequenceConstraint::MorphemeSequenceConstraint(const MorphemeSequenceConstraint &other) : AbstractGenerationConstraint(AbstractGenerationConstraint::MorphemeSequence), mOriginalMorphemeString(other.mOriginalMorphemeString), mMorphemeNames(other.mMorphemeNames)
 {
 
 }
@@ -35,6 +35,7 @@ MorphemeSequenceConstraint::MorphemeSequenceConstraint(const MorphemeSequenceCon
 MorphemeSequenceConstraint &MorphemeSequenceConstraint::operator=(const MorphemeSequenceConstraint & other)
 {
     mOriginalMorphemeString = other.mOriginalMorphemeString;
+    mMorphemeNames = other.mMorphemeNames;
     return *this;
 }
 
