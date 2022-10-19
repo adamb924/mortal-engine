@@ -604,6 +604,11 @@ bool Parsing::jumpPermitted(const Jump *jump) const
     return mJumpCounts.value(jump, 0) < MAXIMUM_JUMPS;
 }
 
+int Parsing::jumpCounter(const Jump *jump) const
+{
+    return mJumpCounts.value(jump, 0);
+}
+
 LexicalStem Parsing::firstLexicalStem() const
 {
     QListIterator<ParsingStep> i(mSteps);

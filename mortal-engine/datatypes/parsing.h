@@ -176,6 +176,7 @@ public:
 
     void incrementJumpCounter(const Jump * jump);
     bool jumpPermitted(const Jump * jump) const;
+    int jumpCounter(const Jump * jump) const;
 
     bool nextNodeRequired() const;
     void setNextNodeRequired(bool nextNodeRequired);

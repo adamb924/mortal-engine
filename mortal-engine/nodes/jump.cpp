@@ -71,12 +71,16 @@ QList<Parsing> Jump::parsingsUsingThisNode(const Parsing &parsing, Parsing::Flag
         p.setNextNodeRequired( mTargetNodeRequired );
         if( Morphology::DebugOutput )
         {
-            qInfo() << "Jumping to:" << mNodeTarget->label() << mNodeTarget->id();
+            qInfo() << "\tJumping to:" << mNodeTarget->label() << mNodeTarget->id();
         }
         return mNodeTarget->possibleParsings( p, flags );
     }
     else
     {
+        if( Morphology::DebugOutput )
+        {
+            qInfo() << "\tJump not permitted. To:" << mNodeTarget->label() << mNodeTarget->id() << "Number of jumps:" << parsing.jumpCounter(this) << "out of" << Parsing::MAXIMUM_JUMPS;
+        }
         return QList<Parsing>();
     }
 }
