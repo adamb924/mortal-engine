@@ -6,3 +6,4 @@ examples/ignored/*
 examples/log
 examples/me-log.txt
 examples/output.txt
+mortal-engine-cppcheck-build-dir/*

@@ -290,9 +290,9 @@ QList<ParsingStep> ParsingStep::readListFromXml(QXmlStreamReader &in, const Morp
 
 ParsingStep ParsingStep::readFromXml(QDomElement parsing, const Morphology *morphology, bool &ok)
 {
-    QDomNodeList nodes = parsing.elementsByTagName("node");
-    Q_ASSERT(!nodes.isEmpty());
-    QDomElement nodeElement = nodes.at(0).toElement();
+    QDomNodeList xmlNodes = parsing.elementsByTagName("node");
+    Q_ASSERT(!xmlNodes.isEmpty());
+    QDomElement nodeElement = xmlNodes.at(0).toElement();
 
     bool isStem = nodeElement.attribute("type") == "stem";
     QString label = nodeElement.attribute("label");
@@ -311,21 +311,21 @@ ParsingStep ParsingStep::readFromXml(QDomElement parsing, const Morphology *morp
     }
     else
     {
-        QList<AbstractNode *> nodes = morphology->getNodesFromLabel(label);
-        if( nodes.size() == 0 )
+        QList<AbstractNode *> meNodes = morphology->getNodesFromLabel(label);
+        if( meNodes.size() == 0 )
         {
             qCritical() << "ParsingStep::readFromXml(QDomElement): No node with label:" << label << label.length();
             ok = false;
         }
-        else if( nodes.size() > 1 )
+        else if( meNodes.size() > 1 )
         {
             qCritical() << "ParsingStep::readFromXml(QDomElement): Multiple nodes with label:" << label << "(choosing first)";
-            node = nodes.first();
+            node = meNodes.first();
             ok = false;
         }
         else
         {
-            node = nodes.first();
+            node = meNodes.first();
         }
     }
 

@@ -2,7 +2,6 @@
 #define ABSTRACTSTEMLIST_H
 
 #include "abstractnode.h"
-#include "../constraints/tagmatchcondition.h"
 #include "datatypes/parsing.h"
 #include "datatypes/allomorph.h"
 #include "datatypes/lexicalstem.h"

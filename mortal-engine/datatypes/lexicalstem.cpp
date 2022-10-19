@@ -42,6 +42,7 @@ LexicalStem &LexicalStem::operator=(const LexicalStem &other)
 
     mGlosses = other.mGlosses;
     mId = other.mId;
+    mOriginalAllomorph = other.mOriginalAllomorph;
     return *this;
 }
 

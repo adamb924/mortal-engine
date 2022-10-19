@@ -7,7 +7,7 @@ class QTextStream;
 class MorphologyChecker
 {
 public:
-    MorphologyChecker(const Morphology * morphology);
+    explicit MorphologyChecker(const Morphology * morphology);
 
     void printCheck(QTextStream &out) const;
 

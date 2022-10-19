@@ -31,7 +31,7 @@ bool WordFinalCondition::matchesThisConstraint(const Parsing *parsing, const Abs
     }
     else
     {
-        WritingSystem ws = parsing->writingSystem();
+//        WritingSystem ws = parsing->writingSystem();
         /// The test is passed if this allomorph is the same length as the parsing,
         /// i.e., it will be the only morpheme in the parsing
         /// i.e., it will be at the end of the word

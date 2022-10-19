@@ -6,7 +6,7 @@
 class Sequence : public AbstractPath
 {
 public:
-    Sequence(const MorphologicalModel *model);
+    explicit Sequence(const MorphologicalModel *model);
     ~Sequence() override;
     Sequence * copy(MorphologyXmlReader *morphologyReader, const QString & idSuffix) const override;
 

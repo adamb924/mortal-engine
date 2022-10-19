@@ -43,6 +43,19 @@ Allomorph::Allomorph(const Allomorph &other) :
 {
 }
 
+Allomorph &Allomorph::operator=(const Allomorph & other)
+{
+    mForms = other.mForms;
+    mConstraints = other.mConstraints;
+    mTags = other.mTags;
+    mType = other.mType;
+    mPortmanteau = other.mPortmanteau;
+    mId = other.mId;
+    mHash = other.mHash;
+    mUseInGenerations = other.mUseInGenerations;
+    return *this;
+}
+
 bool Allomorph::operator==(const Allomorph &other) const
 {
     return mForms == other.mForms

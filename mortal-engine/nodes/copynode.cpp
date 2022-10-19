@@ -8,7 +8,7 @@
 
 #include "datatypes/generation.h"
 
-CopyNode::CopyNode(const MorphologicalModel *model) : AbstractNode(model)
+CopyNode::CopyNode(const MorphologicalModel *model) : AbstractNode(model), mCopy(nullptr)
 {
 
 }

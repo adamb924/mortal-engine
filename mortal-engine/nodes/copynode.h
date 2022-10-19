@@ -12,7 +12,7 @@ class MorphologicalModel;
 class CopyNode : public AbstractNode
 {
 public:
-    CopyNode(const MorphologicalModel * model);
+    explicit CopyNode(const MorphologicalModel * model);
     ~CopyNode() override;
     AbstractNode * copy(MorphologyXmlReader *morphologyReader, const QString & idSuffix) const override;
 

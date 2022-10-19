@@ -53,6 +53,8 @@ public:
      */
     Allomorph(const Allomorph & other);
 
+    Allomorph &operator=(const Allomorph & other);
+
     /**
      * @brief Returns true if the other Allomorph has the same forms, tags, constraints, and type; otherwise returns false.
      * 
