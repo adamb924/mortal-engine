@@ -11,7 +11,8 @@ class MORTAL_ENGINE_EXPORT StemIdentityConstraint : public AbstractGenerationCon
 public:
     StemIdentityConstraint();
     explicit StemIdentityConstraint(const QList<LexicalStem> &lexicalStems);
-    virtual ~StemIdentityConstraint() override;
+    StemIdentityConstraint(const StemIdentityConstraint &other);
+    StemIdentityConstraint &operator=(const StemIdentityConstraint &other);
 
     const LexicalStem currentLexicalStem() const;
     void addLexicalStem(const LexicalStem &lexicalStem);

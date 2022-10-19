@@ -13,7 +13,6 @@ class MORTAL_ENGINE_EXPORT Generation : public Parsing
 public:
     Generation(const WritingSystem & outputWs, const MorphologicalModel * morphologicalModel);
     Generation();
-    ~Generation() override;
 
     void append(const AbstractNode* node, const Allomorph &allomorph, const LexicalStem &lexicalStem = LexicalStem(), bool isStem = false ) override;
 

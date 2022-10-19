@@ -21,11 +21,6 @@ Generation::Generation()
 
 }
 
-Generation::~Generation()
-{
-
-}
-
 void Generation::append(const AbstractNode *node, const Allomorph & allomorph, const LexicalStem & lexicalStem, bool isStem)
 {
     if( constraintsSetSatisfied( mLocalConstraints, node, allomorph) )

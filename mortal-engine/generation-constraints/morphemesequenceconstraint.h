@@ -14,7 +14,8 @@ class MORTAL_ENGINE_EXPORT MorphemeSequenceConstraint : public AbstractGeneratio
 public:
     MorphemeSequenceConstraint();
     explicit MorphemeSequenceConstraint(const QString & morphemeString);
-    virtual ~MorphemeSequenceConstraint() override;
+    MorphemeSequenceConstraint(const MorphemeSequenceConstraint & other);
+    MorphemeSequenceConstraint &operator=(const MorphemeSequenceConstraint & other);
 
     void addMorpheme( const QString & morphemeName );
     QString currentMorpheme() const;

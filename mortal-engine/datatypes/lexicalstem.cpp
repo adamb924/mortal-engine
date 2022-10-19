@@ -9,10 +9,6 @@ LexicalStem::LexicalStem() : mId(-1), mOriginalAllomorph(Allomorph::Null)
 
 }
 
-LexicalStem::~LexicalStem()
-{
-}
-
 LexicalStem::LexicalStem(const Allomorph & allomorph) : mId(-1), mOriginalAllomorph(Allomorph::Null)
 {
     mAllomorphs.insert(allomorph);
@@ -32,6 +28,21 @@ LexicalStem::LexicalStem(const LexicalStem &other) : mOriginalAllomorph(other.mO
 
     mGlosses = other.mGlosses;
     mId = other.mId;
+}
+
+LexicalStem &LexicalStem::operator=(const LexicalStem &other)
+{
+    /// make a deep copy of the Allomorphs since those are pointers
+    mAllomorphs.clear();
+    QSetIterator<Allomorph> ai( other.mAllomorphs );
+    while( ai.hasNext() )
+    {
+        mAllomorphs << ai.next();
+    }
+
+    mGlosses = other.mGlosses;
+    mId = other.mId;
+    return *this;
 }
 
 bool LexicalStem::operator==(const LexicalStem &other) const

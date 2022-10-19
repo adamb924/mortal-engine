@@ -12,10 +12,10 @@ class MORTAL_ENGINE_EXPORT LexicalStem
 {
 public:
     LexicalStem();
-    ~LexicalStem();
 
     explicit LexicalStem(const Allomorph &allomorph);
     LexicalStem(const LexicalStem & other);
+    LexicalStem &operator=(const LexicalStem &other);
 
     bool operator==(const LexicalStem &other) const;
     bool operator==(qlonglong stemId) const;

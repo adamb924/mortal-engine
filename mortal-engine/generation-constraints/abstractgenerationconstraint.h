@@ -16,6 +16,8 @@ public:
 
     AbstractGenerationConstraint(ContraintType constraintType);
     virtual ~AbstractGenerationConstraint();
+    AbstractGenerationConstraint(const AbstractGenerationConstraint & other);
+    AbstractGenerationConstraint &operator=(const AbstractGenerationConstraint & other);
 
     ContraintType constraintType() const;
 

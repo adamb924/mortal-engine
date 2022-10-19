@@ -13,9 +13,14 @@ StemIdentityConstraint::StemIdentityConstraint(const QList<LexicalStem> &lexical
 
 }
 
-StemIdentityConstraint::~StemIdentityConstraint()
+StemIdentityConstraint::StemIdentityConstraint(const StemIdentityConstraint &other) : AbstractGenerationConstraint(AbstractGenerationConstraint::StemIdentity), mLexicalStems(other.mLexicalStems)
 {
+}
 
+StemIdentityConstraint &StemIdentityConstraint::operator=(const StemIdentityConstraint &other)
+{
+    mLexicalStems = other.mLexicalStems;
+    return *this;
 }
 
 const LexicalStem StemIdentityConstraint::currentLexicalStem() const
