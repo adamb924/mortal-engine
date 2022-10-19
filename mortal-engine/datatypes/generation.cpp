@@ -63,7 +63,7 @@ void Generation::append(const AbstractNode *node, const Allomorph & allomorph, c
 
 void Generation::setCompleteIfAllConstraintsSatisfied()
 {
-    if( status() != Parsing::Failed )
+    if( status() != Parsing::Failed && status() != Parsing::Null )
     {
         if( allConstraintsSatisfied() )
         {
