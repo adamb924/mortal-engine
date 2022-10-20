@@ -8,7 +8,7 @@ class QString;
 
 /// I'm just putting this in a special namespace because it's a global
 namespace MortalEngineDebug {
-    extern QString logFilename;
+    MORTAL_ENGINE_EXPORT extern QString logFilename;
 }
 
 void myMessageHandler(QtMsgType type, const QMessageLogContext &, const QString & msg);
