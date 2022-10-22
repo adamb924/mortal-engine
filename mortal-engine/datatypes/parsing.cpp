@@ -664,6 +664,20 @@ bool Parsing::containsStem(qlonglong stemId) const
     return false;
 }
 
+int Parsing::numberOfInstancesOfStem(qlonglong stemId) const
+{
+    int ct = 0;
+    QListIterator<ParsingStep> i(mSteps);
+    while(i.hasNext())
+    {
+        if( i.next().lexicalStem() == stemId )
+        {
+            ct++;
+        }
+    }
+    return ct;
+}
+
 Allomorph Parsing::firstLexicalStemAllomorph() const
 {
     QListIterator<ParsingStep> i(mSteps);

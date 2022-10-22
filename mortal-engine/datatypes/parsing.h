@@ -162,6 +162,7 @@ public:
     QList<LexicalStem> lexicalStems() const;
     bool containsStem(const LexicalStem & stem) const;
     bool containsStem(qlonglong stemId) const;
+    int numberOfInstancesOfStem(qlonglong stemId) const;
     Allomorph firstLexicalStemAllomorph() const;
     Allomorph firstHypotheticalAllomorph() const;
 
