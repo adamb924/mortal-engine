@@ -12,7 +12,7 @@
 #include <QXmlStreamReader>
 #include <QtDebug>
 
-QString SqliteStemList::DEFAULT_DBNAME = "SQLITE_STEM_LIST";
+const QString SqliteStemList::DEFAULT_DBNAME = "SQLITE_STEM_LIST";
 QString SqliteStemList::XML_EXTERNAL_DATABASE = "external-database";
 
 SqliteStemList::SqliteStemList(const MorphologicalModel *model)
