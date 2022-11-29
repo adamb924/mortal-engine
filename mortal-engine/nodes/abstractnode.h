@@ -33,6 +33,8 @@ public:
     enum Type { StemNodeType, MorphemeNodeType, PathNodeType };
 
     AbstractNode(const MorphologicalModel * model, Type t = AbstractNode::MorphemeNodeType);
+    AbstractNode(const AbstractNode &) = delete;
+    AbstractNode &operator=(const AbstractNode &) = delete;
 
     /// Virtual Void Functions
     virtual ~AbstractNode() = 0;

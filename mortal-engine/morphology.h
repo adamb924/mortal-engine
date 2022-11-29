@@ -26,6 +26,8 @@ public:
 
     Morphology();
     ~Morphology();
+    Morphology(const Morphology &) = delete;
+    Morphology &operator=(const Morphology &) = delete;
 
     void readXmlFile( const QString & path );
 

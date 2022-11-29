@@ -13,6 +13,26 @@ Portmanteau::Portmanteau()
 
 }
 
+Portmanteau::Portmanteau(const Portmanteau & other)
+    : mStatus(other.mStatus),
+      mInitializationString(other.mInitializationString),
+      mParent(other.mParent),
+      mMorphemes(other.mMorphemes),
+      mMorphemeNodes(other.mMorphemeNodes)
+{
+
+}
+
+Portmanteau &Portmanteau::operator=(const Portmanteau &other)
+{
+    mStatus = other.mStatus;
+    mInitializationString = other.mInitializationString;
+    mParent = other.mParent;
+    mMorphemes = other.mMorphemes;
+    mMorphemeNodes = other.mMorphemeNodes;
+    return *this;
+}
+
 Portmanteau::Portmanteau(const QString &initializationString, const MorphemeNode *parent)
      : mStatus(Portmanteau::Valid),
        mInitializationString(initializationString),

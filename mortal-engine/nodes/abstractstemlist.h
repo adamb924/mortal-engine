@@ -16,6 +16,9 @@ class MORTAL_ENGINE_EXPORT AbstractStemList : public AbstractNode
 public:
     explicit AbstractStemList(const MorphologicalModel * model);
     ~AbstractStemList() override;
+    AbstractStemList(const AbstractStemList &) = delete;
+    AbstractStemList &operator=(const AbstractStemList &) = delete;
+
     AbstractStemList * copy(MorphologyXmlReader *morphologyReader, const QString & idSuffix) const override;
 
     virtual void readStems( const QHash<QString,WritingSystem> &writingSystems ) = 0;

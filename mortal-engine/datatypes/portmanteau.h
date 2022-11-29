@@ -16,6 +16,9 @@ public:
     enum Status { Valid, Invalid };
 
     Portmanteau();
+    Portmanteau(const Portmanteau &other);
+    Portmanteau &operator=(const Portmanteau & other);
+
     Portmanteau(const QString & initializationString, const MorphemeNode * parent );
     bool operator==(const Portmanteau & other) const;
 
