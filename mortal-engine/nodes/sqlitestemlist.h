@@ -12,7 +12,7 @@ class MORTAL_ENGINE_EXPORT SqliteStemList : public AbstractStemList
 public:
     explicit SqliteStemList(const MorphologicalModel * model);
 
-    static QString DEFAULT_DBNAME;
+    const static QString DEFAULT_DBNAME;
 
     void setDatabasePath(const QString &databasePath);
     void setExternalDatabase(const QString & dbName);
