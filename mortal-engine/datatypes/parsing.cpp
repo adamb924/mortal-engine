@@ -72,8 +72,18 @@ Parsing &Parsing::operator=(const Parsing &other)
 
 bool Parsing::operator==(const Parsing &other) const
 {
-    return labelSummary() == other.labelSummary()
-            && firstLexicalStem() == other.firstLexicalStem();
+    if( labelSummary() != other.labelSummary() )
+        return false;
+    const QList<LexicalStem> myStems = lexicalStems();
+    const QList<LexicalStem> otherStems = other.lexicalStems(); 
+    if( myStems.count() != otherStems.count() )
+        return false;
+    for(int i=0; i<myStems.count(); i++)
+    {
+        if( !( myStems.at(i) == otherStems.at(i) ) )
+            return false;
+    }
+    return true;
 }
 
 Form Parsing::parsedSoFar() const
