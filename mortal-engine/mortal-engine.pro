@@ -148,5 +148,5 @@ FORMS +=
 # Default rules for deployment.
 win32:target.path = $$[QT_INSTALL_LIBS]
 qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
+else: unix:!android: target.path = /usr/lib
 !isEmpty(target.path): INSTALLS += target
