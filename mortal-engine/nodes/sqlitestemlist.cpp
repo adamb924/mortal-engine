@@ -25,12 +25,11 @@ SqliteStemList::SqliteStemList(const MorphologicalModel *model)
 
 void SqliteStemList::setDatabasePath(const QString &databasePath)
 {
-    mDatabasePath = databasePath;
     /// https://stackoverflow.com/a/16568641/1447002
     mDbName = QString("%1_0x%2").arg(DEFAULT_DBNAME).arg( reinterpret_cast<quintptr>(this),
                         QT_POINTER_SIZE * 2, 16, QChar('0'));
 
-    openDatabase(mDatabasePath, mDbName);
+    openDatabase(databasePath, mDbName);
     createTables();
 }
 

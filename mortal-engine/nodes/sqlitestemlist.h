@@ -48,7 +48,6 @@ private:
     void addStemToDatabase( LexicalStem * stem );
     qlonglong ensureTagInDatabase( const QString & tag );
 
-    QString mDatabasePath;
     QString mDbName;
     bool mReadGlosses;
 };
