@@ -3,53 +3,26 @@
 #ifndef SQLITESTEMLIST_H
 #define SQLITESTEMLIST_H
 
-#include "abstractstemlist.h"
+#include "abstractsqlstemlist.h"
 
 #include "mortal-engine_global.h"
 
-class MORTAL_ENGINE_EXPORT SqliteStemList : public AbstractStemList
+class MORTAL_ENGINE_EXPORT SqliteStemList : public AbstractSqlStemList
 {
 public:
     explicit SqliteStemList(const MorphologicalModel * model);
 
-    const static QString DEFAULT_DBNAME;
-
     void setDatabasePath(const QString &databasePath);
     void setExternalDatabase(const QString & dbName);
 
-    void readStems(const QHash<QString, WritingSystem> &writingSystems) override;
+    static void openDatabase(const QString & filename, const QString & databaseName);
 
-    QString dbName() const;
-
+    /// element-reading code
     static QString elementName();
     static AbstractNode *readFromXml(QXmlStreamReader &in, MorphologyXmlReader * morphologyReader, const MorphologicalModel * model);
     static bool matchesElement(QXmlStreamReader &in);
 
-    static void openDatabase(const QString & filename, const QString & databaseName);
-
     static QString XML_EXTERNAL_DATABASE;
-
-    void setReadGlosses(bool newReadGlosses);
-
-private:
-    void readStemsMultipleQueries(const QHash<QString, WritingSystem> &writingSystems);
-    void readStemsSingleQuery(const QHash<QString, WritingSystem> &writingSystems);
-
-
-    void insertStemIntoDataModel( LexicalStem * stem ) override;
-    void removeStemFromDataModel( qlonglong id ) override;
-    LexicalStem * lexicalStemFromId(qlonglong stemId, const QString &liftGuid, const QHash<QString, WritingSystem> &writingSystems);
-    Allomorph allomorphFromId(qlonglong allomorphId, const QHash<QString, WritingSystem> &writingSystems, bool useInGenerations);
-
-    QString tagsInSqliteList() const;
-    QString tagIdsInSqliteList() const;
-
-    void createTables();
-    void addStemToDatabase( LexicalStem * stem );
-    qlonglong ensureTagInDatabase( const QString & tag );
-
-    QString mDbName;
-    bool mReadGlosses;
 };
 
 #endif // SQLITESTEMLIST_H

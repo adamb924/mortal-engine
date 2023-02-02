@@ -56,6 +56,7 @@ SOURCES += \
     datatypes/allomorph.cpp \
     datatypes/form.cpp \
     nodes/abstractpath.cpp \
+    nodes/abstractsqlstemlist.cpp \
     nodes/abstractstemlist.cpp \
     nodes/copynode.cpp \
     nodes/fork.cpp \
@@ -113,6 +114,7 @@ HEADERS += \
     datatypes/allomorph.h \
     datatypes/form.h \
     nodes/abstractpath.h \
+    nodes/abstractsqlstemlist.h \
     nodes/abstractstemlist.h \
     nodes/copynode.h \
     nodes/fork.h \
