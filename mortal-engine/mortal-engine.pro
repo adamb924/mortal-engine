@@ -65,6 +65,7 @@ SOURCES += \
     nodes/path.cpp \
     nodes/morphologicalmodel.cpp \
     nodes/sequence.cpp \
+    nodes/sqlserverstemlist.cpp \
     nodes/xmlstemlist.cpp \
     generation-constraints/morphemesequenceconstraint.cpp \
     morphology.cpp \
@@ -125,6 +126,7 @@ HEADERS += \
     nodes/morphologicalmodel.h \
     nodes/sequence.h \
     nodes/sqlitestemlist.h \
+    nodes/sqlserverstemlist.h \
     nodes/xmlstemlist.h \
     generation-constraints/morphemesequenceconstraint.h \
     morphology.h \

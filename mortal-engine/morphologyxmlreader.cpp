@@ -15,6 +15,7 @@
 #include "nodes/morphemenode.h"
 #include "nodes/xmlstemlist.h"
 #include "nodes/sqlitestemlist.h"
+#include "nodes/sqlserverstemlist.h"
 #include "nodes/mutuallyexclusivemorphemes.h"
 #include "nodes/fork.h"
 #include "nodes/path.h"
@@ -66,6 +67,7 @@ MorphologyXmlReader::MorphologyXmlReader(Morphology *morphology) : mMorphology(m
     registerNodeMatcher<XmlStemList>();
 #ifndef Q_OS_WASM
     registerNodeMatcher<SqliteStemList>();
+    registerNodeMatcher<SqlServerStemList>();
 #endif
     registerNodeMatcher<MutuallyExclusiveMorphemes>();
     registerNodeMatcher<Fork>();

@@ -4,7 +4,6 @@
 #include <QSqlDriver>
 #include <QSqlError>
 
-#include "datatypes/lexicalstem.h"
 #include "create-allomorphs/createallomorphs.h"
 
 #include "morphology.h"
@@ -12,35 +11,10 @@
 #include <QXmlStreamReader>
 #include <QtDebug>
 
-QString SqliteStemList::XML_EXTERNAL_DATABASE = "external-database";
-
 SqliteStemList::SqliteStemList(const MorphologicalModel *model)
     : AbstractSqlStemList(model)
 {
 
-}
-
-void SqliteStemList::setDatabasePath(const QString &databasePath)
-{
-    /// https://stackoverflow.com/a/16568641/1447002
-    mDbName = QString("%1_0x%2").arg(DEFAULT_DBNAME).arg( reinterpret_cast<quintptr>(this),
-                        QT_POINTER_SIZE * 2, 16, QChar('0'));
-
-    openDatabase(databasePath, mDbName);
-    createTables();
-}
-
-void SqliteStemList::setExternalDatabase(const QString &dbName)
-{
-    mDbName = dbName;
-
-    QSqlDatabase db = QSqlDatabase::database(mDbName);
-    if( !db.isValid() )
-        qWarning() << QString("The database %1 returns false for isValid().").arg(dbName);
-    if( !db.isOpen() )
-        qWarning() << QString("The database %1 returns false for isOpen().").arg(dbName);
-
-    createTables();
 }
 
 QString SqliteStemList::elementName()
@@ -71,7 +45,7 @@ AbstractNode *SqliteStemList::readFromXml(QXmlStreamReader &in, MorphologyXmlRea
         {
             if( in.name() == AbstractStemList::XML_FILENAME )
             {
-                sl->setDatabasePath( in.readElementText() );
+                sl->setConnectionString( in.readElementText() );
             }
             else if( in.name() == XML_EXTERNAL_DATABASE )
             {
@@ -103,7 +77,12 @@ bool SqliteStemList::matchesElement(QXmlStreamReader &in)
     return in.isStartElement() && in.name() == elementName();
 }
 
-void SqliteStemList::openDatabase(const QString &filename, const QString &databaseName)
+void SqliteStemList::openDatabase(const QString &connectionString, const QString &databaseName)
+{
+    SqliteStemList::openSqliteDatabase(connectionString, databaseName);
+}
+
+void SqliteStemList::openSqliteDatabase(const QString &connectionString, const QString &databaseName)
 {
     if(!QSqlDatabase::isDriverAvailable("QSQLITE"))
     {
@@ -120,16 +99,16 @@ void SqliteStemList::openDatabase(const QString &filename, const QString &databa
 
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE", databaseName );
 
-    db.setDatabaseName( filename );
+    db.setDatabaseName( connectionString );
     db.setConnectOptions("QSQLITE_ENABLE_REGEXP");
 
     if(!db.open())
     {
-        qWarning() << "SqliteStemList::openDatabase()" << "Database failed to open." << filename;
+        qWarning() << "SqliteStemList::openDatabase()" << "Database failed to open." << connectionString;
         return;
     }
     if( !db.isValid() )
     {
-        qWarning() << "SqliteStemList::openDatabase()" << "Invalid database: " << filename;
+        qWarning() << "SqliteStemList::openDatabase()" << "Invalid database: " << connectionString;
     }
 }

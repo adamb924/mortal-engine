@@ -12,17 +12,15 @@ class MORTAL_ENGINE_EXPORT SqliteStemList : public AbstractSqlStemList
 public:
     explicit SqliteStemList(const MorphologicalModel * model);
 
-    void setDatabasePath(const QString &databasePath);
-    void setExternalDatabase(const QString & dbName);
-
-    static void openDatabase(const QString & filename, const QString & databaseName);
+    static void openSqliteDatabase(const QString & filename, const QString & databaseName);
 
     /// element-reading code
     static QString elementName();
     static AbstractNode *readFromXml(QXmlStreamReader &in, MorphologyXmlReader * morphologyReader, const MorphologicalModel * model);
     static bool matchesElement(QXmlStreamReader &in);
 
-    static QString XML_EXTERNAL_DATABASE;
+protected:
+    void openDatabase(const QString & connectionString, const QString & databaseName) override;
 };
 
 #endif // SQLITESTEMLIST_H

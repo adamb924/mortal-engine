@@ -132,7 +132,7 @@ void HarnessXmlReader::readTestFile(const QString &filename)
 #ifndef Q_OS_WASM
                 else if ( name == "sqlite-database" )
                 {
-                    SqliteStemList::openDatabase( attr.value("filename").toString(), attr.value("database-name").toString() );
+                    SqliteStemList::openSqliteDatabase( attr.value("filename").toString(), attr.value("database-name").toString() );
                 }
 #endif
             }
