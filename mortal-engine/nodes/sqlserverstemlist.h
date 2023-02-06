@@ -3,7 +3,9 @@
 
 #include "abstractsqlstemlist.h"
 
-class SqlServerStemList : public AbstractSqlStemList
+#include "mortal-engine_global.h"
+
+class MORTAL_ENGINE_EXPORT SqlServerStemList : public AbstractSqlStemList
 {
 public:
     explicit SqlServerStemList(const MorphologicalModel * model);
