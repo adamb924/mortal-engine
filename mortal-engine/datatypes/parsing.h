@@ -120,6 +120,8 @@ public:
 
     void allomorphConditionMatchStringSummary(const Allomorph &allomorph) const;
 
+    void positionsForStep(int parsingStepIndex, int &start, int &end) const;
+
     bool atEnd() const;
 
     bool isNull() const;

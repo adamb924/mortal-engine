@@ -835,6 +835,22 @@ void Parsing::allomorphConditionMatchStringSummary(const Allomorph &allomorph) c
     }
 }
 
+void Parsing::positionsForStep(int parsingStepIndex, int &start, int &end) const
+{
+    if( parsingStepIndex < 0 || parsingStepIndex >= mSteps.length() )
+    {
+        start = -1;
+        end = -1;
+    }
+
+    start = 0;
+    for(int i=0; i < parsingStepIndex; i++)
+    {
+        start += mSteps.at(i).allomorph().form( mForm.writingSystem() ).length();
+    }
+    end = start + mSteps.at(parsingStepIndex).allomorph().form( mForm.writingSystem() ).length() - 1;
+}
+
 bool Parsing::allomorphMatchesSegmentally(const Allomorph &allomorph) const
 {
     bool ok;
