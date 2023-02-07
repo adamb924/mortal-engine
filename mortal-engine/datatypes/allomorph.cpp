@@ -503,7 +503,7 @@ QString Allomorph::focusedSummary(const WritingSystem &ws) const
     QString dbgString;
     QTextStream dbg(&dbgString);
 
-    dbg << "Allomorph(";
+    dbg << "Allomorph(" << typeToString( mType ) << ", ";
 
     Form f = mForms.value(ws, Form(ws,"ERROR") );
     dbg << f.text() << ", ";
