@@ -53,7 +53,7 @@ HEADERS += \
     transductiontest.h
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../mortal-engine/release/ -lmortalengine
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../mortal-engine/debug/ -lmortalengine
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../mortal-engine/debug/ -lmortalengined
 else:unix: LIBS += -L$$OUT_PWD/../mortal-engine/ -lmortalengine
 
 INCLUDEPATH += $$PWD/../mortal-engine
