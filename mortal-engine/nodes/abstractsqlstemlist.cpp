@@ -57,10 +57,12 @@ void AbstractSqlStemList::readStems(const QHash<QString, WritingSystem> & writin
         readStemsSingleQuery(writingSystems);
     }
 
+    /*
+     * It's not nice to have this show up with every run. TODO think about a verbose warning mode.
     if( mStems.isEmpty() )
     {
         qWarning() << "No stems were read for the node" << debugIdentifier();
-    }
+    */
 }
 
 void AbstractSqlStemList::setExternalDatabase(const QString &dbName)
@@ -518,19 +520,17 @@ QString AbstractSqlStemList::tagsInSqlList() const
 {
     if( mTags.count() == 0 )
     {
-        return "()";
+        return QString();
     }
     else /// it has at least one
     {
-        QString ret = "(";
+        QStringList asList;
         QSetIterator<Tag> i( mTags );
-        /// before this was a call to label(), it was an automatic cast to QString, which is also the label
-        ret += "'" + i.next().label() + "'";
         while( i.hasNext() )
         {
-            ret += ",'" + i.next().label() + "'";
+            asList << i.next().label();
         }
-        ret += ")";
+        const QString ret("'" + asList.join("','") + "'");
         return ret;
     }
 }
@@ -539,7 +539,7 @@ QString AbstractSqlStemList::tagIdsInSqlList() const
 {
     if( mTags.count() == 0 )
     {
-        return "()";
+        return QString();
     }
     else /// it has at least one
     {
@@ -547,25 +547,22 @@ QString AbstractSqlStemList::tagIdsInSqlList() const
         QSqlQuery query(db);
         query.prepare(qSelectTagIdFromLabel());
 
-
-        QString ret = "(";
+        QStringList ids;
         QSetIterator<Tag> i( mTags );
-
         while( i.hasNext() )
         {
             query.bindValue( 0, i.next().label() );
             if( !query.exec() )
             {
                 qWarning() << "AbstractSqlStemList::tagIdsInSqlList()" << query.lastError().text() << query.executedQuery();
-                return ret;
+                break;
             }
-            query.next();
-            ret += "'" + query.value(0).toString() + "'";
-            if( i.hasNext() )
-                ret += ",";
+            if( query.next() )
+            {
+                ids << query.value(0).toString();
+            }
         }
-        ret += ")";
-        return ret;
+        return ids.join(",");
     }
 }
 
@@ -601,7 +598,7 @@ QString AbstractSqlStemList::qSelectStemsSingleQueryWithTags(const QString &tagl
                               "AND Tags._id=TagMembers.tag_id "
                               "AND TagMembers.allomorph_id=Forms.allomorph_id "
                               "WHERE TagMembers.allomorph_id IN (SELECT allomorph_id FROM TagMembers WHERE tag_id IN ( " + taglist + " ) ) "
-                                                                                                                                     "GROUP BY Forms._id;";
+                              "GROUP BY Forms._id;";
 }
 
 QString AbstractSqlStemList::qDeleteFromTagMembers() const
