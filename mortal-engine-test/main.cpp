@@ -53,8 +53,11 @@ int main(int argc, char *argv[])
     const bool barebones = parser.isSet(barebonesOutputOption);
     Morphology::DebugOutput = parser.isSet(debugOption);
     const bool check = parser.isSet(checkOption);
-    const QString logfile = parser.value(debugOutputOption);
+    QString logfile = parser.value(debugOutputOption);
     const QString inspectId = parser.value(inspectOption);
+
+    if(logfile.isEmpty())
+        logfile = "log.txt";
 
     const QStringList args = parser.positionalArguments();
     if( args.count() == 0 )
