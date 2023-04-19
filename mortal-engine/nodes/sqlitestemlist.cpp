@@ -82,6 +82,13 @@ void SqliteStemList::openDatabase(const QString &connectionString, const QString
     SqliteStemList::openSqliteDatabase(connectionString, databaseName);
 }
 
+bool SqliteStemList::databaseExists(const QString &databaseName) const
+{
+    /// this is superfluous because SQLite does not use database names
+    Q_UNUSED(databaseName)
+    return true;
+}
+
 void SqliteStemList::openSqliteDatabase(const QString &connectionString, const QString &databaseName)
 {
     if(!QSqlDatabase::isDriverAvailable("QSQLITE"))

@@ -12,7 +12,7 @@ public:
 
     const static QString DEFAULT_DBNAME;
 
-    void setConnectionString(const QString &connectionString);
+    void setConnectionString(const QString &connectionString, const QString &databaseName = QString());
 
     QString dbName() const;
     void setReadGlosses(bool newReadGlosses);
@@ -23,6 +23,7 @@ public:
 
     static QString XML_EXTERNAL_DATABASE;
     static QString XML_CONNECTION_STRING;
+    static QString XML_DATABASE_NAME;
 
 protected:
     /// Queries
@@ -86,6 +87,7 @@ protected:
     QString tagIdsInSqlList() const;
 
     virtual void openDatabase(const QString & connectionString, const QString & databaseName) = 0;
+    virtual bool databaseExists(const QString &databaseName) const = 0;
 };
 
 #endif // ABSTRACTSQLSTEMLIST_H

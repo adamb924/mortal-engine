@@ -18,6 +18,11 @@ public:
     static AbstractNode *readFromXml(QXmlStreamReader &in, MorphologyXmlReader * morphologyReader, const MorphologicalModel * model);
     static bool matchesElement(QXmlStreamReader &in);
 
+    void setDatabaseName(const QString &newDatabaseName);
+
+
+    QString databaseName() const;
+
 protected:
     void openDatabase(const QString & connectionString, const QString & databaseName) override;
 
@@ -35,6 +40,11 @@ protected:
 
     QString qSelectStemIdsWithTags(const QString & taglist) const override;
     QString qInsertStem() const override;
+
+    QString table(const QString & tableName) const;
+    bool databaseExists(const QString &databaseName) const;
+
+    QString mDatabaseName;
 };
 
 #endif // SQLSERVERSTEMLIST_H

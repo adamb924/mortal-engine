@@ -11,6 +11,8 @@
 const QString AbstractSqlStemList::DEFAULT_DBNAME = "SQLITE_STEM_LIST";
 QString AbstractSqlStemList::XML_CONNECTION_STRING = "connection-string";
 QString AbstractSqlStemList::XML_EXTERNAL_DATABASE = "external-database";
+QString AbstractSqlStemList::XML_DATABASE_NAME = "database-name";
+
 
 AbstractSqlStemList::AbstractSqlStemList(const MorphologicalModel *model) :
     AbstractStemList(model),
@@ -20,13 +22,19 @@ AbstractSqlStemList::AbstractSqlStemList(const MorphologicalModel *model) :
 
 }
 
-void AbstractSqlStemList::setConnectionString(const QString &connectionString)
+void AbstractSqlStemList::setConnectionString(const QString &connectionString, const QString &databaseName)
 {
     /// https://stackoverflow.com/a/16568641/1447002
     mDbName = QString("%1_0x%2").arg(DEFAULT_DBNAME).arg( reinterpret_cast<quintptr>(this),
                         QT_POINTER_SIZE * 2, 16, QChar('0'));
 
     openDatabase(connectionString, mDbName);
+
+    if( !databaseExists(databaseName) )
+    {
+        qWarning() << "SqlServerStemList::openDatabase()" << "Database not found: " << databaseName << " This may be a permissions issue.";
+    }
+
     createTables();
 }
 
@@ -342,6 +350,8 @@ Allomorph AbstractSqlStemList::allomorphFromId(qlonglong allomorphId, const QHas
 void AbstractSqlStemList::createTables()
 {
     QSqlQuery q(QSqlDatabase::database(mDbName));
+
+    qDebug() << qCreateStems();
 
     if( !q.exec(qCreateStems()) )
         qWarning() << "AbstractSqlStemList::createTables()" << q.lastError().text() << q.executedQuery();

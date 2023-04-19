@@ -75,7 +75,11 @@ AbstractNode *SqlServerStemList::readFromXml(QXmlStreamReader &in, MorphologyXml
         {
             if( in.name() == AbstractSqlStemList::XML_CONNECTION_STRING )
             {
-                sl->setConnectionString( in.readElementText() );
+                sl->setConnectionString( in.readElementText(), sl->databaseName() );
+            }
+            else if( in.name() == XML_DATABASE_NAME )
+            {
+                sl->setDatabaseName( in.readElementText() );
             }
             else if( in.name() == XML_EXTERNAL_DATABASE )
             {
@@ -114,32 +118,32 @@ void SqlServerStemList::openDatabase(const QString &connectionString, const QStr
 
 QString SqlServerStemList::qCreateStems() const
 {
-    return "IF OBJECT_ID(N'dbo.Stems', N'U') IS NULL BEGIN create table Stems ( _id bigint IDENTITY(1,1) PRIMARY KEY, liftGuid varchar(max) ) END;";
+    return "IF OBJECT_ID(N'" + table("Stems") + "', N'U') IS NULL BEGIN create table " + table("Stems") + " ( _id bigint IDENTITY(1,1) PRIMARY KEY, liftGuid varchar(max) ) END;";
 }
 
 QString SqlServerStemList::qCreateAllomorphs() const
 {
-    return "IF OBJECT_ID(N'dbo.Allomorphs', N'U') IS NULL BEGIN create table Allomorphs ( _id bigint IDENTITY(1,1) PRIMARY KEY, stem_id bigint, use_in_generations bigint default 1) END;";
+    return "IF OBJECT_ID(N'" + table("Allomorphs") + "', N'U') IS NULL BEGIN create table " + table("Allomorphs") + " ( _id bigint IDENTITY(1,1) PRIMARY KEY, stem_id bigint, use_in_generations bigint default 1) END;";
 }
 
 QString SqlServerStemList::qCreateForms() const
 {
-    return "IF OBJECT_ID(N'dbo.Forms', N'U') IS NULL BEGIN create table Forms ( _id bigint IDENTITY(1,1) PRIMARY KEY, allomorph_id bigint, Form varchar(max), WritingSystem varchar(max) ) END;";
+    return "IF OBJECT_ID(N'" + table("Forms") + "', N'U') IS NULL BEGIN create table " + table("Forms") + " ( _id bigint IDENTITY(1,1) PRIMARY KEY, allomorph_id bigint, Form varchar(max), WritingSystem varchar(max) ) END;";
 }
 
 QString SqlServerStemList::qCreateGlosses() const
 {
-    return "IF OBJECT_ID(N'dbo.Glosses', N'U') IS NULL BEGIN create table Glosses ( _id bigint IDENTITY(1,1) PRIMARY KEY, stem_id bigint, Form varchar(max), WritingSystem varchar(max) ) END;";
+    return "IF OBJECT_ID(N'" + table("Glosses") + "', N'U') IS NULL BEGIN create table " + table("Glosses") + " ( _id bigint IDENTITY(1,1) PRIMARY KEY, stem_id bigint, Form varchar(max), WritingSystem varchar(max) ) END;";
 }
 
 QString SqlServerStemList::qCreateTags() const
 {
-    return "IF OBJECT_ID(N'dbo.Tags', N'U') IS NULL BEGIN create table Tags ( _id bigint IDENTITY(1,1) PRIMARY KEY, Label varchar(max) ) END;";
+    return "IF OBJECT_ID(N'" + table("Tags") + "', N'U') IS NULL BEGIN create table " + table("Tags") + " ( _id bigint IDENTITY(1,1) PRIMARY KEY, Label varchar(max) ) END;";
 }
 
 QString SqlServerStemList::qCreateTagMembers() const
 {
-    return "IF OBJECT_ID(N'dbo.TagMembers', N'U') IS NULL BEGIN create table TagMembers ( tag_id bigint, allomorph_id bigint ) END;";
+    return "IF OBJECT_ID(N'" + table("TagMembers") + "', N'U') IS NULL BEGIN create table " + table("TagMembers") + " ( tag_id bigint, allomorph_id bigint ) END;";
 }
 
 QString SqlServerStemList::qCreateAllomorphsIdx() const
@@ -175,4 +179,42 @@ QString SqlServerStemList::qSelectStemIdsWithTags(const QString &taglist) const
 QString SqlServerStemList::qInsertStem() const
 {
     return "INSERT INTO stems (liftGuid) VALUES (?);";
+}
+
+void SqlServerStemList::setDatabaseName(const QString &newDatabaseName)
+{
+    mDatabaseName = newDatabaseName;
+}
+
+QString SqlServerStemList::table(const QString &tableName) const
+{
+    if( mDatabaseName.isEmpty() )
+        return tableName;
+    else
+        return QString("[%1].dbo.%2").arg(mDatabaseName,tableName);
+}
+
+bool SqlServerStemList::databaseExists(const QString &databaseName) const
+{
+    QSqlQuery q(QSqlDatabase::database(mDbName));
+
+
+    if( !q.exec("IF NOT EXISTS(SELECT * FROM sys.databases WHERE name = '"+databaseName+"') BEGIN CREATE DATABASE " + databaseName + " END;") )
+    {
+        qWarning() << "SqlServerStemList::databaseExists()" << q.lastError().text() << q.executedQuery();
+    }
+
+    q.prepare("SELECT name FROM sys.databases WHERE name=?;");
+    q.bindValue(0,databaseName);
+    if( !q.exec() )
+    {
+        qWarning() << "SqlServerStemList::databaseExists()" << q.lastError().text() << q.executedQuery();
+        return false;
+    }
+    return q.next();
+}
+
+QString SqlServerStemList::databaseName() const
+{
+    return mDatabaseName;
 }

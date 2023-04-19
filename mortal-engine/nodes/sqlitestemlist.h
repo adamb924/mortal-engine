@@ -21,6 +21,7 @@ public:
 
 protected:
     void openDatabase(const QString & connectionString, const QString & databaseName) override;
+    bool databaseExists(const QString &databaseName) const;
 };
 
 #endif // SQLITESTEMLIST_H
