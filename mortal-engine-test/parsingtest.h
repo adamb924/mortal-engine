@@ -7,6 +7,7 @@
 #define PARSINGTEST_H
 
 #include "abstracttest.h"
+#include "datatypes/morphemesequence.h"
 
 class ParsingTest : public AbstractTest
 {
@@ -26,10 +27,10 @@ public:
     void runTest() override;
 
     //! \brief Add \a parsing to the list of target parsings.
-    void addTargetParsing(const QString & parsing);
+    void addTargetParsing(const MorphemeSequence & sequence);
 
 private:
-    QSet<QString> mTargetParsings, mActualParsings;
+    QSet<MorphemeSequence> mTargetParsings, mActualParsings;
     int mTotalParsingCount, mUniqueParsingCount;
 };
 

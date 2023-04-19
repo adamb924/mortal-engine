@@ -16,7 +16,7 @@ void GenerationTest::runTest()
         return;
     }
 
-    QList<Generation> gs = mMorphology->generateForms(mOutputWritingSystem, *ls, mMorphologicalString);
+    QList<Generation> gs = mMorphology->generateForms(mOutputWritingSystem, *ls, mMorphemeSequence);
     QListIterator<Generation> i(gs);
     while( i.hasNext() )
     {
@@ -31,5 +31,5 @@ void GenerationTest::setLexicalStemId(const qlonglong &lexicalStemId)
 
 void GenerationTest::setMorphologicalString(const QString &morphologicalString)
 {
-    mMorphologicalString = morphologicalString;
+    mMorphemeSequence = MorphemeSequence::fromString(morphologicalString);
 }

@@ -131,14 +131,14 @@ QString Generation::intermediateSummary() const
     {
         return QString("'%1' generated from %2 (%3).")
                 .arg( form().text(),
-                      mMorphemeSequenceConstraint.originalMorphemeString(),
+                      mMorphemeSequenceConstraint.originalSequence().toString(),
                       morphemeDelimitedSummary( form().writingSystem() ) );
     }
     else
     {
         return QString("'%1' generated from %2 (%3), with %4 remaining.")
                 .arg( form().text(),
-                      mMorphemeSequenceConstraint.originalMorphemeString(),
+                      mMorphemeSequenceConstraint.originalSequence().toString(),
                       morphemeDelimitedSummary( form().writingSystem() ),
                       mMorphemeSequenceConstraint.remainingMorphemeString() );
     }

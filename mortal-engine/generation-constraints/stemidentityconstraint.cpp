@@ -3,17 +3,17 @@
 #include "datatypes/lexicalstem.h"
 #include "nodes/abstractnode.h"
 
-StemIdentityConstraint::StemIdentityConstraint() : AbstractGenerationConstraint(AbstractGenerationConstraint::StemIdentity)
+StemIdentityConstraint::StemIdentityConstraint() : AbstractGenerationConstraint(AbstractGenerationConstraint::StemIdentityConstraint)
 {
 
 }
 
-StemIdentityConstraint::StemIdentityConstraint(const QList<LexicalStem> &lexicalStems) : AbstractGenerationConstraint(AbstractGenerationConstraint::StemIdentity), mLexicalStems(lexicalStems)
+StemIdentityConstraint::StemIdentityConstraint(const QList<LexicalStem> &lexicalStems) : AbstractGenerationConstraint(AbstractGenerationConstraint::StemIdentityConstraint), mLexicalStems(lexicalStems)
 {
 
 }
 
-StemIdentityConstraint::StemIdentityConstraint(const StemIdentityConstraint &other) : AbstractGenerationConstraint(AbstractGenerationConstraint::StemIdentity), mLexicalStems(other.mLexicalStems)
+StemIdentityConstraint::StemIdentityConstraint(const StemIdentityConstraint &other) : AbstractGenerationConstraint(AbstractGenerationConstraint::StemIdentityConstraint), mLexicalStems(other.mLexicalStems)
 {
 }
 

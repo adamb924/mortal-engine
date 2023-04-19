@@ -24,6 +24,7 @@ class MorphemeSequenceConstraint;
 class AbstractConstraint;
 class Jump;
 class Morphology;
+class MorphemeSequence;
 
 #include "mortal-engine_global.h"
 
@@ -138,7 +139,7 @@ public:
     static bool parsingsHaveSameStems( const QList<Parsing> & list );
     static bool parsingsHaveSameMorphologicalSequence( const QList<Parsing> & list );
 
-    QStringList morphemeNames() const;
+    MorphemeSequence morphemeSequence() const;
 
     //! Returns the text of the Allomorph whose node label is "Stem", or an empty form
     Form stem(const WritingSystem & ws) const;

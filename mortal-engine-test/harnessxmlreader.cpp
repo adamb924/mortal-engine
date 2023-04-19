@@ -12,6 +12,7 @@
 #include "nodes/sqlitestemlist.h"
 #include "generationtest.h"
 #include "interlinearglosstest.h"
+#include "datatypes/morphemesequence.h"
 
 #include <QTextStream>
 #include <QXmlStreamReader>
@@ -245,7 +246,7 @@ ParsingTest *HarnessXmlReader::readParsingTest(QXmlStreamReader &in, const TestS
     test->setLabel( in.attributes().value(XML_LABEL).toString() );
     test->setShowDebug( in.attributes().value(XML_DEBUG).toString() == XML_TRUE );
 
-    QStringList outputList;
+    MorphemeSequence sequence;
 
     while(!in.atEnd() && !(in.tokenType() == QXmlStreamReader::EndElement && in.name() == XML_PARSING_TEST ) )
     {
@@ -263,18 +264,18 @@ ParsingTest *HarnessXmlReader::readParsingTest(QXmlStreamReader &in, const TestS
             }
             else if( in.name() == XML_OUTPUT )
             {
-                outputList.clear();
+                sequence.clear();
             }
             else if( in.name() == XML_LABEL )
             {
-                outputList.append( in.readElementText() );
+                sequence.append( in.readElementText() );
             }
         }
         else if( in.tokenType() == QXmlStreamReader::EndElement )
         {
             if( in.name() == XML_OUTPUT )
             {
-                test->addTargetParsing( "[" + outputList.join("][") + "]" );
+                test->addTargetParsing( sequence );
             }
         }
     }

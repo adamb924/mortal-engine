@@ -43,7 +43,7 @@ public:
     QList<Parsing> guessStem(const Form & form) const;
 
     QList<Generation> generateForms(const WritingSystem & ws, StemIdentityConstraint sic, MorphemeSequenceConstraint msc , const MorphologicalModel *model = nullptr) const;
-    QList<Generation> generateForms(const WritingSystem & ws, const LexicalStem & stem, const QString & morphologicalString, const MorphologicalModel *model = nullptr) const;
+    QList<Generation> generateForms(const WritingSystem & ws, const LexicalStem & stem, const MorphemeSequence & morphemeSequence, const MorphologicalModel *model = nullptr) const;
     QList<Generation> generateForms(const WritingSystem & ws, const Parsing & parsing) const;
 
     QList<Generation> replaceStemInto(const Form & husk, const LexicalStem kernel, const WritingSystem & outputWs ) const;

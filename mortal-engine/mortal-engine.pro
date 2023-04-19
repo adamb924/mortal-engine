@@ -31,6 +31,7 @@ SOURCES += \
     constraints/ignoreflag.cpp \
     constraints/precedingnodeconstraint.cpp \
     constraints/satisfiedcondition.cpp \
+    datatypes/morphemesequence.cpp \
     datatypes/portmanteau.cpp \
     debug.cpp \
     generation-constraints/abstractgenerationconstraint.cpp \
@@ -90,6 +91,7 @@ HEADERS += \
     constraints/ignoreflag.h \
     constraints/precedingnodeconstraint.h \
     constraints/satisfiedcondition.h \
+    datatypes/morphemesequence.h \
     datatypes/portmanteau.h \
     debug.h \
     generation-constraints/abstractgenerationconstraint.h \

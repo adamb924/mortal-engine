@@ -2,6 +2,7 @@
 #define GENERATIONTEST_H
 
 #include "abstractinputoutputtest.h"
+#include "datatypes/morphemesequence.h"
 
 class GenerationTest : public AbstractInputOutputTest
 {
@@ -17,7 +18,7 @@ public:
 
 private:
     qlonglong mLexicalStemId;
-    QString mMorphologicalString;
+    MorphemeSequence mMorphemeSequence;
 };
 
 #endif // GENERATIONTEST_H

@@ -1,6 +1,7 @@
 #include "abstracttest.h"
 
 #include "debug.h"
+#include "datatypes/morphemesequence.h"
 
 AbstractTest::AbstractTest(const Morphology *morphology) : mMorphology(morphology), mShowDebug(false)
 {
@@ -58,7 +59,7 @@ QString AbstractTest::summaryStub() const
     return stub;
 }
 
-QString AbstractTest::setToString(QSet<Form> forms) const
+QString AbstractTest::setToString(const QSet<Form> forms) const
 {
     if( forms.isEmpty() )
     {
@@ -81,7 +82,7 @@ QString AbstractTest::setToString(QSet<Form> forms) const
     return result;
 }
 
-QString AbstractTest::setToString(QSet<QString> forms) const
+QString AbstractTest::setToString(const QSet<QString> forms) const
 {
     if( forms.count() == 0 )
     {
@@ -99,7 +100,30 @@ QString AbstractTest::setToString(QSet<QString> forms) const
     }
 }
 
-QString AbstractTest::setToBarebonesString(QSet<Form> forms) const
+QString AbstractTest::setToString(const QSet<MorphemeSequence> forms) const
+{
+    if( forms.count() == 0 )
+    {
+        return "no match";
+    }
+    QStringList list;
+    QSetIterator<MorphemeSequence> iter(forms);
+    while(iter.hasNext())
+    {
+        list << iter.next().toString();
+    }
+    std::sort( list.begin(), list.end() );
+    if( list.length() > 1 )
+    {
+        return "(" + list.join(", ") + ")";
+    }
+    else
+    {
+        return list.join(", ");
+    }
+}
+
+QString AbstractTest::setToBarebonesString(const QSet<Form> forms) const
 {
     if( forms.isEmpty() )
     {
@@ -119,7 +143,7 @@ QString AbstractTest::setToBarebonesString(QSet<Form> forms) const
     return result;
 }
 
-QString AbstractTest::setToBarebonesString(QSet<QString> forms) const
+QString AbstractTest::setToBarebonesString(const QSet<QString> forms) const
 {
     if( forms.isEmpty() )
     {
@@ -136,6 +160,29 @@ QString AbstractTest::setToBarebonesString(QSet<QString> forms) const
         }
     }
     return result;
+}
+
+QString AbstractTest::setToBarebonesString(const QSet<MorphemeSequence> forms) const
+{
+    if( forms.isEmpty() )
+    {
+        return QObject::tr("(empty)");
+    }
+    QStringList list;
+    QSetIterator<MorphemeSequence> iter(forms);
+    while(iter.hasNext())
+    {
+        list << iter.next().toString();
+    }
+    std::sort( list.begin(), list.end() );
+    if( list.length() > 1 )
+    {
+        return "(" + list.join(", ") + ")";
+    }
+    else
+    {
+        return list.join(", ");
+    }
 }
 
 bool AbstractTest::showDebug() const

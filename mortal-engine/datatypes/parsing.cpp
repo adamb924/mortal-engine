@@ -9,6 +9,7 @@
 #include "constraints/abstractconstraint.h"
 #include "constraints/abstractlongdistanceconstraint.h"
 #include "morphology.h"
+#include "datatypes/morphemesequence.h"
 
 int Parsing::MAXIMUM_JUMPS = 1;
 
@@ -735,15 +736,15 @@ Form Parsing::stem(const WritingSystem &ws) const
     return Form(ws, "");
 }
 
-QStringList Parsing::morphemeNames() const
+MorphemeSequence Parsing::morphemeSequence() const
 {
-    QStringList names;
+    MorphemeSequence seq;
     QListIterator<ParsingStep> i(mSteps);
     while(i.hasNext())
     {
-        names << i.next().label( writingSystem() );
+        seq << i.next().label( writingSystem() );
     }
-    return names;
+    return seq;
 }
 
 void Parsing::addLocalConstraints(const QSet<const AbstractConstraint *> &newConstraints)

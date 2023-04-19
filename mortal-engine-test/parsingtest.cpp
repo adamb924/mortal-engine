@@ -51,13 +51,13 @@ void ParsingTest::runTest()
     QList<Parsing> parsings = mMorphology->possibleParsings( mInput );
     foreach (Parsing p, parsings)
     {
-        mActualParsings << p.labelSummary();
+        mActualParsings << p.morphemeSequence();
     }
     mTotalParsingCount = parsings.count();
     mUniqueParsingCount = mActualParsings.count();
 }
 
-void ParsingTest::addTargetParsing(const QString &parsing)
+void ParsingTest::addTargetParsing(const MorphemeSequence &sequence)
 {
-    mTargetParsings << parsing;
+    mTargetParsings << sequence;
 }

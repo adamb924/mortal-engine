@@ -53,11 +53,13 @@ public:
 
 protected:
     //! \brief Converts a set of QString objects to a comma-delimited list
-    QString setToString( QSet<Form> forms ) const;
-    QString setToString( QSet<QString> forms ) const;
+    QString setToString( const QSet<Form> forms ) const;
+    QString setToString( const QSet<QString> forms ) const;
+    QString setToString( const QSet<MorphemeSequence> forms ) const;
 
-    QString setToBarebonesString( QSet<Form> forms ) const;
-    QString setToBarebonesString( QSet<QString> forms ) const;
+    QString setToBarebonesString( const QSet<Form> forms ) const;
+    QString setToBarebonesString( const QSet<QString> forms ) const;
+    QString setToBarebonesString( const QSet<MorphemeSequence> forms ) const;
 
     const Morphology * mMorphology;
     Form mInput;

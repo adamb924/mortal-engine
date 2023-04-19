@@ -8,33 +8,24 @@
 
 QRegularExpression MorphemeSequenceConstraint::morphemeStringFormat = QRegularExpression("^(\\[.*\\])+$");
 
-MorphemeSequenceConstraint::MorphemeSequenceConstraint() : AbstractGenerationConstraint(AbstractGenerationConstraint::MorphemeSequence)
+MorphemeSequenceConstraint::MorphemeSequenceConstraint() : AbstractGenerationConstraint(AbstractGenerationConstraint::MorphemeSequenceConstraint)
 {
 
 }
 
-MorphemeSequenceConstraint::MorphemeSequenceConstraint(const QString &morphemeString) : AbstractGenerationConstraint(AbstractGenerationConstraint::MorphemeSequence), mOriginalMorphemeString(morphemeString)
+MorphemeSequenceConstraint::MorphemeSequenceConstraint(const MorphemeSequence &sequence)
+    : AbstractGenerationConstraint(AbstractGenerationConstraint::MorphemeSequenceConstraint),
+      mMorphemeNames(sequence), mOriginalSequence(sequence)
 {
-    if( ! morphemeStringFormat.match(morphemeString).hasMatch() )
-    {
-        std::string str = morphemeString.toUtf8().constData();
-        throw std::runtime_error( "Invalid morpheme sequence string: " + str );
-    }
-    QStringList morphemes = morphemeString.mid(1, morphemeString.length()-2).split("][");
-    foreach(QString morpheme, morphemes)
-    {
-        addMorpheme(morpheme);
-    }
 }
 
-MorphemeSequenceConstraint::MorphemeSequenceConstraint(const MorphemeSequenceConstraint &other) : AbstractGenerationConstraint(AbstractGenerationConstraint::MorphemeSequence), mOriginalMorphemeString(other.mOriginalMorphemeString), mMorphemeNames(other.mMorphemeNames)
+MorphemeSequenceConstraint::MorphemeSequenceConstraint(const MorphemeSequenceConstraint &other) : AbstractGenerationConstraint(AbstractGenerationConstraint::MorphemeSequenceConstraint), mMorphemeNames(other.mMorphemeNames)
 {
 
 }
 
 MorphemeSequenceConstraint &MorphemeSequenceConstraint::operator=(const MorphemeSequenceConstraint & other)
 {
-    mOriginalMorphemeString = other.mOriginalMorphemeString;
     mMorphemeNames = other.mMorphemeNames;
     return *this;
 }
@@ -101,24 +92,15 @@ bool MorphemeSequenceConstraint::matchesPortmanteau(const Portmanteau &portmante
     }
 }
 
-void MorphemeSequenceConstraint::setMorphemeNames(const QList<QString> &morphemeNames)
+void MorphemeSequenceConstraint::setMorphemeSequence(const MorphemeSequence &sequence)
 {
-    /// this longer way of doing it handles portmanteaux
-    foreach( QString name, morphemeNames )
-    {
-        mMorphemeNames << name.split("][");
-    }
-    mOriginalMorphemeString = remainingMorphemeString();
+    mMorphemeNames = sequence;
+    mOriginalSequence = sequence;
 }
 
 QString MorphemeSequenceConstraint::remainingMorphemeString() const
 {
-    return "[" + mMorphemeNames.join("][") + "]";
-}
-
-QString MorphemeSequenceConstraint::originalMorphemeString() const
-{
-    return mOriginalMorphemeString;
+    return mMorphemeNames.toString();
 }
 
 QString MorphemeSequenceConstraint::summary() const
@@ -129,4 +111,9 @@ QString MorphemeSequenceConstraint::summary() const
     dbg << "MorphemeSequenceConstraint ([" << mMorphemeNames.join("], [") << "])";
 
     return dbgString;
+}
+
+MorphemeSequence MorphemeSequenceConstraint::originalSequence() const
+{
+    return mOriginalSequence;
 }

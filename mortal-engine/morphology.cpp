@@ -132,9 +132,9 @@ QList<Generation> Morphology::generateForms( const WritingSystem & ws, StemIdent
     return forms;
 }
 
-QList<Generation> Morphology::generateForms(const WritingSystem &ws, const LexicalStem &stem, const QString &morphologicalString, const MorphologicalModel *model) const
+QList<Generation> Morphology::generateForms(const WritingSystem &ws, const LexicalStem &stem, const MorphemeSequence &morphemeSequence, const MorphologicalModel *model) const
 {
-    return generateForms( ws, StemIdentityConstraint(QList<LexicalStem>() << stem), MorphemeSequenceConstraint(morphologicalString), model );
+    return generateForms( ws, StemIdentityConstraint(QList<LexicalStem>() << stem), MorphemeSequenceConstraint(morphemeSequence), model );
 }
 
 QList<Generation> Morphology::generateForms(const WritingSystem & ws, const Parsing &parsing) const
@@ -146,7 +146,7 @@ QList<Generation> Morphology::generateForms(const WritingSystem & ws, const Pars
     }
 
     MorphemeSequenceConstraint msc;
-    msc.setMorphemeNames( parsing.morphemeNames() );
+    msc.setMorphemeSequence( parsing.morphemeSequence() );
 
     QList<LexicalStem> lss = parsing.lexicalStems();
     if( !lss.isEmpty() )
@@ -170,7 +170,7 @@ QList<Generation> Morphology::replaceStemInto(const Form &husk, const LexicalSte
         Parsing oldParsing = oldParsingIterator.next();
 
         MorphemeSequenceConstraint msc;
-        msc.setMorphemeNames( oldParsing.morphemeNames() );
+        msc.setMorphemeSequence( oldParsing.morphemeSequence() );
 
         StemIdentityConstraint sic;
         sic.addLexicalStem( kernel );
@@ -193,7 +193,7 @@ QList<Generation> Morphology::transduceInto(const Form &form, const WritingSyste
         Parsing oldParsing = oldParsingIterator.next();
 
         MorphemeSequenceConstraint msc;
-        msc.setMorphemeNames( oldParsing.morphemeNames() );
+        msc.setMorphemeSequence( oldParsing.morphemeSequence() );
 
         QList<LexicalStem> lss = oldParsing.lexicalStems();
         if( !lss.isEmpty() )
@@ -214,7 +214,7 @@ Generation Morphology::getFirstTransduction(const Form &form, const WritingSyste
         Parsing oldParsing = parsings.first();
 
         MorphemeSequenceConstraint msc;
-        msc.setMorphemeNames( oldParsing.morphemeNames() );
+        msc.setMorphemeSequence( oldParsing.morphemeSequence() );
 
         QList<LexicalStem> lss = oldParsing.lexicalStems();
         if( !lss.isEmpty() )

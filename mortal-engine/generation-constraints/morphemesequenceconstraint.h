@@ -2,6 +2,7 @@
 #define MORPHEMESEQUENCECONSTRAINT_H
 
 #include "abstractgenerationconstraint.h"
+#include "datatypes/morphemesequence.h"
 
 #include <QList>
 
@@ -13,7 +14,7 @@ class MORTAL_ENGINE_EXPORT MorphemeSequenceConstraint : public AbstractGeneratio
 {
 public:
     MorphemeSequenceConstraint();
-    explicit MorphemeSequenceConstraint(const QString & morphemeString);
+    explicit MorphemeSequenceConstraint(const MorphemeSequence & sequence);
     MorphemeSequenceConstraint(const MorphemeSequenceConstraint & other);
     MorphemeSequenceConstraint &operator=(const MorphemeSequenceConstraint & other);
 
@@ -27,10 +28,10 @@ public:
 
     bool matchesPortmanteau(const Portmanteau & portmanteau) const;
 
-    void setMorphemeNames(const QList<QString> &morphemeNames);
+    void setMorphemeSequence(const MorphemeSequence &sequence);
 
     QString remainingMorphemeString() const;
-    QString originalMorphemeString() const;
+
 
     /**
      * @brief Returns a string representation of the Form for logging purposes.
@@ -41,9 +42,11 @@ public:
 
     static QRegularExpression morphemeStringFormat;
 
+    MorphemeSequence originalSequence() const;
+
 private:
-    QString mOriginalMorphemeString;
-    QStringList mMorphemeNames;
+    MorphemeSequence mMorphemeNames;
+    MorphemeSequence mOriginalSequence;
 };
 
 #endif // MORPHEMESEQUENCECONSTRAINT_H

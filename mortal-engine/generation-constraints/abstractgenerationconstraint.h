@@ -12,7 +12,7 @@ class AbstractNode;
 class MORTAL_ENGINE_EXPORT AbstractGenerationConstraint
 {
 public:
-    enum ContraintType { MorphemeSequence, StemIdentity };
+    enum ContraintType { MorphemeSequenceConstraint, StemIdentityConstraint };
 
     AbstractGenerationConstraint(ContraintType constraintType);
     virtual ~AbstractGenerationConstraint();
