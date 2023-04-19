@@ -308,6 +308,11 @@ bool AbstractStemList::match(const Allomorph &allomorph) const
     return allomorph.tags().contains(mTags);
 }
 
+QSet<LexicalStem *> AbstractStemList::stems() const
+{
+    return mStems;
+}
+
 void AbstractStemList::addCreateAllomorphs(const CreateAllomorphs &createAllomorphs)
 {
     mCreateAllomorphs << createAllomorphs;

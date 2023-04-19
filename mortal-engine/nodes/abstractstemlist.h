@@ -66,6 +66,8 @@ public:
     static QString XML_FILENAME;
     static QString XML_MATCHING_TAG;
 
+    QSet<LexicalStem *> stems() const;
+
 private:
     QList<Parsing> parsingsUsingThisNode(const Parsing & parsing, Parsing::Flags flags) const override;
     QList<QPair<Allomorph, LexicalStem>> possibleStemForms(const Parsing & parsing) const;
