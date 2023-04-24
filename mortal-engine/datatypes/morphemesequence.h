@@ -11,6 +11,9 @@ public:
     MorphemeSequence();
     explicit MorphemeSequence(const QStringList & list);
 
+    MorphemeSequence operator<<(const QString & newLabel);
+    MorphemeSequence operator+(const QString & newLabel) const;
+
     bool isEmpty() const;
 
     QString toString() const;

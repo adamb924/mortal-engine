@@ -14,6 +14,17 @@ MorphemeSequence::MorphemeSequence(const QStringList &list) : QStringList(list)
 {
 }
 
+MorphemeSequence MorphemeSequence::operator<<(const QString &newLabel)
+{
+    append(newLabel);
+    return *this;
+}
+
+MorphemeSequence MorphemeSequence::operator+(const QString &newLabel) const
+{
+    return MorphemeSequence( *this ) << newLabel;
+}
+
 bool MorphemeSequence::isEmpty() const
 {
     return length() == 0;
