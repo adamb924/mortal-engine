@@ -226,6 +226,44 @@ QList<const AbstractNode *> AbstractNode::nextMorphemeNodes() const
     }
 }
 
+QSet<MorphemeSequence> AbstractNode::possibleMorphemeSequences(const QSet<MorphemeSequence> given, QHash<const Jump *, int> &jumps) const
+{
+    qDebug() << "AbstractNode::possibleMorphemeSequences" << debugIdentifier();// << "Given:" << given;
+    QSet<MorphemeSequence> result;
+    if( mOptional )
+    {
+        /// if it's optional, then the existing forms can be inserted. This node doesn't necessarily have to add a label.
+        result.unite(given);
+    }
+    if( given.isEmpty() )
+    {
+        /// if the result set is empty, this is the first node that's been encountered, so we need to add it to the set
+        result << MorphemeSequence( QStringList() << mLabel );
+        if( mOptional )
+        {
+            /// if this node itself is optional, we can also add in an empty result
+            result << MorphemeSequence( QStringList() );
+        }
+    }
+    else
+    {
+        QSetIterator<MorphemeSequence> iter(given);
+        while(iter.hasNext())
+        {
+            MorphemeSequence seq = iter.next();
+            result << ( seq << mLabel );
+        }
+    }
+    if( hasNext() )
+    {
+        return next()->possibleMorphemeSequences(result, jumps);
+    }
+    else
+    {
+        return result;
+    }
+}
+
 void AbstractNode::setNext(AbstractNode *next)
 {
     mNext = next;

@@ -83,6 +83,25 @@ QList<const AbstractNode *> AbstractPath::availableMorphemeNodes(QHash<const Jum
     return list;
 }
 
+QSet<MorphemeSequence> AbstractPath::possibleMorphemeSequences(const QSet<MorphemeSequence> given, QHash<const Jump*,int> &jumps) const
+{
+    qDebug() << "AbstractPath::possibleMorphemeSequences" << debugIdentifier();// << "Given:" << given;
+
+    QSet<MorphemeSequence> result;
+    if( optional() && next() != nullptr )
+    {
+        qDebug() << "next node will be" << next()->debugIdentifier();
+        result.unite( next()->possibleMorphemeSequences(given,jumps) );
+    }
+
+    if( mInitialNode != nullptr )
+    {
+        result.unite( mInitialNode->possibleMorphemeSequences(given,jumps) );
+    }
+
+    return result;
+}
+
 QList<Parsing> AbstractPath::parsingsUsingThisNode(const Parsing &parsing, Parsing::Flags flags) const
 {
     if( mInitialNode == nullptr )

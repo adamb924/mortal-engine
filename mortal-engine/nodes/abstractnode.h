@@ -121,6 +121,8 @@ public:
     QList<const AbstractNode*> nextMorphemeNodes() const;
     virtual QList<const AbstractNode*> availableMorphemeNodes(QHash<const Jump*,int> &jumps) const = 0;
 
+    virtual QSet<MorphemeSequence> possibleMorphemeSequences(const QSet<MorphemeSequence> given, QHash<const Jump*,int> &jumps) const;
+
 protected:
     QHash<WritingSystem,Form> mGlosses;
 

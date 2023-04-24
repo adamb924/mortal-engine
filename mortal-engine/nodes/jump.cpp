@@ -128,6 +128,27 @@ QList<const AbstractNode *> Jump::availableMorphemeNodes(QHash<const Jump *, int
     return list;
 }
 
+QSet<MorphemeSequence> Jump::possibleMorphemeSequences(const QSet<MorphemeSequence> given, QHash<const Jump *, int> &jumps) const
+{
+    qDebug() << "Jump::possibleMorphemeSequences" << debugIdentifier();
+    QSet<MorphemeSequence> result;
+
+    if( jumps.value(this,0) < Parsing::MAXIMUM_JUMPS )
+    {
+        qDebug() << "Jumping...";
+        jumps[ this ] = jumps.value(this,0) + 1;
+        result.unite( mNodeTarget->possibleMorphemeSequences(given, jumps) );
+
+        /// move on to the next node if this one is optional
+        if( optional() && AbstractNode::next() != nullptr )
+        {
+            result.unite( AbstractNode::next()->possibleMorphemeSequences(given, jumps) );
+        }
+    }
+
+    return result;
+}
+
 void Jump::setNodeTarget(const AbstractNode *nodeTarget)
 {
     mNodeTarget = nodeTarget;
