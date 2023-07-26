@@ -86,7 +86,7 @@ void SqliteStemList::openSqliteDatabase(const QString &connectionString, const Q
 {
     if(!QSqlDatabase::isDriverAvailable("QSQLITE"))
     {
-        qWarning() << "SqliteStemList::openDatabase()" << "Driver failed to open.";
+        qWarning() << "SqliteStemList::openDatabase()" << "The QSQLITE driver is not available.";
         return;
     }
 
