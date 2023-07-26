@@ -91,6 +91,8 @@ public:
 
     bool isOk() const;
 
+    static void setPath(const QString & path);
+
 private:
     QList<MorphologicalModel*> mMorphologicalModels;
     QHash<QString,WritingSystem> mWritingSystems;

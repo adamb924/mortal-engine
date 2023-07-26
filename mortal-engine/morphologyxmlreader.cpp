@@ -41,6 +41,7 @@
 
 QString MorphologyXmlReader::XML_MORPHOLOGY = "morphology";
 QString MorphologyXmlReader::XML_MAXIMUM_JUMPS = "maximum-jumps";
+QString MorphologyXmlReader::XML_PATH = "path";
 QString MorphologyXmlReader::XML_SHARED_CREATE_ALLOMORPHS = "shared-create-allomorphs";
 QString MorphologyXmlReader::XML_SHARED_CONDITIONS = "interrupted-by";
 
@@ -120,6 +121,11 @@ void MorphologyXmlReader::parseXml(const QString &path)
         if( in.attributes().hasAttribute(XML_MAXIMUM_JUMPS) )
         {
             Parsing::MAXIMUM_JUMPS = in.attributes().value(XML_MAXIMUM_JUMPS).toInt();
+        }
+
+        if( in.attributes().hasAttribute(XML_PATH) )
+        {
+            Morphology::setPath( in.attributes().value(XML_PATH).toString() );
         }
 
         while(!in.atEnd())

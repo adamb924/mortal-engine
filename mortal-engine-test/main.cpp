@@ -43,8 +43,11 @@ int main(int argc, char *argv[])
     QCommandLineOption debugOutputOption(QStringList() << "l" << "log", QCoreApplication::translate("main", "File for debug output."), "log");
     parser.addOption(debugOutputOption);
 
-    QCommandLineOption inspectOption(QStringList() << "i" << "inspect", QCoreApplication::translate("main", "Element ID to print summary for."), "log");
+    QCommandLineOption inspectOption(QStringList() << "i" << "inspect", QCoreApplication::translate("main", "Element ID to print summary for."));
     parser.addOption(inspectOption);
+
+    QCommandLineOption pathOption(QStringList() << "p" << "path", QCoreApplication::translate("main", "Path with data files."), "path");
+    parser.addOption(pathOption);
 
     parser.process(a);
 
@@ -55,6 +58,13 @@ int main(int argc, char *argv[])
     const bool check = parser.isSet(checkOption);
     QString logfile = parser.value(debugOutputOption);
     const QString inspectId = parser.value(inspectOption);
+    const QString path = parser.value(pathOption);
+
+    /// set the path here to read the files in the correct location
+    if( !path.isEmpty() )
+    {
+        Morphology::setPath(path);
+    }
 
     if(logfile.isEmpty())
         logfile = "log.txt";

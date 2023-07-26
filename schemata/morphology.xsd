@@ -22,6 +22,7 @@ targetNamespace="https://www.adambaker.org/mortal-engine">
                 <xs:element name="model" type="me:model" maxOccurs="unbounded"/>
             </xs:sequence>
             <xs:attribute type="xs:integer" name="maximum-jumps" use="optional"/>
+            <xs:attribute type="xs:string" name="path" use="optional"/>
         </xs:complexType>
     </xs:element>
 

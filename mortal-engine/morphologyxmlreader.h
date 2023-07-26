@@ -89,6 +89,7 @@ private:
 
     static QString XML_MORPHOLOGY;
     static QString XML_MAXIMUM_JUMPS;
+    static QString XML_PATH;
     static QString XML_SHARED_CREATE_ALLOMORPHS;
     static QString XML_SHARED_CONDITIONS;
 

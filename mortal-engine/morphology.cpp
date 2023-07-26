@@ -8,6 +8,8 @@
 #include "datatypes/lexicalstem.h"
 #include <stdexcept>
 
+#include <QDir>
+
 #include "morphologychecker.h"
 
 #include "debug.h"
@@ -394,6 +396,11 @@ QSet<AbstractStemList *> Morphology::stemLists() const
 bool Morphology::isOk() const
 {
     return mIsOk;
+}
+
+void Morphology::setPath(const QString &path)
+{
+    QDir::setCurrent(path);
 }
 
 QString Morphology::summary() const
