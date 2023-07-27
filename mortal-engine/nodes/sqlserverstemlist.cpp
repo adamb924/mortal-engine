@@ -63,7 +63,10 @@ AbstractNode *SqlServerStemList::readFromXml(QXmlStreamReader &in, MorphologyXml
 
     /// the default here is true
     if( in.attributes().value("include-glosses").toString() == "false" )
+    {
+        qCritical() << "The include-glosses=\"false\" is giving errors. Do not use it until it is fixed.";
         sl->setReadGlosses(false);
+    }
 
     morphologyReader->recordStemList( sl );
 
