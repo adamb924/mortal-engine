@@ -40,6 +40,8 @@ public:
 
     Morphology *morphology() const;
 
+    static Morphology* readMorphology( const QString & path );
+
     AbstractNode* readNodes(QXmlStreamReader &in, const QString &untilEndOf, const MorphologicalModel *currentModel);
 
     QSet<const AbstractConstraint *> readConstraints(const QString &untilEndOf, QXmlStreamReader &in);

@@ -503,6 +503,19 @@ Morphology *MorphologyXmlReader::morphology() const
     return mMorphology;
 }
 
+Morphology *MorphologyXmlReader::readMorphology(const QString &path)
+{
+    Morphology *m = new Morphology;
+    MorphologyXmlReader reader(m);
+    try {
+        reader.readXmlFile(path);
+    }  catch (const std::runtime_error& e) {
+        m->mIsOk = false;
+        qCritical() << e.what() << "(" << path << ")";
+    }
+    return m;
+}
+
 template<class T>
 void MorphologyXmlReader::registerConstraintMatcher()
 {
