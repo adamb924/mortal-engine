@@ -3,7 +3,7 @@
 
 #include "abstractnode.h"
 
-class AbstractPath : public AbstractNode
+class MORTAL_ENGINE_EXPORT AbstractPath : public AbstractNode
 {
 public:
     explicit AbstractPath(const MorphologicalModel * model);

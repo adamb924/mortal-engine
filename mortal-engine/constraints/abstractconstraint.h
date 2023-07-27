@@ -4,6 +4,7 @@
 #include <QString>
 
 #include "ignoreflag.h"
+#include "mortal-engine_global.h"
 
 class Allomorph;
 class Parsing;
@@ -14,7 +15,7 @@ class AbstractLongDistanceConstraint;
 class AbstractNestedConstraint;
 class MorphologyXmlReader;
 
-class AbstractConstraint
+class MORTAL_ENGINE_EXPORT AbstractConstraint
 {
 public:
     enum Type { MatchCondition, LocalConstraint, LongDistanceConstraint, Nested, Pointer };

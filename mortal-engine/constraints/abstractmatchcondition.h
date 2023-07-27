@@ -8,12 +8,13 @@ class Parsing;
 class QXmlStreamReader;
 
 #include "abstractconstraint.h"
+#include "mortal-engine_global.h"
 
 #include "datatypes/writingsystem.h"
 
 class MorphologyXmlReader;
 
-class AbstractMatchCondition : public AbstractConstraint
+class MORTAL_ENGINE_EXPORT AbstractMatchCondition : public AbstractConstraint
 {
 public:
     AbstractMatchCondition();

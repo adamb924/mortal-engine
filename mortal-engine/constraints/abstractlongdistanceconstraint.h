@@ -2,8 +2,9 @@
 #define ABSTRACTLONGDISTANCECONSTRAINT_H
 
 #include "abstractconstraint.h"
+#include "mortal-engine_global.h"
 
-class AbstractLongDistanceConstraint : public AbstractConstraint
+class MORTAL_ENGINE_EXPORT AbstractLongDistanceConstraint : public AbstractConstraint
 {
 public:
     AbstractLongDistanceConstraint();

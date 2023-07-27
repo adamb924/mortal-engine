@@ -84,14 +84,16 @@ private:
     /// convenience method
     static bool notAtEndOf(const QString & tagName, QXmlStreamReader &in);
 
-    template <class T> void registerConstraintMatcher();
-    template <class T> void registerNodeMatcher();
-
     static QString XML_MORPHOLOGY;
     static QString XML_MAXIMUM_JUMPS;
     static QString XML_PATH;
     static QString XML_SHARED_CREATE_ALLOMORPHS;
     static QString XML_SHARED_CONDITIONS;
+
+public:
+    /// these methods should be public so that Mortal Engine can be extended without building the source
+    template <class T> void registerConstraintMatcher();
+    template <class T> void registerNodeMatcher();
 
 private:
     Morphology * mMorphology;
