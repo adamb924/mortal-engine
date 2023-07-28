@@ -515,15 +515,3 @@ Morphology *MorphologyXmlReader::readMorphology(const QString &path)
     }
     return m;
 }
-
-template<class T>
-void MorphologyXmlReader::registerConstraintMatcher()
-{
-    mConstraintMatchers.append( ConstraintMatcher( T::matchesElement, T::readFromXml ) );
-}
-
-template<class T>
-void MorphologyXmlReader::registerNodeMatcher()
-{
-    mNodeMatchers.append( NodeMatcher( T::matchesElement, T::readFromXml ) );
-}

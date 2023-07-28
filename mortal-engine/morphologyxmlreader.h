@@ -94,8 +94,9 @@ private:
 
 public:
     /// these methods should be public so that Mortal Engine can be extended without building the source
-    template <class T> void registerConstraintMatcher();
-    template <class T> void registerNodeMatcher();
+    /// implementing the functions inline avoids a compiler warning if Mortal Engine is extended
+    template <class T> void registerConstraintMatcher() { mConstraintMatchers.append( ConstraintMatcher( T::matchesElement, T::readFromXml ) ); }
+    template <class T> void registerNodeMatcher() { mNodeMatchers.append( NodeMatcher( T::matchesElement, T::readFromXml ) ); }
 
 private:
     Morphology * mMorphology;
