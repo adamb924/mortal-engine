@@ -387,6 +387,7 @@ targetNamespace="https://www.adambaker.org/mortal-engine">
                 <xs:choice maxOccurs="unbounded">
                     <xs:element name="match-tag" type="xs:string"/>
                     <xs:element name="without-tag" type="xs:string"/>
+                    <xs:element ref="me:match-expression" maxOccurs="unbounded" minOccurs="1"/>
                 </xs:choice>
             </xs:choice>
             <xs:element name="when" minOccurs="0" maxOccurs="1">

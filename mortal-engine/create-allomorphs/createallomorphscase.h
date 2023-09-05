@@ -29,6 +29,7 @@ public:
 
     void addMatchTag(const Tag & t);
     void addNotMatchTag(const Tag & t);
+    void addMatchExpression(const WritingSystem & ws, const QRegularExpression & re);
     void addConstraints(const QSet<const AbstractConstraint *> c);
     void addReplacement(const CreateAllomorphsReplacement & r);
 
@@ -66,6 +67,7 @@ private:
     QList<CreateAllomorphsReplacement> mReplacements;
     QSet<Tag> mMatchTags;
     QSet<Tag> mNotMatchTags;
+    QHash<WritingSystem,QRegularExpression> mMatchExpressions;
     FormsMode mFormsMode;
     QSet<Tag> mAddTags;
     QSet<Tag> mRemoveTags;

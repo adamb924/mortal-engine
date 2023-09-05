@@ -5,6 +5,7 @@
 
 #include "morphologyxmlreader.h"
 #include "debug.h"
+#include "morphology.h"
 
 #include <QXmlStreamReader>
 
@@ -35,6 +36,18 @@ Allomorph CreateAllomorphsCase::createAllomorph(const Allomorph & input, const Q
     if( ! input.tags().contains( mMatchTags ) || ( !mNotMatchTags.isEmpty() && input.tags().contains( mNotMatchTags ) ) )
     {
         return Allomorph(Allomorph::Null);
+    }
+    /// the allomorph must also match all of the regular expression matches
+    QHashIterator<WritingSystem,QRegularExpression> mei(mMatchExpressions);
+    while(mei.hasNext())
+    {
+        mei.next();
+        bool ok;
+        const Form f = input.form( mei.key(), &ok );
+        if( !ok || ! mei.value().match( f.text() ).hasMatch() )
+        {
+            return Allomorph(Allomorph::Null);
+        }
     }
 
     Allomorph newAllomorph( input );
@@ -136,6 +149,12 @@ CreateAllomorphsCase CreateAllomorphsCase::readFromXml(QXmlStreamReader &in, Mor
             {
                 c.addNotMatchTag( Tag( in.readElementText() ) );
             }
+            if( in.name() == AbstractConstraint::XML_MATCH_EXPRESSION )
+            {
+                /// this'll all get optimized by the compiler I assume
+                WritingSystem ws = morphologyReader->morphology()->writingSystem( in.attributes().value("lang").toString() );
+                c.addMatchExpression( ws, QRegularExpression( in.readElementText(), QRegularExpression::UseUnicodePropertiesOption ) );
+            }
             else if( in.name() == XML_WHEN )
             {
                 in.readNextStartElement();
@@ -192,6 +211,11 @@ void CreateAllomorphsCase::addMatchTag(const Tag &t)
 void CreateAllomorphsCase::addNotMatchTag(const Tag &t)
 {
     mNotMatchTags << t;
+}
+
+void CreateAllomorphsCase::addMatchExpression(const WritingSystem &ws, const QRegularExpression &re)
+{
+    mMatchExpressions.insert( ws, re );
 }
 
 void CreateAllomorphsCase::addConstraints(const QSet<const AbstractConstraint *> c)
@@ -263,6 +287,18 @@ QString CreateAllomorphsCase::summary() const
     while(nti.hasNext())
     {
         dbg << nti.next().summary();
+        if( nti.hasNext() )
+        {
+            dbg << ", ";
+        }
+    }
+    dbg << ")" << newline;
+    dbg << "Match Expressions (";
+    QHashIterator<WritingSystem,QRegularExpression> mei(mMatchExpressions);
+    while(mei.hasNext())
+    {
+        mei.next();
+        dbg << QString("%1: %2").arg(mei.key().abbreviation()).arg(mei.value().pattern());
         if( nti.hasNext() )
         {
             dbg << ", ";
