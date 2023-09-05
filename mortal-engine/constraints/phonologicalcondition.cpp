@@ -56,7 +56,7 @@ AbstractConstraint *PhonologicalCondition::readFromXml(QXmlStreamReader &in, Mor
             {
                 /// this'll all get optimized by the compiler I assume
                 WritingSystem ws = morphologyReader->morphology()->writingSystem( in.attributes().value("lang").toString() );
-                c->addRegularExpression( ws, QRegularExpression( in.readElementText() ) );
+                c->addRegularExpression( ws, QRegularExpression( in.readElementText(), QRegularExpression::UseUnicodePropertiesOption ) );
             }
         }
     }
