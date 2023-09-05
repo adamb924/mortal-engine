@@ -44,6 +44,7 @@ private:
 
     TestHarness *mHarness;
 
+public:
     static QString XML_SHOW_MODEL;
     static QString XML_TRUE;
     static QString XML_INPUT;
@@ -65,6 +66,7 @@ private:
     static QString XML_MORPHEMES;
     static QString XML_LANG;
     static QString XML_DEBUG;
+    static QString XML_STEM_DEBUG;
     static QString XML_INTERLINEAR_GLOSS_TEST;
 };
 

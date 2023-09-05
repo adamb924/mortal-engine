@@ -232,10 +232,11 @@ QList<QPair<Allomorph, LexicalStem> > AbstractStemList::matchingAllomorphs(const
 {
     QList<QPair<Allomorph, LexicalStem> > list;
 
-    /// disable debug output for the stem search; the same information can be obtained
-    /// as well from the model dump
+    /// disable debug output for the stem search, unless StemDebugOutput
+    /// has been explicitly enabled
     bool oldDebugValue = Morphology::DebugOutput;
-    Morphology::DebugOutput = false;
+    if( Morphology::StemDebugOutput == false )
+        Morphology::DebugOutput = false;
 
     /// cycle through each form
     foreach( LexicalStem *s, mStems )
@@ -252,7 +253,8 @@ QList<QPair<Allomorph, LexicalStem> > AbstractStemList::matchingAllomorphs(const
         }
     }
 
-    Morphology::DebugOutput = oldDebugValue;
+    if( Morphology::StemDebugOutput == false )
+        Morphology::DebugOutput = oldDebugValue;
 
     return list;
 }

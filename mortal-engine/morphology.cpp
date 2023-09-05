@@ -15,6 +15,7 @@
 #include "debug.h"
 
 bool Morphology::DebugOutput = false;
+bool Morphology::StemDebugOutput = false;
 
 Morphology::Morphology() : mIsOk(true)
 {

@@ -44,6 +44,7 @@ targetNamespace="https://www.adambaker.org/mortal-engine/tests">
     <xs:complexType name="test">
         <xs:attribute name="label" type="xs:string" use="optional"/>
         <xs:attribute name="debug" type="met:true-false-type" use="optional"/>
+        <xs:attribute name="stem-debug" type="met:true-false-type" use="optional"/>
     </xs:complexType>
 
     <xs:complexType name="transduction-test">
@@ -107,6 +108,7 @@ targetNamespace="https://www.adambaker.org/mortal-engine/tests">
                 <xs:attribute name="lang" type="xs:string" use="required"/>
                 <xs:attribute name="label" type="xs:string" use="optional"/>
                 <xs:attribute name="debug" type="met:true-false-type" use="optional"/>
+                <xs:attribute name="stem-debug" type="met:true-false-type" use="optional"/>
             </xs:extension>
         </xs:simpleContent>
     </xs:complexType>

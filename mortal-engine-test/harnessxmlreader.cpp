@@ -39,6 +39,7 @@ QString HarnessXmlReader::XML_TAG = "tag";
 QString HarnessXmlReader::XML_MORPHEMES = "morphemes";
 QString HarnessXmlReader::XML_LANG = "lang";
 QString HarnessXmlReader::XML_DEBUG = "debug";
+QString HarnessXmlReader::XML_STEM_DEBUG = "stem-debug";
 QString HarnessXmlReader::XML_INTERLINEAR_GLOSS_TEST = "interlinear-gloss-test";
 
 
@@ -144,8 +145,7 @@ void HarnessXmlReader::readTestFile(const QString &filename)
 RecognitionTest *HarnessXmlReader::readRecognitionTest(QXmlStreamReader &in, const TestSchema *schema)
 {
     RecognitionTest* test = new RecognitionTest(schema->morphology());
-    test->setLabel( in.attributes().value(XML_LABEL).toString() );
-    test->setShowDebug( in.attributes().value(XML_DEBUG).toString() == XML_TRUE );
+    test->setPropertiesFromAttributes(in);
 
     while(!in.atEnd() && !(in.tokenType() == QXmlStreamReader::EndElement && in.name() == XML_RECOGNITION_TEST ) )
     {
@@ -175,11 +175,7 @@ RecognitionTest *HarnessXmlReader::readRecognitionTest(QXmlStreamReader &in, con
 RecognitionTest *HarnessXmlReader::readQuickAcceptanceTest(QXmlStreamReader &in, const TestSchema *schema)
 {
     RecognitionTest* test = new RecognitionTest(schema->morphology());
-
-    if( in.attributes().hasAttribute(XML_LABEL) )
-        test->setLabel( in.attributes().value(XML_LABEL).toString() );
-    if( in.attributes().hasAttribute(XML_DEBUG) )
-        test->setShowDebug( in.attributes().value(XML_DEBUG).toString() == XML_TRUE );
+    test->setPropertiesFromAttributes(in);
 
     WritingSystem ws = schema->morphology()->writingSystem( in.attributes().value(XML_LANG).toString() );
     Form f = Form( ws, in.readElementText() );
@@ -192,11 +188,7 @@ RecognitionTest *HarnessXmlReader::readQuickAcceptanceTest(QXmlStreamReader &in,
 RecognitionTest *HarnessXmlReader::readQuickRejectionTest(QXmlStreamReader &in, const TestSchema *schema)
 {
     RecognitionTest* test = new RecognitionTest(schema->morphology());
-
-    if( in.attributes().hasAttribute(XML_LABEL) )
-        test->setLabel( in.attributes().value(XML_LABEL).toString() );
-    if( in.attributes().hasAttribute(XML_DEBUG) )
-        test->setShowDebug( in.attributes().value(XML_DEBUG).toString() == XML_TRUE );
+    test->setPropertiesFromAttributes(in);
 
     WritingSystem ws = schema->morphology()->writingSystem( in.attributes().value(XML_LANG).toString() );
     Form f = Form( ws, in.readElementText() );
@@ -209,8 +201,7 @@ RecognitionTest *HarnessXmlReader::readQuickRejectionTest(QXmlStreamReader &in, 
 TransductionTest *HarnessXmlReader::readTransductionTest(QXmlStreamReader &in, const TestSchema *schema)
 {
     TransductionTest* test = new TransductionTest(schema->morphology());
-    test->setLabel( in.attributes().value(XML_LABEL).toString() );
-    test->setShowDebug( in.attributes().value(XML_DEBUG).toString() == XML_TRUE );
+    test->setPropertiesFromAttributes(in);
 
     while(!in.atEnd() && !(in.tokenType() == QXmlStreamReader::EndElement && in.name() == XML_TRANSDUCTION_TEST ) )
     {
@@ -243,8 +234,7 @@ TransductionTest *HarnessXmlReader::readTransductionTest(QXmlStreamReader &in, c
 ParsingTest *HarnessXmlReader::readParsingTest(QXmlStreamReader &in, const TestSchema *schema)
 {
     ParsingTest* test = new ParsingTest(schema->morphology());
-    test->setLabel( in.attributes().value(XML_LABEL).toString() );
-    test->setShowDebug( in.attributes().value(XML_DEBUG).toString() == XML_TRUE );
+    test->setPropertiesFromAttributes(in);
 
     MorphemeSequence sequence;
 
@@ -288,9 +278,8 @@ ParsingTest *HarnessXmlReader::readParsingTest(QXmlStreamReader &in, const TestS
 StemReplacementTest *HarnessXmlReader::readStemReplacementTest(QXmlStreamReader &in, const TestSchema *schema)
 {
     StemReplacementTest* test = new StemReplacementTest(schema->morphology());
-    test->setLabel( in.attributes().value(XML_LABEL).toString() );
+    test->setPropertiesFromAttributes(in);
     test->setOutputWritingSystem( WritingSystem( in.attributes().value("output-lang").toString() ) );
-    test->setShowDebug( in.attributes().value(XML_DEBUG).toString() == XML_TRUE );
 
     Allomorph allomorph(Allomorph::Original);
 
@@ -342,8 +331,7 @@ StemReplacementTest *HarnessXmlReader::readStemReplacementTest(QXmlStreamReader 
 SuggestionTest *HarnessXmlReader::readSuggestionTest(QXmlStreamReader &in, const TestSchema *schema)
 {
     SuggestionTest* test = new SuggestionTest(schema->morphology());
-    test->setLabel( in.attributes().value(XML_LABEL).toString() );
-    test->setShowDebug( in.attributes().value(XML_DEBUG).toString() == XML_TRUE );
+    test->setPropertiesFromAttributes(in);
 
     QStringList outputList;
     QStringList stemList;
@@ -404,8 +392,7 @@ SuggestionTest *HarnessXmlReader::readSuggestionTest(QXmlStreamReader &in, const
 GenerationTest *HarnessXmlReader::readGenerationTest(QXmlStreamReader &in, const TestSchema *schema)
 {
     GenerationTest* test = new GenerationTest(schema->morphology());
-    test->setLabel( in.attributes().value(XML_LABEL).toString() );
-    test->setShowDebug( in.attributes().value(XML_DEBUG).toString() == XML_TRUE );
+    test->setPropertiesFromAttributes(in);
 
     while(!in.atEnd() && !(in.tokenType() == QXmlStreamReader::EndElement && in.name() == XML_GENERATION_TEST ) )
     {
@@ -439,8 +426,7 @@ GenerationTest *HarnessXmlReader::readGenerationTest(QXmlStreamReader &in, const
 GenerationTest *HarnessXmlReader::readQuickGenerationTest(QXmlStreamReader &in, const TestSchema *schema)
 {
     GenerationTest* test = new GenerationTest(schema->morphology());
-    test->setLabel( in.attributes().value(XML_LABEL).toString() );
-    test->setShowDebug( in.attributes().value(XML_DEBUG).toString() == XML_TRUE );
+    test->setPropertiesFromAttributes(in);
 
     test->setMorphologicalString( in.attributes().value( XML_MORPHEMES ).toString() );
     test->setLexicalStemId( in.attributes().value( XML_STEM ).toLongLong() );
@@ -457,8 +443,7 @@ GenerationTest *HarnessXmlReader::readQuickGenerationTest(QXmlStreamReader &in, 
 InterlinearGlossTest *HarnessXmlReader::readInterlinearGlossTest(QXmlStreamReader &in, const TestSchema *schema)
 {
     InterlinearGlossTest* test = new InterlinearGlossTest(schema->morphology());
-    test->setLabel( in.attributes().value(XML_LABEL).toString() );
-    test->setShowDebug( in.attributes().value(XML_DEBUG).toString() == XML_TRUE );
+    test->setPropertiesFromAttributes(in);
 
     while(!in.atEnd() && !(in.tokenType() == QXmlStreamReader::EndElement && in.name() == XML_GENERATION_TEST ) )
     {

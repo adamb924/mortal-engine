@@ -2,8 +2,11 @@
 
 #include "debug.h"
 #include "datatypes/morphemesequence.h"
+#include "harnessxmlreader.h"
 
-AbstractTest::AbstractTest(const Morphology *morphology) : mMorphology(morphology), mShowDebug(false)
+#include <QXmlStreamReader>
+
+AbstractTest::AbstractTest(const Morphology *morphology) : mMorphology(morphology), mShowDebug(false), mShowStemDebug(false)
 {
 
 }
@@ -21,24 +24,22 @@ bool AbstractTest::fails() const
 void AbstractTest::evaluate()
 {
     bool oldShowDebugValue = Morphology::DebugOutput;
+    bool oldShowStemDebugValue = Morphology::StemDebugOutput;
 
     Morphology::DebugOutput = mShowDebug;
+    Morphology::StemDebugOutput = mShowStemDebug;
     Debug::indentLevel = 0;
     Debug::atBeginning = true;
 
     runTest();
 
     Morphology::DebugOutput = oldShowDebugValue;
+    Morphology::StemDebugOutput = oldShowStemDebugValue;
 }
 
 void AbstractTest::setInput(const Form &input)
 {
     mInput = input;
-}
-
-void AbstractTest::setLabel(const QString &label)
-{
-    mLabel = label;
 }
 
 QString AbstractTest::summaryStub() const
@@ -185,12 +186,9 @@ QString AbstractTest::setToBarebonesString(const QSet<MorphemeSequence> forms) c
     }
 }
 
-bool AbstractTest::showDebug() const
+void AbstractTest::setPropertiesFromAttributes(QXmlStreamReader &in)
 {
-    return mShowDebug;
-}
-
-void AbstractTest::setShowDebug(bool showDebug)
-{
-    mShowDebug = showDebug;
+    mLabel = in.attributes().value(HarnessXmlReader::XML_LABEL).toString();
+    mShowDebug = in.attributes().value(HarnessXmlReader::XML_DEBUG).toString() == HarnessXmlReader::XML_TRUE;
+    mShowStemDebug = in.attributes().value(HarnessXmlReader::XML_STEM_DEBUG).toString() == HarnessXmlReader::XML_TRUE;
 }

@@ -41,15 +41,10 @@ public:
     //! \brief Sets the input
     void setInput(const Form &input);
 
-    //! \brief Sets the label of the test
-    void setLabel(const QString &label);
-
     //! \brief A simple success or failure message. Implementations of message() can use this method as a way of ensuring uniformity of presentation.
     QString summaryStub() const;
 
-    void setShowDebug(bool showDebug);
-
-    bool showDebug() const;
+    void setPropertiesFromAttributes(QXmlStreamReader &in);
 
 protected:
     //! \brief Converts a set of QString objects to a comma-delimited list
@@ -65,6 +60,7 @@ protected:
     Form mInput;
     QString mLabel;
     bool mShowDebug;
+    bool mShowStemDebug;
 };
 
 #endif // ABSTRACTTEST_H

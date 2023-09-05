@@ -88,6 +88,7 @@ public:
     QSet<AbstractStemList *> stemLists() const;
 
     static bool DebugOutput;
+    static bool StemDebugOutput;
 
     bool isOk() const;
 
