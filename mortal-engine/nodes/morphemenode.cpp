@@ -110,7 +110,7 @@ QList<Generation> MorphemeNode::generateFormsUsingThisNode(const Generation &gen
     {
         if( Morphology::DebugOutput )
         {
-            qInfo() << qPrintable("\t") << "Current node does not match the morpheme sequence constraint:" << label();
+            qInfo() << qPrintable("\t") << "Current node does not match the morpheme sequence constraint. The line above this one should have more information.";
         }
         return candidates;
     }

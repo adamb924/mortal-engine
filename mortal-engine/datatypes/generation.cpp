@@ -119,6 +119,10 @@ bool Generation::ableToAppend(const QString &label) const
 {
     bool mscHasNoMoreMorphemes = mMorphemeSequenceConstraint.hasNoMoreMorphemes();
     bool mscFailed = mMorphemeSequenceConstraint.currentMorpheme() != label;
+    if( Morphology::DebugOutput )
+    {
+        qInfo().noquote() << qPrintable("\t") << QString("MSC has no more morphemes: %1; MSC failed: %2 (expecting: %3, trying to append %4).").arg(mscHasNoMoreMorphemes).arg(mscFailed).arg(mMorphemeSequenceConstraint.currentMorpheme()).arg(label);
+    }
     if( mscHasNoMoreMorphemes || mscFailed )
         return false;
     else
