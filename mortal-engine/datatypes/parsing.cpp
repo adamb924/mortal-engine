@@ -742,7 +742,12 @@ MorphemeSequence Parsing::morphemeSequence() const
     QListIterator<ParsingStep> i(mSteps);
     while(i.hasNext())
     {
-        seq << i.next().label( writingSystem() );
+        /// 2023-09-23: this is a bug fix, but it's a logical error
+        /// in the data structure to assume that a ParsingStep
+        /// will have a label that is meaningful (i.e., it assumes
+        /// a single label, not a portmanteau)
+        const QString labelstr = i.next().label( writingSystem() );
+        seq.append(labelstr.split("]["));
     }
     return seq;
 }
