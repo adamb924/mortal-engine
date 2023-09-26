@@ -746,6 +746,9 @@ MorphemeSequence Parsing::morphemeSequence() const
         /// in the data structure to assume that a ParsingStep
         /// will have a label that is meaningful (i.e., it assumes
         /// a single label, not a portmanteau)
+        /// TODO: ParsingStep::label() is not used that much. You
+        /// need to be careful in rewriting Parsing::hasPortmanteauClash
+        /// but otherwise it shouldn't be difficult to remove the method.
         const QString labelstr = i.next().label( writingSystem() );
         seq.append(labelstr.split("]["));
     }
