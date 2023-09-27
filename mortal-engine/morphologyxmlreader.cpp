@@ -168,14 +168,14 @@ void MorphologyXmlReader::populateNodeHashes()
 {
     foreach(AbstractNode * n, mMorphology->mNodes)
     {
-        mMorphology->mNodesByLabel.insert( n->label(), n );
+        mMorphology->mNodesByLabel.insert( n->label().toString(), n );
         if( n->isMorphemeNode() )
         {
-            mMorphology->mMorphemeNodesByLabel.insert( n->label(), dynamic_cast<MorphemeNode*>(n) );
+            mMorphology->mMorphemeNodesByLabel.insert( n->label().toString(), dynamic_cast<MorphemeNode*>(n) );
         }
         if( n->isModel() )
         {
-            mMorphology->mMorphologicalModelsByLabel.insert( n->label(), dynamic_cast<MorphologicalModel*>(n) );
+            mMorphology->mMorphologicalModelsByLabel.insert( n->label().toString(), dynamic_cast<MorphologicalModel*>(n) );
         }
     }
 }

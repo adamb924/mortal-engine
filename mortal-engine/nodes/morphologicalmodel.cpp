@@ -71,7 +71,7 @@ QString MorphologicalModel::summary(const AbstractNode *doNotFollow) const
     Debug dbg(&dbgString);
     Debug::atBeginning = false;
 
-    dbg << QString("MorphologicalModel[%1] (").arg(label()) << Debug::endl << Debug::endl;
+    dbg << QString("MorphologicalModel[%1] (").arg(label().toString()) << Debug::endl << Debug::endl;
     dbg.indent();
     if( mInitialNode == nullptr )
     {

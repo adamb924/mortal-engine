@@ -150,7 +150,7 @@ bool MutuallyExclusiveMorphemes::matchesElement(QXmlStreamReader &in)
     return in.isStartElement() && in.name() == elementName();
 }
 
-const AbstractNode *MutuallyExclusiveMorphemes::followingNodeHavingLabel(const QString &targetLabel) const
+const AbstractNode *MutuallyExclusiveMorphemes::followingNodeHavingLabel(const MorphemeLabel &targetLabel) const
 {
     /// NB: this will just return the first one, not all possible ones
     foreach(MorphemeNode * node, mMorphemes)
@@ -197,7 +197,7 @@ QString MutuallyExclusiveMorphemes::summary(const AbstractNode *doNotFollow) con
 
     dbg << "MutuallyExclusiveMorphemes(" << newline;
     dbg.indent();
-    dbg << "Label: " << label() << newline;
+    dbg << "Label: " << label().toString() << newline;
     dbg << "ID: " << id() << newline;
     dbg << "Type: " << AbstractNode::typeToString(type()) << newline;
     dbg << "Optional: " << (optional() ? "true" : "false" ) << newline;

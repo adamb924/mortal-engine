@@ -62,14 +62,14 @@ QList<Parsing> MorphemeNode::parsingsUsingThisNode(const Parsing &parsing, Parsi
 
     if( Morphology::DebugOutput )
     {
-        qInfo().noquote() << "In " << label() << "with" << parsing.intermediateSummary();
+        qInfo().noquote() << "In " << label().toString() << "with" << parsing.intermediateSummary();
     }
 
     QSet<Allomorph> matches = matchingAllomorphs(parsing);
 
     if( Morphology::DebugOutput )
     {
-        qInfo().noquote() << label() << " has " << matches.count() << " allomorph matches.";
+        qInfo().noquote() << label().toString() << " has " << matches.count() << " allomorph matches.";
     }
 
     QSetIterator<Allomorph> matchesIterator( matches );
@@ -86,7 +86,7 @@ QList<Parsing> MorphemeNode::parsingsUsingThisNode(const Parsing &parsing, Parsi
         {
             if( Morphology::DebugOutput )
             {
-                qInfo().noquote() << "Moving from" << debugIdentifier() << " to " << next(a, p.writingSystem())->label() << "having appended" << a.oneLineSummary();
+                qInfo().noquote() << "Moving from" << debugIdentifier() << " to " << next(a, p.writingSystem())->label().toString() << "having appended" << a.oneLineSummary();
             }
             candidates.append( next(a, p.writingSystem())->possibleParsings( p, flags ) );
             MAYBE_RETURN_EARLY
@@ -237,7 +237,7 @@ QList<Generation> MorphemeNode::generateFormsWithAllomorphs(const Generation &ge
         {
             if( Morphology::DebugOutput )
             {
-                qInfo().noquote() << "Moving from" << debugIdentifier() << " to " << next(a, g.writingSystem())->label() << "having appended" << a.oneLineSummary();
+                qInfo().noquote() << "Moving from" << debugIdentifier() << " to " << next(a, g.writingSystem())->label().toString() << "having appended" << a.oneLineSummary();
             }
             candidates.append( next(a, g.writingSystem())->generateForms(g) );
         }
@@ -482,7 +482,7 @@ QString MorphemeNode::summaryWithoutFollowing() const
 
     dbg << "MorphemeNode(" << newline;
     dbg.indent();
-    dbg << "Label: " << label() << newline;
+    dbg << "Label: " << label().toString() << newline;
     dbg << "ID: " << id() << newline;
     dbg << "Type: " << AbstractNode::typeToString(type()) << newline;
     dbg << "Optional: " << (optional() ? "true" : "false" ) << newline;

@@ -218,7 +218,7 @@ void Parsing::serialize(QXmlStreamWriter &out, bool includeGlosses) const
     out.writeAttribute("text",mForm.text());
     out.writeAttribute("status", statusToString(mStatus));
     out.writeAttribute("position", QString("%1").arg( mPosition ) );
-    out.writeAttribute("morphological-model", mMorphologicalModel->label() );
+    out.writeAttribute("morphological-model", mMorphologicalModel->label().toString() );
     if( isCompleted() )
         /// only write further information if the parsing is actually completed
         /// this function should not be used for any other parsing stages
@@ -246,7 +246,7 @@ void Parsing::serialize(QDomElement &out, bool includeGlosses) const
     out.setAttribute("text",mForm.text());
     out.setAttribute("status", statusToString(mStatus));
     out.setAttribute("position", QString("%1").arg( mPosition ) );
-    out.setAttribute("morphological-model", mMorphologicalModel->label() );
+    out.setAttribute("morphological-model", mMorphologicalModel->label().toString() );
 
     if( isCompleted() )
         /// only write further information if the parsing is actually completed
@@ -563,15 +563,21 @@ bool Parsing::isGeneration() const
     return false;
 }
 
-bool Parsing::hasPortmanteauClash(const QStringList &morphemes, const WritingSystem & ws) const
+bool Parsing::hasPortmanteauClash(const MorphemeSequence &morphemes, const WritingSystem & ws) const
 {
+    /// iterate over mSteps
+    /// start at zero and go up to the last index that could match \a morphemes
     for(int i=0; i <= (mSteps.count() - morphemes.count()); i++)
     {
         bool matches = true;
         for(int j=0; j < morphemes.count(); j++)
         {
+            /// in the conditional below, note that we use first()
+            /// because the first condition establishes that the
+            /// allomorph doesn't have a portmanteau; so it will only
+            /// have one
             if( !mSteps.at(i+j).allomorph().hasPortmanteau(ws)
-                    && mSteps.at(i+j).label(ws) == morphemes.at(j) )
+                && mSteps.at(i+j).morphemes(ws).first() == morphemes.at(j) )
             {
                 continue;
             }
@@ -589,13 +595,12 @@ bool Parsing::hasPortmanteauClash(const QStringList &morphemes, const WritingSys
     return false;
 }
 
-bool Parsing::hasPortmanteauClash(const QMultiHash<WritingSystem, QStringList> &portmanteaux, const WritingSystem & ws) const
+bool Parsing::hasPortmanteauClash(const QMultiHash<WritingSystem, MorphemeSequence> &portmanteaux, const WritingSystem & ws) const
 {
-
-    QListIterator<QStringList> i( portmanteaux.values(ws) );
+    QListIterator<MorphemeSequence> i( portmanteaux.values(ws) );
     while(i.hasNext())
     {
-        QStringList p = i.next();
+        MorphemeSequence p = i.next();
         if( hasPortmanteauClash( p, ws ) )
         {
             return true;
@@ -742,15 +747,7 @@ MorphemeSequence Parsing::morphemeSequence() const
     QListIterator<ParsingStep> i(mSteps);
     while(i.hasNext())
     {
-        /// 2023-09-23: this is a bug fix, but it's a logical error
-        /// in the data structure to assume that a ParsingStep
-        /// will have a label that is meaningful (i.e., it assumes
-        /// a single label, not a portmanteau)
-        /// TODO: ParsingStep::label() is not used that much. You
-        /// need to be careful in rewriting Parsing::hasPortmanteauClash
-        /// but otherwise it shouldn't be difficult to remove the method.
-        const QString labelstr = i.next().label( writingSystem() );
-        seq.append(labelstr.split("]["));
+        seq << i.next().morphemes( writingSystem() );
     }
     return seq;
 }
@@ -907,27 +904,27 @@ QString Parsing::labelSummary( const WritingSystem & ws ) const
 {
     if( ws.isNull() )
     {
-        return stringSummary( ParsingStep::MorphemeLabel, WritingSystem(), ParsingStep::MorphemeLabel, WritingSystem(), "[", "]", "" );
+        return stringSummary( ParsingStep::MorphemeLabelType, WritingSystem(), ParsingStep::MorphemeLabelType, WritingSystem(), "[", "]", "" );
     }
     else
     {
-        return stringSummary( ParsingStep::MorphemeForm, ws, ParsingStep::MorphemeLabel, WritingSystem(), "[", "]", "" );
+        return stringSummary( ParsingStep::MorphemeFormType, ws, ParsingStep::MorphemeLabelType, WritingSystem(), "[", "]", "" );
     }
 }
 
 QString Parsing::morphemeDelimitedSummary(const WritingSystem &ws) const
 {
-    return stringSummary( ParsingStep::MorphemeForm, ws, ParsingStep::MorphemeForm, ws, "", "", "-" );
+    return stringSummary( ParsingStep::MorphemeFormType, ws, ParsingStep::MorphemeFormType, ws, "", "", "-" );
 }
 
 QString Parsing::hypotheticalStyleSummary(const WritingSystem &ws) const
 {
-    return stringSummary( ParsingStep::MorphemeForm, ws, ParsingStep::MorphemeLabel, WritingSystem(), "[", "]", "" );
+    return stringSummary( ParsingStep::MorphemeFormType, ws, ParsingStep::MorphemeLabelType, WritingSystem(), "[", "]", "" );
 }
 
 QString Parsing::interlinearStyleSummary(const WritingSystem &ws) const
 {
-    return stringSummary( ParsingStep::MorphemeGloss, ws, ParsingStep::MorphemeGloss, ws, "", "", "-" );
+    return stringSummary( ParsingStep::MorphemeGlossType, ws, ParsingStep::MorphemeGlossType, ws, "", "", "-" );
 }
 
 QString Parsing::stringSummary(ParsingStep::SummaryType stemType, const WritingSystem & stemWs, ParsingStep::SummaryType affixType, const WritingSystem & affixWs, const QString & beforeMorpheme, const QString & afterMorpheme, const QString & betweenMorphemes) const
@@ -1014,7 +1011,7 @@ QString Parsing::summary() const
     dbg << "Status: " << statusToString(mStatus) << "\n";
     dbg << "Position: " << mPosition << "\n";
     dbg << "Remainder: " << mForm.text().mid(mPosition) << "\n";
-    dbg << "Model: " << (mMorphologicalModel == nullptr ? "null" : mMorphologicalModel->label()) << "\n";
+    dbg << "Model: " << (mMorphologicalModel == nullptr ? "null" : mMorphologicalModel->label().toString()) << "\n";
 
     dbg << "Steps(s) (n=" << mSteps.length() << ") (\n";
 
@@ -1022,7 +1019,7 @@ QString Parsing::summary() const
     while(i.hasNext())
     {
         ParsingStep ps = i.next();
-        dbg << ps.node()->label() << ", " << ps.allomorph().focusedSummary( writingSystem() ) << "\n";
+        dbg << ps.node()->label().toString() << ", " << ps.allomorph().focusedSummary( writingSystem() ) << "\n";
     }
     dbg << "),\n";
     dbg << "Local Constraint(s) (n=" << mLocalConstraints.size() << ") (\n";

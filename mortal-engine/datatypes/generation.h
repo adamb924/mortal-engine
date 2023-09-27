@@ -30,7 +30,7 @@ public:
 
     bool isGeneration() const override;
 
-    bool ableToAppend(const QString & label) const;
+    bool ableToAppend(const MorphemeLabel &label) const;
 
     QString intermediateSummary() const override;
 

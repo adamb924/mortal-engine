@@ -19,7 +19,7 @@ public:
     QList<Parsing> parsingsUsingThisNode( const Parsing & parsing, Parsing::Flags flags) const override;
     QList<Generation> generateFormsUsingThisNode( const Generation & generation ) const override;
 
-    const AbstractNode *followingNodeHavingLabel(const QString & targetLabel) const override;
+    const AbstractNode *followingNodeHavingLabel(const MorphemeLabel & targetLabel) const override;
     bool checkHasOptionalCompletionPath() const override;
 
     static QString elementName();

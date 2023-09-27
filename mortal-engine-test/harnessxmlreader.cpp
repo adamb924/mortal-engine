@@ -258,7 +258,7 @@ ParsingTest *HarnessXmlReader::readParsingTest(QXmlStreamReader &in, const TestS
             }
             else if( in.name() == XML_LABEL )
             {
-                sequence.append( in.readElementText() );
+                sequence.append( MorphemeLabel( in.readElementText() ) );
             }
         }
         else if( in.tokenType() == QXmlStreamReader::EndElement )

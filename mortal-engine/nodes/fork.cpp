@@ -121,7 +121,7 @@ bool Fork::matchesElement(QXmlStreamReader &in)
     return in.isStartElement() && in.name() == elementName();
 }
 
-const AbstractNode *Fork::followingNodeHavingLabel(const QString &targetLabel) const
+const AbstractNode *Fork::followingNodeHavingLabel(const MorphemeLabel &targetLabel) const
 {
     /// NB: this will just return the first one, not all possible ones
     foreach(Path * p, mPaths)
@@ -193,7 +193,7 @@ QString Fork::summary(const AbstractNode *doNotFollow) const
 
     dbg << "Fork(" << newline;
     dbg.indent();
-    dbg << "Label: " << label() << newline;
+    dbg << "Label: " << label().toString() << newline;
     dbg << "ID: " << id() << newline;
     dbg << "Type: " << AbstractNode::typeToString(type()) << newline;
     dbg << "Optional: " << (optional() ? "true" : "false" ) << newline;

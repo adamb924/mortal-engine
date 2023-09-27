@@ -31,7 +31,7 @@ public:
     static AbstractNode *readFromXml(QXmlStreamReader &in, MorphologyXmlReader * morphologyReader, const MorphologicalModel * model);
     static bool matchesElement(QXmlStreamReader &in);
 
-    const AbstractNode *followingNodeHavingLabel(const QString & targetLabel) const override;
+    const AbstractNode *followingNodeHavingLabel(const MorphemeLabel & targetLabel) const override;
 
     void addConstraintsToAllMorphemes(const QSet<const AbstractConstraint *> &constraints);
 

@@ -34,7 +34,7 @@ void AbstractPath::setNext(AbstractNode *nextNode)
     AbstractNode::setNext(nextNode);
 }
 
-const AbstractNode *AbstractPath::followingNodeHavingLabel(const QString &targetLabel) const
+const AbstractNode *AbstractPath::followingNodeHavingLabel(const MorphemeLabel &targetLabel) const
 {
     return mInitialNode->followingNodeHavingLabel(targetLabel);
 }

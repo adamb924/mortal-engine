@@ -71,7 +71,7 @@ QList<Parsing> Jump::parsingsUsingThisNode(const Parsing &parsing, Parsing::Flag
         p.setNextNodeRequired( mTargetNodeRequired );
         if( Morphology::DebugOutput )
         {
-            qInfo() << "\tJumping to:" << mNodeTarget->label() << mNodeTarget->id();
+            qInfo() << "\tJumping to:" << mNodeTarget->label().toString() << mNodeTarget->id();
         }
         return mNodeTarget->possibleParsings( p, flags );
     }
@@ -79,7 +79,7 @@ QList<Parsing> Jump::parsingsUsingThisNode(const Parsing &parsing, Parsing::Flag
     {
         if( Morphology::DebugOutput )
         {
-            qInfo() << "\tJump not permitted. To:" << mNodeTarget->label() << mNodeTarget->id() << "Number of jumps:" << parsing.jumpCounter(this) << "out of" << Parsing::MAXIMUM_JUMPS;
+            qInfo() << "\tJump not permitted. To:" << mNodeTarget->label().toString() << mNodeTarget->id() << "Number of jumps:" << parsing.jumpCounter(this) << "out of" << Parsing::MAXIMUM_JUMPS;
         }
         return QList<Parsing>();
     }
@@ -180,7 +180,7 @@ bool Jump::matchesElement(QXmlStreamReader &in)
     return in.isStartElement() && in.name() == elementName();
 }
 
-const AbstractNode *Jump::followingNodeHavingLabel(const QString &targetLabel) const
+const AbstractNode *Jump::followingNodeHavingLabel(const MorphemeLabel &targetLabel) const
 {
     /// if the target node is in the same model as the current node
     /// we've got a circularity situation. in that case, just return

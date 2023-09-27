@@ -58,7 +58,7 @@ QString LexicalStemInsertResult::summary() const
     while( iter.hasNext() )
     {
         iter.next();
-        dbg << iter.key()->label() << ", " << ( iter.value() ? "true" : "false" ) << "\n";
+        dbg << iter.key()->label().toString() << ", " << ( iter.value() ? "true" : "false" ) << "\n";
     }
 
     dbg << ")\n";

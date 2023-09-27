@@ -31,6 +31,7 @@ SOURCES += \
     constraints/ignoreflag.cpp \
     constraints/precedingnodeconstraint.cpp \
     constraints/satisfiedcondition.cpp \
+    datatypes/morphemelabel.cpp \
     datatypes/morphemesequence.cpp \
     datatypes/portmanteau.cpp \
     debug.cpp \
@@ -91,6 +92,7 @@ HEADERS += \
     constraints/ignoreflag.h \
     constraints/precedingnodeconstraint.h \
     constraints/satisfiedcondition.h \
+    datatypes/morphemelabel.h \
     datatypes/morphemesequence.h \
     datatypes/portmanteau.h \
     debug.h \

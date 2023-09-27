@@ -175,8 +175,8 @@ public:
 
     /// return true if the parsing contains, as a sequence, any of the morpheme sequences
     /// represented by the given portmanteau list; otherwise returns false
-    bool hasPortmanteauClash(const QStringList & morphemes, const WritingSystem & ws ) const;
-    bool hasPortmanteauClash(const QMultiHash<WritingSystem, QStringList> &portmanteaux, const WritingSystem & ws ) const;
+    bool hasPortmanteauClash(const MorphemeSequence &morphemes, const WritingSystem & ws ) const;
+    bool hasPortmanteauClash(const QMultiHash<WritingSystem, MorphemeSequence> &portmanteaux, const WritingSystem & ws ) const;
 
     void incrementJumpCounter(const Jump * jump);
     bool jumpPermitted(const Jump * jump) const;

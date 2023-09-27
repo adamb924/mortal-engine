@@ -30,7 +30,7 @@ bool PrecedingNodeConstraint::matchesThisConstraint(const Parsing *parsing, cons
     case PrecedingNodeConstraint::Id:
         return parsing->steps().constLast().lastNodeMatchesId( mIdentifierString );
     case PrecedingNodeConstraint::Label:
-        return parsing->steps().constLast().lastNodeMatchesLabel( mIdentifierString );
+        return parsing->steps().constLast().lastNodeMatchesLabel( MorphemeLabel(mIdentifierString) );
     }
     return false;
 }

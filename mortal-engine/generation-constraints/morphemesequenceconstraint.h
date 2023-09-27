@@ -18,8 +18,8 @@ public:
     MorphemeSequenceConstraint(const MorphemeSequenceConstraint & other);
     MorphemeSequenceConstraint &operator=(const MorphemeSequenceConstraint & other);
 
-    void addMorpheme( const QString & morphemeName );
-    QString currentMorpheme() const;
+    void addMorpheme( const MorphemeLabel & label );
+    MorphemeLabel currentMorpheme() const;
     void removeCurrentMorpheme(int n = 1);
     bool hasNoMoreMorphemes() const;
     int remainingMorphemes() const;

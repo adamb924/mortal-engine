@@ -1,18 +1,20 @@
 #ifndef MORPHEMESEQUENCE_H
 #define MORPHEMESEQUENCE_H
 
-#include <QStringList>
+#include <QList>
+#include "morphemelabel.h"
 
 #include "mortal-engine_global.h"
 
-class MORTAL_ENGINE_EXPORT MorphemeSequence : public QStringList
+class MORTAL_ENGINE_EXPORT MorphemeSequence : public QList<MorphemeLabel>
 {
 public:
     MorphemeSequence();
-    explicit MorphemeSequence(const QStringList & list);
+    explicit MorphemeSequence(const QList<MorphemeLabel> & list);
 
-    MorphemeSequence operator<<(const QString & newLabel);
-    MorphemeSequence operator+(const QString & newLabel) const;
+    MorphemeSequence operator<<(const MorphemeLabel & newLabel);
+    MorphemeSequence operator<<(const MorphemeSequence & newSequence);
+    MorphemeSequence operator+(const MorphemeLabel & newLabel) const;
 
     bool isEmpty() const;
 

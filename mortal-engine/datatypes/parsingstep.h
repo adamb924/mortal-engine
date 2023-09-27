@@ -14,7 +14,7 @@ class Morphology;
 class MORTAL_ENGINE_EXPORT ParsingStep
 {
 public:
-    enum SummaryType { MorphemeGloss, MorphemeForm, MorphemeLabel };
+    enum SummaryType { MorphemeGlossType, MorphemeFormType, MorphemeLabelType };
 
     ParsingStep(const AbstractNode* node, const Allomorph & allomorph);
     ParsingStep(const AbstractNode* node, const Allomorph & allomorph, const LexicalStem &lexicalStem);
@@ -22,7 +22,7 @@ public:
     const AbstractNode *node() const;
     const AbstractNode *lastNode(const WritingSystem &ws) const;
     bool lastNodeMatchesId(const QString & id) const;
-    bool lastNodeMatchesLabel(const QString & label) const;
+    bool lastNodeMatchesLabel(const class MorphemeLabel & label) const;
 
     Allomorph allomorph() const;
 
@@ -46,7 +46,7 @@ public:
     static ParsingStep readFromXml(QDomElement parsing, const Morphology * morphology, bool &ok);
     static QList<ParsingStep> readListFromXml(QDomElement list, const Morphology * morphology, bool &ok);
 
-    QString label(const WritingSystem &ws) const;
+    MorphemeSequence morphemes(const WritingSystem &ws) const;
 
     void setIsStem(const bool &isStem);
 

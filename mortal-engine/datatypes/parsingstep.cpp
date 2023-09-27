@@ -55,7 +55,7 @@ bool ParsingStep::lastNodeMatchesId(const QString &id) const
     return false;
 }
 
-bool ParsingStep::lastNodeMatchesLabel(const QString &label) const
+bool ParsingStep::lastNodeMatchesLabel(const MorphemeLabel &label) const
 {
     QSetIterator<WritingSystem> wsIter( mAllomorph.writingSystems() );
     while(wsIter.hasNext())
@@ -155,33 +155,33 @@ QString ParsingStep::summaryPortion(ParsingStep::SummaryType type, const Writing
     {
         switch(type)
         {
-        case ParsingStep::MorphemeForm:
+        case ParsingStep::MorphemeFormType:
             return mAllomorph.form( summaryDisplayWritingSystem ).text();
-        case ParsingStep::MorphemeGloss:
+        case ParsingStep::MorphemeGlossType:
             return mLexicalStem.gloss(summaryDisplayWritingSystem).text();
-        case ParsingStep::MorphemeLabel:
+        case ParsingStep::MorphemeLabelType:
             if( mAllomorph.hasPortmanteau(parsingWritingSystem) )
-                return mAllomorph.portmanteau().label();
+                return mAllomorph.portmanteau().morphemes().toString();
             else
-                return mNode->label();
+                return mNode->label().toString();
         }
     }
     else /// affix
     {
         switch(type)
         {
-        case ParsingStep::MorphemeForm:
+        case ParsingStep::MorphemeFormType:
             return mAllomorph.form( summaryDisplayWritingSystem ).text();
-        case ParsingStep::MorphemeGloss:
+        case ParsingStep::MorphemeGlossType:
             if( mAllomorph.hasPortmanteau(parsingWritingSystem) )
                 return mAllomorph.portmanteau().morphemeGlosses(summaryDisplayWritingSystem, betweenMorphemes);
             else
                 return mNode->gloss(summaryDisplayWritingSystem).text();
-        case ParsingStep::MorphemeLabel:
+        case ParsingStep::MorphemeLabelType:
             if( mAllomorph.hasPortmanteau(parsingWritingSystem) )
-                return mAllomorph.portmanteau().label();
+                return mAllomorph.portmanteau().morphemes().toString();
             else
-                return mNode->label();
+                return mNode->label().toString();
         }
     }
     return "";
@@ -377,15 +377,15 @@ QList<ParsingStep> ParsingStep::readListFromXml(QDomElement list, const Morpholo
     return parsingSteps;
 }
 
-QString ParsingStep::label(const WritingSystem & ws) const
+MorphemeSequence ParsingStep::morphemes(const WritingSystem & ws) const
 {
     if( mAllomorph.hasPortmanteau(ws) )
     {
-        return mAllomorph.portmanteau().label();
+        return mAllomorph.portmanteau().morphemes();
     }
     else
     {
-        return mNode->label();
+        return MorphemeSequence() << mNode->label();
     }
 }
 

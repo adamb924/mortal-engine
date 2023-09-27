@@ -94,7 +94,7 @@ QString Path::summary(const AbstractNode *doNotFollow) const
     QString dbgString;
     Debug dbg(&dbgString);
 
-    dbg << "Path[" << label() << "] (" << newline;
+    dbg << "Path[" << label().toString() << "] (" << newline;
     dbg.indent();
     dbg << "Optional: " << (optional() ? "true" : "false" ) << newline;
     dbg << "Has optional completion path: " << ( hasPathToEnd() ? "true" : "false" ) << newline;
@@ -106,7 +106,7 @@ QString Path::summary(const AbstractNode *doNotFollow) const
     {
         dbg << mInitialNode->summary( next() ) << newline;
     }
-    dbg << ") (End of " << label() << ")";
+    dbg << ") (End of " << label().toString() << ")";
     dbg.unindent();
 
     return dbgString;

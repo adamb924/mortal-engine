@@ -152,7 +152,7 @@ QList<Parsing> AbstractStemList::parsingsUsingThisNode(const Parsing &parsing, P
     }
     if( Morphology::DebugOutput )
     {
-        qInfo() << label() << "has" << allomorphMatches.count() << "candidate stem matches.";
+        qInfo() << label().toString() << "has" << allomorphMatches.count() << "candidate stem matches.";
     }
 
     QListIterator< QPair<Allomorph, LexicalStem> > ai(allomorphMatches);
@@ -271,7 +271,7 @@ QString AbstractStemList::summary(const AbstractNode *doNotFollow) const
     Debug::atBeginning = false;
     dbg << "StemList(" << Debug::endl;
     dbg.indent();
-    dbg << "Label: " << label() << Debug::endl;
+    dbg << "Label: " << label().toString() << Debug::endl;
     dbg << "Type: " << AbstractNode::typeToString(type()) << Debug::endl;
     dbg << "Optional: " << (optional() ? "true" : "false" ) << Debug::endl;
     dbg << "Has optional completion path: " << ( hasPathToEnd() ? "true" : "false" ) << Debug::endl;

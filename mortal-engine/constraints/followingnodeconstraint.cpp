@@ -32,7 +32,7 @@ bool FollowingNodeConstraint::matchesThisConstraint(const Parsing *parsing, cons
     case FollowingNodeConstraint::Id:
         return node->id() == mIdentifierString;
     case FollowingNodeConstraint::Label:
-        return node->label() == mIdentifierString;
+        return node->label() == MorphemeLabel(mIdentifierString);
     }
     return true;
 }

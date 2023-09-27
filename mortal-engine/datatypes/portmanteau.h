@@ -1,6 +1,7 @@
 #ifndef PORTMANTEAU_H
 #define PORTMANTEAU_H
 
+#include "datatypes/morphemesequence.h"
 #include "mortal-engine_global.h"
 
 class MorphemeNode;
@@ -30,8 +31,6 @@ public:
 
     const AbstractNode *next() const;
 
-    QString label() const;
-
     /**
      * @brief Returns a string representation of the Form for logging purposes.
      * 
@@ -45,13 +44,13 @@ public:
 
     int count() const;
 
-    QStringList morphemes() const;
+    MorphemeSequence morphemes() const;
 
 private:
     Portmanteau::Status mStatus;
     QString mInitializationString;
     const MorphemeNode * mParent;
-    QStringList mMorphemes;
+    MorphemeSequence mMorphemes;
     QList<const MorphemeNode*> mMorphemeNodes;
 };
 

@@ -14,7 +14,7 @@ public:
 
     void setNext(AbstractNode *nextNode) override;
 
-    const AbstractNode *followingNodeHavingLabel(const QString & targetLabel) const override;
+    const AbstractNode *followingNodeHavingLabel(const MorphemeLabel &targetLabel) const override;
 
     bool checkHasOptionalCompletionPath() const override;
 

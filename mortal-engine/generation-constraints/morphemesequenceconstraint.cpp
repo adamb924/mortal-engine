@@ -30,15 +30,15 @@ MorphemeSequenceConstraint &MorphemeSequenceConstraint::operator=(const Morpheme
     return *this;
 }
 
-void MorphemeSequenceConstraint::addMorpheme(const QString &morphemeName)
+void MorphemeSequenceConstraint::addMorpheme(const MorphemeLabel &label)
 {
-    mMorphemeNames.append(morphemeName);
+    mMorphemeNames.append(label);
 }
 
-QString MorphemeSequenceConstraint::currentMorpheme() const
+MorphemeLabel MorphemeSequenceConstraint::currentMorpheme() const
 {
     if( mMorphemeNames.isEmpty() )
-        return QString();
+        return MorphemeLabel();
     else
         return mMorphemeNames.first();
 }
@@ -108,7 +108,7 @@ QString MorphemeSequenceConstraint::summary() const
     QString dbgString;
     QTextStream dbg(&dbgString);
 
-    dbg << "MorphemeSequenceConstraint ([" << mMorphemeNames.join("], [") << "])";
+    dbg << QString("MorphemeSequenceConstraint (%1)").arg( mMorphemeNames.toString() );
 
     return dbgString;
 }

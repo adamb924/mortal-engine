@@ -36,7 +36,7 @@ QList<Generation> CopyNode::generateFormsUsingThisNode(const Generation &generat
     return mCopy->generateForms(generation);
 }
 
-const AbstractNode *CopyNode::followingNodeHavingLabel(const QString &targetLabel) const
+const AbstractNode *CopyNode::followingNodeHavingLabel(const MorphemeLabel &targetLabel) const
 {
     return mCopy->followingNodeHavingLabel(targetLabel);
 }

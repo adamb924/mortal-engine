@@ -170,12 +170,12 @@ AbstractNode::~AbstractNode()
 
 }
 
-QString AbstractNode::label() const
+MorphemeLabel AbstractNode::label() const
 {
     return mLabel;
 }
 
-void AbstractNode::setLabel(const QString &label)
+void AbstractNode::setLabel(const MorphemeLabel &label)
 {
     mLabel = label;
 }
@@ -248,7 +248,7 @@ QString AbstractNode::summary(const AbstractNode *doNotFollow) const
     QTextStream dbg(&dbgString);
 
     dbg << "AbstractNode(";
-    dbg << "Label: " << mLabel << ", ";
+    dbg << "Label: " << mLabel.toString() << ", ";
     dbg << "Type: " << AbstractNode::typeToString(mType) << ", ";
     dbg << "Optional: " << (mOptional ? "true" : "false" ) << ")";
 
@@ -263,7 +263,7 @@ QString AbstractNode::oneLineSummary() const
 void AbstractNode::serialize(QXmlStreamWriter &out) const
 {
     out.writeStartElement("node");
-    out.writeAttribute("label", mLabel);
+    out.writeAttribute("label", mLabel.toString());
     out.writeAttribute("type", typeToString(mType) );
     if( ! mId.isEmpty() )
     {
@@ -275,7 +275,7 @@ void AbstractNode::serialize(QXmlStreamWriter &out) const
 
 void AbstractNode::serialize(QDomElement &out) const
 {
-    out.setAttribute("label", mLabel);
+    out.setAttribute("label", mLabel.toString());
     out.setAttribute("type", typeToString(mType) );
     if( ! mId.isEmpty() )
     {
@@ -288,7 +288,7 @@ void AbstractNode::readInitialNodeAttributes(QXmlStreamReader &in, MorphologyXml
 {
     QXmlStreamAttributes attr = in.attributes();
     if( attr.hasAttribute("label") )
-        setLabel( attr.value("label").toString() );
+        setLabel( MorphemeLabel( attr.value("label").toString() ) );
 
     if( attr.hasAttribute("id") )
     {
@@ -326,7 +326,7 @@ void AbstractNode::setNextNodeIfFinalNode(AbstractNode *nextNode)
     }
 }
 
-const AbstractNode *AbstractNode::followingNodeHavingLabel(const QString &targetLabel) const
+const AbstractNode *AbstractNode::followingNodeHavingLabel(const MorphemeLabel &targetLabel) const
 {
     if( label() == targetLabel )
     {
@@ -420,9 +420,9 @@ QHash<WritingSystem, Form> AbstractNode::glosses() const
 QString AbstractNode::debugIdentifier() const
 {
     if( id().isEmpty() )
-        return label();
+        return label().toString();
     else
-        return QString("%1[%2]").arg( label(), id() );
+        return QString("%1[%2]").arg( label().toString(), id() );
 }
 
 bool AbstractNode::hasPathToEnd() const

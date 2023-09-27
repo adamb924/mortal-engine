@@ -77,7 +77,7 @@ private:
 
     QList<Allomorph> mAllomorphs;
     QList<CreateAllomorphs> mCreateAllomorphs;
-    QMultiHash<WritingSystem, QStringList> mPortmanteauSequences;
+    QMultiHash<WritingSystem, MorphemeSequence> mPortmanteauSequences;
 };
 
 #endif // MORPHEMENODE_H

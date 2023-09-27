@@ -47,7 +47,7 @@ void MorphologyChecker::duplicateAllomorphFormCheck(QTextStream &out, bool origi
             int ct = allForms.count(f);
             if( ct > 1 )
             {
-                out << node->label() << ":\t" << ct << " duplicate allomorph forms: " << f.summary() << Qt::endl;
+                out << node->label().toString() << ":\t" << ct << " duplicate allomorph forms: " << f.summary() << Qt::endl;
                 overallCount++;
                 continue;
             }
@@ -96,7 +96,7 @@ void MorphologyChecker::allomorphConstraintCheck(QTextStream &out, bool original
                         bool haveOverlappingWritingSystems = allomorphs.at(i).writingSystems().intersects( allomorphs.at(j).writingSystems() );
                         if( isSubset && hasSamePortmanteau && haveOverlappingWritingSystems)
                         {
-                            out << node->label() << ":\t" << " The constraints on the first allomorph below have the constraints of the second allomorph as a subset." << Qt::endl;
+                            out << node->label().toString() << ":\t" << " The constraints on the first allomorph below have the constraints of the second allomorph as a subset." << Qt::endl;
                             out << "\t" << allomorphs.at(i).summary() << Qt::endl;
                             out << "\t" << allomorphs.at(j).summary() << Qt::endl;
 
@@ -133,7 +133,7 @@ void MorphologyChecker::missingGlossCheck(QTextStream &out) const
     {
         if( n->glossCount() == 0 )
         {
-            out << QObject::tr("No glosses. Label: %1, ID: %2, Model: %3").arg( n->label(), n->id(), n->model()->label() ) << Qt::endl;
+            out << QObject::tr("No glosses. Label: %1, ID: %2, Model: %3").arg( n->label().toString(), n->id(), n->model()->label().toString() ) << Qt::endl;
         }
     }
 }

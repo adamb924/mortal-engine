@@ -13,6 +13,7 @@
 #include <QString>
 #include <QMap>
 
+#include "datatypes/morphemelabel.h"
 #include "datatypes/parsing.h"
 #include "mortal-engine_global.h"
 
@@ -60,8 +61,8 @@ public:
     /// Virtual Functions
     virtual void setNext(AbstractNode *next);
 
-    QString label() const;
-    void setLabel(const QString &label);
+    MorphemeLabel label() const;
+    void setLabel(const MorphemeLabel &label);
 
     AbstractNode::Type type() const;
     QString typeString() const;
@@ -92,7 +93,7 @@ public:
 
     void setNextNodeIfFinalNode(AbstractNode *nextNode);
 
-    virtual const AbstractNode *followingNodeHavingLabel(const QString & targetLabel) const;
+    virtual const AbstractNode *followingNodeHavingLabel(const MorphemeLabel & targetLabel) const;
 
     void calculateModelProperties();
     bool hasPathToEnd() const;
@@ -129,7 +130,7 @@ private:
     virtual QList<Generation> generateFormsUsingThisNode( const Generation & generation ) const = 0;
 
     const MorphologicalModel * mModel;
-    QString mLabel;
+    MorphemeLabel mLabel;
     AbstractNode::Type mType;
     AbstractNode* mNext;
     bool mOptional;
