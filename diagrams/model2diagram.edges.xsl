@@ -37,6 +37,7 @@
             <xsl:call-template name="edge">
                 <xsl:with-param name="from" select="$previous"/>
                 <xsl:with-param name="to" select="$next"/>
+                <xsl:with-param name="constraint">false</xsl:with-param>
             </xsl:call-template>
         </xsl:if>
     </xsl:template>
@@ -74,7 +75,7 @@
                 <xsl:with-param name="direction">
                     <xsl:if test="local-name() = 'jump'">s</xsl:if>
                 </xsl:with-param>
-
+                <xsl:with-param name="constraint">false</xsl:with-param>
             </xsl:call-template>
         </xsl:if>
 
@@ -93,6 +94,7 @@
                 <xsl:with-param name="to">
                     <xsl:apply-templates select="current()" mode="following-connector-node-id"/>
                 </xsl:with-param>
+                <xsl:with-param name="constraint">false</xsl:with-param>
             </xsl:call-template>
         </xsl:if>
 
@@ -189,6 +191,7 @@
                 <xsl:with-param name="to">
                     <xsl:apply-templates select="current()" mode="following-connector-node-id"/>
                 </xsl:with-param>
+                <xsl:with-param name="constraint">false</xsl:with-param>
             </xsl:call-template>
         </xsl:if>
 

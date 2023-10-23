@@ -43,6 +43,8 @@
         <xsl:param name="direction"/>
         <!-- if specified, will be printed in error output -->
         <xsl:param name="debug"/>
+        <!-- if false, the edge will not affect the layout of the nodes -->
+        <xsl:param name="constraint"/>
 
         <!-- error checking -->
         <xsl:if test="string-length($from) = 0">
@@ -87,6 +89,9 @@
                     <xsl:value-of select="$to"/>
                 </xsl:attribute>
                 <xsl:attribute name="arrowhead">none</xsl:attribute>
+                <xsl:if test="$constraint = 'false'">
+                    <xsl:attribute name="constraint">false</xsl:attribute>
+                </xsl:if>
             </xsl:element>
         </xsl:if>
     </xsl:template>
