@@ -273,6 +273,8 @@
             <xsl:with-param name="to" select="$target"/>
             <!-- jump node connections come from the bottom of the node -->
             <xsl:with-param name="direction">s</xsl:with-param>
+            <!-- jumps shouldn't affect node layout -->
+            <xsl:with-param name="constraint">false</xsl:with-param>
         </xsl:call-template>
     </xsl:template>
 
