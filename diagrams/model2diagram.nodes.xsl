@@ -21,6 +21,8 @@
             </xsl:call-template>
         </xsl:if>
 
+        <!-- Create a comment to identify the node in the DotML file -->
+        <xsl:apply-templates mode="identify-node" select="."></xsl:apply-templates>
         <!-- Draw the node itself -->
         <xsl:apply-templates mode="make-node" select="."></xsl:apply-templates>
 

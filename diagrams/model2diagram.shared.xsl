@@ -187,4 +187,19 @@
         </xsl:choose>
     </xsl:template>
 
+    <xsl:template match="node()" mode="identify-node">
+        <xsl:comment>
+            <xsl:apply-templates select="." mode="node-identifier-string"/>
+        </xsl:comment>
+    </xsl:template>
+
+    <xsl:template match="node()" mode="node-identifier-string">
+        <xsl:text>Label: </xsl:text>
+        <xsl:value-of select="@label"></xsl:value-of>
+        <xsl:if test="@id">
+            <xsl:text>, ID: </xsl:text>
+            <xsl:value-of select="@id"></xsl:value-of>
+        </xsl:if>
+    </xsl:template>
+
 </xsl:stylesheet>

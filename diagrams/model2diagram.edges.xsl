@@ -21,12 +21,20 @@
         </xsl:variable>
 
         <!-- Connect the node to its empty-preceding node -->
+        <xsl:comment>
+            <xsl:text>Connection to preceding node for:</xsl:text>
+            <xsl:apply-templates select="." mode="node-identifier-string"/>
+        </xsl:comment>
         <xsl:call-template name="edge">
             <xsl:with-param name="from" select="$previous"/>
             <xsl:with-param name="to" select="$this-id"/>
         </xsl:call-template>
 
         <!-- Connect it to the following node -->
+        <xsl:comment>
+            <xsl:text>Connection to following node for:</xsl:text>
+            <xsl:apply-templates select="." mode="node-identifier-string"/>
+        </xsl:comment>
         <xsl:call-template name="edge">
             <xsl:with-param name="from" select="$this-id"/>
             <xsl:with-param name="to" select="$next"/>
@@ -34,6 +42,10 @@
 
         <!-- Draw a skip-arc if it's optional -->
         <xsl:if test="me:optional">
+            <xsl:comment>
+                <xsl:text>Optionality edge for:</xsl:text>
+                <xsl:apply-templates select="." mode="node-identifier-string"/>
+            </xsl:comment>
             <xsl:call-template name="edge">
                 <xsl:with-param name="from" select="$previous"/>
                 <xsl:with-param name="to" select="$next"/>
@@ -68,6 +80,10 @@
 
         <!-- Draw a skip-arc if it's optional -->
         <xsl:if test="me:optional">
+            <xsl:comment>
+                <xsl:text>Optionality edge for:</xsl:text>
+                <xsl:apply-templates select="." mode="node-identifier-string"/>
+            </xsl:comment>
             <xsl:call-template name="edge">
                 <xsl:with-param name="from" select="$previous"/>
                 <xsl:with-param name="to" select="$next"/>
@@ -87,6 +103,10 @@
 
         <!-- Draw a skip-arc if it's optional -->
         <xsl:if test="me:optional">
+            <xsl:comment>
+                <xsl:text>Optionality edge for:</xsl:text>
+                <xsl:apply-templates select="." mode="node-identifier-string"/>
+            </xsl:comment>
             <xsl:call-template name="edge">
                 <xsl:with-param name="from">
                     <xsl:apply-templates select="current()" mode="preceding-connector-node-id"/>
@@ -118,6 +138,10 @@
 
         <!-- this creates the edge from the preceding connector node of the fork
          to the first node -->
+        <xsl:comment>
+            <xsl:text>Connection to preceding node for:</xsl:text>
+            <xsl:apply-templates select="." mode="node-identifier-string"/>
+        </xsl:comment>
         <xsl:call-template name="edge">
             <xsl:with-param name="from" select="$previous"/>
             <xsl:with-param name="to" select="$first-to-link-to"/>
@@ -135,6 +159,10 @@
 
         <!-- this creates the edge from the following connector node of the last child,
          to the following connector node of the parent me:fork -->
+        <xsl:comment>
+            <xsl:text>Connection to following node for:</xsl:text>
+            <xsl:apply-templates select="." mode="node-identifier-string"/>
+        </xsl:comment>
         <xsl:call-template name="edge">
             <xsl:with-param name="from" select="$last-to-link-to"/>
             <xsl:with-param name="to" select="$next"/>
@@ -158,6 +186,10 @@
 
         <!-- this creates the edge from the preceding connector node of the fork
          to the first node -->
+        <xsl:comment>
+            <xsl:text>Connection to preceding node for:</xsl:text>
+            <xsl:apply-templates select="." mode="node-identifier-string"/>
+        </xsl:comment>
         <xsl:call-template name="edge">
             <xsl:with-param name="from" select="$previous"/>
             <xsl:with-param name="to" select="$first-to-link-to"/>
@@ -176,6 +208,10 @@
 
         <!-- this creates the edge from the following connector node of the last child,
          to the following connector node of the parent me:fork -->
+        <xsl:comment>
+            <xsl:text>Connection to following node for:</xsl:text>
+            <xsl:apply-templates select="." mode="node-identifier-string"/>
+        </xsl:comment>
         <xsl:call-template name="edge">
             <xsl:with-param name="from" select="$last-to-link-to"/>
             <xsl:with-param name="to" select="$next"/>
@@ -184,6 +220,10 @@
 
         <!-- draw the optional arc if it's optional -->
         <xsl:if test="me:optional">
+            <xsl:comment>
+                <xsl:text>Optionality edge for:</xsl:text>
+                <xsl:apply-templates select="." mode="node-identifier-string"/>
+            </xsl:comment>
             <xsl:call-template name="edge">
                 <xsl:with-param name="from">
                     <xsl:apply-templates select="current()" mode="preceding-connector-node-id"/>
@@ -224,6 +264,10 @@
         </xsl:variable>
 
         <!-- draw the connection -->
+        <xsl:comment>
+            <xsl:text>Jump connection for:</xsl:text>
+            <xsl:apply-templates select="." mode="node-identifier-string"/>
+        </xsl:comment>
         <xsl:call-template name="edge">
             <xsl:with-param name="from" select="$this-id"/>
             <xsl:with-param name="to" select="$target"/>
