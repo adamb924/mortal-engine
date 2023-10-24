@@ -18,6 +18,9 @@ public:
 
     bool isEmpty() const;
 
+    bool contains(const MorphemeSequence & needle, int *at = nullptr) const;
+    MorphemeSequence replace(const MorphemeSequence & replaceThis, const MorphemeSequence & withThis) const;
+
     QString toString() const;
     static MorphemeSequence fromString(const QString & str);
 
