@@ -172,6 +172,17 @@
         </xsl:call-template>
     </xsl:template>
 
+    <!-- copy-of node -->
+    <xsl:template match="me:copy-of" mode="make-node">
+        <xsl:variable name="target-id" select="@target-id"/>
+        <xsl:call-template name="node">
+            <xsl:with-param name="shape">hexagon</xsl:with-param>
+            <xsl:with-param name="label">
+                <xsl:text>Copy of </xsl:text>
+                <xsl:value-of select="$target-id"/>
+            </xsl:with-param>
+        </xsl:call-template>
+    </xsl:template>
 
     <!-- <optional/> can be inside sequences; ignore it -->
     <xsl:template match="me:optional" mode="make-node"></xsl:template>

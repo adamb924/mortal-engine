@@ -6,7 +6,7 @@
     xmlns:me="https://www.adambaker.org/mortal-engine">
 
     <!-- These nodes are just typical shape nodes; they have no complicating behavior -->
-    <xsl:template match="me:morpheme|me:sqlite-stem-list|me:stem-list|me:jump" mode="edges">
+    <xsl:template match="me:morpheme|me:sqlite-stem-list|me:stem-list|me:jump|me:copy-of" mode="edges">
         <!-- $previous is the preceding connector node of the current node -->
         <xsl:param name="previous">
             <xsl:apply-templates select="current()" mode="preceding-connector-node-id"/>
