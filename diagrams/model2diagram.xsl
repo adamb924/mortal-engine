@@ -28,12 +28,11 @@
 
             <xsl:choose>
                 <xsl:when test="$which-model">
-                    <xsl:message>Only showing: <xsl:value-of select="$which-model"/>
-                    </xsl:message>
-                    <xsl:message>
-                        <xsl:value-of select="count(/me:morphology/me:model[@label=$which-model])"/>
- models</xsl:message>
                     <!-- If $which-model is specified, select only that model -->
+                    <xsl:message>
+                        <xsl:text>Only showing: </xsl:text>
+                        <xsl:value-of select="$which-model"/>
+                    </xsl:message>
                     <xsl:apply-templates select="/me:morphology/me:model[@label=$which-model]" mode="make-node"/>
                     <xsl:apply-templates select="/me:morphology/me:model[@label=$which-model]" mode="edges"/>
                 </xsl:when>
