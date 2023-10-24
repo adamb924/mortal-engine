@@ -14,6 +14,13 @@ You can add the `which-model` parameter, in which case only the specified model 
 xsltproc --param which-model "'%2'" --param gloss-writing-system "'en-US'"  -o mymodel-diagram.xml model2diagram.xsl mymodel.xml
 ```
 
+These commands create `05-Mutually-Exclusive.png` in the examples folder:
+
+```
+xsltproc --param which-model "''" --param gloss-writing-system "'en-US'"  -o ../examples/05-Mutually-Exclusive-diagram.xml model2diagram.xsl ../examples/05-Mutually-Exclusive.xml
+xsltproc  -o ../examples/05-Mutually-Exclusive.dot dotml2dot.xsl ../examples/05-Mutually-Exclusive-diagram.xml
+dot -Tpng ../examples/05-Mutually-Exclusive.dot -o ../examples/05-Mutually-Exclusive.png
+```
 
 ## Convenience .bat files
 These are the bat files I use for my convenience.
