@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" 
-xmlns:me="https://www.adambaker.org/mortal-engine"
-targetNamespace="https://www.adambaker.org/mortal-engine">
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:me="https://www.adambaker.org/mortal-engine" targetNamespace="https://www.adambaker.org/mortal-engine">
 
     <xs:include schemaLocation="writing-systems.xsd"></xs:include>
 
@@ -53,13 +53,13 @@ targetNamespace="https://www.adambaker.org/mortal-engine">
             </xs:choice>
         </xs:choice>
     </xs:group>
-    
+
     <xs:complexType name="condition-base">
         <xs:attribute type="xs:ID" name="id" use="optional"/>
         <xs:attribute type="xs:string" name="ignore-when-parsing" use="optional"/>
         <xs:attribute type="xs:string" name="ignore-when-generating" use="optional"/>
     </xs:complexType>
-    
+
     <!-- phonological-condition -->
     <xs:complexType name="phonological-condition">
         <xs:complexContent>
@@ -74,15 +74,15 @@ targetNamespace="https://www.adambaker.org/mortal-engine">
 
     <xs:element name="match-expression">
         <xs:complexType>
-          <xs:simpleContent>
-            <xs:extension base="xs:string">
-              <xs:attribute type="me:match-expression-type" name="type" use="optional" default="preceding"/>
-              <xs:attribute type="xs:string" name="lang" use="required"/>
-            </xs:extension>
-          </xs:simpleContent>
+            <xs:simpleContent>
+                <xs:extension base="xs:string">
+                    <xs:attribute type="me:match-expression-type" name="type" use="optional" default="preceding"/>
+                    <xs:attribute type="xs:string" name="lang" use="required"/>
+                </xs:extension>
+            </xs:simpleContent>
         </xs:complexType>
-      </xs:element>
-      <xs:simpleType name="match-expression-type">
+    </xs:element>
+    <xs:simpleType name="match-expression-type">
         <xs:restriction base="xs:string">
             <xs:enumeration value="preceding"/>
             <xs:enumeration value="following"/>
@@ -133,7 +133,7 @@ targetNamespace="https://www.adambaker.org/mortal-engine">
             <xs:extension base="me:condition-base">
                 <xs:group ref="me:conditions"></xs:group>
             </xs:extension>
-        </xs:complexContent>        
+        </xs:complexContent>
     </xs:complexType>
 
     <!-- not -->
@@ -142,7 +142,7 @@ targetNamespace="https://www.adambaker.org/mortal-engine">
             <xs:extension base="me:condition-base">
                 <xs:group ref="me:conditions"></xs:group>
             </xs:extension>
-        </xs:complexContent>        
+        </xs:complexContent>
     </xs:complexType>
 
     <!-- condition -->
@@ -216,7 +216,7 @@ targetNamespace="https://www.adambaker.org/mortal-engine">
             <xs:element name="filename" type="xs:string"/>
             <xs:element name="matching-tag" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="create-allomorphs" type="me:create-allomorphs" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="add-allomorphs" type="me:create-allomorphs-link" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="add-allomorphs" type="me:create-allomorphs-link" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
         <xs:attributeGroup ref="me:node-attributes"/>
     </xs:complexType>
@@ -230,7 +230,7 @@ targetNamespace="https://www.adambaker.org/mortal-engine">
             </xs:choice>
             <xs:element name="matching-tag" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="create-allomorphs" type="me:create-allomorphs" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="add-allomorphs" type="me:create-allomorphs-link" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="add-allomorphs" type="me:create-allomorphs-link" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
         <xs:attributeGroup ref="me:node-attributes"/>
         <xs:attribute name="accepts-stems" type="xs:boolean" use="optional"></xs:attribute>
@@ -252,26 +252,26 @@ targetNamespace="https://www.adambaker.org/mortal-engine">
         <xs:attribute name="accepts-stems" type="xs:boolean" use="optional"></xs:attribute>
         <xs:attribute name="include-glosses" type="xs:boolean" use="optional" default="true"></xs:attribute>
     </xs:complexType>
-    
-    <!-- morpheme -->
-	<xs:group name="morpheme-elements">
-		<xs:sequence>
-			<xs:choice minOccurs="0" maxOccurs="unbounded">
-				<xs:group ref="me:conditions"></xs:group>
-			</xs:choice>    
-			<xs:element name="allomorph" type="me:allomorph" minOccurs="1" maxOccurs="unbounded"/>
-			<xs:element name="add-allomorphs" type="me:create-allomorphs-link" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="gloss" type="me:form" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-	</xs:group>
 
-	<xs:complexType name="morpheme">
-		<xs:sequence>
-			<xs:element name="optional" type="xs:string" minOccurs="0"/>
-			<xs:group ref="me:morpheme-elements"></xs:group>
-		</xs:sequence>
-		<xs:attributeGroup ref="me:node-attributes"/>
-	</xs:complexType>
+    <!-- morpheme -->
+    <xs:group name="morpheme-elements">
+        <xs:sequence>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:group ref="me:conditions"></xs:group>
+            </xs:choice>
+            <xs:element name="allomorph" type="me:allomorph" minOccurs="1" maxOccurs="unbounded"/>
+            <xs:element name="add-allomorphs" type="me:create-allomorphs-link" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="gloss" type="me:form" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:group>
+
+    <xs:complexType name="morpheme">
+        <xs:sequence>
+            <xs:element name="optional" type="xs:string" minOccurs="0"/>
+            <xs:group ref="me:morpheme-elements"></xs:group>
+        </xs:sequence>
+        <xs:attributeGroup ref="me:node-attributes"/>
+    </xs:complexType>
 
     <xs:complexType name="non-optional-morpheme">
         <xs:group ref="me:morpheme-elements"></xs:group>
@@ -284,7 +284,7 @@ targetNamespace="https://www.adambaker.org/mortal-engine">
             <xs:element name="optional" type="xs:string" minOccurs="0"/>
             <xs:choice minOccurs="0" maxOccurs="unbounded">
                 <xs:group ref="me:conditions"></xs:group>
-            </xs:choice>    
+            </xs:choice>
             <xs:element name="morpheme" type="me:non-optional-morpheme" minOccurs="1" maxOccurs="unbounded"/>
         </xs:sequence>
         <xs:attributeGroup ref="me:node-attributes"/>
@@ -310,8 +310,8 @@ targetNamespace="https://www.adambaker.org/mortal-engine">
             <xs:element name="optional" type="xs:string" minOccurs="0"/>
             <xs:group ref="me:nodes"></xs:group>
         </xs:sequence>
-        <xs:attributeGroup ref="me:node-attributes"/>    
-</xs:complexType>
+        <xs:attributeGroup ref="me:node-attributes"/>
+    </xs:complexType>
 
     <!-- allomorph -->
     <xs:complexType name="allomorph">
