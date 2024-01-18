@@ -933,26 +933,57 @@ QString Parsing::stringSummary(ParsingStep::SummaryType stemType, const WritingS
     QListIterator<ParsingStep> iter(mSteps);
     while( iter.hasNext() )
     {
-        ParsingStep s = iter.next();
-
-        /// e.g., [
-        string += beforeMorpheme;
+        const ParsingStep s = iter.next();
 
         if( s.isStem() )
         {
+            /// e.g., [
+            string += beforeMorpheme;
             string += s.summaryPortion(stemType, stemWs, writingSystem(), betweenMorphemes );
+            /// e.g., ]
+            string += afterMorpheme;
+            if( iter.hasNext() )
+            {
+                /// e.g., -
+                string += betweenMorphemes;
+            }
         }
         else
         {
-            string += s.summaryPortion(affixType, affixWs, writingSystem(), betweenMorphemes );
-        }
+            if( s.allomorph().hasPortmanteau(writingSystem()) )
+            {
+                QListIterator<MorphemeLabel> portmanteauIterator(s.allomorph().portmanteau().morphemes());
+                while(portmanteauIterator.hasNext())
+                {
+                    const MorphemeLabel l = portmanteauIterator.next();
+                    /// e.g., [
+                    string += beforeMorpheme;
 
-        /// e.g., ]
-        string += afterMorpheme;
-        if( iter.hasNext() )
-        {
-            /// e.g., -
-            string += betweenMorphemes;
+                    string += l.toString();
+
+                    /// e.g., ]
+                    string += afterMorpheme;
+
+                    if( portmanteauIterator.hasNext() )
+                    {
+                        /// e.g., -
+                        string += betweenMorphemes;
+                    }
+                }
+            }
+            else
+            {
+                /// e.g., [
+                string += beforeMorpheme;
+                string += s.summaryPortion(affixType, affixWs, writingSystem(), betweenMorphemes );
+                /// e.g., ]
+                string += afterMorpheme;
+                if( iter.hasNext() )
+                {
+                    /// e.g., -
+                    string += betweenMorphemes;
+                }
+            }
         }
     }
 
