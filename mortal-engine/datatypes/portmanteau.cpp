@@ -132,15 +132,15 @@ QString Portmanteau::summary() const
 {
     if( mMorphemeNodes.isEmpty() )
     {
-        return QString("Portmanteau([%1], not yet initialized)").arg( mMorphemes.toString() );
+        return QString("Portmanteau(%1, not yet initialized)").arg( mMorphemes.toString() );
     }
     else if( mMorphemeNodes.last()->AbstractNode::next() != nullptr )
     {
-        return QString("Portmanteau([%1], Next: %2)").arg( mMorphemes.toString(), next() == nullptr ? "null" : next()->label().toString() );
+        return QString("Portmanteau(%1, Next: %2)").arg( mMorphemes.toString(), next() == nullptr ? "null" : next()->label().toString() );
     }
     else
     {
-        return QString("Portmanteau([%1], Next: null)").arg( mMorphemes.toString() );
+        return QString("Portmanteau(%1, Next: null)").arg( mMorphemes.toString() );
     }
 }
 
