@@ -60,6 +60,12 @@
         <xs:attribute type="xs:string" name="ignore-when-generating" use="optional"/>
     </xs:complexType>
 
+    <xs:complexType name="optional-base">
+        <xs:attribute type="xs:ID" name="id" use="optional"/>
+        <xs:attribute type="xs:string" name="ignore-when-parsing" use="optional"/>
+        <xs:attribute type="xs:string" name="ignore-when-generating" use="optional"/>
+    </xs:complexType>
+
     <!-- phonological-condition -->
     <xs:complexType name="phonological-condition">
         <xs:complexContent>
@@ -267,7 +273,7 @@
 
     <xs:complexType name="morpheme">
         <xs:sequence>
-            <xs:element name="optional" type="xs:string" minOccurs="0"/>
+            <xs:element name="optional" type="me:optional-base" minOccurs="0"/>
             <xs:group ref="me:morpheme-elements"></xs:group>
         </xs:sequence>
         <xs:attributeGroup ref="me:node-attributes"/>
