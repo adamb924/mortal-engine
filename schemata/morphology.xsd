@@ -288,7 +288,7 @@
     <!-- mutually-exclusive-morphemes -->
     <xs:complexType name="mutually-exclusive-morphemes">
         <xs:sequence>
-            <xs:element name="optional" type="xs:string" minOccurs="0"/>
+            <xs:element name="optional" type="me:optional-base" minOccurs="0"/>
             <xs:choice minOccurs="0" maxOccurs="unbounded">
                 <xs:group ref="me:conditions"></xs:group>
             </xs:choice>
@@ -300,7 +300,7 @@
     <!-- fork -->
     <xs:complexType name="fork">
         <xs:sequence>
-            <xs:element name="optional" type="xs:string" minOccurs="0"/>
+            <xs:element name="optional" type="me:optional-base" minOccurs="0"/>
             <xs:element name="path" type="me:path" minOccurs="1" maxOccurs="unbounded"/>
         </xs:sequence>
         <xs:attributeGroup ref="me:node-attributes"/>
@@ -314,7 +314,7 @@
 
     <xs:complexType name="optional-path">
         <xs:sequence>
-            <xs:element name="optional" type="xs:string" minOccurs="0"/>
+            <xs:element name="optional" type="me:optional-base" minOccurs="0"/>
             <xs:group ref="me:nodes"></xs:group>
         </xs:sequence>
         <xs:attributeGroup ref="me:node-attributes"/>
