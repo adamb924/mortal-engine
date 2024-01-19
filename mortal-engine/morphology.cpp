@@ -75,7 +75,7 @@ QList<Parsing> Morphology::possibleParsings(const Form &form, Parsing::Flags fla
 
     foreach(MorphologicalModel *model,  mMorphologicalModels)
     {
-        Parsing p( form, model );
+        Parsing p( normalize(form), model );
         QList<Parsing> parsings = model->possibleParsings(p, flags);
         candidates.append( parsings );
     }
@@ -85,7 +85,7 @@ QList<Parsing> Morphology::possibleParsings(const Form &form, Parsing::Flags fla
 
 QSet<Parsing> Morphology::uniqueParsings(const Form &form, Parsing::Flags flags) const
 {
-    QList<Parsing> parsings = possibleParsings(form, flags);
+    QList<Parsing> parsings = possibleParsings(normalize(form), flags);
     return QSet<Parsing>(parsings.begin(),parsings.end());
 }
 
@@ -95,7 +95,7 @@ QList<Parsing> Morphology::guessStem(const Form &form) const
 
     foreach(MorphologicalModel *model,  mMorphologicalModels)
     {
-        Parsing p( form, model );
+        Parsing p( normalize(form), model );
         candidates.append( model->possibleParsings(p, Parsing::GuessStem) );
     }
 
@@ -232,6 +232,20 @@ Generation Morphology::getFirstTransduction(const Form &form, const WritingSyste
         }
     }
     return Generation(newWs, nullptr);
+}
+
+Form Morphology::normalize(const Form &f) const
+{
+    InputNormalizer n = mNormalizationFunctions.value(f.writingSystem(), nullptr);
+    if( n == nullptr )
+        return f;
+    else
+        return Form( f.writingSystem(), n(f.text()) );
+}
+
+void Morphology::setNormalizationFunction(const WritingSystem &forWs, InputNormalizer n)
+{
+    mNormalizationFunctions[forWs] = n;
 }
 
 LexicalStemInsertResult Morphology::addLexicalStem(const LexicalStem &stem)

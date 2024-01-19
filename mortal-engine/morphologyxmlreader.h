@@ -91,6 +91,10 @@ private:
     static QString XML_PATH;
     static QString XML_SHARED_CREATE_ALLOMORPHS;
     static QString XML_SHARED_CONDITIONS;
+    static QString XML_NORMALIZATION_FUNCTION;
+    static QString XML_LANG;
+    static QString XML_FUNCTION;
+    static QString XML_LOWERCASE;
 
 public:
     /// these methods should be public so that Mortal Engine can be extended without building the source

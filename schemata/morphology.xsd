@@ -9,6 +9,7 @@
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="writing-systems" type="me:writing-systems"/>
+                <xs:element name="normalization-function" type="me:normalization-function" minOccurs="0"/>
                 <xs:element name="shared-conditions" minOccurs="0">
                     <xs:complexType>
                         <xs:group ref="me:conditions"></xs:group>
@@ -439,6 +440,21 @@
         <xs:restriction base="xs:string">
             <xs:enumeration value="true"/>
             <xs:enumeration value="false"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="normalization-function">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute type="xs:ID" name="lang" use="required"/>
+                <xs:attribute type="me:normalization-function-type" name="function" use="required"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:simpleType name="normalization-function-type">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="none"/>
+            <xs:enumeration value="lowercase"/>
         </xs:restriction>
     </xs:simpleType>
 

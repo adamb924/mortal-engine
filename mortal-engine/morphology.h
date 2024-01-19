@@ -18,6 +18,8 @@ class MorphemeSequenceConstraint;
 class AbstractStemList;
 class LexicalStemInsertResult;
 
+typedef QString (*InputNormalizer)(QString);
+
 class MORTAL_ENGINE_EXPORT Morphology
 {
 public:
@@ -48,6 +50,10 @@ public:
     QList<Generation> replaceStemInto(const Form & husk, const LexicalStem kernel, const WritingSystem & outputWs ) const;
     QList<Generation> transduceInto(const Form & form, const WritingSystem & newWs) const;
     Generation getFirstTransduction(const Form & form, const WritingSystem & newWs) const;
+
+    /// Normalization functions
+    Form normalize(const Form & f) const;
+    void setNormalizationFunction(const WritingSystem & forWs, InputNormalizer n);
 
     /// Lexicon functions
     LexicalStemInsertResult addLexicalStem(const LexicalStem & stem);
@@ -103,6 +109,7 @@ private:
     QSet<AbstractStemList*> mStemLists;
     QSet<MorphemeNode*> mMorphemeNodes;
     bool mIsOk;
+    QHash<WritingSystem,InputNormalizer> mNormalizationFunctions;
 };
 
 #endif // MORPHOLOGY_H

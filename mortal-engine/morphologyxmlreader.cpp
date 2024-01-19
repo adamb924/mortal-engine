@@ -45,6 +45,11 @@ QString MorphologyXmlReader::XML_PATH = "path";
 QString MorphologyXmlReader::XML_SHARED_CREATE_ALLOMORPHS = "shared-create-allomorphs";
 QString MorphologyXmlReader::XML_SHARED_CONDITIONS = "interrupted-by";
 
+QString MorphologyXmlReader::XML_NORMALIZATION_FUNCTION = "normalization-function";
+QString MorphologyXmlReader::XML_LANG = "lang";
+QString MorphologyXmlReader::XML_FUNCTION = "function";
+QString MorphologyXmlReader::XML_LOWERCASE = "lowercase";
+
 MorphologyXmlReader::MorphologyXmlReader(Morphology *morphology) : mMorphology(morphology)
 {
     registerConstraintMatcher<TagMatchCondition>();
@@ -140,6 +145,21 @@ void MorphologyXmlReader::parseXml(const QString &path)
                 if ( name == WritingSystem::XML_WRITING_SYSTEMS )
                 {
                     mMorphology->mWritingSystems.insert( WritingSystem::readWritingSystems(in) );
+                }
+                else if ( name == XML_NORMALIZATION_FUNCTION )
+                {
+                    WritingSystem ws = mMorphology->mWritingSystems.value(attr.value(XML_LANG).toString());
+                    if( ws.isNull() )
+                    {
+                        qWarning() << "Unknown writing system:" << attr.value(XML_LANG).toString();
+                    }
+                    else
+                    {
+                        if( attr.value(XML_FUNCTION).toString() == XML_LOWERCASE )
+                        {
+                            mMorphology->setNormalizationFunction( ws, [](QString s) { return s.toLower(); } );
+                        }
+                    }
                 }
                 else if( name == "shared-conditions" )
                 {
