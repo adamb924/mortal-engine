@@ -29,53 +29,31 @@ public:
     Morphology(const Morphology &) = delete;
     Morphology &operator=(const Morphology &) = delete;
 
+    /// Functions related to creating an object from XML
     void readXmlFile( const QString & path );
-
     bool isWellFormed(const Form & form) const;
 
+    /// Basic access functions
     QList<MorphologicalModel *> morphologicalModels() const;
-
     WritingSystem writingSystem(const QString & lang) const;
+    QHash<QString, WritingSystem> writingSystems() const;
 
+    /// Parsing/generating/transducing functions
     QList<Parsing> possibleParsings(const Form & form, Parsing::Flags flags = Parsing::None) const;
     QSet<Parsing> uniqueParsings(const Form & form, Parsing::Flags flags = Parsing::None) const;
-
     QList<Parsing> guessStem(const Form & form) const;
-
     QList<Generation> generateForms(const WritingSystem & ws, StemIdentityConstraint sic, MorphemeSequenceConstraint msc , const MorphologicalModel *model = nullptr) const;
     QList<Generation> generateForms(const WritingSystem & ws, const LexicalStem & stem, const MorphemeSequence & morphemeSequence, const MorphologicalModel *model = nullptr) const;
     QList<Generation> generateForms(const WritingSystem & ws, const Parsing & parsing) const;
-
     QList<Generation> replaceStemInto(const Form & husk, const LexicalStem kernel, const WritingSystem & outputWs ) const;
-
     QList<Generation> transduceInto(const Form & form, const WritingSystem & newWs) const;
     Generation getFirstTransduction(const Form & form, const WritingSystem & newWs) const;
 
+    /// Lexicon functions
     LexicalStemInsertResult addLexicalStem(const LexicalStem & stem);
     LexicalStemInsertResult replaceLexicalStem(const LexicalStem & stem);
     const LexicalStem * getLexicalStem(qlonglong id) const;
     void removeLexicalStem(qlonglong id);
-
-    void printModelCheck(QTextStream &out) const;
-
-    /**
-     * @brief Returns a string representation of the Form for logging purposes.
-     *
-     * @return QString The logging output.
-     */
-    QString summary() const;
-
-    //! \brief Returns a pointer to the node with the given id, or nullptr if it doesn't exist
-    AbstractNode* getNodeFromId(const QString & id) const;
-
-    //! \brief Returns a list of pointers to nodes with the given label, or an empty list if none exist
-    QList<AbstractNode*> getNodesFromLabel(const QString & label) const;
-    QList<MorphemeNode*> getMorphemeNodeFromLabel(const QString & label) const;
-    MorphologicalModel *getMorphologicalModelFromLabel(const QString & label) const;
-
-    QHash<QString, WritingSystem> writingSystems() const;
-
-    void setNodeId(const QString & id, AbstractNode * node);
 
     /// returns all matching lexicalStems
     QList<LexicalStem *> searchLexicalStems( const Form & formSearchString ) const;
@@ -85,6 +63,25 @@ public:
     /// NB: this function can throw an exception
     LexicalStem * uniqueLexicalStem( const Form & formSearchString ) const;
 
+    /// Model check functions
+    void printModelCheck(QTextStream &out) const;
+
+    /**
+     * @brief Returns a string representation of the Form for logging purposes.
+     *
+     * @return QString The logging output.
+     */
+    QString summary() const;
+
+    /// Querying the model
+    //! \brief Returns a pointer to the node with the given id, or nullptr if it doesn't exist
+    AbstractNode* getNodeFromId(const QString & id) const;
+
+    //! \brief Returns a list of pointers to nodes with the given label, or an empty list if none exist
+    QList<AbstractNode*> getNodesFromLabel(const QString & label) const;
+    QList<MorphemeNode*> getMorphemeNodeFromLabel(const QString & label) const;
+    MorphologicalModel *getMorphologicalModelFromLabel(const QString & label) const;
+    void setNodeId(const QString & id, AbstractNode * node);
     QSet<AbstractStemList *> stemLists() const;
 
     static bool DebugOutput;
