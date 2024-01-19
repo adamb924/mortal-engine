@@ -34,6 +34,7 @@ public:
     /// Functions related to creating an object from XML
     void readXmlFile( const QString & path );
     bool isWellFormed(const Form & form) const;
+    void clearData();
 
     /// Basic access functions
     QList<MorphologicalModel *> morphologicalModels() const;

@@ -24,11 +24,15 @@ Morphology::Morphology() : mIsOk(true)
 
 Morphology::~Morphology()
 {
-    qDeleteAll( mNodes );
+    clearData();
 }
 
 void Morphology::readXmlFile(const QString &path)
 {
+    /// there's no guarantee that this method hasn't been called previously
+    /// so clear any data that might exist
+    clearData();
+
     MorphologyXmlReader reader(this);
     try {
         reader.readXmlFile(path);
@@ -52,6 +56,23 @@ bool Morphology::isWellFormed(const Form & form) const
         }
     }
     return false;
+}
+
+void Morphology::clearData()
+{
+    qDeleteAll( mNodes );
+
+    mMorphologicalModels.clear();
+    mWritingSystems.clear();
+    mNodesById.clear();
+    mNodesByLabel.clear();
+    mMorphemeNodesByLabel.clear();
+    mMorphologicalModelsByLabel.clear();
+    mNodes.clear();
+    mStemAcceptingStemLists.clear();
+    mStemLists.clear();
+    mMorphemeNodes.clear();
+    mNormalizationFunctions.clear();
 }
 
 QList<MorphologicalModel *> Morphology::morphologicalModels() const
