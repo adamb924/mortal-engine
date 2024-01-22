@@ -44,6 +44,10 @@ bool Portmanteau::operator==(const Portmanteau &other) const
 bool Portmanteau::initialize(const AbstractNode *parent)
 {
     mNodes.clear();
+
+    if( mInitializationString.isEmpty() )
+        return false;
+
     mMorphemes = MorphemeSequence::fromString(mInitializationString);
 
     /// portmanteaux must have at least two morphemes
@@ -71,6 +75,7 @@ bool Portmanteau::initialize(const AbstractNode *parent)
     {
         /// the current node is the (first?) node following the most recently added node node that has the label in question
         const AbstractNode * current = mNodes.last()->followingNodeHavingLabel( mMorphemes.at(i) );
+
         /// fail if no node has that label
         if( current == nullptr )
         {
@@ -78,14 +83,7 @@ bool Portmanteau::initialize(const AbstractNode *parent)
             std::string label = mMorphemes.first().toString().toUtf8().constData();
             throw std::runtime_error( "Attempting to process the portmanteau string " + is + " but the following node with this label could not be found: " + label );
         }
-        /// fail if, for some reason the node returned is not a MorphemeNode
-        if( !current->isMorphemeNode() )
-        {
-            std::string is = mInitializationString.toUtf8().constData();
-            std::string label = mMorphemes.first().toString().toUtf8().constData();
-            throw std::runtime_error( "Attempting to process the portmanteau string " + is + " but the following node with this label is not a MorphemeNode: " + label );
-        }
-        mNodes << static_cast<const MorphemeNode*>(current);
+        mNodes << current;
 
         i++;
     }
