@@ -399,30 +399,6 @@ bool MorphemeNode::matchesElement(QXmlStreamReader &in)
     return in.isStartElement() && in.name() == elementName();
 }
 
-bool MorphemeNode::hasNext(const Allomorph &appendedAllomorph, const WritingSystem & ws) const
-{
-    if( appendedAllomorph.hasPortmanteau(ws) )
-    {
-        return appendedAllomorph.portmanteau().next() != nullptr;
-    }
-    else
-    {
-        return AbstractNode::next() != nullptr;
-    }
-}
-
-const AbstractNode *MorphemeNode::next(const Allomorph &appendedAllomorph, const WritingSystem & ws) const
-{
-    if( appendedAllomorph.hasPortmanteau(ws) )
-    {
-        return appendedAllomorph.portmanteau().next();
-    }
-    else
-    {
-        return AbstractNode::next();
-    }
-}
-
 void MorphemeNode::initializePortmanteaux()
 {
     for(int i=0; i<mAllomorphs.count(); i++)

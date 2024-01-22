@@ -41,10 +41,6 @@ public:
     static Allomorph readAllomorphTag(QXmlStreamReader &in, MorphologyXmlReader *morphologyReader);
     static bool matchesElement(QXmlStreamReader &in);
 
-    /// these are special methods for handling portmanteau
-    bool hasNext(const Allomorph & appendedAllomorph, const WritingSystem &ws) const;
-    const AbstractNode *next(const Allomorph & appendedAllomorph, const WritingSystem & ws) const;
-
     void initializePortmanteaux();
 
     void addCreateAllomorphs( const CreateAllomorphs & ca );

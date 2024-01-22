@@ -226,6 +226,30 @@ QList<const AbstractNode *> AbstractNode::nextMorphemeNodes() const
     }
 }
 
+bool AbstractNode::hasNext(const Allomorph &appendedAllomorph, const WritingSystem &ws) const
+{
+    if( appendedAllomorph.hasPortmanteau(ws) )
+    {
+        return appendedAllomorph.portmanteau().next() != nullptr;
+    }
+    else
+    {
+        return AbstractNode::next() != nullptr;
+    }
+}
+
+const AbstractNode *AbstractNode::next(const Allomorph &appendedAllomorph, const WritingSystem &ws) const
+{
+    if( appendedAllomorph.hasPortmanteau(ws) )
+    {
+        return appendedAllomorph.portmanteau().next();
+    }
+    else
+    {
+        return AbstractNode::next();
+    }
+}
+
 void AbstractNode::setNext(AbstractNode *next)
 {
     mNext = next;

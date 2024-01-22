@@ -122,6 +122,10 @@ public:
     QList<const AbstractNode*> nextMorphemeNodes() const;
     virtual QList<const AbstractNode*> availableMorphemeNodes(QHash<const Jump*,int> &jumps) const = 0;
 
+    /// these are special methods for handling portmanteau
+    bool hasNext(const Allomorph & appendedAllomorph, const WritingSystem &ws) const;
+    const AbstractNode *next(const Allomorph & appendedAllomorph, const WritingSystem & ws) const;
+
 protected:
     QHash<WritingSystem,Form> mGlosses;
 
