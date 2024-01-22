@@ -31,7 +31,7 @@ public:
     void insert(const Allomorph &allomorph);
     void remove(const Allomorph &allomorph);
 
-    QSetIterator<Allomorph> allomorphIterator() const;
+    QListIterator<Allomorph> allomorphIterator() const;
 
     void generateAllomorphs(const CreateAllomorphs & ca);
     void generateAllomorphs(const QList<CreateAllomorphs> & cas);
@@ -52,7 +52,7 @@ public:
 
     int allomorphCount() const;
 
-    QSet<Allomorph> allomorphs() const;
+    QListIterator<Allomorph> allomorphs() const;
 
     QString liftGuid() const;
     void setLiftGuid(const QString &liftGuid);
@@ -60,8 +60,10 @@ public:
     /// I don't like this, but I need a quick way to get a display form
     Allomorph displayAllomorph() const;
 
+    void initializePortmanteaux(const AbstractNode * parent);
+
 private:
-    QSet<Allomorph> mAllomorphs;
+    QList<Allomorph> mAllomorphs;
     QHash<WritingSystem,Form> mGlosses;
     qlonglong mId;
     QString mLiftGuid;

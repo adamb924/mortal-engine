@@ -32,7 +32,7 @@ AbstractStemList *AbstractStemList::copy(MorphologyXmlReader *morphologyReader, 
 bool AbstractStemList::addStem(LexicalStem *stem)
 {
     bool shouldInsert = false;
-    QSetIterator<Allomorph> iter = stem->allomorphIterator();
+    QListIterator<Allomorph> iter = stem->allomorphIterator();
     while( iter.hasNext() )
     {
         Allomorph a = iter.next();
@@ -194,7 +194,7 @@ QList<Generation> AbstractStemList::generateFormsUsingThisNode(const Generation 
     {
         LexicalStem s = generation.stemIdentityConstraint()->currentLexicalStem();
         /// check all the allomorphs of the stem
-        QSetIterator<Allomorph> ai = s.allomorphIterator();
+        QListIterator<Allomorph> ai = s.allomorphIterator();
         while(ai.hasNext())
         {
             Allomorph a = ai.next();
@@ -241,7 +241,7 @@ QList<QPair<Allomorph, LexicalStem> > AbstractStemList::matchingAllomorphs(const
     /// cycle through each form
     foreach( LexicalStem *s, mStems )
     {
-        QSetIterator<Allomorph> ai = s->allomorphIterator();
+        QListIterator<Allomorph> ai = s->allomorphIterator();
         while(ai.hasNext())
         {
             Allomorph a = ai.next();

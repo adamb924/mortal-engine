@@ -11,7 +11,7 @@ LexicalStem::LexicalStem() : mId(-1), mOriginalAllomorph(Allomorph::Null)
 
 LexicalStem::LexicalStem(const Allomorph & allomorph) : mId(-1), mOriginalAllomorph(Allomorph::Null)
 {
-    mAllomorphs.insert(allomorph);
+    mAllomorphs << allomorph;
     if( allomorph.isOriginal() )
         mOriginalAllomorph = allomorph;
 }
@@ -20,7 +20,7 @@ LexicalStem::LexicalStem(const LexicalStem &other) : mOriginalAllomorph(other.mO
 {
     /// make a deep copy of the Allomorphs since those are pointers
     mAllomorphs.clear();
-    QSetIterator<Allomorph> ai( other.mAllomorphs );
+    QListIterator<Allomorph> ai( other.mAllomorphs );
     while( ai.hasNext() )
     {
         mAllomorphs << ai.next();
@@ -34,7 +34,7 @@ LexicalStem &LexicalStem::operator=(const LexicalStem &other)
 {
     /// make a deep copy of the Allomorphs since those are pointers
     mAllomorphs.clear();
-    QSetIterator<Allomorph> ai( other.mAllomorphs );
+    QListIterator<Allomorph> ai( other.mAllomorphs );
     while( ai.hasNext() )
     {
         mAllomorphs << ai.next();
@@ -59,25 +59,25 @@ bool LexicalStem::operator==(qlonglong stemId) const
 
 void LexicalStem::insert(const Allomorph & allomorph)
 {
-    mAllomorphs.insert(allomorph);
+    mAllomorphs << allomorph;
     if( allomorph.isOriginal() )
         mOriginalAllomorph = allomorph;
 }
 
 void LexicalStem::remove(const Allomorph &allomorph)
 {
-    mAllomorphs.remove(allomorph);
+    mAllomorphs.removeOne(allomorph);
 }
 
-QSetIterator<Allomorph> LexicalStem::allomorphIterator() const
+QListIterator<Allomorph> LexicalStem::allomorphIterator() const
 {
-    return QSetIterator<Allomorph>(mAllomorphs);
+    return QListIterator<Allomorph>(mAllomorphs);
 }
 
 void LexicalStem::generateAllomorphs(const CreateAllomorphs &ca)
 {
     QSet<Allomorph> replacementAllomorphs;
-    QSetIterator<Allomorph> i(mAllomorphs);
+    QListIterator<Allomorph> i(mAllomorphs);
     while( i.hasNext() )
     {
         Allomorph a = i.next();
@@ -86,7 +86,7 @@ void LexicalStem::generateAllomorphs(const CreateAllomorphs &ca)
             replacementAllomorphs.unite( ca.generateAllomorphs( a ) );
         }
     }
-    mAllomorphs = replacementAllomorphs;
+    mAllomorphs = QList<Allomorph>(replacementAllomorphs.begin(),replacementAllomorphs.end());
 }
 
 void LexicalStem::generateAllomorphs(const QList<CreateAllomorphs> &cas)
@@ -94,18 +94,18 @@ void LexicalStem::generateAllomorphs(const QList<CreateAllomorphs> &cas)
     for(int i=0; i < cas.count(); i++ )
     {
         QSet<Allomorph> newAllomorphs;
-        QSetIterator<Allomorph> iter(mAllomorphs);
+        QListIterator<Allomorph> iter(mAllomorphs);
         while( iter.hasNext() )
         {
             newAllomorphs.unite( cas.at(i).generateAllomorphs( iter.next() ) );
         }
-        mAllomorphs = newAllomorphs;
+        mAllomorphs = QList<Allomorph>(newAllomorphs.begin(), newAllomorphs.end());
     }
 }
 
 bool LexicalStem::hasAllomorph(const Allomorph & allomorph, bool matchConstraints) const
 {
-    QSetIterator<Allomorph> i(mAllomorphs);
+    QListIterator<Allomorph> i(mAllomorphs);
     if( matchConstraints )
     {
         while( i.hasNext() )
@@ -128,7 +128,7 @@ bool LexicalStem::hasAllomorph(const Allomorph & allomorph, bool matchConstraint
 
 bool LexicalStem::hasAllomorph(const Form &form, const QSet<Tag> containingTags, const QSet<Tag> withoutTags, bool includeDerivedAllomorphs) const
 {
-    QSetIterator<Allomorph> i(mAllomorphs);
+    QListIterator<Allomorph> i(mAllomorphs);
     while( i.hasNext() )
     {
         Allomorph a = i.next();
@@ -143,7 +143,7 @@ bool LexicalStem::hasAllomorph(const Form &form, const QSet<Tag> containingTags,
 
 bool LexicalStem::hasAllomorphWithForm(const Form &form) const
 {
-    QSetIterator<Allomorph> i(mAllomorphs);
+    QListIterator<Allomorph> i(mAllomorphs);
     while( i.hasNext() )
     {
         Allomorph a = i.next();
@@ -193,7 +193,7 @@ int LexicalStem::allomorphCount() const
     return mAllomorphs.count();
 }
 
-QSet<Allomorph> LexicalStem::allomorphs() const
+QListIterator<Allomorph> LexicalStem::allomorphs() const
 {
     return mAllomorphs;
 }
@@ -213,6 +213,11 @@ Allomorph LexicalStem::displayAllomorph() const
     return mOriginalAllomorph;
 }
 
+void LexicalStem::initializePortmanteaux(const AbstractNode *parent)
+{
+    Q_UNUSED(parent)
+}
+
 QString LexicalStem::summary() const
 {
     QString dbgString;
@@ -225,7 +230,7 @@ QString LexicalStem::summary() const
 
     dbg.indent();
 
-    QSetIterator<Allomorph> i(mAllomorphs);
+    QListIterator<Allomorph> i(mAllomorphs);
     while( i.hasNext() )
     {
         dbg << i.next().summary();
@@ -262,5 +267,9 @@ uint qHash(const LexicalStem &key)
 {
     /// 2021-09-22: This hash is very rarely used, and never in this code,
     /// so I am not going to store a hash value.
-    return qHash( key.glosses(), static_cast<uint>(qGlobalQHashSeed()) ) ^ qHash( key.allomorphs(), static_cast<uint>(qGlobalQHashSeed()) ) ^ qHash(key.id(), static_cast<uint>(qGlobalQHashSeed()));
+    uint hash = qHash( key.glosses(), static_cast<uint>(qGlobalQHashSeed()) )  ^ qHash(key.id(), static_cast<uint>(qGlobalQHashSeed()));
+    QListIterator<Allomorph> i = key.allomorphIterator();
+    while( i.hasNext() )
+        hash ^= qHash(i.next());
+    return hash;
 }

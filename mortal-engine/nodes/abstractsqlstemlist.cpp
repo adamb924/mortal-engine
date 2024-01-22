@@ -412,7 +412,7 @@ void AbstractSqlStemList::addStemToDatabase(LexicalStem *stem)
     QSqlQuery tagQuery(db);
     tagQuery.prepare(qInsertTagMember());
 
-    QSetIterator<Allomorph> ai = stem->allomorphIterator();
+    QListIterator<Allomorph> ai = stem->allomorphIterator();
     while(ai.hasNext())
     {
         Allomorph a = ai.next();
