@@ -46,6 +46,10 @@ void XmlStemList::readStems(const QHash<QString, WritingSystem> &writingSystems)
                 else if( in.name() == Allomorph::XML_ALLOMORPH )
                 {
                     allomorph = Allomorph(Allomorph::Original);
+                    if( in.attributes().hasAttribute(Allomorph::XML_PORTMANTEAU) )
+                    {
+                        allomorph.setPortmanteau( Portmanteau( in.attributes().value(Allomorph::XML_PORTMANTEAU).toString() ) );
+                    }
                 }
                 else if( in.name() == Allomorph::XML_FORM )
                 {

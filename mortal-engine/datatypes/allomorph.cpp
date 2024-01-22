@@ -19,6 +19,7 @@ QString Allomorph::XML_TAG = "tag";
 QString Allomorph::XML_STEM = "stem";
 QString Allomorph::XML_USE_IN_GENERATIONS = "use-in-generations";
 QString Allomorph::XML_TRUE = "true";
+QString Allomorph::XML_PORTMANTEAU = "portmanteau";
 
 Allomorph::Allomorph(Allomorph::Type type) : mType(type), mId(-1), mUseInGenerations(true)
 {
@@ -192,6 +193,10 @@ void Allomorph::serialize(QXmlStreamWriter &out) const
 {
     out.writeStartElement("allomorph");
     out.writeAttribute("type", typeToString(mType));
+    if( mPortmanteau.isValid() )
+    {
+        out.writeAttribute(XML_PORTMANTEAU, mPortmanteau.morphemes().toString() );
+    }
     if( mId != -1 )
     {
         out.writeAttribute("id", QString("%1").arg(mId) );
@@ -216,6 +221,10 @@ void Allomorph::serialize(QDomElement &out) const
     if( mId != -1 )
     {
         out.setAttribute("id", mId );
+    }
+    if( mPortmanteau.isValid() )
+    {
+        out.setAttribute(XML_PORTMANTEAU, mPortmanteau.morphemes().toString());
     }
     QHashIterator<WritingSystem,Form> fi(mForms);
     while( fi.hasNext() )
@@ -245,6 +254,10 @@ Allomorph Allomorph::readFromXml(QXmlStreamReader &in, const Morphology *morphol
     if( in.attributes().hasAttribute(XML_USE_IN_GENERATIONS) )
     {
         allomorph.setUseInGenerations( in.attributes().value(XML_USE_IN_GENERATIONS) == XML_TRUE );
+    }
+    if( in.attributes().hasAttribute(XML_PORTMANTEAU) )
+    {
+        allomorph.setPortmanteau( Portmanteau() );
     }
 
     while(!in.atEnd() && !(in.tokenType() == QXmlStreamReader::EndElement && in.name() == elementName ) )
