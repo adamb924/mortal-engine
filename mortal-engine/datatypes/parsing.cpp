@@ -609,6 +609,49 @@ bool Parsing::hasPortmanteauClash(const QMultiHash<WritingSystem, MorphemeSequen
     return false;
 }
 
+bool Parsing::hasLexicalItemPortmanteauClash() const
+{
+    MorphemeSequence parsingSequence = morphemeSequence();
+    for(int i=0; i<mSteps.count(); i++)
+    {
+        if( mSteps.at(i).isStem() )
+        {
+            const QList<MorphemeSequence> portmanteaux = mSteps.at(i).lexicalStem().portmanteaux( writingSystem() );
+
+            QListIterator<MorphemeSequence> iter(portmanteaux);
+            while(iter.hasNext())
+            {
+                const MorphemeSequence sequence = iter.next();
+                /// of course we only check if the allomorph in the parsing is not itself the portmanteau morpheme
+                if( mSteps.at(i).morphemes(writingSystem()) != sequence )
+                {
+                    int stemInSequence = sequence.indexOf( MorphemeLabel( MorphemeSequence::STEM_LABEL ) );
+
+                    /// check if the left side of the sequence extends beyond the left edge of the parsing
+                    if( stemInSequence < i )
+                        break;
+                    /// check if the right side of the sequence extends beyong the right edge of the parsing
+                    if( (i + sequence.count() - stemInSequence - 1 ) >= parsingSequence.count() )
+                        break;
+
+                    bool result = true;
+                    for(int j=0; j<sequence.count(); j++)
+                    {
+                        if( parsingSequence.at( i - stemInSequence + j ) != sequence.at(j) )
+                        {
+                            result = false;
+                            break;
+                        }
+                    }
+                    if(result)
+                        return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+
 void Parsing::incrementJumpCounter(const Jump *jump)
 {
     int previous = mJumpCounts.value(jump, 0);

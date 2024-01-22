@@ -491,6 +491,12 @@ void MorphologyXmlReader::parsePortmanteaux()
     {
         i.next()->initializePortmanteaux();
     }
+
+    QSetIterator<AbstractStemList *> i2(mStemNodes);
+    while( i2.hasNext() )
+    {
+        i2.next()->initializePortmanteaux();
+    }
 }
 
 void MorphologyXmlReader::calculateModelProperties()

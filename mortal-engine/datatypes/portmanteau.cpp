@@ -41,7 +41,7 @@ bool Portmanteau::operator==(const Portmanteau &other) const
     return mInitializationString == other.mInitializationString;
 }
 
-void Portmanteau::initialize(const AbstractNode *parent)
+bool Portmanteau::initialize(const AbstractNode *parent)
 {
     mNodes.clear();
     mMorphemes = MorphemeSequence::fromString(mInitializationString);
@@ -92,6 +92,8 @@ void Portmanteau::initialize(const AbstractNode *parent)
     while( i < mMorphemes.count() );
 
     Q_ASSERT(mNodes.count() > 1);
+
+    return mMorphemes.count() > 1;
 }
 
 Portmanteau::Status Portmanteau::status() const

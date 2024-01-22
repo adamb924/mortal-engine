@@ -28,6 +28,7 @@ LexicalStem::LexicalStem(const LexicalStem &other) : mOriginalAllomorph(other.mO
 
     mGlosses = other.mGlosses;
     mId = other.mId;
+    mPortmanteaux = other.mPortmanteaux;
 }
 
 LexicalStem &LexicalStem::operator=(const LexicalStem &other)
@@ -43,6 +44,7 @@ LexicalStem &LexicalStem::operator=(const LexicalStem &other)
     mGlosses = other.mGlosses;
     mId = other.mId;
     mOriginalAllomorph = other.mOriginalAllomorph;
+    mPortmanteaux = other.mPortmanteaux;
     return *this;
 }
 
@@ -215,7 +217,26 @@ Allomorph LexicalStem::displayAllomorph() const
 
 void LexicalStem::initializePortmanteaux(const AbstractNode *parent)
 {
-    Q_UNUSED(parent)
+    for(int i=0; i<mAllomorphs.count(); i++)
+    {
+        QSetIterator<WritingSystem> wsIter( mAllomorphs.at(i).writingSystems() );
+        while( wsIter.hasNext() )
+        {
+            const WritingSystem ws = wsIter.next();
+            if( mAllomorphs.at(i).hasPortmanteau(ws) )
+            {
+                if( mAllomorphs[i].portmanteau().initialize(parent) )
+                {
+                    mPortmanteaux.insert(ws, mAllomorphs[i].portmanteau().morphemes() );
+                }
+            }
+        }
+    }
+}
+
+QList<MorphemeSequence> LexicalStem::portmanteaux(const WritingSystem &ws)
+{
+    return mPortmanteaux.values(ws);
 }
 
 QString LexicalStem::summary() const

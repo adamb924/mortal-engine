@@ -160,6 +160,7 @@ QString ParsingStep::summaryPortion(ParsingStep::SummaryType type, const Writing
         case ParsingStep::MorphemeGlossType:
             return mLexicalStem.gloss(summaryDisplayWritingSystem).text();
         case ParsingStep::MorphemeLabelType:
+            /// TODO this produces extra brackets, e.g., [[Stem][Dative]]
             if( mAllomorph.hasPortmanteau(parsingWritingSystem) )
                 return mAllomorph.portmanteau().morphemes().toString();
             else

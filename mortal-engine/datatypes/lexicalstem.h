@@ -61,6 +61,7 @@ public:
     Allomorph displayAllomorph() const;
 
     void initializePortmanteaux(const AbstractNode * parent);
+    QList<MorphemeSequence> portmanteaux(const WritingSystem & ws);
 
 private:
     QList<Allomorph> mAllomorphs;
@@ -68,6 +69,7 @@ private:
     qlonglong mId;
     QString mLiftGuid;
     Allomorph mOriginalAllomorph;
+    QMultiHash<WritingSystem,MorphemeSequence> mPortmanteaux;
 };
 
 Q_DECL_EXPORT uint qHash(const LexicalStem & key);

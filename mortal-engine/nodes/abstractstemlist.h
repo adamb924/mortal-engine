@@ -68,6 +68,9 @@ public:
 
     QSet<LexicalStem *> stems() const;
 
+    void initializePortmanteaux();
+    void filterOutPortmanteauClashes(QList<Parsing> &candidates) const;
+
 private:
     QList<Parsing> parsingsUsingThisNode(const Parsing & parsing, Parsing::Flags flags) const override;
     QList<QPair<Allomorph, LexicalStem>> possibleStemForms(const Parsing & parsing) const;

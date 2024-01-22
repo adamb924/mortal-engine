@@ -172,15 +172,17 @@ QList<Parsing> AbstractStemList::parsingsUsingThisNode(const Parsing &parsing, P
         /// we want to move to the next node either 1) the parse hasn't been completed, or 2) there
         /// are null morphemes in the model, which we might want to append
         bool shouldTryToContinue = p.isOngoing() || model()->hasZeroLengthForms();
-        if( hasNext() && shouldTryToContinue ) /// more morphemes remain in the model
+        if( hasNext(a, p.writingSystem()) && shouldTryToContinue ) /// more morphemes remain in the model
         {
-            candidates.append( next()->possibleParsings( p, flags ) );
+            candidates.append( next(a, p.writingSystem())->possibleParsings( p, flags ) );
         }
         else /// there's nothing more to match; we have a successful, completed parse
         {
             appendIfComplete(candidates, p);
         }
     }
+
+    filterOutPortmanteauClashes(candidates);
 
     return candidates;
 }
@@ -313,6 +315,28 @@ bool AbstractStemList::match(const Allomorph &allomorph) const
 QSet<LexicalStem *> AbstractStemList::stems() const
 {
     return mStems;
+}
+
+void AbstractStemList::initializePortmanteaux()
+{
+    QSetIterator<LexicalStem*> i(mStems);
+    while( i.hasNext() )
+    {
+        LexicalStem *stem = i.next();
+        stem->initializePortmanteaux(this);
+    }
+}
+
+void AbstractStemList::filterOutPortmanteauClashes(QList<Parsing> &candidates) const
+{
+    for(int i=0; i<candidates.count(); i++)
+    {
+        if( candidates.at(i).hasLexicalItemPortmanteauClash() )
+        {
+            candidates.removeAt(i);
+            i--;
+        }
+    }
 }
 
 void AbstractStemList::addCreateAllomorphs(const CreateAllomorphs &createAllomorphs)
