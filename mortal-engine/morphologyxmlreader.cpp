@@ -308,7 +308,7 @@ AbstractNode *MorphologyXmlReader::tryToReadMorphemeNode(QXmlStreamReader &in, c
                 /// keep a copy of the pointer for later if it's a stem node
                 if( node->type() == AbstractNode::StemNodeType )
                 {
-                    mStemNodes << node;
+                    mStemNodes << dynamic_cast<AbstractStemList*>(node);
                 }
                 return node;
             }
@@ -470,11 +470,10 @@ void MorphologyXmlReader::fillInConstraintPointers()
 
 void MorphologyXmlReader::generateAllomorphsFromRules()
 {
-    QSetIterator<AbstractNode *> i(mStemNodes);
+    QSetIterator<AbstractStemList *> i(mStemNodes);
     while( i.hasNext() )
     {
-        AbstractStemList * sl = dynamic_cast<AbstractStemList*>( i.next() );
-        sl->generateAllomorphsFromRules();
+        i.next()->generateAllomorphsFromRules();
     }
 
     QSetIterator<MorphemeNode *> i2(mMorphology->mMorphemeNodes);

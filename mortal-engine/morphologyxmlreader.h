@@ -114,7 +114,7 @@ private:
     QSet<Jump*> mJumps;
     QSet<CopyNode*> mCopyNodes;
     QSet<PointerToConstraint *> mPointers;
-    QSet<AbstractNode*> mStemNodes;
+    QSet<AbstractStemList*> mStemNodes;
     QSet<const AbstractNestedConstraint*> mNestedConstraints;
 };
 
