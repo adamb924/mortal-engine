@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tests
-    xmlns="https://www.adambaker.org/mortal-engine/tests"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="https://www.adambaker.org/mortal-engine/tests tests.xsd">
+<tests xmlns="https://www.adambaker.org/mortal-engine/tests"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://www.adambaker.org/mortal-engine/tests tests.xsd">
     <schema label="Minimal Example">
         <morphology-file>00-Minimal.xml</morphology-file>
         <accept lang="wk-LA">bil</accept>
@@ -148,7 +146,7 @@
         <message>Non-ATR words cannot take an ATR classifier</message>
         <reject lang="wk-LA">esɪn</reject>
         <reject lang="wk-LA">ekɛm</reject>
-        <reject lang="wk-LA">ekɔŋ</reject>    
+        <reject lang="wk-LA">ekɔŋ</reject>
     </schema>
     <schema label="Phonological Allomorphy">
         <morphology-file>13-Shared-Conditions.xml</morphology-file>
@@ -416,5 +414,12 @@
         <accept lang="wk-AR">نونکم</accept>
         <accept lang="wk-AR">نونکون</accept>
 
+    </schema>
+    <schema label="Portmanteau Stems">
+        <morphology-file>26-Portmanteau-Stems.xml</morphology-file>
+        <accept lang="wk-LA">don</accept>
+        <accept lang="wk-LA">dona</accept>
+        <accept lang="wk-LA">shunga</accept>
+        <reject lang="wk-LA">shua</reject>
     </schema>
 </tests>
