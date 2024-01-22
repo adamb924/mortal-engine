@@ -7,8 +7,7 @@
 #include <stdexcept>
 
 Portmanteau::Portmanteau()
-    : mStatus(Portmanteau::Invalid),
-      mParent(nullptr)
+    : mStatus(Portmanteau::Invalid)
 {
 
 }
@@ -16,9 +15,8 @@ Portmanteau::Portmanteau()
 Portmanteau::Portmanteau(const Portmanteau & other)
     : mStatus(other.mStatus),
       mInitializationString(other.mInitializationString),
-      mParent(other.mParent),
       mMorphemes(other.mMorphemes),
-      mMorphemeNodes(other.mMorphemeNodes)
+    mNodes(other.mNodes)
 {
 
 }
@@ -27,27 +25,25 @@ Portmanteau &Portmanteau::operator=(const Portmanteau &other)
 {
     mStatus = other.mStatus;
     mInitializationString = other.mInitializationString;
-    mParent = other.mParent;
     mMorphemes = other.mMorphemes;
-    mMorphemeNodes = other.mMorphemeNodes;
+    mNodes = other.mNodes;
     return *this;
 }
 
-Portmanteau::Portmanteau(const QString &initializationString, const MorphemeNode *parent)
+Portmanteau::Portmanteau(const QString &initializationString)
      : mStatus(Portmanteau::Valid),
-       mInitializationString(initializationString),
-       mParent(parent)
+       mInitializationString(initializationString)
 {
 }
 
 bool Portmanteau::operator==(const Portmanteau &other) const
 {
-    return mInitializationString == other.mInitializationString && mParent == other.mParent;
+    return mInitializationString == other.mInitializationString;
 }
 
-void Portmanteau::initialize()
+void Portmanteau::initialize(const AbstractNode *parent)
 {
-    mMorphemeNodes.clear();
+    mNodes.clear();
     mMorphemes = MorphemeSequence::fromString(mInitializationString);
 
     /// portmanteaux must have at least two morphemes
@@ -58,15 +54,15 @@ void Portmanteau::initialize()
     }
 
     /// the first morpheme must be the same (i.e., have the same label as) the MorphemeNode that this portmanteau belongs to
-    if( mMorphemes.first() != mParent->label() )
+    if( mMorphemes.first() != parent->label() )
     {
         std::string is = mInitializationString.toUtf8().constData();
-        std::string parent = mParent->label().toString().toUtf8().constData();
-        throw std::runtime_error( "The first morpheme of a portmanteau should be the current morpheme: " + is + " but it's " + parent );
+        std::string parentLabel = parent->label().toString().toUtf8().constData();
+        throw std::runtime_error( "The first morpheme of a portmanteau should be the current morpheme: " + is + " but it's " + parentLabel );
     }
 
     /// the parent MorphemeNode is the first element of the portmanteau
-    mMorphemeNodes << mParent;
+    mNodes << parent;
 
     /// then add every other morpheme in the portmanteau
     /// this will execute at least once because every portmanteau has to have at least two morphemes (checked above)
@@ -74,7 +70,7 @@ void Portmanteau::initialize()
     do
     {
         /// the current node is the (first?) node following the most recently added node node that has the label in question
-        const AbstractNode * current = mMorphemeNodes.last()->followingNodeHavingLabel( mMorphemes.at(i) );
+        const AbstractNode * current = mNodes.last()->followingNodeHavingLabel( mMorphemes.at(i) );
         /// fail if no node has that label
         if( current == nullptr )
         {
@@ -89,13 +85,13 @@ void Portmanteau::initialize()
             std::string label = mMorphemes.first().toString().toUtf8().constData();
             throw std::runtime_error( "Attempting to process the portmanteau string " + is + " but the following node with this label is not a MorphemeNode: " + label );
         }
-        mMorphemeNodes << static_cast<const MorphemeNode*>(current);
+        mNodes << static_cast<const MorphemeNode*>(current);
 
         i++;
     }
     while( i < mMorphemes.count() );
 
-    Q_ASSERT(mMorphemeNodes.count() > 1);
+    Q_ASSERT(mNodes.count() > 1);
 }
 
 Portmanteau::Status Portmanteau::status() const
@@ -110,12 +106,12 @@ bool Portmanteau::isValid() const
 
 const AbstractNode *Portmanteau::next() const
 {
-    return mMorphemeNodes.last()->AbstractNode::next();
+    return mNodes.last()->AbstractNode::next();
 }
 
 const AbstractNode *Portmanteau::lastNode() const
 {
-    return mMorphemeNodes.last();
+    return mNodes.last();
 }
 
 int Portmanteau::count() const
@@ -130,11 +126,11 @@ MorphemeSequence Portmanteau::morphemes() const
 
 QString Portmanteau::summary() const
 {
-    if( mMorphemeNodes.isEmpty() )
+    if( mNodes.isEmpty() )
     {
         return QString("Portmanteau(%1, not yet initialized)").arg( mMorphemes.toString() );
     }
-    else if( mMorphemeNodes.last()->AbstractNode::next() != nullptr )
+    else if( mNodes.last()->AbstractNode::next() != nullptr )
     {
         return QString("Portmanteau(%1, Next: %2)").arg( mMorphemes.toString(), next() == nullptr ? "null" : next()->label().toString() );
     }
@@ -147,9 +143,9 @@ QString Portmanteau::summary() const
 QString Portmanteau::morphemeGlosses(const WritingSystem &summaryDisplayWritingSystem, const QString &delimiter) const
 {
     QStringList glosses;
-    for(int i=0; i<mMorphemeNodes.count(); i++)
+    for(int i=0; i<mNodes.count(); i++)
     {
-        glosses << mMorphemeNodes.at(i)->gloss(summaryDisplayWritingSystem).text();
+        glosses << mNodes.at(i)->gloss(summaryDisplayWritingSystem).text();
     }
     return glosses.join(delimiter);
 }

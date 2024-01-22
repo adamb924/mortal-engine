@@ -20,11 +20,11 @@ public:
     Portmanteau(const Portmanteau &other);
     Portmanteau &operator=(const Portmanteau & other);
 
-    Portmanteau(const QString & initializationString, const MorphemeNode * parent );
+    Portmanteau(const QString & initializationString);
     bool operator==(const Portmanteau & other) const;
 
     /// this needs to be called after all the nodes are read, so they can be searched
-    void initialize();
+    void initialize(const AbstractNode * parent);
 
     Portmanteau::Status status() const;
     bool isValid() const;
@@ -49,9 +49,8 @@ public:
 private:
     Portmanteau::Status mStatus;
     QString mInitializationString;
-    const MorphemeNode * mParent;
     MorphemeSequence mMorphemes;
-    QList<const MorphemeNode*> mMorphemeNodes;
+    QList<const AbstractNode*> mNodes;
 };
 
 #endif // PORTMANTEAU_H

@@ -319,7 +319,7 @@ AbstractNode *MorphemeNode::readFromXml(QXmlStreamReader &in, MorphologyXmlReade
             }
             else if( in.name() == XML_ALLOMORPH )
             {
-                morpheme->addAllomorph( readAllomorphTag(morpheme, in, morphologyReader) );
+                morpheme->addAllomorph( readAllomorphTag(in, morphologyReader) );
             }
             else if( in.name() == AbstractNode::XML_ADD_ALLOMORPHS )
             {
@@ -348,14 +348,14 @@ AbstractNode *MorphemeNode::readFromXml(QXmlStreamReader &in, MorphologyXmlReade
 }
 
 /// TODO probably this belongs in the Allomorph class
-Allomorph MorphemeNode::readAllomorphTag(MorphemeNode* morpheme, QXmlStreamReader &in, MorphologyXmlReader *morphologyReader)
+Allomorph MorphemeNode::readAllomorphTag(QXmlStreamReader &in, MorphologyXmlReader *morphologyReader)
 {
     Q_ASSERT( in.isStartElement() );
     Allomorph allomorph(Allomorph::Original);
 
     if( in.attributes().hasAttribute("portmanteau") )
     {
-        allomorph.setPortmanteau( Portmanteau( in.attributes().value("portmanteau").toString(), morpheme ) );
+        allomorph.setPortmanteau( Portmanteau( in.attributes().value("portmanteau").toString() ) );
     }
 
     if( in.attributes().hasAttribute( Allomorph::XML_USE_IN_GENERATIONS) )
@@ -433,7 +433,7 @@ void MorphemeNode::initializePortmanteaux()
             const WritingSystem ws = wsIter.next();
             if( mAllomorphs.at(i).hasPortmanteau(ws) )
             {
-                mAllomorphs[i].portmanteau().initialize();
+                mAllomorphs[i].portmanteau().initialize(this);
                 /// also keep a list of the portmanteau for later
                 mPortmanteauSequences.insert(ws, mAllomorphs.at(i).portmanteau().morphemes() );
             }
