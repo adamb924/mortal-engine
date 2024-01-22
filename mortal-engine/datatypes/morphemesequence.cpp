@@ -14,6 +14,11 @@ MorphemeSequence::MorphemeSequence(const QList<MorphemeLabel> &list) : QList<Mor
 {
 }
 
+MorphemeSequence::MorphemeSequence(const MorphemeLabel &label)
+{
+    *this << label;
+}
+
 MorphemeSequence MorphemeSequence::operator<<(const MorphemeLabel &newLabel)
 {
     append(newLabel);

@@ -11,6 +11,7 @@ class MORTAL_ENGINE_EXPORT MorphemeSequence : public QList<MorphemeLabel>
 public:
     MorphemeSequence();
     explicit MorphemeSequence(const QList<MorphemeLabel> & list);
+    explicit MorphemeSequence(const MorphemeLabel & label);
 
     MorphemeSequence operator<<(const MorphemeLabel & newLabel);
     MorphemeSequence operator<<(const MorphemeSequence & newSequence);
