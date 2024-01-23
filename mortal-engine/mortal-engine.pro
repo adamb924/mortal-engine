@@ -33,6 +33,7 @@ SOURCES += \
     constraints/satisfiedcondition.cpp \
     datatypes/morphemelabel.cpp \
     datatypes/morphemesequence.cpp \
+    datatypes/parsingsummary.cpp \
     datatypes/portmanteau.cpp \
     debug.cpp \
     generation-constraints/abstractgenerationconstraint.cpp \
@@ -94,6 +95,7 @@ HEADERS += \
     constraints/satisfiedcondition.h \
     datatypes/morphemelabel.h \
     datatypes/morphemesequence.h \
+    datatypes/parsingsummary.h \
     datatypes/portmanteau.h \
     debug.h \
     generation-constraints/abstractgenerationconstraint.h \

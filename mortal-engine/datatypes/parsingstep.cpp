@@ -149,45 +149,6 @@ bool ParsingStep::isStem() const
     return mIsStem;
 }
 
-QString ParsingStep::summaryPortion(ParsingStep::SummaryType type, const WritingSystem &summaryDisplayWritingSystem, const WritingSystem &parsingWritingSystem, const QString &betweenMorphemes) const
-{
-    if( isStem() )
-    {
-        switch(type)
-        {
-        case ParsingStep::MorphemeFormType:
-            return mAllomorph.form( summaryDisplayWritingSystem ).text();
-        case ParsingStep::MorphemeGlossType:
-            return mLexicalStem.gloss(summaryDisplayWritingSystem).text();
-        case ParsingStep::MorphemeLabelType:
-            /// TODO this produces extra brackets, e.g., [[Stem][Dative]]
-            if( mAllomorph.hasPortmanteau(parsingWritingSystem) )
-                return mAllomorph.portmanteau().morphemes().toString();
-            else
-                return mNode->label().toString();
-        }
-    }
-    else /// affix
-    {
-        switch(type)
-        {
-        case ParsingStep::MorphemeFormType:
-            return mAllomorph.form( summaryDisplayWritingSystem ).text();
-        case ParsingStep::MorphemeGlossType:
-            if( mAllomorph.hasPortmanteau(parsingWritingSystem) )
-                return mAllomorph.portmanteau().morphemeGlosses(summaryDisplayWritingSystem, betweenMorphemes);
-            else
-                return mNode->gloss(summaryDisplayWritingSystem).text();
-        case ParsingStep::MorphemeLabelType:
-            if( mAllomorph.hasPortmanteau(parsingWritingSystem) )
-                return mAllomorph.portmanteau().morphemes().toString();
-            else
-                return mNode->label().toString();
-        }
-    }
-    return "";
-}
-
 ParsingStep ParsingStep::readFromXml(QXmlStreamReader &in, const Morphology *morphology, bool &ok, const QString &elementName)
 {
     Q_ASSERT( in.isStartElement() && in.name() == elementName );

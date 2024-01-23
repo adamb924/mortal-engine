@@ -10,6 +10,7 @@
 #include "constraints/abstractlongdistanceconstraint.h"
 #include "morphology.h"
 #include "datatypes/morphemesequence.h"
+#include "datatypes/parsingsummary.h"
 
 int Parsing::MAXIMUM_JUMPS = 1;
 
@@ -947,90 +948,27 @@ QString Parsing::labelSummary( const WritingSystem & ws ) const
 {
     if( ws.isNull() )
     {
-        return stringSummary( ParsingStep::MorphemeLabelType, WritingSystem(), ParsingStep::MorphemeLabelType, WritingSystem(), "[", "]", "" );
+        return ParsingSummary::labelSummary().summarize(*this);
     }
     else
     {
-        return stringSummary( ParsingStep::MorphemeFormType, ws, ParsingStep::MorphemeLabelType, WritingSystem(), "[", "]", "" );
+        return ParsingSummary::labelSummary(ws ).summarize(*this);
     }
 }
 
 QString Parsing::morphemeDelimitedSummary(const WritingSystem &ws) const
 {
-    return stringSummary( ParsingStep::MorphemeFormType, ws, ParsingStep::MorphemeFormType, ws, "", "", "-" );
+    return ParsingSummary::morphemeDelimitedSummary(ws).summarize(*this);
 }
 
 QString Parsing::hypotheticalStyleSummary(const WritingSystem &ws) const
 {
-    return stringSummary( ParsingStep::MorphemeFormType, ws, ParsingStep::MorphemeLabelType, WritingSystem(), "[", "]", "" );
+    return ParsingSummary::hypotheticalStyleSummary(ws).summarize(*this);
 }
 
 QString Parsing::interlinearStyleSummary(const WritingSystem &ws) const
 {
-    return stringSummary( ParsingStep::MorphemeGlossType, ws, ParsingStep::MorphemeGlossType, ws, "", "", "-" );
-}
-
-QString Parsing::stringSummary(ParsingStep::SummaryType stemType, const WritingSystem & stemWs, ParsingStep::SummaryType affixType, const WritingSystem & affixWs, const QString & beforeMorpheme, const QString & afterMorpheme, const QString & betweenMorphemes) const
-{
-    QString string;
-    QListIterator<ParsingStep> iter(mSteps);
-    while( iter.hasNext() )
-    {
-        const ParsingStep s = iter.next();
-
-        if( s.isStem() )
-        {
-            /// e.g., [
-            string += beforeMorpheme;
-            string += s.summaryPortion(stemType, stemWs, writingSystem(), betweenMorphemes );
-            /// e.g., ]
-            string += afterMorpheme;
-            if( iter.hasNext() )
-            {
-                /// e.g., -
-                string += betweenMorphemes;
-            }
-        }
-        else
-        {
-            if( s.allomorph().hasPortmanteau(writingSystem()) )
-            {
-                QListIterator<MorphemeLabel> portmanteauIterator(s.allomorph().portmanteau().morphemes());
-                while(portmanteauIterator.hasNext())
-                {
-                    const MorphemeLabel l = portmanteauIterator.next();
-                    /// e.g., [
-                    string += beforeMorpheme;
-
-                    string += l.toString();
-
-                    /// e.g., ]
-                    string += afterMorpheme;
-
-                    if( portmanteauIterator.hasNext() )
-                    {
-                        /// e.g., -
-                        string += betweenMorphemes;
-                    }
-                }
-            }
-            else
-            {
-                /// e.g., [
-                string += beforeMorpheme;
-                string += s.summaryPortion(affixType, affixWs, writingSystem(), betweenMorphemes );
-                /// e.g., ]
-                string += afterMorpheme;
-                if( iter.hasNext() )
-                {
-                    /// e.g., -
-                    string += betweenMorphemes;
-                }
-            }
-        }
-    }
-
-    return string;
+    return ParsingSummary::interlinearStyleSummary(ws).summarize(*this);
 }
 
 QString Parsing::parsingListSummary(const QList<Parsing> &list, const WritingSystem &ws)

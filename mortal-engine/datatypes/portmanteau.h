@@ -38,13 +38,13 @@ public:
      */
     QString summary() const;
 
-    QString morphemeGlosses(const WritingSystem & summaryDisplayWritingSystem, const QString & delimiter) const;
-
     const AbstractNode *lastNode() const;
 
     int count() const;
 
     MorphemeSequence morphemes() const;
+
+    QList<const AbstractNode *> nodes() const;
 
 private:
     Portmanteau::Status mStatus;

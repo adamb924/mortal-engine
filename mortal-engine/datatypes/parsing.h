@@ -134,7 +134,6 @@ public:
     QString morphemeDelimitedSummary( const WritingSystem & ws ) const;
     QString hypotheticalStyleSummary( const WritingSystem & ws ) const;
     QString interlinearStyleSummary( const WritingSystem & ws = WritingSystem() ) const;
-    QString stringSummary( ParsingStep::SummaryType stemType, const WritingSystem & stemWs, ParsingStep::SummaryType affixType, const WritingSystem & affixWs, const QString & beforeMorpheme, const QString & afterMorpheme, const QString & betweenMorphemes ) const;
     static QString parsingListSummary(const QList<Parsing> & list, const WritingSystem & ws = WritingSystem());
     static bool parsingsHaveSameStems( const QList<Parsing> & list );
     static bool parsingsHaveSameMorphologicalSequence( const QList<Parsing> & list );

@@ -125,6 +125,11 @@ MorphemeSequence Portmanteau::morphemes() const
     return mMorphemes;
 }
 
+QList<const AbstractNode *> Portmanteau::nodes() const
+{
+    return mNodes;
+}
+
 QString Portmanteau::summary() const
 {
     if( mNodes.isEmpty() )
@@ -139,14 +144,4 @@ QString Portmanteau::summary() const
     {
         return QString("Portmanteau(%1, Next: null)").arg( mMorphemes.toString() );
     }
-}
-
-QString Portmanteau::morphemeGlosses(const WritingSystem &summaryDisplayWritingSystem, const QString &delimiter) const
-{
-    QStringList glosses;
-    for(int i=0; i<mNodes.count(); i++)
-    {
-        glosses << mNodes.at(i)->gloss(summaryDisplayWritingSystem).text();
-    }
-    return glosses.join(delimiter);
 }
