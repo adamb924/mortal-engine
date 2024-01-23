@@ -257,7 +257,7 @@ Allomorph Allomorph::readFromXml(QXmlStreamReader &in, const Morphology *morphol
     }
     if( in.attributes().hasAttribute(XML_PORTMANTEAU) )
     {
-        allomorph.setPortmanteau( Portmanteau() );
+        allomorph.setPortmanteau( Portmanteau( in.attributes().value(XML_PORTMANTEAU).toString() ) );
     }
 
     while(!in.atEnd() && !(in.tokenType() == QXmlStreamReader::EndElement && in.name() == elementName ) )

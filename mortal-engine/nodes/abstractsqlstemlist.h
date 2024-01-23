@@ -55,6 +55,7 @@ protected:
 
     virtual QString qCreateStems() const;
     virtual QString qCreateAllomorphs() const;
+    virtual QString qUpdateAllomorphsA() const;
     virtual QString qCreateForms() const;
     virtual QString qCreateGlosses() const;
     virtual QString qCreateTags() const;
@@ -72,7 +73,7 @@ private:
     void insertStemIntoDataModel( LexicalStem * stem ) override;
     void removeStemFromDataModel( qlonglong id ) override;
     LexicalStem * lexicalStemFromId(qlonglong stemId, const QString &liftGuid, const QHash<QString, WritingSystem> &writingSystems);
-    Allomorph allomorphFromId(qlonglong allomorphId, const QHash<QString, WritingSystem> &writingSystems, bool useInGenerations);
+    Allomorph allomorphFromId(qlonglong allomorphId, const QHash<QString, WritingSystem> &writingSystems, bool useInGenerations, const QString & portmanteau);
 
     void addStemToDatabase( LexicalStem * stem );
     qlonglong ensureTagInDatabase( const QString & tag );

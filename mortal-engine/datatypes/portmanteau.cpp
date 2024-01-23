@@ -1,7 +1,6 @@
 #include "portmanteau.h"
 
 #include "nodes/abstractnode.h"
-#include "nodes/morphemenode.h"
 
 #include <QtDebug>
 #include <stdexcept>
@@ -65,7 +64,7 @@ bool Portmanteau::initialize(const AbstractNode *parent)
         throw std::runtime_error( "The first morpheme of a portmanteau should be the current morpheme: " + is + " but it's " + parentLabel );
     }
 
-    /// the parent MorphemeNode is the first element of the portmanteau
+    /// the parent AbstractNode is the first element of the portmanteau
     mNodes << parent;
 
     /// then add every other morpheme in the portmanteau
@@ -74,14 +73,16 @@ bool Portmanteau::initialize(const AbstractNode *parent)
     do
     {
         /// the current node is the (first?) node following the most recently added node node that has the label in question
-        const AbstractNode * current = mNodes.last()->followingNodeHavingLabel( mMorphemes.at(i) );
+        const AbstractNode * startingFrom = mNodes.last(); /// i.e., either the first node or the last one added in a previous loop iteration
+        const AbstractNode * current = startingFrom->followingNodeHavingLabel( mMorphemes.at(i) );
 
         /// fail if no node has that label
         if( current == nullptr )
         {
             std::string is = mInitializationString.toUtf8().constData();
-            std::string label = mMorphemes.first().toString().toUtf8().constData();
-            throw std::runtime_error( "Attempting to process the portmanteau string " + is + " but the following node with this label could not be found: " + label );
+            std::string startingLabel = mMorphemes.first().toString().toUtf8().constData();
+            std::string targetLabel = mMorphemes.at(i).toString().toUtf8().constData();
+            throw std::runtime_error( "Attempting to process the portmanteau string " + is + " but the node '" + targetLabel + "' could not be found following '" + startingLabel + "'." );
         }
         mNodes << current;
 
@@ -128,7 +129,7 @@ QString Portmanteau::summary() const
 {
     if( mNodes.isEmpty() )
     {
-        return QString("Portmanteau(%1, not yet initialized)").arg( mMorphemes.toString() );
+        return QString("Portmanteau(%1, not yet initialized but having initialization string %2)").arg( mMorphemes.toString() ).arg(mInitializationString);
     }
     else if( mNodes.last()->AbstractNode::next() != nullptr )
     {

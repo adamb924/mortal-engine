@@ -45,7 +45,9 @@ bool AbstractStemList::addStem(LexicalStem *stem)
 
     if( shouldInsert )
     {
-        insertStemIntoDataModel( new LexicalStem( * stem ) );
+        LexicalStem * newStem = new LexicalStem( * stem );
+        newStem->initializePortmanteaux(this);
+        insertStemIntoDataModel( newStem );
     }
 
     return shouldInsert;
@@ -57,6 +59,7 @@ bool AbstractStemList::replaceStem(const LexicalStem & stem)
     if( removed )
     {
         LexicalStem * newStem = new LexicalStem(stem);
+        newStem->initializePortmanteaux(this);
         mStems.insert(newStem);
         insertStemIntoDataModel(newStem);
     }

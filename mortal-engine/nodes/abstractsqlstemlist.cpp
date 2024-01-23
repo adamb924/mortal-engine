@@ -163,6 +163,8 @@ void AbstractSqlStemList::readStemsSingleQuery(const QHash<QString, WritingSyste
                 /// then reset the allomorph object, and add this form
                 allomorph = Allomorph(Allomorph::Original);
                 allomorph.setTags( Tag::fromString( query.value(6).toString() ) );
+                if( query.value(7).toString().length() > 0 )
+                    allomorph.setPortmanteau(Portmanteau( query.value(7).toString() ));
             }
             allomorph.setForm( f );
             previousAllomorphId = allomorphId;
@@ -267,7 +269,8 @@ LexicalStem *AbstractSqlStemList::lexicalStemFromId(qlonglong stemId, const QStr
         {
             qlonglong allomorph_id = query.value(0).toLongLong();
             bool useInGenerations =  query.value(1).toLongLong() > 0;
-            ls->insert( allomorphFromId( allomorph_id, writingSystems, useInGenerations ) );
+            QString portmanteau = query.value(2).toString();
+            ls->insert( allomorphFromId( allomorph_id, writingSystems, useInGenerations, portmanteau ) );
         }
     }
     else
@@ -296,7 +299,7 @@ LexicalStem *AbstractSqlStemList::lexicalStemFromId(qlonglong stemId, const QStr
     return ls;
 }
 
-Allomorph AbstractSqlStemList::allomorphFromId(qlonglong allomorphId, const QHash<QString, WritingSystem> &writingSystems, bool useInGenerations)
+Allomorph AbstractSqlStemList::allomorphFromId(qlonglong allomorphId, const QHash<QString, WritingSystem> &writingSystems, bool useInGenerations, const QString &portmanteau)
 {
     QSqlDatabase db = QSqlDatabase::database(mDbName);
     QSqlQuery query(db);
@@ -304,6 +307,8 @@ Allomorph AbstractSqlStemList::allomorphFromId(qlonglong allomorphId, const QHas
     Allomorph a(Allomorph::Original);
     a.setId(allomorphId);
     a.setUseInGenerations(useInGenerations);
+    if( portmanteau.length() > 0 )
+        a.setPortmanteau( Portmanteau(portmanteau) );
 
     query.prepare(qSelectFormsFromAllomorphId());
     query.bindValue(0, allomorphId);
@@ -348,6 +353,9 @@ void AbstractSqlStemList::createTables()
 
     if( !q.exec(qCreateAllomorphs()) )
         qWarning() << "AbstractSqlStemList::createTables()" << q.lastError().text() << q.executedQuery();
+
+    /// ignoring errors on this, since it will produce an error when it applies vaccuously
+    q.exec(qUpdateAllomorphsA());
 
     if( !q.exec(qCreateForms()) )
         qWarning() << "AbstractSqlStemList::createTables()" << q.lastError().text() << q.executedQuery();
@@ -421,6 +429,7 @@ void AbstractSqlStemList::addStemToDatabase(LexicalStem *stem)
         if( a.type() == Allomorph::Original )
         {
             allomorphQuery.bindValue(1, a.useInGenerations() ); /// this will be the same for all subsequent calls
+            allomorphQuery.bindValue(2, a.portmanteau().morphemes().toString() ); /// this will be the same for all subsequent calls
             allomorphQuery.exec(); /// using previously bound values
             qlonglong allomorph_id = allomorphQuery.lastInsertId().toLongLong();
 
@@ -578,7 +587,7 @@ QString AbstractSqlStemList::qSelectStemIdsWithTags(const QString &taglist) cons
 
 QString AbstractSqlStemList::qSelectStemsSingleQuery() const
 {
-    return "SELECT stem_id, liftGuid,allomorphs._id AS allomorph_id,use_in_generations,Form,writingsystem,group_concat(label) "
+    return "SELECT stem_id, liftGuid,allomorphs._id AS allomorph_id,use_in_generations,Form,writingsystem,group_concat(label),portmanteau "
            "FROM Stems, Allomorphs, Forms, Tags, TagMembers "
            "ON "
                "Stems._id=Allomorphs.stem_id "
@@ -590,7 +599,7 @@ QString AbstractSqlStemList::qSelectStemsSingleQuery() const
 
 QString AbstractSqlStemList::qSelectStemsSingleQueryWithTags(const QString &taglist) const
 {
-    return "SELECT stem_id, liftGuid,allomorphs._id AS allomorph_id,use_in_generations,Form,writingsystem,group_concat(label) "
+    return "SELECT stem_id, liftGuid,allomorphs._id AS allomorph_id,use_in_generations,Form,writingsystem,group_concat(label),portmanteau "
                           "FROM Stems, Allomorphs, Forms, Tags, TagMembers "
                           "ON "
                               "Stems._id=Allomorphs.stem_id "
@@ -628,7 +637,7 @@ QString AbstractSqlStemList::qDeleteFromStems() const
 
 QString AbstractSqlStemList::qSelectAllomorphsFromStemId() const
 {
-    return "SELECT _id,use_in_generations FROM Allomorphs WHERE stem_id=?;";
+    return "SELECT _id,use_in_generations,portmanteau FROM Allomorphs WHERE stem_id=?;";
 }
 
 QString AbstractSqlStemList::qSelectGlossesFromStemId() const
@@ -653,7 +662,7 @@ QString AbstractSqlStemList::qInsertStem() const
 
 QString AbstractSqlStemList::qInsertAllomorph() const
 {
-    return "INSERT INTO allomorphs (stem_id,use_in_generations) VALUES (?,?);";
+    return "INSERT INTO allomorphs (stem_id,use_in_generations,portmanteau) VALUES (?,?,?);";
 }
 
 QString AbstractSqlStemList::qInsertForm() const
@@ -688,7 +697,12 @@ QString AbstractSqlStemList::qCreateStems() const
 
 QString AbstractSqlStemList::qCreateAllomorphs() const
 {
-    return "create table if not exists Allomorphs ( _id integer primary key autoincrement, stem_id integer, use_in_generations integer default 1);";
+    return "create table if not exists Allomorphs ( _id integer primary key autoincrement, stem_id integer, use_in_generations integer default 1, portmanteau text default null);";
+}
+
+QString AbstractSqlStemList::qUpdateAllomorphsA() const
+{
+    return "ALTER TABLE Allomorphs ADD COLUMN portmanteau text default null;";
 }
 
 QString AbstractSqlStemList::qCreateForms() const
