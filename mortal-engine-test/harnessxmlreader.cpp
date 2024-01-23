@@ -445,7 +445,7 @@ InterlinearGlossTest *HarnessXmlReader::readInterlinearGlossTest(QXmlStreamReade
     InterlinearGlossTest* test = new InterlinearGlossTest(schema->morphology());
     test->setPropertiesFromAttributes(in);
 
-    while(!in.atEnd() && !(in.tokenType() == QXmlStreamReader::EndElement && in.name() == XML_GENERATION_TEST ) )
+    while(!in.atEnd() && !(in.tokenType() == QXmlStreamReader::EndElement && in.name() == XML_INTERLINEAR_GLOSS_TEST ) )
     {
         in.readNext();
 
