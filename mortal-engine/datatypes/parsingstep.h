@@ -49,6 +49,7 @@ public:
 private:
     const AbstractNode* mNode;
     Allomorph mAllomorph;
+    /// these need to be an object rather than a pointer because even LexicalStems that don't exist in the model can be specified in generations
     LexicalStem mLexicalStem;
     bool mIsStem;
 };

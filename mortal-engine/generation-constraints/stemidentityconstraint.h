@@ -30,6 +30,7 @@ public:
     QString summary() const override;
 
 private:
+    /// these need to be objects rather than pointers because even LexicalStems that don't exist in the model can be specified in generations
     QList<LexicalStem> mLexicalStems;
 };
 
