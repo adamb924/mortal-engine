@@ -6,6 +6,7 @@
 #include <stdexcept>
 
 #include "morphology.h"
+#include "hashseed.h"
 
 QRegularExpression Form::whitespaceAndNonWordExpression("^[\\W\\s\\d]+$", QRegularExpression::UseUnicodePropertiesOption);
 
@@ -185,7 +186,7 @@ uint Form::hash() const
 
 void Form::calculateHash()
 {
-    mHash = mWritingSystem.hash() ^ qHash(mText, static_cast<uint>(qGlobalQHashSeed()));
+    mHash = mWritingSystem.hash() ^ qHash(mText, HASH_SEED);
 }
 
 QString Form::summary(const QString &label) const

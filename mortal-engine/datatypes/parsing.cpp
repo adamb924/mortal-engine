@@ -11,6 +11,7 @@
 #include "morphology.h"
 #include "datatypes/morphemesequence.h"
 #include "datatypes/parsingsummary.h"
+#include "hashseed.h"
 
 int Parsing::MAXIMUM_JUMPS = 1;
 
@@ -509,7 +510,7 @@ QString Parsing::longDistanceConstraintsSatisfactionSummary() const
 
 void Parsing::calculateHash()
 {
-    mHash = qHash(labelSummary(), static_cast<uint>(qGlobalQHashSeed()));
+    mHash = qHash(labelSummary(), HASH_SEED);
 }
 
 uint Parsing::hash() const

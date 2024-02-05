@@ -1,6 +1,7 @@
 #include "morphemelabel.h"
 
 #include <QHash>
+#include "hashseed.h"
 
 MorphemeLabel::MorphemeLabel()
 {
@@ -39,5 +40,5 @@ QString MorphemeLabel::summary() const
 
 uint qHash(const MorphemeLabel &key)
 {
-    return qHash(key.toString(), static_cast<uint>(qGlobalQHashSeed()));
+    return qHash(key.toString(), HASH_SEED);
 }

@@ -31,6 +31,7 @@ SOURCES += \
     constraints/ignoreflag.cpp \
     constraints/precedingnodeconstraint.cpp \
     constraints/satisfiedcondition.cpp \
+    datatypes/hashseed.cpp \
     datatypes/morphemelabel.cpp \
     datatypes/morphemesequence.cpp \
     datatypes/parsingsummary.cpp \
@@ -93,6 +94,7 @@ HEADERS += \
     constraints/ignoreflag.h \
     constraints/precedingnodeconstraint.h \
     constraints/satisfiedcondition.h \
+    datatypes/hashseed.h \
     datatypes/morphemelabel.h \
     datatypes/morphemesequence.h \
     datatypes/parsingsummary.h \

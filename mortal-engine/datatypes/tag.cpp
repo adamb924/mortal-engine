@@ -5,8 +5,10 @@
 #include <QDomElement>
 #include <QSet>
 
+#include "hashseed.h"
+
 Tag::Tag(const QString &label)
-    : mLabel(label), mHash( qHash(mLabel, static_cast<uint>(qGlobalQHashSeed())) )
+    : mLabel(label), mHash( qHash(mLabel, HASH_SEED ) )
 {
 
 }

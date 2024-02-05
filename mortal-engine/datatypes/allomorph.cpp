@@ -5,6 +5,7 @@
 #include "parsing.h"
 #include "portmanteau.h"
 #include "debug.h"
+#include "hashseed.h"
 
 #include "constraints/abstractconstraint.h"
 
@@ -444,7 +445,7 @@ uint Allomorph::hash() const
 
 void Allomorph::calculateHash()
 {
-    mHash = mType ^ qHash( mForms, static_cast<uint>(qGlobalQHashSeed()) ) ^ qHash( mConstraints, static_cast<uint>(qGlobalQHashSeed()) ) ^ qHash( mTags, static_cast<uint>(qGlobalQHashSeed()) );
+    mHash = mType ^ qHash( mForms, HASH_SEED ) ^ qHash( mConstraints, HASH_SEED ) ^ qHash( mTags, HASH_SEED );
 }
 
 bool Allomorph::useInGenerations() const

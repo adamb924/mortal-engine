@@ -3,6 +3,7 @@
 #include "allomorph.h"
 #include "create-allomorphs/createallomorphs.h"
 #include "debug.h"
+#include "hashseed.h"
 
 LexicalStem::LexicalStem() : mId(-1), mOriginalAllomorph(Allomorph::Null)
 {
@@ -288,7 +289,7 @@ uint qHash(const LexicalStem &key)
 {
     /// 2021-09-22: This hash is very rarely used, and never in this code,
     /// so I am not going to store a hash value.
-    uint hash = qHash( key.glosses(), static_cast<uint>(qGlobalQHashSeed()) )  ^ qHash(key.id(), static_cast<uint>(qGlobalQHashSeed()));
+    uint hash = qHash( key.glosses(), HASH_SEED )  ^ qHash(key.id(), HASH_SEED);
     QListIterator<Allomorph> i = key.allomorphIterator();
     while( i.hasNext() )
         hash ^= qHash(i.next());
