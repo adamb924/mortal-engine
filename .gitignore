@@ -10,3 +10,4 @@ mortal-engine-cppcheck-build-dir/*
 examples/log.txt
 diagrams/**.dot
 diagrams/**.png
+mortal-engine.code-workspace
