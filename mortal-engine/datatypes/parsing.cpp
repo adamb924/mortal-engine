@@ -857,7 +857,7 @@ bool Parsing::allomorphMatchConditionsSatisfied(const Allomorph &allomorph) cons
         {
             if( Morphology::DebugOutput )
             {
-                qInfo() << qPrintable("\t") << allomorph.form(writingSystem()).text() << "Match conditions failed:";
+                qInfo().noquote() << qPrintable("\t") << allomorph.form(writingSystem()).text() << "Match conditions failed:";
                 allomorphConditionMatchStringSummary(allomorph);
             }
             return false;
@@ -865,7 +865,7 @@ bool Parsing::allomorphMatchConditionsSatisfied(const Allomorph &allomorph) cons
     }
     if( Morphology::DebugOutput )
     {
-        qInfo() << qPrintable("\t") << allomorph.form(writingSystem()).text() << "Match conditions satisfied:";
+        qInfo().noquote() << qPrintable("\t") << allomorph.form(writingSystem()).text() << "Match conditions satisfied:";
         allomorphConditionMatchStringSummary(allomorph);
     }
     return true;
