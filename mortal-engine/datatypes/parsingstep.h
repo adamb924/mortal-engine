@@ -1,15 +1,18 @@
 #ifndef PARSINGSTEP_H
 #define PARSINGSTEP_H
 
-class AbstractNode;
-class QXmlStreamWriter;
-class LexicalStem;
-class Morphology;
-
 #include "allomorph.h"
 #include "lexicalstem.h"
 
 #include "mortal-engine_global.h"
+
+class QXmlStreamWriter;
+
+namespace ME {
+
+class AbstractNode;
+class LexicalStem;
+class Morphology;
 
 class MORTAL_ENGINE_EXPORT ParsingStep
 {
@@ -53,5 +56,7 @@ private:
     LexicalStem mLexicalStem;
     bool mIsStem;
 };
+
+} // namespace ME
 
 #endif // PARSINGSTEP_H

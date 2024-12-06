@@ -14,6 +14,8 @@
 #include "testharness.h"
 #include "abstracttest.h"
 
+namespace ME {
+
 class Morphology;
 
 class TestSchema
@@ -59,5 +61,7 @@ private:
     Morphology * mMorphology;
     bool mShowModel;
 };
+
+} // namespace ME
 
 #endif // TESTSCHEMA_H

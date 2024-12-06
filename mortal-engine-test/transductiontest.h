@@ -8,6 +8,8 @@
 
 #include "abstractinputoutputtest.h"
 
+namespace ME {
+
 class TransductionTest : public AbstractInputOutputTest
 {
 public:
@@ -16,5 +18,7 @@ public:
     //! \brief Runs the test.
     void runTest() override;
 };
+
+} // namespace ME
 
 #endif // TRANSDUCTIONTEST_H

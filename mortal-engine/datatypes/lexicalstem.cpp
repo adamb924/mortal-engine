@@ -5,6 +5,10 @@
 #include "debug.h"
 #include "hashseed.h"
 
+#include <QHash>
+
+using namespace ME;
+
 LexicalStem::LexicalStem() : mId(-1), mOriginalAllomorph(Allomorph::Null)
 {
 
@@ -285,11 +289,19 @@ QString LexicalStem::oneLineSummary() const
     return summary().replace(QRegularExpression("\\s+")," ").trimmed();
 }
 
-uint qHash(const LexicalStem &key)
+uint ME::qHash(const LexicalStem &key)
 {
     /// 2021-09-22: This hash is very rarely used, and never in this code,
     /// so I am not going to store a hash value.
-    uint hash = qHash( key.glosses(), HASH_SEED )  ^ qHash(key.id(), HASH_SEED);
+    // uint hash = qHash( key.glosses(), HASH_SEED )  ^ qHash(key.id(), HASH_SEED);
+
+    uint hash = qHash(key.glosses(), HASH_SEED);
+    hash = hash ^ static_cast<unsigned int>( std::hash<long long>()(static_cast<long long>(key.id())) );
+
+    // long long id = static_cast<long long>(key.id());
+    // size_t idHash = std::hash<long long>( id )();
+    // uint hash = qHash( key.glosses(), HASH_SEED );
+    // hash = hash ^ std::hash<long long>( id )();
     QListIterator<Allomorph> i = key.allomorphIterator();
     while( i.hasNext() )
         hash ^= qHash(i.next());

@@ -39,6 +39,8 @@
 
 #include <stdexcept>
 
+using namespace ME;
+
 QString MorphologyXmlReader::XML_MORPHOLOGY = "morphology";
 QString MorphologyXmlReader::XML_MAXIMUM_JUMPS = "maximum-jumps";
 QString MorphologyXmlReader::XML_PATH = "path";

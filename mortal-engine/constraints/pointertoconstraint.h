@@ -3,6 +3,8 @@
 
 #include "abstractconstraint.h"
 
+namespace ME {
+
 class PointerToConstraint : public AbstractConstraint
 {
 public:
@@ -39,5 +41,7 @@ private:
     QString mTargetId;
     const AbstractConstraint * mTheConstraint;
 };
+
+} // namespace ME
 
 #endif // POINTERTOCONSTRAINT_H

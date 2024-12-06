@@ -4,6 +4,8 @@
 #include <QXmlStreamReader>
 #include "debug.h"
 
+using namespace ME;
+
 Path::Path(const MorphologicalModel *model) : AbstractPath(model)
 {
 

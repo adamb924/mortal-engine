@@ -15,6 +15,8 @@
 #include "datatypes/form.h"
 #include "morphology.h"
 
+namespace ME {
+
 class Morphology;
 
 class AbstractTest
@@ -62,5 +64,7 @@ protected:
     bool mShowDebug;
     bool mShowStemDebug;
 };
+
+} // namespace ME
 
 #endif // ABSTRACTTEST_H

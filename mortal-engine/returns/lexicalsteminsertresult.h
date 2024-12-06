@@ -3,9 +3,11 @@
 
 #include <QHash>
 
-class AbstractStemList;
-
 #include "mortal-engine_global.h"
+
+namespace ME {
+
+class AbstractStemList;
 
 class MORTAL_ENGINE_EXPORT LexicalStemInsertResult
 {
@@ -33,3 +35,5 @@ private:
 };
 
 #endif // LEXICALSTEMINSERTRESULT_H
+
+} // namespace ME

@@ -4,6 +4,8 @@
 #include "abstractnode.h"
 #include "path.h"
 
+namespace ME {
+
 class Fork : public AbstractNode
 {
 public:
@@ -41,5 +43,7 @@ private:
 private:
     QList<Path*> mPaths;
 };
+
+} // namespace ME
 
 #endif // FORK_H

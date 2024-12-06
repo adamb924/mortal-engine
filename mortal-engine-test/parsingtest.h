@@ -9,6 +9,8 @@
 #include "abstracttest.h"
 #include "datatypes/morphemesequence.h"
 
+namespace ME {
+
 class ParsingTest : public AbstractTest
 {
 public:
@@ -33,5 +35,7 @@ private:
     QSet<MorphemeSequence> mTargetParsings, mActualParsings;
     int mTotalParsingCount, mUniqueParsingCount;
 };
+
+} // namespace ME
 
 #endif // PARSINGTEST_H

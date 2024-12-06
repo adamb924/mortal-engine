@@ -7,13 +7,19 @@
 #include <QSet>
 #include <QHash>
 
-class Morphology;
-class AbstractNode;
-class AbstractPath;
+#include "create-allomorphs/createallomorphs.h"
+#include "nodes/nodematcher.h"
+#include "constraints/constraintmatcher.h"
 
 class QXmlStreamReader;
-class Allomorph;
 class QXmlStreamAttributes;
+
+namespace ME {
+
+class Morphology;
+class AbstractPath;
+
+class Allomorph;
 class WritingSystem;
 class Parsing;
 
@@ -26,10 +32,6 @@ class MorphologicalModel;
 class MorphemeNode;
 class Jump;
 class CopyNode;
-
-#include "create-allomorphs/createallomorphs.h"
-#include "nodes/nodematcher.h"
-#include "constraints/constraintmatcher.h"
 
 class MORTAL_ENGINE_EXPORT MorphologyXmlReader
 {
@@ -117,5 +119,7 @@ private:
     QSet<AbstractStemList*> mStemNodes;
     QSet<const AbstractNestedConstraint*> mNestedConstraints;
 };
+
+} // namespace ME
 
 #endif // MORPHOLOGYXMLREADER_H

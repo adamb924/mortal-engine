@@ -4,6 +4,8 @@
 
 #include "nodes/abstractstemlist.h"
 
+using namespace ME;
+
 LexicalStemInsertResult::LexicalStemInsertResult()
 {
 

@@ -11,6 +11,8 @@
 #include "morphologyxmlreader.h"
 #include "debug.h"
 
+using namespace ME;
+
 QString CreateAllomorphs::XML_NO_OTHERWISE = "no-otherwise";
 QString CreateAllomorphs::XML_OVERRIDE_OTHERWISE = "override-otherwise";
 

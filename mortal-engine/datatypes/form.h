@@ -11,17 +11,21 @@
 #ifndef FORM_H
 #define FORM_H
 
+#include "mortal-engine_global.h"
+
 #include "writingsystem.h"
 
-class Parsing;
 class QXmlStreamWriter;
 class QDomElement;
 class QDomDocument;
 class QXmlStreamReader;
+
+
+namespace ME {
+
+class Parsing;
 class MorphologyXmlReader;
 class Morphology;
-
-#include "mortal-engine_global.h"
 
 class MORTAL_ENGINE_EXPORT Form
 {
@@ -224,6 +228,10 @@ private:
     uint mHash;
 };
 
-Q_DECL_EXPORT uint qHash(const Form &key);
+Q_DECL_EXPORT uint qHash(const ME::Form &key);
+
+Q_DECL_EXPORT uint qHash(const std::pair<const ME::WritingSystem&, const ME::Form&>& pair);
+
+} // namespace ME
 
 #endif // FORM_H

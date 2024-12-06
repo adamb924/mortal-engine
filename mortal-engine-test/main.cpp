@@ -9,6 +9,8 @@
 #include "morphology.h"
 #include "messages.h"
 
+using namespace ME;
+
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);

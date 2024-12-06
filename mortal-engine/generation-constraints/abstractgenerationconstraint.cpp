@@ -1,5 +1,7 @@
 #include "abstractgenerationconstraint.h"
 
+using namespace ME;
+
 AbstractGenerationConstraint::AbstractGenerationConstraint(ContraintType constraintType) : mConstraintType(constraintType)
 {
 

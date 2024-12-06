@@ -6,6 +6,8 @@
 
 #include "mortal-engine_global.h"
 
+namespace ME {
+
 class MORTAL_ENGINE_EXPORT StemIdentityConstraint : public AbstractGenerationConstraint
 {
 public:
@@ -33,5 +35,7 @@ private:
     /// these need to be objects rather than pointers because even LexicalStems that don't exist in the model can be specified in generations
     QList<LexicalStem> mLexicalStems;
 };
+
+} // namespace ME
 
 #endif // STEMIDENTITYCONSTRAINT_H

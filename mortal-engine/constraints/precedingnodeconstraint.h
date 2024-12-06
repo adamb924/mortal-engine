@@ -3,6 +3,8 @@
 
 #include "abstractconstraint.h"
 
+namespace ME {
+
 class PrecedingNodeConstraint : public AbstractConstraint
 {
 public:
@@ -31,5 +33,7 @@ private:
     QString mIdentifierString;
     Identifier mIdentifier;
 };
+
+} // namespace ME
 
 #endif // PRECEDINGNODECONSTRAINT_H

@@ -1,5 +1,7 @@
 #include "parsingtest.h"
 
+using namespace ME;
+
 ParsingTest::ParsingTest(const Morphology *morphology) : AbstractTest(morphology), mTotalParsingCount(-1), mUniqueParsingCount(-1)
 {
 

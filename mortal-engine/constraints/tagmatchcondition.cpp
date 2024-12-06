@@ -8,6 +8,8 @@
 #include "datatypes/parsingstep.h"
 #include "debug.h"
 
+using namespace ME;
+
 QString TagMatchCondition::XML_TAG_MATCH = "tag-match";
 QString TagMatchCondition::XML_MATCH_TAG = "match-tag";
 QString TagMatchCondition::XML_INTERUPTED_BY = "interrupted-by";

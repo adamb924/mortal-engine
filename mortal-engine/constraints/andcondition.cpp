@@ -7,6 +7,8 @@
 #include "morphologyxmlreader.h"
 #include "debug.h"
 
+using namespace ME;
+
 AndCondition::AndCondition()
 {
 

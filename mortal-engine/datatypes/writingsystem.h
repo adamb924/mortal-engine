@@ -22,6 +22,8 @@ class QXmlStreamReader;
 
 #include "mortal-engine_global.h"
 
+namespace ME {
+
 class MORTAL_ENGINE_EXPORT WritingSystem
 {
 public:
@@ -151,6 +153,8 @@ private:
     uint mHash;
 };
 
-Q_DECL_EXPORT uint qHash(const WritingSystem & key);
+Q_DECL_EXPORT uint qHash(const ME::WritingSystem & key);
+
+} // namespace ME
 
 #endif // WRITINGSYSTEM_H

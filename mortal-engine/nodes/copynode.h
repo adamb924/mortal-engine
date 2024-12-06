@@ -4,8 +4,12 @@
 #include "abstractnode.h"
 
 class QString;
-class AbstractNode;
 class QXmlStreamReader;
+
+
+namespace ME {
+
+class AbstractNode;
 class MorphologyXmlReader;
 class MorphologicalModel;
 
@@ -38,5 +42,7 @@ public:
 private:
     AbstractNode * mCopy;
 };
+
+} // namespace ME
 
 #endif // COPYNODE_H

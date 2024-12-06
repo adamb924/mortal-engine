@@ -9,6 +9,8 @@
 #include <QXmlStreamReader>
 #include "debug.h"
 
+using namespace ME;
+
 MutuallyExclusiveMorphemes::MutuallyExclusiveMorphemes(const MorphologicalModel *model) : AbstractNode(model)
 {
 

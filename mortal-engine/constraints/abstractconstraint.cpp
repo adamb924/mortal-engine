@@ -6,6 +6,8 @@
 #include <QXmlStreamReader>
 #include <QRegularExpression>
 
+using namespace ME;
+
 QString AbstractConstraint::XML_MATCH_EXPRESSION = "match-expression";
 QString AbstractConstraint::XML_OPTIONAL = "optional";
 QString AbstractConstraint::XML_IGNORE_WHEN_PARSING = "ignore-when-parsing";

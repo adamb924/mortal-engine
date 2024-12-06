@@ -5,6 +5,8 @@
 #include <QXmlStreamReader>
 #include "debug.h"
 
+using namespace ME;
+
 BoundCondition::BoundCondition()
 {
 

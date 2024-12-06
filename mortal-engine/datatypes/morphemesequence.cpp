@@ -2,6 +2,8 @@
 
 #include <QRegularExpression>
 
+using namespace ME;
+
 QString MorphemeSequence::STEM_LABEL = "Stem";
 QRegularExpression MorphemeSequence::morphemeStringFormat = QRegularExpression("^(\\[.*\\])+$");
 

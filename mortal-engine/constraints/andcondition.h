@@ -5,6 +5,8 @@
 
 #include "abstractnestedconstraint.h"
 
+namespace ME {
+
 class MorphologyXmlReader;
 
 class AndCondition : public AbstractNestedConstraint
@@ -27,5 +29,7 @@ public:
     static AbstractConstraint *readFromXml(QXmlStreamReader &in, MorphologyXmlReader *morphologyReader);
     static bool matchesElement(QXmlStreamReader &in);
 };
+
+} // namespace ME
 
 #endif // ANDCONDITION_H

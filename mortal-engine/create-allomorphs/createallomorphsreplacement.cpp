@@ -3,6 +3,8 @@
 #include "datatypes/form.h"
 #include "debug.h"
 
+using namespace ME;
+
 CreateAllomorphsReplacement::CreateAllomorphsReplacement(const QList<Form> &replaceThis, const QList<Form> &withThis )
 {
     setReplaceThis(replaceThis);

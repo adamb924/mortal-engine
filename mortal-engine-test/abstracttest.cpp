@@ -6,6 +6,8 @@
 
 #include <QXmlStreamReader>
 
+using namespace ME;
+
 AbstractTest::AbstractTest(const Morphology *morphology) : mMorphology(morphology), mShowDebug(false), mShowStemDebug(false)
 {
 

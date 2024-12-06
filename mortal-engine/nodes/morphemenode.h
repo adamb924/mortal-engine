@@ -7,6 +7,8 @@
 #include "datatypes/allomorph.h"
 #include "create-allomorphs/createallomorphs.h"
 
+namespace ME {
+
 class MorphemeNode : public AbstractNode
 {
 public:
@@ -75,5 +77,7 @@ private:
     QList<CreateAllomorphs> mCreateAllomorphs;
     QMultiHash<WritingSystem, MorphemeSequence> mPortmanteauSequences;
 };
+
+} // namespace ME
 
 #endif // MORPHEMENODE_H

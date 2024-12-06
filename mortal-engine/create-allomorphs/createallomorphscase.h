@@ -1,9 +1,6 @@
 #ifndef CREATEALLOMORPHSCASE_H
 #define CREATEALLOMORPHSCASE_H
 
-class Allomorph;
-class AbstractConstraint;
-
 #include <QSet>
 #include <QList>
 
@@ -11,6 +8,11 @@ class AbstractConstraint;
 #include "datatypes/tag.h"
 
 class QXmlStreamReader;
+
+namespace ME {
+
+class Allomorph;
+class AbstractConstraint;
 class MorphologyXmlReader;
 class MorphemeNode;
 
@@ -73,5 +75,7 @@ private:
     QSet<Tag> mRemoveTags;
     bool mTolerateDuplicates;
 };
+
+} // namespace ME
 
 #endif // CREATEALLOMORPHSCASE_H

@@ -13,6 +13,8 @@
 #include "datatypes/parsingsummary.h"
 #include "hashseed.h"
 
+using namespace ME;
+
 int Parsing::MAXIMUM_JUMPS = 1;
 
 Parsing::Parsing() :
@@ -1057,7 +1059,7 @@ bool parsingLessThanStepwise(const Parsing &p1, const Parsing &p2)
     return p1.steps().length() > p2.steps().length();
 }
 
-uint qHash(const Parsing & key)
+uint ME::qHash(const Parsing & key)
 {
     return key.hash();
 }

@@ -4,6 +4,8 @@
 #include "abstractconstraint.h"
 #include "mortal-engine_global.h"
 
+namespace ME {
+
 class MORTAL_ENGINE_EXPORT AbstractLongDistanceConstraint : public AbstractConstraint
 {
 public:
@@ -14,5 +16,7 @@ public:
 
     virtual bool satisfied( const Parsing * p ) const = 0;
 };
+
+} // namespace ME
 
 #endif // ABSTRACTLONGDISTANCECONSTRAINT_H

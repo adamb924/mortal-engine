@@ -4,6 +4,8 @@
 #include "abstractinputoutputtest.h"
 #include "datatypes/lexicalstem.h"
 
+namespace ME {
+
 class StemReplacementTest : public AbstractInputOutputTest
 {
 public:
@@ -17,5 +19,7 @@ public:
 private:
     LexicalStem mReplacementStem;
 };
+
+} // namespace ME
 
 #endif // STEMREPLACEMENTTEST_H

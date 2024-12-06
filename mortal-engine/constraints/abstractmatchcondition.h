@@ -3,15 +3,17 @@
 
 #include <QString>
 
-class Allomorph;
-class Parsing;
-class QXmlStreamReader;
-
 #include "abstractconstraint.h"
 #include "mortal-engine_global.h"
 
 #include "datatypes/writingsystem.h"
 
+class QXmlStreamReader;
+
+namespace ME {
+
+class Allomorph;
+class Parsing;
 class MorphologyXmlReader;
 
 class MORTAL_ENGINE_EXPORT AbstractMatchCondition : public AbstractConstraint
@@ -26,5 +28,7 @@ public:
     static AbstractMatchCondition *readFromXml(QXmlStreamReader &in, MorphologyXmlReader * morphologyReader);
     static bool matchesElement(QXmlStreamReader &in);
 };
+
+} // namespace ME
 
 #endif // ABSTRACTMATCHCONDITION_H

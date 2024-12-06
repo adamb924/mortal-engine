@@ -5,6 +5,8 @@
 
 #include "mortal-engine_global.h"
 
+namespace ME {
+
 class MORTAL_ENGINE_EXPORT AbstractSqlStemList : public AbstractStemList
 {
 public:
@@ -88,5 +90,7 @@ protected:
 
     virtual void openDatabase(const QString & connectionString, const QString & databaseName) = 0;
 };
+
+} // namespace ME
 
 #endif // ABSTRACTSQLSTEMLIST_H

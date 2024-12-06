@@ -16,6 +16,8 @@
 
 #include "form.h"
 
+namespace ME {
+
 class AbstractNode;
 class MorphologicalModel;
 class LexicalStem;
@@ -232,8 +234,10 @@ private:
     uint mHash;
 };
 
-Q_DECL_EXPORT uint qHash(const Parsing & key);
+Q_DECL_EXPORT uint qHash(const ME::Parsing & key);
 
-Q_DECL_EXPORT bool parsingLessThanStepwise(const Parsing &p1, const Parsing &p2);
+Q_DECL_EXPORT bool parsingLessThanStepwise(const ME::Parsing &p1, const ME::Parsing &p2);
+
+} // namespace ME
 
 #endif // PARSING_H

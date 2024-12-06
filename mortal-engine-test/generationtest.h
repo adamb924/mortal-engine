@@ -4,6 +4,8 @@
 #include "abstractinputoutputtest.h"
 #include "datatypes/morphemesequence.h"
 
+namespace ME {
+
 class GenerationTest : public AbstractInputOutputTest
 {
 public:
@@ -20,5 +22,7 @@ private:
     qlonglong mLexicalStemId;
     MorphemeSequence mMorphemeSequence;
 };
+
+} // namespace ME
 
 #endif // GENERATIONTEST_H

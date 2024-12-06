@@ -3,6 +3,8 @@
 #include "testschema.h"
 #include "harnessxmlreader.h"
 
+using namespace ME;
+
 TestHarness::TestHarness()
 {
 

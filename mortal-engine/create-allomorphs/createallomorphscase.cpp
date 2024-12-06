@@ -9,6 +9,8 @@
 
 #include <QXmlStreamReader>
 
+using namespace ME;
+
 QString CreateAllomorphsCase::XML_MATCH_TAG = "match-tag";
 QString CreateAllomorphsCase::XML_WITHOUT_TAG = "without-tag";
 QString CreateAllomorphsCase::XML_WHEN = "when";

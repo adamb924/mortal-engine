@@ -1,5 +1,7 @@
 #include "abstractlongdistanceconstraint.h"
 
+using namespace ME;
+
 AbstractLongDistanceConstraint::AbstractLongDistanceConstraint() : AbstractConstraint(AbstractConstraint::LongDistanceConstraint)
 {
 

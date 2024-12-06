@@ -2,6 +2,8 @@
 
 #include <QXmlStreamReader>
 
+using namespace ME;
+
 AbstractMatchCondition::AbstractMatchCondition() : AbstractConstraint(AbstractConstraint::MatchCondition)
 {
 

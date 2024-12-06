@@ -1,13 +1,15 @@
 #ifndef ABSTRACTGENERATIONCONSTRAINT_H
 #define ABSTRACTGENERATIONCONSTRAINT_H
 
-class Allomorph;
-class Parsing;
-class AbstractNode;
-
 #include <QString>
 
 #include "mortal-engine_global.h"
+
+namespace ME {
+
+class Allomorph;
+class Parsing;
+class AbstractNode;
 
 class MORTAL_ENGINE_EXPORT AbstractGenerationConstraint
 {
@@ -33,5 +35,7 @@ public:
 private:
     ContraintType mConstraintType;
 };
+
+} // namespace ME
 
 #endif // ABSTRACTGENERATIONCONSTRAINT_H

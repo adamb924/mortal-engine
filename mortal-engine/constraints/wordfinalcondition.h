@@ -3,6 +3,8 @@
 
 #include "abstractconstraint.h"
 
+namespace ME {
+
 class WordFinalCondition : public AbstractConstraint
 {
 public:
@@ -22,5 +24,7 @@ public:
     static AbstractConstraint *readFromXml(QXmlStreamReader &in, MorphologyXmlReader * morphologyReader);
     static bool matchesElement(QXmlStreamReader &in);
 };
+
+} // namespace ME
 
 #endif // WORDFINALCONDITION_H

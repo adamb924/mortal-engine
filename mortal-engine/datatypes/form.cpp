@@ -8,6 +8,8 @@
 #include "morphology.h"
 #include "hashseed.h"
 
+using namespace ME;
+
 QRegularExpression Form::whitespaceAndNonWordExpression("^[\\W\\s\\d]+$", QRegularExpression::UseUnicodePropertiesOption);
 
 Form::Form() : mId(-1)
@@ -201,7 +203,12 @@ QString Form::summary(const QString &label) const
     return dbgString;
 }
 
-uint qHash(const Form &key)
+uint ME::qHash(const Form &key)
 {
     return key.hash();
+}
+
+uint ME::qHash(const std::pair<const WritingSystem &, const Form &> & pair)
+{
+    return pair.first.hash() ^ pair.second.hash();
 }

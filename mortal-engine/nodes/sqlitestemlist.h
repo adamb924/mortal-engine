@@ -7,6 +7,8 @@
 
 #include "mortal-engine_global.h"
 
+namespace ME {
+
 class MORTAL_ENGINE_EXPORT SqliteStemList : public AbstractSqlStemList
 {
 public:
@@ -22,6 +24,8 @@ public:
 protected:
     void openDatabase(const QString & connectionString, const QString & databaseName) override;
 };
+
+} // namespace ME
 
 #endif // SQLITESTEMLIST_H
 

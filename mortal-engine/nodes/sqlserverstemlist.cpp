@@ -11,6 +11,8 @@
 #include <QXmlStreamReader>
 #include <QtDebug>
 
+using namespace ME;
+
 SqlServerStemList::SqlServerStemList(const MorphologicalModel *model)
     : AbstractSqlStemList(model)
 {

@@ -8,6 +8,8 @@
 
 #include "abstracttest.h"
 
+namespace ME {
+
 class RecognitionTest : public AbstractTest
 {
 public:
@@ -35,5 +37,7 @@ private:
     QSet<QString> mActualParsings;
     int mTotalParsingCount, mUniqueParsingCount;
 };
+
+} // namespace ME
 
 #endif // RECOGNITIONTEST_H

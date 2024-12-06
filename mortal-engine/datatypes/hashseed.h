@@ -3,6 +3,10 @@
 
 #include <QtGlobal>
 
+namespace ME {
+
 extern uint HASH_SEED;
+
+} // namespace ME
 
 #endif // HASHSEED_H

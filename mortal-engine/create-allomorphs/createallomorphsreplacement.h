@@ -8,6 +8,8 @@
 
 #include <QSet>
 
+namespace ME {
+
 class Form;
 
 class CreateAllomorphsReplacement
@@ -34,5 +36,7 @@ private:
     QSet<Tag> mAddTags;
     QSet<Tag> mRemoveTags;
 };
+
+} // namespace ME
 
 #endif // CREATEALLOMORPHSREPLACEMENT_H

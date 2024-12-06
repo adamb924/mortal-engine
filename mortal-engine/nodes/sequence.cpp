@@ -4,6 +4,8 @@
 #include <QXmlStreamReader>
 #include "debug.h"
 
+using namespace ME;
+
 Sequence::Sequence(const MorphologicalModel *model) : AbstractPath(model)
 {
 

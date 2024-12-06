@@ -8,6 +8,8 @@
 #include <QtDebug>
 #include "debug.h"
 
+using namespace ME;
+
 Jump::Jump(const MorphologicalModel *model) : AbstractNode(model), mNodeTarget(nullptr), mTargetNodeRequired(false)
 {
     setOptional(true);

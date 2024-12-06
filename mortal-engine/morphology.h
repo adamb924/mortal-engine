@@ -13,6 +13,8 @@
 
 #include "datatypes/lexicalstem.h"
 
+namespace ME {
+
 class StemIdentityConstraint;
 class MorphemeSequenceConstraint;
 class AbstractStemList;
@@ -112,5 +114,7 @@ private:
     bool mIsOk;
     QHash<WritingSystem,InputNormalizer> mNormalizationFunctions;
 };
+
+} // namespace ME
 
 #endif // MORPHOLOGY_H

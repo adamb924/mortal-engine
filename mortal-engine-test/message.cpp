@@ -1,5 +1,7 @@
 #include "message.h"
 
+using namespace ME;
+
 Message::Message(const QString &message, const Morphology *morphology) : AbstractTest(morphology), mMessage(message)
 {
 

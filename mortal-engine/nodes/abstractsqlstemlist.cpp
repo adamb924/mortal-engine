@@ -8,6 +8,8 @@
 
 #include "datatypes/lexicalstem.h"
 
+using namespace ME;
+
 const QString AbstractSqlStemList::DEFAULT_DBNAME = "SQLITE_STEM_LIST";
 QString AbstractSqlStemList::XML_CONNECTION_STRING = "connection-string";
 QString AbstractSqlStemList::XML_EXTERNAL_DATABASE = "external-database";

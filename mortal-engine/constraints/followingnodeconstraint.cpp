@@ -8,6 +8,8 @@
 #include "datatypes/allomorph.h"
 #include "debug.h"
 
+using namespace ME;
+
 FollowingNodeConstraint::FollowingNodeConstraint() : AbstractConstraint(AbstractConstraint::LocalConstraint), mIdentifier(FollowingNodeConstraint::Null)
 {
 

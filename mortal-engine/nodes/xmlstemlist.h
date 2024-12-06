@@ -5,6 +5,8 @@
 
 #include <QSet>
 
+namespace ME {
+
 class WritingSystem;
 
 class XmlStemList : public AbstractStemList
@@ -26,5 +28,7 @@ private:
 
     QString mFilename;
 };
+
+} // namespace ME
 
 #endif // STEMLIST_H

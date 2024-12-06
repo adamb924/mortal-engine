@@ -2,6 +2,8 @@
 
 #include "datatypes/generation.h"
 
+using namespace ME;
+
 AbstractPath::AbstractPath(const MorphologicalModel *model) : AbstractNode(model, AbstractNode::PathNodeType), mInitialNode(nullptr)
 {
 

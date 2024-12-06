@@ -9,6 +9,8 @@
 #include "abstractnestedconstraint.h"
 #include "debug.h"
 
+using namespace ME;
+
 PointerToConstraint::PointerToConstraint() : AbstractConstraint(Pointer), mTheConstraint(nullptr)
 {
 

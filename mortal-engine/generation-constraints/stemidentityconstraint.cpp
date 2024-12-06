@@ -3,6 +3,8 @@
 #include "datatypes/lexicalstem.h"
 #include "nodes/abstractnode.h"
 
+using namespace ME;
+
 StemIdentityConstraint::StemIdentityConstraint() : AbstractGenerationConstraint(AbstractGenerationConstraint::StemIdentityConstraint)
 {
 

@@ -3,6 +3,8 @@
 
 #include "abstractconstraint.h"
 
+namespace ME {
+
 class SatisfiedCondition : public AbstractConstraint
 {
 public:
@@ -23,5 +25,7 @@ public:
     static bool matchesElement(QXmlStreamReader &in);
 
 };
+
+} // namespace ME
 
 #endif // SATISFIEDCONDITION_H

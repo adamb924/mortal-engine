@@ -22,6 +22,8 @@
 
 #include "mortal-engine_global.h"
 
+namespace ME {
+
 class MORTAL_ENGINE_EXPORT Allomorph
 {
 public:
@@ -260,6 +262,8 @@ private:
     bool mUseInGenerations;
 };
 
-Q_DECL_EXPORT uint qHash(const Allomorph &key);
+Q_DECL_EXPORT uint qHash(const ME::Allomorph &key);
+
+} // namespace ME
 
 #endif // ALLOMORPH_H

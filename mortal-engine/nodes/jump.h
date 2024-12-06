@@ -3,6 +3,8 @@
 
 #include "abstractnode.h"
 
+namespace ME {
+
 class Jump : public AbstractNode
 {
 public:
@@ -47,5 +49,7 @@ private:
     QString mTargetId;
     bool mTargetNodeRequired;
 };
+
+} // namespace ME
 
 #endif // JUMP_H

@@ -13,6 +13,8 @@
 
 #include "create-allomorphs/createallomorphs.h"
 
+using namespace ME;
+
 XmlStemList::XmlStemList(const MorphologicalModel *model) : AbstractStemList(model)
 {
 

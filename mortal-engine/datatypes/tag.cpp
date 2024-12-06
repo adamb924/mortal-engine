@@ -7,6 +7,8 @@
 
 #include "hashseed.h"
 
+using namespace ME;
+
 Tag::Tag(const QString &label)
     : mLabel(label), mHash( qHash(mLabel, HASH_SEED ) )
 {
@@ -53,7 +55,7 @@ QString Tag::summary() const
     return mLabel;
 }
 
-uint qHash(const Tag &key)
+uint ME::qHash(const Tag &key)
 {
     return key.hash();
 }

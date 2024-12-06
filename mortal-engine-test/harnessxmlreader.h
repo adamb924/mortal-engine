@@ -11,6 +11,8 @@
 class QTextStream;
 class QXmlStreamReader;
 
+namespace ME {
+
 class TestSchema;
 class RecognitionTest;
 class TransductionTest;
@@ -19,7 +21,6 @@ class StemReplacementTest;
 class SuggestionTest;
 class GenerationTest;
 class InterlinearGlossTest;
-
 class TestHarness;
 
 class HarnessXmlReader
@@ -69,5 +70,7 @@ public:
     static QString XML_STEM_DEBUG;
     static QString XML_INTERLINEAR_GLOSS_TEST;
 };
+
+} // namespace ME
 
 #endif // HARNESSXMLREADER_H

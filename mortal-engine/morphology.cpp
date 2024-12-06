@@ -14,6 +14,8 @@
 
 #include "debug.h"
 
+using namespace ME;
+
 bool Morphology::DebugOutput = false;
 bool Morphology::StemDebugOutput = false;
 

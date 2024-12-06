@@ -1,5 +1,7 @@
 #include "abstractinputoutputtest.h"
 
+using namespace ME;
+
 AbstractInputOutputTest::AbstractInputOutputTest(const Morphology *morphology) : AbstractTest(morphology)
 {
 

@@ -13,6 +13,8 @@
 #include "morphology.h"
 #include "debug.h"
 
+using namespace ME;
+
 FollowingPhonologicalCondition::FollowingPhonologicalCondition() : AbstractConstraint(AbstractConstraint::LocalConstraint)
 {
 

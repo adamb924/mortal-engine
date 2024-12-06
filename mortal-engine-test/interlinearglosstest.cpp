@@ -2,6 +2,8 @@
 
 #include "datatypes/parsing.h"
 
+using namespace ME;
+
 InterlinearGlossTest::InterlinearGlossTest(const Morphology *morphology) : AbstractInputOutputTest(morphology)
 {
 

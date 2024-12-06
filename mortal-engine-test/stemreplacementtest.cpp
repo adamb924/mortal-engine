@@ -3,6 +3,8 @@
 #include "datatypes/generation.h"
 #include "datatypes/writingsystem.h"
 
+using namespace ME;
+
 StemReplacementTest::StemReplacementTest(const Morphology *morphology) : AbstractInputOutputTest(morphology)
 {
 

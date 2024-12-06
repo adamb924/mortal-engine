@@ -5,6 +5,8 @@
 #include <QtDebug>
 #include <stdexcept>
 
+using namespace ME;
+
 Portmanteau::Portmanteau()
     : mStatus(Portmanteau::Invalid)
 {

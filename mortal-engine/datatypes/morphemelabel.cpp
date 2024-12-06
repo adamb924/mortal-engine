@@ -3,6 +3,8 @@
 #include <QHash>
 #include "hashseed.h"
 
+using namespace ME;
+
 MorphemeLabel::MorphemeLabel()
 {
 
@@ -38,7 +40,7 @@ QString MorphemeLabel::summary() const
     return QString("MorphemeLabel(%1)").arg(mLabel);
 }
 
-uint qHash(const MorphemeLabel &key)
+uint ME::qHash(const MorphemeLabel &key)
 {
     return qHash(key.toString(), HASH_SEED);
 }

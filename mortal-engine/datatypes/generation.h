@@ -8,6 +8,8 @@
 
 #include "mortal-engine_global.h"
 
+namespace ME {
+
 class MORTAL_ENGINE_EXPORT Generation : public Parsing
 {
 public:
@@ -41,5 +43,7 @@ private:
     StemIdentityConstraint mStemIdentityConstraint;
     MorphemeSequenceConstraint mMorphemeSequenceConstraint;
 };
+
+} // namespace ME
 
 #endif // GENERATION_H

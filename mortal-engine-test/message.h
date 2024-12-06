@@ -8,6 +8,8 @@
 
 #include "abstracttest.h"
 
+namespace ME {
+
 class Message : public AbstractTest
 {
 public:
@@ -28,5 +30,7 @@ public:
 private:
     QString mMessage;
 };
+
+} // namespace ME
 
 #endif // MESSAGE_H

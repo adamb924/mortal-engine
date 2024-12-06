@@ -11,6 +11,9 @@
 #include <QList>
 
 class QTextStream;
+
+namespace ME {
+
 class TestSchema;
 
 class TestHarness
@@ -35,5 +38,7 @@ public:
 private:
     QList<TestSchema*> mSchemata;
 };
+
+} // namespace ME
 
 #endif // TESTHARNESS_H

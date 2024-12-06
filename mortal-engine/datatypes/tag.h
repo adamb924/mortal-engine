@@ -8,6 +8,8 @@ class QDomElement;
 
 #include "mortal-engine_global.h"
 
+namespace ME {
+
 class MORTAL_ENGINE_EXPORT Tag
 {
 public:
@@ -50,6 +52,8 @@ private:
     uint mHash;
 };
 
-Q_DECL_EXPORT uint qHash(const Tag & key);
+Q_DECL_EXPORT uint qHash(const ME::Tag & key);
+
+} // namespace ME
 
 #endif // TAG_H

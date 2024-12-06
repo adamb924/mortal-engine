@@ -1,8 +1,11 @@
 #ifndef CONSTRAINTMATCHER_H
 #define CONSTRAINTMATCHER_H
 
-class AbstractConstraint;
 class QXmlStreamReader;
+
+namespace ME {
+
+class AbstractConstraint;
 class MorphologyXmlReader;
 class MorphologicalModel;
 
@@ -16,5 +19,7 @@ public:
     ElementMatcher matcher;
     ConstraintReader reader;
 };
+
+} // namespace ME
 
 #endif // CONSTRAINTMATCHER_H

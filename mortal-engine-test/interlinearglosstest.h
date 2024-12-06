@@ -3,6 +3,8 @@
 
 #include "abstractinputoutputtest.h"
 
+namespace ME {
+
 class InterlinearGlossTest : public AbstractInputOutputTest
 {
 public:
@@ -11,5 +13,7 @@ public:
     //! \brief Runs the test.
     void runTest() override;
 };
+
+} // namespace ME
 
 #endif // INTERLINEARGLOSSTEST_H

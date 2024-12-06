@@ -5,6 +5,8 @@
 
 #include <QSet>
 
+namespace ME {
+
 class Path : public AbstractPath
 {
 public:
@@ -25,5 +27,7 @@ public:
     static AbstractNode *readFromXml(QXmlStreamReader &in, MorphologyXmlReader * morphologyReader, const MorphologicalModel * model);
     static bool matchesElement(QXmlStreamReader &in);
 };
+
+} // namespace ME
 
 #endif // PATH_H

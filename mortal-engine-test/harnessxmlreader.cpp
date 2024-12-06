@@ -18,6 +18,8 @@
 #include <QXmlStreamReader>
 #include <QFile>
 
+using namespace ME;
+
 QString HarnessXmlReader::XML_SHOW_MODEL = "show-model";
 QString HarnessXmlReader::XML_TRUE = "true";
 QString HarnessXmlReader::XML_INPUT = "input";

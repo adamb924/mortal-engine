@@ -14,6 +14,8 @@
 #include <QRegularExpression>
 #include <QDomElement>
 
+using namespace ME;
+
 QString Allomorph::XML_ALLOMORPH = "allomorph";
 QString Allomorph::XML_FORM = "form";
 QString Allomorph::XML_TAG = "tag";
@@ -536,7 +538,7 @@ QString Allomorph::focusedSummary(const WritingSystem &ws) const
     return dbgString;
 }
 
-uint qHash(const Allomorph &key)
+uint ME::qHash(const Allomorph &key)
 {
     return key.hash();
 }

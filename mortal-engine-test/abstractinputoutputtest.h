@@ -3,6 +3,8 @@
 
 #include "abstracttest.h"
 
+namespace ME {
+
 class AbstractInputOutputTest : public AbstractTest
 {
 public:
@@ -25,5 +27,7 @@ protected:
     WritingSystem mOutputWritingSystem;
     QSet<Form> mActualOutputs, mTargetOutputs;
 };
+
+} // namespace ME
 
 #endif // ABSTRACTINPUTOUTPUTTEST_H

@@ -1,12 +1,14 @@
 #ifndef LEXICALSTEM_H
 #define LEXICALSTEM_H
 
-#include <QSet>
+#include "mortal-engine_global.h"
 #include "allomorph.h"
 
-class CreateAllomorphs;
+#include <QSet>
 
-#include "mortal-engine_global.h"
+namespace ME {
+
+class CreateAllomorphs;
 
 class MORTAL_ENGINE_EXPORT LexicalStem
 {
@@ -72,6 +74,8 @@ private:
     QMultiHash<WritingSystem,MorphemeSequence> mPortmanteaux;
 };
 
-Q_DECL_EXPORT uint qHash(const LexicalStem & key);
+Q_DECL_EXPORT uint qHash(const ME::LexicalStem & key);
+
+} // namespace ME
 
 #endif // LEXICALSTEM_H

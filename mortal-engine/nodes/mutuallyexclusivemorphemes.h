@@ -5,6 +5,8 @@
 #include <QSet>
 #include "datatypes/parsing.h"
 
+namespace ME {
+
 class MorphemeNode;
 class Form;
 
@@ -44,5 +46,7 @@ private:
 private:
     QSet<MorphemeNode*> mMorphemes;
 };
+
+} // namespace ME
 
 #endif // MUTUALLYEXCLUSIVEMORPHEMES_H

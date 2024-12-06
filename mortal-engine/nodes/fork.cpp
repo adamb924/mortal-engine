@@ -8,6 +8,8 @@
 #include <QXmlStreamReader>
 #include "debug.h"
 
+using namespace ME;
+
 Fork::Fork(const MorphologicalModel *model) : AbstractNode(model)
 {
 

@@ -5,6 +5,8 @@
 
 #include "datatypes/writingsystem.h"
 
+namespace ME {
+
 class PhonologicalCondition : public AbstractConstraint
 {
 public:
@@ -29,5 +31,7 @@ public:
 private:
     QHash<WritingSystem,QRegularExpression> mRegularExpressions;
 };
+
+} // namespace ME
 
 #endif // PHONOLOGICALCONDITION_H

@@ -5,6 +5,8 @@
 
 #include "../mortal-engine/morphology.h"
 
+using namespace ME;
+
 TestSchema::TestSchema(const QString &label) : mLabel(label), mMorphology(nullptr), mShowModel(false)
 {
 

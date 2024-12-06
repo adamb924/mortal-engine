@@ -6,6 +6,8 @@
 
 #include <QSet>
 
+namespace ME {
+
 class Allomorph;
 
 class TagMatchCondition : public AbstractConstraint
@@ -59,5 +61,7 @@ private:
     QSet<Tag> mTags;
     QSet<Tag> mInterruptTags;
 };
+
+} // namespace ME
 
 #endif // TAGMATCHCONDITION_H

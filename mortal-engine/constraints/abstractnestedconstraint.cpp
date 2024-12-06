@@ -3,6 +3,8 @@
 #include <QtDebug>
 #include <stdexcept>
 
+using namespace ME;
+
 AbstractNestedConstraint::AbstractNestedConstraint() : AbstractConstraint(AbstractConstraint::Nested)
 {
 

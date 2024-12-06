@@ -3,6 +3,8 @@
 
 #include "abstractlongdistanceconstraint.h"
 
+namespace ME {
+
 class BoundCondition : public AbstractLongDistanceConstraint
 {
 public:
@@ -24,5 +26,7 @@ public:
     static AbstractConstraint *readFromXml(QXmlStreamReader &in, MorphologyXmlReader * morphologyReader);
     static bool matchesElement(QXmlStreamReader &in);
 };
+
+} // namespace ME
 
 #endif // BOUNDCONDITION_H

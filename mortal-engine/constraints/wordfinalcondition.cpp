@@ -8,6 +8,8 @@
 #include "datatypes/generation.h"
 #include "debug.h"
 
+using namespace ME;
+
 WordFinalCondition::WordFinalCondition() : AbstractConstraint(LocalConstraint)
 {
 

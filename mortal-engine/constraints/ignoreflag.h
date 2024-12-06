@@ -3,6 +3,8 @@
 
 #include "datatypes/writingsystem.h"
 
+namespace ME {
+
 class Parsing;
 
 class IgnoreFlag
@@ -17,5 +19,7 @@ private:
     Type mType;
     WritingSystem mWritingSystem;
 };
+
+} // namespace ME
 
 #endif // IGNOREFLAG_H

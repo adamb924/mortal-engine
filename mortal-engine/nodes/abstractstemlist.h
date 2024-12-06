@@ -1,15 +1,17 @@
 #ifndef ABSTRACTSTEMLIST_H
 #define ABSTRACTSTEMLIST_H
 
+#include "mortal-engine_global.h"
+
 #include "abstractnode.h"
 #include "datatypes/parsing.h"
 #include "datatypes/allomorph.h"
 #include "datatypes/lexicalstem.h"
 #include "create-allomorphs/createallomorphs.h"
 
-class LexicalStem;
+namespace ME {
 
-#include "mortal-engine_global.h"
+class LexicalStem;
 
 class MORTAL_ENGINE_EXPORT AbstractStemList : public AbstractNode
 {
@@ -86,5 +88,7 @@ protected:
     QSet<Tag> mTags;
     QList<CreateAllomorphs> mCreateAllomorphs;
 };
+
+} // namespace ME
 
 #endif // ABSTRACTSTEMLIST_H

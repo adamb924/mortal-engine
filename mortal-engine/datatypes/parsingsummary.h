@@ -6,10 +6,12 @@
 #include "datatypes/writingsystem.h"
 #include "datatypes/morphemesequence.h"
 
+#include "mortal-engine_global.h"
+
+namespace ME {
+
 class Parsing;
 class ParsingStep;
-
-#include "mortal-engine_global.h"
 
 struct MORTAL_ENGINE_EXPORT ParsingSummary
 {
@@ -44,5 +46,7 @@ private:
     QString mAfterMorpheme;
     QString mBetweenMorphemes;
 };
+
+} // namespace ME
 
 #endif // PARSINGSUMMARY_H

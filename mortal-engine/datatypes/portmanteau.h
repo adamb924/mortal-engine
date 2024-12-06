@@ -4,12 +4,14 @@
 #include "datatypes/morphemesequence.h"
 #include "mortal-engine_global.h"
 
+#include <QStringList>
+
+namespace ME {
+
 class MorphemeNode;
 class AbstractNode;
 class Morphology;
 class WritingSystem;
-
-#include <QStringList>
 
 class MORTAL_ENGINE_EXPORT Portmanteau
 {
@@ -52,5 +54,7 @@ private:
     MorphemeSequence mMorphemes;
     QList<const AbstractNode*> mNodes;
 };
+
+} // namespace ME
 
 #endif // PORTMANTEAU_H

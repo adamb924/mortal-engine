@@ -4,6 +4,8 @@
 #include "parsingstep.h"
 #include "nodes/abstractnode.h"
 
+using namespace ME;
+
 ParsingSummary::ParsingSummary(const SummaryType & stemType, const WritingSystem & stemWritingSystem, const SummaryType & affixType, const WritingSystem & affixWritingSystem, const QString & beforeMorpheme, const QString & afterMorpheme, const QString & betweenMorphemes) :
     mStemType(stemType),
     mStemWritingSystem(stemWritingSystem),

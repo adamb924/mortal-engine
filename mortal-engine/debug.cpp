@@ -4,6 +4,8 @@
 #include <QTextStream>
 #include <QIODevice>
 
+using namespace ME;
+
 int Debug::indentLevel = 0;
 bool Debug::atBeginning = true;
 

@@ -9,6 +9,8 @@
 #include "generation-constraints/morphemesequenceconstraint.h"
 #include "generation-constraints/stemidentityconstraint.h"
 
+using namespace ME;
+
 
 Generation::Generation(const WritingSystem &outputWs, const MorphologicalModel *morphologicalModel)
   : Parsing( Form(outputWs, ""), morphologicalModel )

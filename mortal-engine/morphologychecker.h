@@ -1,8 +1,11 @@
 #ifndef MORPHOLOGYCHECKER_H
 #define MORPHOLOGYCHECKER_H
 
-class Morphology;
 class QTextStream;
+
+namespace ME {
+
+class Morphology;
 
 class MorphologyChecker
 {
@@ -24,5 +27,7 @@ private:
 
     const Morphology * mMorphology;
 };
+
+} // namespace ME
 
 #endif // MORPHOLOGYCHECKER_H

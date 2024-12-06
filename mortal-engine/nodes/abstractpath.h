@@ -3,6 +3,8 @@
 
 #include "abstractnode.h"
 
+namespace ME {
+
 class MORTAL_ENGINE_EXPORT AbstractPath : public AbstractNode
 {
 public:
@@ -27,5 +29,7 @@ private:
 protected:
     AbstractNode* mInitialNode;
 };
+
+} // namespace ME
 
 #endif // ABSTRACTPATH_H

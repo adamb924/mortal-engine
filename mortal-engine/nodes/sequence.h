@@ -3,6 +3,8 @@
 
 #include "abstractpath.h"
 
+namespace ME {
+
 class Sequence : public AbstractPath
 {
 public:
@@ -23,5 +25,7 @@ public:
     static AbstractNode *readFromXml(QXmlStreamReader &in, MorphologyXmlReader * morphologyReader, const MorphologicalModel * model);
     static bool matchesElement(QXmlStreamReader &in);
 };
+
+} // namespace ME
 
 #endif // SEQUENCE_H

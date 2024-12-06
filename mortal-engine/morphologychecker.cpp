@@ -4,6 +4,8 @@
 #include "nodes/morphologicalmodel.h"
 #include "nodes/morphemenode.h"
 
+using namespace ME;
+
 MorphologyChecker::MorphologyChecker(const Morphology *morphology) : mMorphology(morphology)
 {
 

@@ -12,6 +12,8 @@
 #include "morphology.h"
 #include "datatypes/generation.h"
 
+using namespace ME;
+
 QString AbstractNode::XML_OPTIONAL = "optional";
 QString AbstractNode::XML_ADD_ALLOMORPHS = "add-allomorphs";
 

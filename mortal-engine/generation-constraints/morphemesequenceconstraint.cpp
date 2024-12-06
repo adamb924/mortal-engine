@@ -6,6 +6,8 @@
 #include "datatypes/allomorph.h"
 #include "nodes/abstractnode.h"
 
+using namespace ME;
+
 QRegularExpression MorphemeSequenceConstraint::morphemeStringFormat = QRegularExpression("^(\\[.*\\])+$");
 
 MorphemeSequenceConstraint::MorphemeSequenceConstraint() : AbstractGenerationConstraint(AbstractGenerationConstraint::MorphemeSequenceConstraint)

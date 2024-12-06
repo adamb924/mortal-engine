@@ -8,6 +8,8 @@
 #include "datatypes/parsing.h"
 #include "debug.h"
 
+using namespace ME;
+
 NotCondition::NotCondition()
 {
 

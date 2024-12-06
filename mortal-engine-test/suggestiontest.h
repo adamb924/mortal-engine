@@ -3,6 +3,8 @@
 
 #include "abstracttest.h"
 
+namespace ME {
+
 class SuggestionTest : public AbstractTest
 {
 public:
@@ -27,5 +29,7 @@ private:
     QSet<QString> mTargetParsings, mActualParsings;
 
 };
+
+} // namespace ME
 
 #endif // SUGGESTIONTEST_H

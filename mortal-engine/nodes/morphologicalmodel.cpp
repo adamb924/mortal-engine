@@ -6,6 +6,8 @@
 #include <QXmlStreamReader>
 #include "debug.h"
 
+using namespace ME;
+
 MorphologicalModel::MorphologicalModel() : AbstractPath(nullptr), mHasZeroLengthForms(false)
 {
 

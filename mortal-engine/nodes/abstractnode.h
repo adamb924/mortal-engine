@@ -18,15 +18,16 @@
 #include "mortal-engine_global.h"
 
 class QXmlStreamWriter;
+class QXmlStreamReader;
+
+#define MAYBE_RETURN_EARLY if( flags & ME::Parsing::OnlyOneResult && candidates.count() > 0 ) { return candidates; }
+
+namespace ME {
 
 class Form;
 class Generation;
-
-class QXmlStreamReader;
 class MorphologyXmlReader;
 class MorphologicalModel;
-
-#define MAYBE_RETURN_EARLY if( flags & Parsing::OnlyOneResult && candidates.count() > 0 ) { return candidates; }
 
 class MORTAL_ENGINE_EXPORT AbstractNode
 {
@@ -141,5 +142,7 @@ private:
     QString mId;
     bool mHasPathToEnd;
 };
+
+} // namespace ME
 
 #endif // ABSTRACTNODE_H

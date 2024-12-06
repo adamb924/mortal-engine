@@ -5,6 +5,8 @@
 
 #include <QSet>
 
+namespace ME {
+
 class AbstractNestedConstraint : public AbstractConstraint
 {
 public:
@@ -26,5 +28,7 @@ protected:
     QSet<const AbstractConstraint *> mConstraints;
 
 };
+
+} // namespace ME
 
 #endif // ABSTRACTNESTEDCONSTRAINT_H

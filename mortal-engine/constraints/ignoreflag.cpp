@@ -2,6 +2,8 @@
 
 #include "datatypes/parsing.h"
 
+using namespace ME;
+
 IgnoreFlag::IgnoreFlag(Type type, const WritingSystem &ws) : mType(type), mWritingSystem(ws)
 {
 

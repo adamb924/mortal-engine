@@ -7,6 +7,8 @@ class QString;
 
 #include <QTextStream>
 
+namespace ME {
+
 class MORTAL_ENGINE_EXPORT Debug {
 public:
     enum Control { endl };
@@ -30,6 +32,8 @@ private:
     QString * mString;
     QTextStream mStream;
 };
+
+} // namespace ME
 
 #define newline Debug::endl
 

@@ -7,6 +7,8 @@
 #include "datatypes/portmanteau.h"
 #include "morphology.h"
 
+using namespace ME;
+
 ParsingStep::ParsingStep(const AbstractNode *node, const Allomorph & allomorph) :
     mNode(node),
     mAllomorph(allomorph),

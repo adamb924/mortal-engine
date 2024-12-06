@@ -6,11 +6,13 @@
 #include "ignoreflag.h"
 #include "mortal-engine_global.h"
 
+class QXmlStreamReader;
+
+namespace ME {
+
 class Allomorph;
 class Parsing;
 class AbstractNode;
-class QXmlStreamReader;
-
 class AbstractLongDistanceConstraint;
 class AbstractNestedConstraint;
 class MorphologyXmlReader;
@@ -74,5 +76,7 @@ protected:
 private:
     QList<IgnoreFlag> mIgnoreFlags;
 };
+
+} // namespace ME
 
 #endif // ABSTRACTCONSTRAINT_H

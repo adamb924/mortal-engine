@@ -13,6 +13,8 @@
 #include <QXmlStreamReader>
 #include "debug.h"
 
+using namespace ME;
+
 QString MorphemeNode::XML_ALLOMORPH = "allomorph";
 QString MorphemeNode::XML_GLOSS = "gloss";
 

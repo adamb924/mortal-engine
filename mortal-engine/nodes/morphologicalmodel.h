@@ -9,11 +9,13 @@
 
 #include <QList>
 
-class AbstractNode;
-class Form;
-
 #include "abstractpath.h"
 #include "../mortal-engine/datatypes/parsing.h"
+
+namespace ME {
+
+class AbstractNode;
+class Form;
 
 class MorphologicalModel : public AbstractPath
 {
@@ -43,5 +45,7 @@ private:
     bool mHasZeroLengthForms;
 
 };
+
+} // namespace ME
 
 #endif // MORPHOLOGICALMODEL_H

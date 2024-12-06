@@ -1,13 +1,16 @@
 #ifndef CREATEALLOMORPHS_H
 #define CREATEALLOMORPHS_H
 
-class Allomorph;
 class QXmlStreamReader;
-class MorphologyXmlReader;
 
 #include "createallomorphscase.h"
 
 #include <QSet>
+
+namespace ME {
+
+class Allomorph;
+class MorphologyXmlReader;
 
 class CreateAllomorphs
 {
@@ -54,5 +57,7 @@ private:
     OtherwiseMode mOtherwiseMode;
     QString mId;
 };
+
+} // namespace ME
 
 #endif // CREATEALLOMORPHS_H

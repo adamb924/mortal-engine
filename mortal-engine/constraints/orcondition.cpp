@@ -9,6 +9,8 @@
 #include <QXmlStreamReader>
 #include "debug.h"
 
+using namespace ME;
+
 OrCondition::OrCondition()
 {
 

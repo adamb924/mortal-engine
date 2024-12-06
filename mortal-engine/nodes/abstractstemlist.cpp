@@ -7,6 +7,8 @@
 
 #include "debug.h"
 
+using namespace ME;
+
 QString AbstractStemList::XML_FILENAME = "filename";
 QString AbstractStemList::XML_MATCHING_TAG = "matching-tag";
 

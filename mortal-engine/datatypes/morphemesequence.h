@@ -6,6 +6,8 @@
 
 #include "mortal-engine_global.h"
 
+namespace ME {
+
 class MORTAL_ENGINE_EXPORT MorphemeSequence : public QList<MorphemeLabel>
 {
 public:
@@ -28,5 +30,7 @@ public:
     static QString STEM_LABEL;
     static QRegularExpression morphemeStringFormat;
 };
+
+} // namespace ME
 
 #endif // MORPHEMESEQUENCE_H

@@ -5,6 +5,8 @@
 
 #include "mortal-engine_global.h"
 
+namespace ME {
+
 class MORTAL_ENGINE_EXPORT SqlServerStemList : public AbstractSqlStemList
 {
 public:
@@ -36,5 +38,7 @@ protected:
     QString qSelectStemIdsWithTags(const QString & taglist) const override;
     QString qInsertStem() const override;
 };
+
+} // namespace ME
 
 #endif // SQLSERVERSTEMLIST_H

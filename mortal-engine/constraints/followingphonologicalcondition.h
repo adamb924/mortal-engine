@@ -4,6 +4,9 @@
 #include "abstractconstraint.h"
 
 #include "datatypes/writingsystem.h"
+
+namespace ME {
+
 class Parsing;
 
 class FollowingPhonologicalCondition : public AbstractConstraint
@@ -30,5 +33,7 @@ public:
 private:
     QHash<WritingSystem,QRegularExpression> mRegularExpressions;
 };
+
+} // namespace ME
 
 #endif // FOLLOWINGPHONOLOGICALCONDITION_H

@@ -1,8 +1,11 @@
 #ifndef NODEMATCHER_H
 #define NODEMATCHER_H
 
-class AbstractNode;
 class QXmlStreamReader;
+
+namespace ME {
+
+class AbstractNode;
 class MorphologyXmlReader;
 class MorphologicalModel;
 
@@ -15,5 +18,7 @@ public:
     ElementMatcher matcher;
     MorphemeNodeReader reader;
 };
+
+} // namespace ME
 
 #endif // NODEMATCHER_H

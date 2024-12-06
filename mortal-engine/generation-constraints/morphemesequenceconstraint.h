@@ -8,6 +8,8 @@
 
 #include "mortal-engine_global.h"
 
+namespace ME {
+
 class Portmanteau;
 
 class MORTAL_ENGINE_EXPORT MorphemeSequenceConstraint : public AbstractGenerationConstraint
@@ -48,5 +50,7 @@ private:
     MorphemeSequence mMorphemeNames;
     MorphemeSequence mOriginalSequence;
 };
+
+} // namespace ME
 
 #endif // MORPHEMESEQUENCECONSTRAINT_H

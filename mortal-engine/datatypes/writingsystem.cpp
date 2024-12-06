@@ -6,6 +6,8 @@
 
 #include "hashseed.h"
 
+using namespace ME;
+
 QString WritingSystem::XML_WRITING_SYSTEMS = "writing-systems";
 QString WritingSystem::XML_WRITING_SYSTEM = "writing-system";
 
@@ -188,7 +190,7 @@ WritingSystem& WritingSystem::operator=(const WritingSystem & other)
     return *this;
 }
 
-uint qHash(const WritingSystem & key)
+uint ME::qHash(const WritingSystem & key)
 {
     return key.hash();
 }

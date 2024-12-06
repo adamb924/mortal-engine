@@ -5,6 +5,8 @@
 
 #include <QString>
 
+namespace ME {
+
 class MORTAL_ENGINE_EXPORT MorphemeLabel
 {
 public:
@@ -23,6 +25,8 @@ private:
     QString mLabel;
 };
 
-Q_DECL_EXPORT uint qHash(const MorphemeLabel &key);
+Q_DECL_EXPORT uint qHash(const ME::MorphemeLabel &key);
+
+} // namespace ME
 
 #endif // MORPHEMELABEL_H

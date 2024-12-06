@@ -7,6 +7,8 @@
 #include "datatypes/parsing.h"
 #include "nodes/abstractnode.h"
 
+using namespace ME;
+
 PrecedingNodeConstraint::PrecedingNodeConstraint() : AbstractConstraint(AbstractConstraint::MatchCondition), mIdentifier(Null)
 {
 

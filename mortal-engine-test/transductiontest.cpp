@@ -2,6 +2,8 @@
 
 #include "datatypes/generation.h"
 
+using namespace ME;
+
 TransductionTest::TransductionTest(const Morphology *morphology) : AbstractInputOutputTest(morphology)
 {
 

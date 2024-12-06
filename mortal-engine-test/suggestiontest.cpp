@@ -1,5 +1,7 @@
 #include "suggestiontest.h"
 
+using namespace ME;
+
 SuggestionTest::SuggestionTest(const Morphology *morphology) : AbstractTest(morphology)
 {
 
