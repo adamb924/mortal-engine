@@ -11,5 +11,5 @@ examples/log.txt
 diagrams/**.dot
 diagrams/**.png
 mortal-engine.code-workspace
-CMakeLists.txt.user
-/build
+build/**
+*.user
