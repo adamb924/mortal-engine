@@ -71,66 +71,6 @@ add_library(mortalengine SHARED
     datatypes/tag.cpp
     datatypes/writingsystem.cpp
     nodes/sqlitestemlist.cpp
-    constraints/constraintmatcher.h
-    constraints/ignoreflag.h
-    constraints/precedingnodeconstraint.h
-    constraints/satisfiedcondition.h
-    datatypes/hashseed.h
-    datatypes/morphemelabel.h
-    datatypes/morphemesequence.h
-    datatypes/parsingsummary.h
-    datatypes/portmanteau.h
-    debug.h
-    generation-constraints/abstractgenerationconstraint.h
-    generation-constraints/stemidentityconstraint.h
-    datatypes/generation.h
-    datatypes/lexicalstem.h
-    constraints/abstractconstraint.h
-    constraints/abstractlongdistanceconstraint.h
-    constraints/abstractmatchcondition.h
-    constraints/abstractnestedconstraint.h
-    constraints/andcondition.h
-    constraints/boundcondition.h
-    constraints/followingnodeconstraint.h
-    constraints/followingphonologicalcondition.h
-    constraints/notcondition.h
-    constraints/orcondition.h
-    constraints/phonologicalcondition.h
-    constraints/pointertoconstraint.h
-    constraints/tagmatchcondition.h
-    constraints/wordfinalcondition.h
-    messages.h
-    nodes/abstractnode.h
-    datatypes/allomorph.h
-    datatypes/form.h
-    nodes/abstractpath.h
-    nodes/abstractsqlstemlist.h
-    nodes/abstractstemlist.h
-    nodes/copynode.h
-    nodes/fork.h
-    nodes/jump.h
-    nodes/morphemenode.h
-    nodes/nodematcher.h
-    nodes/path.h
-    nodes/morphologicalmodel.h
-    nodes/sequence.h
-    nodes/sqlitestemlist.h
-    nodes/sqlserverstemlist.h
-    nodes/xmlstemlist.h
-    generation-constraints/morphemesequenceconstraint.h
-    morphology.h
-    nodes/mutuallyexclusivemorphemes.h
-    morphologychecker.h
-    morphologyxmlreader.h
-    datatypes/parsing.h
-    datatypes/parsingstep.h
-    mortal-engine_global.h
-    returns/lexicalsteminsertresult.h
-    create-allomorphs/createallomorphs.h
-    create-allomorphs/createallomorphscase.h
-    create-allomorphs/createallomorphsreplacement.h
-    datatypes/tag.h
-    datatypes/writingsystem.h
 )
 
 target_include_directories(mortalengine PUBLIC ".")
@@ -140,5 +80,14 @@ target_link_libraries(mortalengine PRIVATE Qt${QT_VERSION_MAJOR}::Core Qt${QT_VE
 target_compile_definitions(mortalengine PRIVATE MORTALENGINE_LIBRARY)
 
 install(TARGETS mortalengine
-        DESTINATION lib
-        )
+    LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
+    RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
+)
+
+# this installs some non-public headers, but so be it
+install(DIRECTORY "${CMAKE_SOURCE_DIR}/mortal-engine"
+        DESTINATION ${CMAKE_INSTALL_PREFIX}/include
+        FILES_MATCHING
+        PATTERN "*.h"
+)
