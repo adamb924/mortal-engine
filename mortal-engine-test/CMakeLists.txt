@@ -54,6 +54,7 @@ target_include_directories(mortal-engine-test PUBLIC  ${MORTALENGINE_INCLUDE})
 
 target_link_libraries(mortal-engine-test
     PRIVATE
+    mortalengine
     Qt${QT_VERSION_MAJOR}::Core
     Qt${QT_VERSION_MAJOR}::Sql
     Qt${QT_VERSION_MAJOR}::Xml
