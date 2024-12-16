@@ -14,63 +14,63 @@ find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core Sql Xml)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Sql Xml)
 
 add_library(mortalengine SHARED
-    constraints/ignoreflag.cpp
-    constraints/precedingnodeconstraint.cpp
-    constraints/satisfiedcondition.cpp
-    datatypes/hashseed.cpp
-    datatypes/morphemelabel.cpp
-    datatypes/morphemesequence.cpp
-    datatypes/parsingsummary.cpp
-    datatypes/portmanteau.cpp
-    debug.cpp
-    generation-constraints/abstractgenerationconstraint.cpp
-    generation-constraints/stemidentityconstraint.cpp
-    datatypes/generation.cpp
-    datatypes/lexicalstem.cpp
-    constraints/abstractconstraint.cpp
-    constraints/abstractlongdistanceconstraint.cpp
-    constraints/abstractmatchcondition.cpp
-    constraints/abstractnestedconstraint.cpp
-    constraints/andcondition.cpp
-    constraints/boundcondition.cpp
-    constraints/followingnodeconstraint.cpp
-    constraints/followingphonologicalcondition.cpp
-    constraints/notcondition.cpp
-    constraints/orcondition.cpp
-    constraints/phonologicalcondition.cpp
-    constraints/pointertoconstraint.cpp
-    constraints/tagmatchcondition.cpp
-    constraints/wordfinalcondition.cpp
-    messages.cpp
-    nodes/abstractnode.cpp
-    datatypes/allomorph.cpp
-    datatypes/form.cpp
-    nodes/abstractpath.cpp
-    nodes/abstractsqlstemlist.cpp
-    nodes/abstractstemlist.cpp
-    nodes/copynode.cpp
-    nodes/fork.cpp
-    nodes/jump.cpp
-    nodes/morphemenode.cpp
-    nodes/path.cpp
-    nodes/morphologicalmodel.cpp
-    nodes/sequence.cpp
-    nodes/sqlserverstemlist.cpp
-    nodes/xmlstemlist.cpp
-    generation-constraints/morphemesequenceconstraint.cpp
-    morphology.cpp
-    nodes/mutuallyexclusivemorphemes.cpp
-    morphologychecker.cpp
-    morphologyxmlreader.cpp
-    datatypes/parsing.cpp
-    datatypes/parsingstep.cpp
-    returns/lexicalsteminsertresult.cpp
-    create-allomorphs/createallomorphs.cpp
-    create-allomorphs/createallomorphscase.cpp
-    create-allomorphs/createallomorphsreplacement.cpp
-    datatypes/tag.cpp
-    datatypes/writingsystem.cpp
-    nodes/sqlitestemlist.cpp
+    constraints/ignoreflag.h constraints/ignoreflag.cpp
+    constraints/precedingnodeconstraint.h constraints/precedingnodeconstraint.cpp
+    constraints/satisfiedcondition.h constraints/satisfiedcondition.cpp
+    datatypes/hashseed.h datatypes/hashseed.cpp
+    datatypes/morphemelabel.h datatypes/morphemelabel.cpp
+    datatypes/morphemesequence.h datatypes/morphemesequence.cpp
+    datatypes/parsingsummary.h datatypes/parsingsummary.cpp
+    datatypes/portmanteau.h datatypes/portmanteau.cpp
+    debug.h debug.cpp
+    generation-constraints/abstractgenerationconstraint.h generation-constraints/abstractgenerationconstraint.cpp
+    generation-constraints/stemidentityconstraint.h generation-constraints/stemidentityconstraint.cpp
+    datatypes/generation.h datatypes/generation.cpp
+    datatypes/lexicalstem.h datatypes/lexicalstem.cpp
+    constraints/abstractconstraint.h constraints/abstractconstraint.cpp
+    constraints/abstractlongdistanceconstraint.h constraints/abstractlongdistanceconstraint.cpp
+    constraints/abstractmatchcondition.h constraints/abstractmatchcondition.cpp
+    constraints/abstractnestedconstraint.h constraints/abstractnestedconstraint.cpp
+    constraints/andcondition.h constraints/andcondition.cpp
+    constraints/boundcondition.h constraints/boundcondition.cpp
+    constraints/followingnodeconstraint.h constraints/followingnodeconstraint.cpp
+    constraints/followingphonologicalcondition.h constraints/followingphonologicalcondition.cpp
+    constraints/notcondition.h constraints/notcondition.cpp
+    constraints/orcondition.h constraints/orcondition.cpp
+    constraints/phonologicalcondition.h constraints/phonologicalcondition.cpp
+    constraints/pointertoconstraint.h constraints/pointertoconstraint.cpp
+    constraints/tagmatchcondition.h constraints/tagmatchcondition.cpp
+    constraints/wordfinalcondition.h constraints/wordfinalcondition.cpp
+    messages.h messages.cpp
+    nodes/abstractnode.h nodes/abstractnode.cpp
+    datatypes/allomorph.h datatypes/allomorph.cpp
+    datatypes/form.h datatypes/form.cpp
+    nodes/abstractpath.h nodes/abstractpath.cpp
+    nodes/abstractsqlstemlist.h nodes/abstractsqlstemlist.cpp
+    nodes/abstractstemlist.h nodes/abstractstemlist.cpp
+    nodes/copynode.h nodes/copynode.cpp
+    nodes/fork.h nodes/fork.cpp
+    nodes/jump.h nodes/jump.cpp
+    nodes/morphemenode.h nodes/morphemenode.cpp
+    nodes/path.h nodes/path.cpp
+    nodes/morphologicalmodel.h nodes/morphologicalmodel.cpp
+    nodes/sequence.h nodes/sequence.cpp
+    nodes/sqlserverstemlist.h nodes/sqlserverstemlist.cpp
+    nodes/xmlstemlist.h nodes/xmlstemlist.cpp
+    generation-constraints/morphemesequenceconstraint.h generation-constraints/morphemesequenceconstraint.cpp
+    morphology.h morphology.cpp
+    nodes/mutuallyexclusivemorphemes.h nodes/mutuallyexclusivemorphemes.cpp
+    morphologychecker.h morphologychecker.cpp
+    morphologyxmlreader.h morphologyxmlreader.cpp
+    datatypes/parsing.h datatypes/parsing.cpp
+    datatypes/parsingstep.h datatypes/parsingstep.cpp
+    returns/lexicalsteminsertresult.h returns/lexicalsteminsertresult.cpp
+    create-allomorphs/createallomorphs.h create-allomorphs/createallomorphs.cpp
+    create-allomorphs/createallomorphscase.h create-allomorphs/createallomorphscase.cpp
+    create-allomorphs/createallomorphsreplacement.h create-allomorphs/createallomorphsreplacement.cpp
+    datatypes/tag.h datatypes/tag.cpp
+    datatypes/writingsystem.h datatypes/writingsystem.cpp
+    nodes/sqlitestemlist.h nodes/sqlitestemlist.cpp
 )
 
 target_include_directories(mortalengine PUBLIC ".")
