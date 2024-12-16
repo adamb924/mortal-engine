@@ -61,7 +61,7 @@ public:
     /// Lexicon functions
     LexicalStemInsertResult addLexicalStem(const LexicalStem & stem);
     LexicalStemInsertResult replaceLexicalStem(const LexicalStem & stem);
-    const LexicalStem * getLexicalStem(qlonglong id) const;
+    LexicalStem * getLexicalStem(qlonglong id) const;
     void removeLexicalStem(qlonglong id);
 
     /// returns all matching lexicalStems
@@ -113,6 +113,7 @@ private:
     QSet<MorphemeNode*> mMorphemeNodes;
     bool mIsOk;
     QHash<WritingSystem,InputNormalizer> mNormalizationFunctions;
+    static QRegularExpression endingStemId;
 };
 
 } // namespace ME

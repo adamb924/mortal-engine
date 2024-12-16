@@ -34,7 +34,7 @@ public:
     bool replaceStem(const LexicalStem &stem );
 
     //!
-    const LexicalStem * getStem( qlonglong id ) const;
+    LexicalStem *getStem( qlonglong id ) const;
 
     QList<LexicalStem *> stemsFromAllomorph(const Form & form, const QSet<Tag> containingTags = QSet<Tag>(), const QSet<Tag> withoutTags = QSet<Tag>(), bool includeDerivedAllomorphs = false ) const;
     QList<LexicalStem *> stemsFromAllomorph(const Allomorph & allomorph, bool matchConstraints) const;

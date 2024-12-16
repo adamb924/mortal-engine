@@ -18,6 +18,7 @@ using namespace ME;
 
 bool Morphology::DebugOutput = false;
 bool Morphology::StemDebugOutput = false;
+QRegularExpression Morphology::endingStemId("##(\\d+)$", QRegularExpression::UseUnicodePropertiesOption);
 
 Morphology::Morphology() : mIsOk(true)
 {
@@ -297,14 +298,14 @@ LexicalStemInsertResult Morphology::replaceLexicalStem(const LexicalStem &stem)
     return result;
 }
 
-const LexicalStem * Morphology::getLexicalStem(qlonglong id) const
+LexicalStem * Morphology::getLexicalStem(qlonglong id) const
 {
     LexicalStemInsertResult result;
     QSetIterator<AbstractStemList*> iter( mStemAcceptingStemLists );
     while( iter.hasNext() )
     {
         AbstractStemList* asl = iter.next();
-        const LexicalStem * ls = asl->getStem( id );
+        LexicalStem * ls = asl->getStem( id );
         if( ls != nullptr )
         {
             return ls;
@@ -362,6 +363,17 @@ void Morphology::setNodeId(const QString &id, AbstractNode *node)
 
 QList<LexicalStem *> Morphology::searchLexicalStems(const Form &formSearchString) const
 {
+    QRegularExpressionMatch finalIdMatch = endingStemId.match(formSearchString.text());
+    if( finalIdMatch.hasMatch() )
+    {
+        qlonglong id = finalIdMatch.captured(1).toLongLong();
+        LexicalStem * stem = getLexicalStem(id);
+        if( stem != nullptr )
+        {
+            return QList<LexicalStem *>() << stem;
+        }
+    }
+
     /// handle tags: stem#tag1#tag2#tag3 etc.
     QStringList elements = formSearchString.text().split('#');
 

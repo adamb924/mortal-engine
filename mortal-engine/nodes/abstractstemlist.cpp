@@ -68,7 +68,7 @@ bool AbstractStemList::replaceStem(const LexicalStem & stem)
     return removed;
 }
 
-const LexicalStem *AbstractStemList::getStem(qlonglong id) const
+LexicalStem *AbstractStemList::getStem(qlonglong id) const
 {
     QSetIterator<LexicalStem*> i(mStems);
     while( i.hasNext() )
