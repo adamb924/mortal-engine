@@ -25,48 +25,64 @@ public:
 
     static QString XML_EXTERNAL_DATABASE;
     static QString XML_CONNECTION_STRING;
+    static QString XML_TABLE_PREFIX;
+
+    void setTablePrefix(const QString &newTablePrefix);
+
+    void setDbName(const QString &newDbName);
 
 protected:
+    /// Table names
+    QString tableStems() const;
+    QString tableAllomorphs() const;
+    QString tableForms() const;
+    QString tableGlosses() const;
+    QString tableTags() const;
+    QString tableTagMembers() const;
+
     /// Queries
-    /// These are SQLite queries, and should be overridden in classes using different database engines.
-    virtual QString qSelectStemIds() const;
-    virtual QString qSelectStemIdsWithTags(const QString & taglist) const;
-    virtual QString qSelectStemsSingleQuery() const;
-    virtual QString qSelectStemsSingleQueryWithTags(const QString & taglist) const;
+    virtual QString qSelectStemIds() const = 0;
+    virtual QString qSelectStemIdsWithTags(const QString & taglist) const = 0;
+    virtual QString qSelectStemsSingleQuery() const = 0;
+    virtual QString qSelectStemsSingleQueryWithTags(const QString & taglist) const = 0;
 
-    virtual QString qDeleteFromTagMembers() const;
-    virtual QString qDeleteFromForms() const;
-    virtual QString qDeleteFromGlosses() const;
-    virtual QString qDeleteFromAllomorphs() const;
-    virtual QString qDeleteFromStems() const;
+    virtual QString qDeleteFromTagMembers() const = 0;
+    virtual QString qDeleteFromForms() const = 0;
+    virtual QString qDeleteFromGlosses() const = 0;
+    virtual QString qDeleteFromAllomorphs() const = 0;
+    virtual QString qDeleteFromStems() const = 0;
 
-    virtual QString qSelectAllomorphsFromStemId() const;
-    virtual QString qSelectGlossesFromStemId() const;
+    virtual QString qSelectAllomorphsFromStemId() const = 0;
+    virtual QString qSelectGlossesFromStemId() const = 0;
 
-    virtual QString qSelectFormsFromAllomorphId() const;
-    virtual QString qSelectTagLabelsFromAllomorphId() const;
+    virtual QString qSelectFormsFromAllomorphId() const = 0;
+    virtual QString qSelectTagLabelsFromAllomorphId() const = 0;
 
-    virtual QString qInsertStem() const;
-    virtual QString qInsertAllomorph() const;
-    virtual QString qInsertForm() const;
-    virtual QString qInsertTagMember() const;
-    virtual QString qInsertGloss() const;
-    virtual QString qInsertTag() const;
+    virtual QString qInsertStem() const = 0;
+    virtual QString qInsertAllomorph() const = 0;
+    virtual QString qInsertForm() const = 0;
+    virtual QString qInsertTagMember() const = 0;
+    virtual QString qInsertGloss() const = 0;
+    virtual QString qInsertTag() const = 0;
 
-    virtual QString qSelectTagIdFromLabel() const;
+    virtual QString qSelectTagIdFromLabel() const = 0;
 
-    virtual QString qCreateStems() const;
-    virtual QString qCreateAllomorphs() const;
-    virtual QString qUpdateAllomorphsA() const;
-    virtual QString qCreateForms() const;
-    virtual QString qCreateGlosses() const;
-    virtual QString qCreateTags() const;
-    virtual QString qCreateTagMembers() const;
-    virtual QString qCreateAllomorphsIdx() const;
-    virtual QString qCreateGlossesIdx() const;
-    virtual QString qCreateFormsIdx() const;
-    virtual QString qCreateTagsIdx1() const;
-    virtual QString qCreateTagsIdx2() const;
+    /// create database tables
+    virtual QString qCreateStems() const = 0;
+    virtual QString qCreateAllomorphs() const = 0;
+    virtual QString qUpdateAllomorphsA() const = 0;
+    virtual QString qCreateForms() const = 0;
+    virtual QString qCreateGlosses() const = 0;
+    virtual QString qCreateTags() const = 0;
+    virtual QString qCreateTagMembers() const = 0;
+
+    /// create database indices
+    virtual QString qCreateAllomorphsIdx() const = 0;
+    virtual QString qCreateGlossesIdx() const = 0;
+    virtual QString qCreateFormsIdx() const = 0;
+    virtual QString qCreateTagsIdx1() const = 0;
+    virtual QString qCreateTagsIdx2() const = 0;
+
 
 private:
     void readStemsMultipleQueries(const QHash<QString, WritingSystem> &writingSystems);
@@ -79,6 +95,15 @@ private:
 
     void addStemToDatabase( LexicalStem * stem );
     qlonglong ensureTagInDatabase( const QString & tag );
+
+    /// prevent subclasses from accessing these, so that they have to use the table name functions
+    QString mTablePrefix;
+    static QString TABLE_STEMS;
+    static QString TABLE_ALLOMORPHS;
+    static QString TABLE_FORMS;
+    static QString TABLE_GLOSSES;
+    static QString TABLE_TAGS;
+    static QString TABLE_TAGMEMBERS;
 
 protected:
     QString mDbName;

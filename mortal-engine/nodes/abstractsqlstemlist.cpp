@@ -13,6 +13,14 @@ using namespace ME;
 const QString AbstractSqlStemList::DEFAULT_DBNAME = "SQLITE_STEM_LIST";
 QString AbstractSqlStemList::XML_CONNECTION_STRING = "connection-string";
 QString AbstractSqlStemList::XML_EXTERNAL_DATABASE = "external-database";
+QString AbstractSqlStemList::XML_TABLE_PREFIX = "table-prefix";
+
+QString AbstractSqlStemList::TABLE_STEMS = "Stems";
+QString AbstractSqlStemList::TABLE_ALLOMORPHS = "Allomorphs";
+QString AbstractSqlStemList::TABLE_FORMS = "Forms";
+QString AbstractSqlStemList::TABLE_GLOSSES = "Glosses";
+QString AbstractSqlStemList::TABLE_TAGS = "Tags";
+QString AbstractSqlStemList::TABLE_TAGMEMBERS = "TagMembers";
 
 AbstractSqlStemList::AbstractSqlStemList(const MorphologicalModel *model) :
     AbstractStemList(model),
@@ -24,9 +32,12 @@ AbstractSqlStemList::AbstractSqlStemList(const MorphologicalModel *model) :
 
 void AbstractSqlStemList::setConnectionString(const QString &connectionString)
 {
+    /// TODO 2024-12-30: I can't recall why this was ever here. It's poorly done since
+    /// mDbName is set elsewhere. I wonder if this supposed to be used for some kind
+    /// of multithreading.
     /// https://stackoverflow.com/a/16568641/1447002
-    mDbName = QString("%1_0x%2").arg(DEFAULT_DBNAME).arg( reinterpret_cast<quintptr>(this),
-                        QT_POINTER_SIZE * 2, 16, QChar('0'));
+    // mDbName = QString("%1_0x%2").arg(DEFAULT_DBNAME).arg( reinterpret_cast<quintptr>(this),
+    //                     QT_POINTER_SIZE * 2, 16, QChar('0'));
 
     openDatabase(connectionString, mDbName);
     createTables();
@@ -386,6 +397,7 @@ void AbstractSqlStemList::createTables()
 
     if( !q.exec(qCreateTagsIdx2()) )
         qWarning() << "AbstractSqlStemList::createTables()" << q.lastError().text() << q.executedQuery();
+
 }
 
 void AbstractSqlStemList::addStemToDatabase(LexicalStem *stem)
@@ -527,6 +539,46 @@ qlonglong AbstractSqlStemList::ensureTagInDatabase(const QString &tag)
     }
 }
 
+void AbstractSqlStemList::setDbName(const QString &newDbName)
+{
+    mDbName = newDbName;
+}
+
+void AbstractSqlStemList::setTablePrefix(const QString &newTablePrefix)
+{
+    mTablePrefix = newTablePrefix;
+}
+
+QString AbstractSqlStemList::tableStems() const
+{
+    return mTablePrefix + TABLE_STEMS;
+}
+
+QString AbstractSqlStemList::tableAllomorphs() const
+{
+    return mTablePrefix + TABLE_ALLOMORPHS;
+}
+
+QString AbstractSqlStemList::tableForms() const
+{
+    return mTablePrefix + TABLE_FORMS;
+}
+
+QString AbstractSqlStemList::tableGlosses() const
+{
+    return mTablePrefix + TABLE_GLOSSES;
+}
+
+QString AbstractSqlStemList::tableTags() const
+{
+    return mTablePrefix + TABLE_TAGS;
+}
+
+QString AbstractSqlStemList::tableTagMembers() const
+{
+    return mTablePrefix + TABLE_TAGMEMBERS;
+}
+
 QString AbstractSqlStemList::tagsInSqlList() const
 {
     if( mTags.count() == 0 )
@@ -575,179 +627,4 @@ QString AbstractSqlStemList::tagIdsInSqlList() const
         }
         return ids.join(",");
     }
-}
-
-QString AbstractSqlStemList::qSelectStemIds() const
-{
-    return "SELECT DISTINCT _id, liftGuid from Stems;";
-}
-
-QString AbstractSqlStemList::qSelectStemIdsWithTags(const QString &taglist) const
-{
-    return "SELECT DISTINCT stem_id, liftGuid from TagMembers LEFT JOIN Tags, Allomorphs,Stems ON Tags._id=TagMembers.tag_id AND Allomorphs._id=TagMembers.allomorph_id AND Stems._id=Allomorphs.stem_id WHERE Label IN ("+taglist+");";
-}
-
-QString AbstractSqlStemList::qSelectStemsSingleQuery() const
-{
-    return "SELECT stem_id, liftGuid,allomorphs._id AS allomorph_id,use_in_generations,Form,writingsystem,group_concat(label),portmanteau "
-           "FROM Stems, Allomorphs, Forms, Tags, TagMembers "
-           "ON "
-               "Stems._id=Allomorphs.stem_id "
-               "AND Allomorphs._id=Forms.allomorph_id "
-               "AND Tags._id=TagMembers.tag_id "
-               "AND TagMembers.allomorph_id=Forms.allomorph_id "
-           "GROUP BY Forms._id;";
-}
-
-QString AbstractSqlStemList::qSelectStemsSingleQueryWithTags(const QString &taglist) const
-{
-    return "SELECT stem_id, liftGuid,allomorphs._id AS allomorph_id,use_in_generations,Form,writingsystem,group_concat(label),portmanteau "
-                          "FROM Stems, Allomorphs, Forms, Tags, TagMembers "
-                          "ON "
-                              "Stems._id=Allomorphs.stem_id "
-                              "AND Allomorphs._id=Forms.allomorph_id "
-                              "AND Tags._id=TagMembers.tag_id "
-                              "AND TagMembers.allomorph_id=Forms.allomorph_id "
-                              "WHERE TagMembers.allomorph_id IN (SELECT allomorph_id FROM TagMembers WHERE tag_id IN ( " + taglist + " ) ) "
-                              "GROUP BY Forms._id;";
-}
-
-QString AbstractSqlStemList::qDeleteFromTagMembers() const
-{
-    return "DELETE from TagMembers WHERE allomorph_id IN (SELECT _id FROM Allomorphs WHERE stem_id=?);";
-}
-
-QString AbstractSqlStemList::qDeleteFromForms() const
-{
-    return "DELETE from forms WHERE allomorph_id IN (SELECT _id FROM Allomorphs WHERE stem_id=?);";
-}
-
-QString AbstractSqlStemList::qDeleteFromGlosses() const
-{
-    return "DELETE FROM Glosses WHERE stem_id=?;";
-}
-
-QString AbstractSqlStemList::qDeleteFromAllomorphs() const
-{
-    return "DELETE FROM allomorphs WHERE stem_id=?;";
-}
-
-QString AbstractSqlStemList::qDeleteFromStems() const
-{
-    return "DELETE FROM stems WHERE _id=?;";
-}
-
-QString AbstractSqlStemList::qSelectAllomorphsFromStemId() const
-{
-    return "SELECT _id,use_in_generations,portmanteau FROM Allomorphs WHERE stem_id=?;";
-}
-
-QString AbstractSqlStemList::qSelectGlossesFromStemId() const
-{
-    return "SELECT Form, WritingSystem FROM Glosses WHERE stem_id=?;";
-}
-
-QString AbstractSqlStemList::qSelectFormsFromAllomorphId() const
-{
-    return "SELECT form, writingsystem FROM Forms WHERE allomorph_id=?;";
-}
-
-QString AbstractSqlStemList::qSelectTagLabelsFromAllomorphId() const
-{
-    return "SELECT label from TagMembers LEFT JOIN Tags ON Tags._id=TagMembers.tag_id WHERE allomorph_id=?;";
-}
-
-QString AbstractSqlStemList::qInsertStem() const
-{
-    return "INSERT INTO stems (_id, liftGuid) VALUES (null, ?);";
-}
-
-QString AbstractSqlStemList::qInsertAllomorph() const
-{
-    return "INSERT INTO allomorphs (stem_id,use_in_generations,portmanteau) VALUES (?,?,?);";
-}
-
-QString AbstractSqlStemList::qInsertForm() const
-{
-    return "INSERT INTO forms (allomorph_id, form, writingsystem) VALUES (?, ?, ?);";
-}
-
-QString AbstractSqlStemList::qInsertTagMember() const
-{
-    return "INSERT INTO TagMembers (tag_id, allomorph_id) VALUES (?, ?);";
-}
-
-QString AbstractSqlStemList::qInsertGloss() const
-{
-    return "INSERT INTO Glosses (stem_id, form, writingsystem) VALUES (?, ?, ?);";
-}
-
-QString AbstractSqlStemList::qInsertTag() const
-{
-    return "INSERT INTO tags (label) VALUES (?);";
-}
-
-QString AbstractSqlStemList::qSelectTagIdFromLabel() const
-{
-    return "SELECT _id FROM tags WHERE label=?;";
-}
-
-QString AbstractSqlStemList::qCreateStems() const
-{
-    return "create table if not exists Stems ( _id integer primary key autoincrement, liftGuid text  );";
-}
-
-QString AbstractSqlStemList::qCreateAllomorphs() const
-{
-    return "create table if not exists Allomorphs ( _id integer primary key autoincrement, stem_id integer, use_in_generations integer default 1, portmanteau text default null);";
-}
-
-QString AbstractSqlStemList::qUpdateAllomorphsA() const
-{
-    return "ALTER TABLE Allomorphs ADD COLUMN portmanteau text default null;";
-}
-
-QString AbstractSqlStemList::qCreateForms() const
-{
-    return "create table if not exists Forms ( _id integer primary key autoincrement, allomorph_id integer, Form text, WritingSystem text );";
-}
-
-QString AbstractSqlStemList::qCreateGlosses() const
-{
-    return "create table if not exists Glosses ( _id integer primary key autoincrement, stem_id integer, Form text, WritingSystem text );";
-}
-
-QString AbstractSqlStemList::qCreateTags() const
-{
-    return "create table if not exists Tags ( _id integer primary key autoincrement, Label text );";
-}
-
-QString AbstractSqlStemList::qCreateTagMembers() const
-{
-    return "create table if not exists TagMembers ( tag_id integer, allomorph_id );";
-}
-
-QString AbstractSqlStemList::qCreateAllomorphsIdx() const
-{
-    return "CREATE INDEX IF NOT EXISTS stemIdIdx ON Allomorphs (stem_id);";
-}
-
-QString AbstractSqlStemList::qCreateGlossesIdx() const
-{
-    return "CREATE INDEX IF NOT EXISTS glossIdx ON Glosses (stem_id);";
-}
-
-QString AbstractSqlStemList::qCreateFormsIdx() const
-{
-    return "CREATE INDEX IF NOT EXISTS formIdx ON Forms (allomorph_id);";
-}
-
-QString AbstractSqlStemList::qCreateTagsIdx1() const
-{
-    return "CREATE INDEX IF NOT EXISTS tagIdx ON TagMembers (allomorph_id);";
-}
-
-QString AbstractSqlStemList::qCreateTagsIdx2() const
-{
-    return "CREATE INDEX IF NOT EXISTS tagIdxTwo ON TagMembers (tag_id);";
 }

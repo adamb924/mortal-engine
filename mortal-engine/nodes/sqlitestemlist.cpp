@@ -60,6 +60,10 @@ AbstractNode *SqliteStemList::readFromXml(QXmlStreamReader &in, MorphologyXmlRea
             {
                 sl->addConditionTag( in.readElementText() );
             }
+            else if( in.name() == AbstractSqlStemList::XML_TABLE_PREFIX )
+            {
+                sl->setTablePrefix( in.readElementText() );
+            }
             else if( in.name() == AbstractNode::XML_ADD_ALLOMORPHS )
             {
                 sl->addCreateAllomorphs( morphologyReader->createAllomorphsFromId( in.attributes().value("with").toString() ) );
@@ -116,4 +120,179 @@ void SqliteStemList::openSqliteDatabase(const QString &connectionString, const Q
     {
         qWarning() << "SqliteStemList::openDatabase()" << "Invalid database: " << connectionString;
     }
+}
+
+QString SqliteStemList::qSelectStemIds() const
+{
+    return "SELECT DISTINCT _id, liftGuid from " + tableStems() + ";";
+}
+
+QString SqliteStemList::qSelectStemIdsWithTags(const QString &taglist) const
+{
+    return "SELECT DISTINCT stem_id, liftGuid from " + tableTagMembers() + " LEFT JOIN " + tableTags() + ", " + tableAllomorphs() + "," + tableStems() + " ON " + tableTags() + "._id=" + tableTagMembers() + ".tag_id AND " + tableAllomorphs() + "._id=" + tableTagMembers() + ".allomorph_id AND " + tableStems() + "._id=" + tableAllomorphs() + ".stem_id WHERE Label IN ("+taglist+");";
+}
+
+QString SqliteStemList::qSelectStemsSingleQuery() const
+{
+    return "SELECT stem_id, liftGuid," + tableAllomorphs() + "._id AS allomorph_id,use_in_generations,Form,writingsystem,group_concat(label),portmanteau "
+                                                             "FROM " + tableStems() + ", " + tableAllomorphs() + ", " + tableForms() + ", " + tableTags() + ", " + tableTagMembers() + " "
+                                                                                                                             "ON "
+                                                                                                                             "" + tableStems() + "._id=" + tableAllomorphs() + ".stem_id "
+                                                          "AND " + tableAllomorphs() + "._id=" + tableForms() + ".allomorph_id "
+                                                          "AND " + tableTags() + "._id=" + tableTagMembers() + ".tag_id "
+                                                         "AND " + tableTagMembers() + ".allomorph_id=" + tableForms() + ".allomorph_id "
+                                                                   "GROUP BY " + tableForms() + "._id;";
+}
+
+QString SqliteStemList::qSelectStemsSingleQueryWithTags(const QString &taglist) const
+{
+    return "SELECT stem_id, liftGuid,allomorphs._id AS allomorph_id,use_in_generations,Form,writingsystem,group_concat(label),portmanteau "
+           "FROM " + tableStems() + ", " + tableAllomorphs() + ", " + tableForms() + ", " + " + tableTags() + " + ", " + tableTagMembers() + " "
+                                                                                                                                     "ON "
+                                                                                                                                     "" + tableStems() + "._id=" + tableAllomorphs() + ".stem_id "
+                                                          "AND " + tableAllomorphs() + "._id=" + tableForms() + ".allomorph_id "
+                                                          "AND " + tableTags() + "._id=" + tableTagMembers() + ".tag_id "
+                                                         "AND " + tableTagMembers() + ".allomorph_id=" + tableForms() + ".allomorph_id "
+                                                                   "WHERE " + tableTagMembers() + ".allomorph_id IN (SELECT allomorph_id FROM " + tableTagMembers() + " WHERE tag_id IN ( " + taglist + " ) ) "
+                                                                                                                                       "GROUP BY " + tableForms() + "._id;";
+}
+
+QString SqliteStemList::qDeleteFromTagMembers() const
+{
+    return "DELETE from " + tableTagMembers() + " WHERE allomorph_id IN (SELECT _id FROM " + tableAllomorphs() + " WHERE stem_id=?);";
+}
+
+QString SqliteStemList::qDeleteFromForms() const
+{
+    return "DELETE from " + tableForms() + " WHERE allomorph_id IN (SELECT _id FROM " + tableAllomorphs() + " WHERE stem_id=?);";
+}
+
+QString SqliteStemList::qDeleteFromGlosses() const
+{
+    return "DELETE FROM " + tableGlosses() + " WHERE stem_id=?;";
+}
+
+QString SqliteStemList::qDeleteFromAllomorphs() const
+{
+    return "DELETE FROM " + tableAllomorphs() + " WHERE stem_id=?;";
+}
+
+QString SqliteStemList::qDeleteFromStems() const
+{
+    return "DELETE FROM " + tableStems() + " WHERE _id=?;";
+}
+
+QString SqliteStemList::qSelectAllomorphsFromStemId() const
+{
+    return "SELECT _id,use_in_generations,portmanteau FROM " + tableAllomorphs() + " WHERE stem_id=?;";
+}
+
+QString SqliteStemList::qSelectGlossesFromStemId() const
+{
+    return "SELECT Form, WritingSystem FROM " + tableGlosses() + " WHERE stem_id=?;";
+}
+
+QString SqliteStemList::qSelectFormsFromAllomorphId() const
+{
+    return "SELECT form, writingsystem FROM " + tableForms() + " WHERE allomorph_id=?;";
+}
+
+QString SqliteStemList::qSelectTagLabelsFromAllomorphId() const
+{
+    return "SELECT label from " + tableTagMembers() + " LEFT JOIN Tags ON Tags._id=TagMembers.tag_id WHERE allomorph_id=?;";
+}
+
+QString SqliteStemList::qInsertStem() const
+{
+    return "INSERT INTO " + tableStems() + " (_id, liftGuid) VALUES (null, ?);";
+}
+
+QString SqliteStemList::qInsertAllomorph() const
+{
+    return "INSERT INTO " + tableAllomorphs() + " (stem_id,use_in_generations,portmanteau) VALUES (?,?,?);";
+}
+
+QString SqliteStemList::qInsertForm() const
+{
+    return "INSERT INTO " + tableForms() + " (allomorph_id, form, writingsystem) VALUES (?, ?, ?);";
+}
+
+QString SqliteStemList::qInsertTagMember() const
+{
+    return "INSERT INTO " + tableTagMembers() + " (tag_id, allomorph_id) VALUES (?, ?);";
+}
+
+QString SqliteStemList::qInsertGloss() const
+{
+    return "INSERT INTO " + tableGlosses() + " (stem_id, form, writingsystem) VALUES (?, ?, ?);";
+}
+
+QString SqliteStemList::qInsertTag() const
+{
+    return "INSERT INTO " + tableTags() + " (label) VALUES (?);";
+}
+
+QString SqliteStemList::qSelectTagIdFromLabel() const
+{
+    return "SELECT _id FROM " + tableTags() + " WHERE label=?;";
+}
+
+QString SqliteStemList::qCreateStems() const
+{
+    return "create table if not exists " + tableStems() + " ( _id integer primary key autoincrement, liftGuid text  );";
+}
+
+QString SqliteStemList::qCreateAllomorphs() const
+{
+    return "create table if not exists " + tableAllomorphs() + " ( _id integer primary key autoincrement, stem_id integer, use_in_generations integer default 1, portmanteau text default null);";
+}
+
+QString SqliteStemList::qUpdateAllomorphsA() const
+{
+    return "ALTER TABLE " + tableAllomorphs() + " ADD COLUMN portmanteau text default null;";
+}
+
+QString SqliteStemList::qCreateForms() const
+{
+    return "create table if not exists " + tableForms() + " ( _id integer primary key autoincrement, allomorph_id integer, Form text, WritingSystem text );";
+}
+
+QString SqliteStemList::qCreateGlosses() const
+{
+    return "create table if not exists " + tableGlosses() + " ( _id integer primary key autoincrement, stem_id integer, Form text, WritingSystem text );";
+}
+
+QString SqliteStemList::qCreateTags() const
+{
+    return "create table if not exists " + tableTags() + " ( _id integer primary key autoincrement, Label text );";
+}
+
+QString SqliteStemList::qCreateTagMembers() const
+{
+    return "create table if not exists " + tableTagMembers() + " ( tag_id integer, allomorph_id );";
+}
+
+QString SqliteStemList::qCreateAllomorphsIdx() const
+{
+    return "CREATE INDEX IF NOT EXISTS stemIdIdx ON " + tableAllomorphs() + " (stem_id);";
+}
+
+QString SqliteStemList::qCreateGlossesIdx() const
+{
+    return "CREATE INDEX IF NOT EXISTS glossIdx ON " + tableGlosses() + " (stem_id);";
+}
+
+QString SqliteStemList::qCreateFormsIdx() const
+{
+    return "CREATE INDEX IF NOT EXISTS formIdx ON " + tableForms() + " (allomorph_id);";
+}
+
+QString SqliteStemList::qCreateTagsIdx1() const
+{
+    return "CREATE INDEX IF NOT EXISTS tagIdx ON " + tableTagMembers() + " (allomorph_id);";
+}
+
+QString SqliteStemList::qCreateTagsIdx2() const
+{
+    return "CREATE INDEX IF NOT EXISTS tagIdxTwo ON " + tableTagMembers() + " (tag_id);";
 }

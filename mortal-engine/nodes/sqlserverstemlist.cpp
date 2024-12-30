@@ -13,6 +13,8 @@
 
 using namespace ME;
 
+QString SqlServerStemList::XML_DATABASE_NAME = "database-name";
+
 SqlServerStemList::SqlServerStemList(const MorphologicalModel *model)
     : AbstractSqlStemList(model)
 {
@@ -47,6 +49,13 @@ void SqlServerStemList::openSqlServerDatabase(const QString &connectionString, c
     {
         qWarning() << "SqlServerStemList::openDatabase()" << "Invalid database: " << connectionString;
     }
+
+    QSqlQuery q(db);
+    if( !q.exec("use " + databaseName + ";") )
+    {
+        qWarning() << "SqlServerStemList::openDatabase()" << "Could not select database: " << databaseName;
+    }
+
 }
 
 QString SqlServerStemList::elementName()
@@ -57,6 +66,7 @@ QString SqlServerStemList::elementName()
 AbstractNode *SqlServerStemList::readFromXml(QXmlStreamReader &in, MorphologyXmlReader *morphologyReader, const MorphologicalModel *model)
 {
     Q_ASSERT( in.isStartElement() );
+
     SqlServerStemList* sl = new SqlServerStemList(model);
     sl->readInitialNodeAttributes(in, morphologyReader);
 
@@ -82,9 +92,9 @@ AbstractNode *SqlServerStemList::readFromXml(QXmlStreamReader &in, MorphologyXml
             {
                 sl->setConnectionString( in.readElementText() );
             }
-            else if( in.name() == XML_EXTERNAL_DATABASE )
+            else if( in.name() == XML_DATABASE_NAME )
             {
-                sl->setExternalDatabase( in.readElementText() );
+                sl->setDbName( in.readElementText() );
             }
             else if( in.name() == AbstractStemList::XML_MATCHING_TAG )
             {
@@ -93,6 +103,10 @@ AbstractNode *SqlServerStemList::readFromXml(QXmlStreamReader &in, MorphologyXml
             else if( in.name() == AbstractNode::XML_ADD_ALLOMORPHS )
             {
                 sl->addCreateAllomorphs( morphologyReader->createAllomorphsFromId( in.attributes().value("with").toString() ) );
+            }
+            else if( in.name() == AbstractSqlStemList::XML_TABLE_PREFIX )
+            {
+                sl->setTablePrefix( in.readElementText() );
             }
             else if( CreateAllomorphs::matchesElement(in) )
             {
@@ -125,6 +139,12 @@ QString SqlServerStemList::qCreateStems() const
 QString SqlServerStemList::qCreateAllomorphs() const
 {
     return "IF OBJECT_ID(N'dbo.Allomorphs', N'U') IS NULL BEGIN create table Allomorphs ( _id bigint IDENTITY(1,1) PRIMARY KEY, stem_id bigint, use_in_generations bigint default 1) END;";
+}
+
+/// TODO untested
+QString SqlServerStemList::qUpdateAllomorphsA() const
+{
+    return "ALTER TABLE " + tableAllomorphs() + " ADD COLUMN portmanteau varchar(max) default null;";
 }
 
 QString SqlServerStemList::qCreateForms() const
@@ -181,3 +201,112 @@ QString SqlServerStemList::qInsertStem() const
 {
     return "INSERT INTO stems (liftGuid) VALUES (?);";
 }
+
+/// DEBUG BEGIN UNTESTED METHODS
+
+QString SqlServerStemList::qSelectStemIds() const
+{
+    return "SELECT DISTINCT _id, liftGuid from " + tableStems() + ";";
+}
+
+QString SqlServerStemList::qSelectStemsSingleQuery() const
+{
+    return "SELECT stem_id, liftGuid," + tableAllomorphs() + "._id AS allomorph_id,use_in_generations,Form,writingsystem,group_concat(label),portmanteau "
+                                                             "FROM " + tableStems() + ", " + tableAllomorphs() + ", " + tableForms() + ", " + tableTags() + ", " + tableTagMembers() + " "
+                                                                                                                             "ON "
+                                                                                                                             "" + tableStems() + "._id=" + tableAllomorphs() + ".stem_id "
+                                                          "AND " + tableAllomorphs() + "._id=" + tableForms() + ".allomorph_id "
+                                                          "AND " + tableTags() + "._id=" + tableTagMembers() + ".tag_id "
+                                                         "AND " + tableTagMembers() + ".allomorph_id=" + tableForms() + ".allomorph_id "
+                                                                   "GROUP BY " + tableForms() + "._id;";
+}
+
+QString SqlServerStemList::qSelectStemsSingleQueryWithTags(const QString &taglist) const
+{
+    return "SELECT stem_id, liftGuid,allomorphs._id AS allomorph_id,use_in_generations,Form,writingsystem,group_concat(label),portmanteau "
+           "FROM " + tableStems() + ", " + tableAllomorphs() + ", " + tableForms() + ", " + " + tableTags() + " + ", " + tableTagMembers() + " "
+                                                                                                                                     "ON "
+                                                                                                                                     "" + tableStems() + "._id=" + tableAllomorphs() + ".stem_id "
+                                                          "AND " + tableAllomorphs() + "._id=" + tableForms() + ".allomorph_id "
+                                                          "AND " + tableTags() + "._id=" + tableTagMembers() + ".tag_id "
+                                                         "AND " + tableTagMembers() + ".allomorph_id=" + tableForms() + ".allomorph_id "
+                                                                   "WHERE " + tableTagMembers() + ".allomorph_id IN (SELECT allomorph_id FROM " + tableTagMembers() + " WHERE tag_id IN ( " + taglist + " ) ) "
+                                                                                                                                       "GROUP BY " + tableForms() + "._id;";
+}
+
+QString SqlServerStemList::qDeleteFromTagMembers() const
+{
+    return "DELETE from " + tableTagMembers() + " WHERE allomorph_id IN (SELECT _id FROM " + tableAllomorphs() + " WHERE stem_id=?);";
+}
+
+QString SqlServerStemList::qDeleteFromForms() const
+{
+    return "DELETE from " + tableForms() + " WHERE allomorph_id IN (SELECT _id FROM " + tableAllomorphs() + " WHERE stem_id=?);";
+}
+
+QString SqlServerStemList::qDeleteFromGlosses() const
+{
+    return "DELETE FROM " + tableGlosses() + " WHERE stem_id=?;";
+}
+
+QString SqlServerStemList::qDeleteFromAllomorphs() const
+{
+    return "DELETE FROM " + tableAllomorphs() + " WHERE stem_id=?;";
+}
+
+QString SqlServerStemList::qDeleteFromStems() const
+{
+    return "DELETE FROM " + tableStems() + " WHERE _id=?;";
+}
+
+QString SqlServerStemList::qSelectAllomorphsFromStemId() const
+{
+    return "SELECT _id,use_in_generations,portmanteau FROM " + tableAllomorphs() + " WHERE stem_id=?;";
+}
+
+QString SqlServerStemList::qSelectGlossesFromStemId() const
+{
+    return "SELECT Form, WritingSystem FROM " + tableGlosses() + " WHERE stem_id=?;";
+}
+
+QString SqlServerStemList::qSelectFormsFromAllomorphId() const
+{
+    return "SELECT form, writingsystem FROM " + tableForms() + " WHERE allomorph_id=?;";
+}
+
+QString SqlServerStemList::qSelectTagLabelsFromAllomorphId() const
+{
+    return "SELECT label from " + tableTagMembers() + " LEFT JOIN Tags ON Tags._id=TagMembers.tag_id WHERE allomorph_id=?;";
+}
+
+QString SqlServerStemList::qInsertAllomorph() const
+{
+    return "INSERT INTO " + tableAllomorphs() + " (stem_id,use_in_generations,portmanteau) VALUES (?,?,?);";
+}
+
+QString SqlServerStemList::qInsertForm() const
+{
+    return "INSERT INTO " + tableForms() + " (allomorph_id, form, writingsystem) VALUES (?, ?, ?);";
+}
+
+QString SqlServerStemList::qInsertTagMember() const
+{
+    return "INSERT INTO " + tableTagMembers() + " (tag_id, allomorph_id) VALUES (?, ?);";
+}
+
+QString SqlServerStemList::qInsertGloss() const
+{
+    return "INSERT INTO " + tableGlosses() + " (stem_id, form, writingsystem) VALUES (?, ?, ?);";
+}
+
+QString SqlServerStemList::qInsertTag() const
+{
+    return "INSERT INTO " + tableTags() + " (label) VALUES (?);";
+}
+
+QString SqlServerStemList::qSelectTagIdFromLabel() const
+{
+    return "SELECT _id FROM " + tableTags() + " WHERE label=?;";
+}
+
+/// DEBUG END UNTESTED METHODS
