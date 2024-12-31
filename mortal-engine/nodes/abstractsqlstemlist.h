@@ -11,6 +11,7 @@ class MORTAL_ENGINE_EXPORT AbstractSqlStemList : public AbstractStemList
 {
 public:
     explicit AbstractSqlStemList(const MorphologicalModel * model);
+    ~AbstractSqlStemList() override;
 
     const static QString DEFAULT_DBNAME;
 
@@ -96,6 +97,8 @@ private:
     void addStemToDatabase( LexicalStem * stem );
     qlonglong ensureTagInDatabase( const QString & tag );
 
+    void openAlternateConnections() const;
+
     /// prevent subclasses from accessing these, so that they have to use the table name functions
     QString mTablePrefix;
     static QString TABLE_STEMS;
@@ -105,6 +108,12 @@ private:
     static QString TABLE_TAGS;
     static QString TABLE_TAGMEMBERS;
 
+    static QString STEM_CONNECTION;
+    static QString ALLOMORPH_CONNECTION;
+
+    QString stemConnectionName() const;
+    QString allomorphConnectionName() const;
+
 protected:
     QString mDbName;
     bool mReadGlosses;
@@ -113,7 +122,8 @@ protected:
     QString tagsInSqlList() const;
     QString tagIdsInSqlList() const;
 
-    virtual void openDatabase(const QString & connectionString, const QString & databaseName) = 0;
+    virtual void openDatabase(const QString & connectionString, const QString & databaseName) const = 0;
+    virtual void cloneDatabase(const QString & databaseName, const QString & newConnectionName) const = 0;
 };
 
 } // namespace ME

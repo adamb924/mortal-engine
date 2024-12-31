@@ -5,6 +5,7 @@
 #include <QSqlError>
 #include <QXmlStreamReader>
 #include <QtDebug>
+#include <QElapsedTimer>
 
 #include "datatypes/lexicalstem.h"
 
@@ -22,12 +23,24 @@ QString AbstractSqlStemList::TABLE_GLOSSES = "Glosses";
 QString AbstractSqlStemList::TABLE_TAGS = "Tags";
 QString AbstractSqlStemList::TABLE_TAGMEMBERS = "TagMembers";
 
+QString AbstractSqlStemList::STEM_CONNECTION = "stem-connection";
+QString AbstractSqlStemList::ALLOMORPH_CONNECTION = "allomorph-connection";
+
 AbstractSqlStemList::AbstractSqlStemList(const MorphologicalModel *model) :
     AbstractStemList(model),
     mDbName(DEFAULT_DBNAME),
     mReadGlosses(true)
 {
 
+}
+
+AbstractSqlStemList::~AbstractSqlStemList()
+{
+    /// 2024-12-31: I'm not actually sure this is necessary.
+    foreach(QString connectionName, QSqlDatabase::connectionNames())
+    {
+        QSqlDatabase::removeDatabase(connectionName);
+    }
 }
 
 void AbstractSqlStemList::setConnectionString(const QString &connectionString)
@@ -93,7 +106,12 @@ void AbstractSqlStemList::setExternalDatabase(const QString &dbName)
 
 void AbstractSqlStemList::readStemsMultipleQueries(const QHash<QString, WritingSystem> &writingSystems)
 {
+    QElapsedTimer timer;
+    timer.start();
+
     QSqlDatabase db = QSqlDatabase::database(mDbName);
+
+    openAlternateConnections();
 
     /// this is where the tag filtering takes place
     QSqlQuery query(db);
@@ -106,7 +124,7 @@ void AbstractSqlStemList::readStemsMultipleQueries(const QHash<QString, WritingS
     {
         const QString inStatement = tagsInSqlList();
         query.prepare( qSelectStemIdsWithTags(inStatement) );
-    }
+    }    
 
     if(query.exec())
     {
@@ -121,6 +139,8 @@ void AbstractSqlStemList::readStemsMultipleQueries(const QHash<QString, WritingS
     {
         qWarning() << "AbstractSqlStemList::readStemsMultipleQueries()" << query.lastError().text() << query.executedQuery();
     }
+
+    qInfo().noquote() << QString("Stems read in %1 ms").arg(timer.elapsed());
 }
 
 void AbstractSqlStemList::readStemsSingleQuery(const QHash<QString, WritingSystem> &writingSystems)
@@ -274,7 +294,7 @@ LexicalStem *AbstractSqlStemList::lexicalStemFromId(qlonglong stemId, const QStr
     if( !liftGuid.isEmpty() )
         ls->setLiftGuid( liftGuid );
 
-    QSqlDatabase db = QSqlDatabase::database(mDbName);
+    QSqlDatabase db = QSqlDatabase::database(stemConnectionName());
     QSqlQuery query(db);
     query.setForwardOnly(true);
 
@@ -319,7 +339,7 @@ LexicalStem *AbstractSqlStemList::lexicalStemFromId(qlonglong stemId, const QStr
 
 Allomorph AbstractSqlStemList::allomorphFromId(qlonglong allomorphId, const QHash<QString, WritingSystem> &writingSystems, bool useInGenerations, const QString &portmanteau)
 {
-    QSqlDatabase db = QSqlDatabase::database(mDbName);
+    QSqlDatabase db = QSqlDatabase::database(allomorphConnectionName());
     QSqlQuery query(db);
     query.setForwardOnly(true);
 
@@ -550,6 +570,22 @@ qlonglong AbstractSqlStemList::ensureTagInDatabase(const QString &tag)
         qWarning() << "AbstractSqlStemList::readStems()" << query.lastError().text() << query.executedQuery();
         return 0;
     }
+}
+
+void AbstractSqlStemList::openAlternateConnections() const
+{
+    cloneDatabase(mDbName, stemConnectionName());
+    cloneDatabase(mDbName, allomorphConnectionName());
+}
+
+QString AbstractSqlStemList::stemConnectionName() const
+{
+    return mDbName + ":" + STEM_CONNECTION;
+}
+
+QString AbstractSqlStemList::allomorphConnectionName() const
+{
+    return mDbName + ":" + ALLOMORPH_CONNECTION;
 }
 
 void AbstractSqlStemList::setDbName(const QString &newDbName)

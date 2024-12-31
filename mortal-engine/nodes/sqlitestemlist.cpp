@@ -86,9 +86,14 @@ bool SqliteStemList::matchesElement(QXmlStreamReader &in)
     return in.isStartElement() && in.name() == elementName();
 }
 
-void SqliteStemList::openDatabase(const QString &connectionString, const QString &databaseName)
+void SqliteStemList::openDatabase(const QString &connectionString, const QString &databaseName) const
 {
     SqliteStemList::openSqliteDatabase(connectionString, databaseName);
+}
+
+void SqliteStemList::cloneDatabase(const QString &databaseName, const QString &newConnectionName) const
+{
+    SqliteStemList::cloneSqliteDatabase(databaseName, newConnectionName);
 }
 
 void SqliteStemList::openSqliteDatabase(const QString &connectionString, const QString &databaseName)
@@ -119,6 +124,20 @@ void SqliteStemList::openSqliteDatabase(const QString &connectionString, const Q
     if( !db.isValid() )
     {
         qWarning() << "SqliteStemList::openDatabase()" << "Invalid database: " << connectionString;
+    }
+}
+
+void SqliteStemList::cloneSqliteDatabase(const QString &databaseName, const QString &newConnectionName)
+{
+    QSqlDatabase db = QSqlDatabase::cloneDatabase(databaseName, newConnectionName);
+    if(!db.open())
+    {
+        qWarning() << "SqliteStemList::cloneSqlServerDatabase()" << "Database failed to open.";
+        return;
+    }
+    if( !db.isValid() )
+    {
+        qWarning() << "SqliteStemList::cloneSqlServerDatabase()" << "Invalid database: ";
     }
 }
 

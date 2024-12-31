@@ -15,6 +15,7 @@ public:
     explicit SqliteStemList(const MorphologicalModel * model);
 
     static void openSqliteDatabase(const QString & filename, const QString & databaseName);
+    static void cloneSqliteDatabase(const QString & databaseName, const QString & newConnectionName);
 
     /// element-reading code
     static QString elementName();
@@ -61,7 +62,8 @@ public:
     QString qCreateTagsIdx2() const override;
 
 protected:
-    void openDatabase(const QString & connectionString, const QString & databaseName) override;
+    void openDatabase(const QString & connectionString, const QString & databaseName) const override;
+    void cloneDatabase(const QString & databaseName, const QString & newConnectionName) const override;
 };
 
 } // namespace ME

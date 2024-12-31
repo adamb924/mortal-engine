@@ -59,6 +59,27 @@ void SqlServerStemList::openSqlServerDatabase(const QString &connectionString, c
 
 }
 
+void SqlServerStemList::cloneSqlServerDatabase(const QString &databaseName, const QString &newConnectionName)
+{
+    QSqlDatabase db = QSqlDatabase::cloneDatabase(databaseName, newConnectionName);
+    if(!db.open())
+    {
+        qWarning() << "SqlServerStemList::cloneSqlServerDatabase()" << "Database failed to open.";
+        return;
+    }
+    if( !db.isValid() )
+    {
+        qWarning() << "SqlServerStemList::cloneSqlServerDatabase()" << "Invalid database: ";
+    }
+
+    QSqlQuery q(db);
+    q.setForwardOnly(true);
+    if( !q.exec("use " + databaseName + ";") )
+    {
+        qWarning() << "SqlServerStemList::cloneSqlServerDatabase()" << "Could not select database: " << databaseName;
+    }
+}
+
 QString SqlServerStemList::elementName()
 {
     return "sqlserver-stem-list";
@@ -127,9 +148,14 @@ bool SqlServerStemList::matchesElement(QXmlStreamReader &in)
     return in.isStartElement() && in.name() == elementName();
 }
 
-void SqlServerStemList::openDatabase(const QString &connectionString, const QString &databaseName)
+void SqlServerStemList::openDatabase(const QString &connectionString, const QString &databaseName) const
 {
     SqlServerStemList::openSqlServerDatabase(connectionString, databaseName);
+}
+
+void SqlServerStemList::cloneDatabase(const QString &databaseName, const QString &newConnectionName) const
+{
+    SqlServerStemList::cloneSqlServerDatabase(databaseName, newConnectionName);
 }
 
 QString SqlServerStemList::qCreateStems() const

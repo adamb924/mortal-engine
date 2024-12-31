@@ -14,6 +14,7 @@ public:
     SqlServerStemList();
 
     static void openSqlServerDatabase(const QString & connectionString, const QString & databaseName);
+    static void cloneSqlServerDatabase(const QString & databaseName, const QString & newConnectionName);
 
     /// element-reading code
     static QString elementName();
@@ -21,7 +22,8 @@ public:
     static bool matchesElement(QXmlStreamReader &in);
 
 protected:
-    void openDatabase(const QString & connectionString, const QString & databaseName) override;
+    void openDatabase(const QString & connectionString, const QString & databaseName) const override;
+    void cloneDatabase(const QString & databaseName, const QString & newConnectionName) const override;
 
     QString qSelectStemIds() const override;
     QString qSelectStemIdsWithTags(const QString & taglist) const override;
