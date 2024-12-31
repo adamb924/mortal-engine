@@ -147,7 +147,7 @@ QString SqliteStemList::qSelectStemsSingleQuery() const
 QString SqliteStemList::qSelectStemsSingleQueryWithTags(const QString &taglist) const
 {
     return "SELECT stem_id, liftGuid,allomorphs._id AS allomorph_id,use_in_generations,Form,writingsystem,group_concat(label),portmanteau "
-           "FROM " + tableStems() + ", " + tableAllomorphs() + ", " + tableForms() + ", " + " + tableTags() + " + ", " + tableTagMembers() + " "
+           "FROM " + tableStems() + ", " + tableAllomorphs() + ", " + tableForms() + ", " +  tableTags()  + ", " + tableTagMembers() + " "
                                                                                                                                      "ON "
                                                                                                                                      "" + tableStems() + "._id=" + tableAllomorphs() + ".stem_id "
                                                           "AND " + tableAllomorphs() + "._id=" + tableForms() + ".allomorph_id "
