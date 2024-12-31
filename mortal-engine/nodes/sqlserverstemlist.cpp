@@ -133,73 +133,72 @@ void SqlServerStemList::openDatabase(const QString &connectionString, const QStr
 
 QString SqlServerStemList::qCreateStems() const
 {
-    return "IF OBJECT_ID(N'dbo.Stems', N'U') IS NULL BEGIN create table Stems ( _id bigint IDENTITY(1,1) PRIMARY KEY, liftGuid varchar(max) ) END;";
+    return "IF OBJECT_ID(N'dbo." + tableStems() + "', N'U') IS NULL BEGIN create table " + tableStems() + " ( _id bigint IDENTITY(1,1) PRIMARY KEY, liftGuid nvarchar(max) COLLATE Latin1_General_100_CI_AS_SC_UTF8 ) END;";
 }
 
 QString SqlServerStemList::qCreateAllomorphs() const
 {
-    return "IF OBJECT_ID(N'dbo.Allomorphs', N'U') IS NULL BEGIN create table Allomorphs ( _id bigint IDENTITY(1,1) PRIMARY KEY, stem_id bigint, use_in_generations bigint default 1) END;";
+    return "IF OBJECT_ID(N'dbo." + tableAllomorphs() + "', N'U') IS NULL BEGIN create table " + tableAllomorphs() + " ( _id bigint IDENTITY(1,1) PRIMARY KEY, stem_id bigint, use_in_generations bigint default 1) END;";
 }
 
-/// TODO untested
 QString SqlServerStemList::qUpdateAllomorphsA() const
 {
-    return "ALTER TABLE " + tableAllomorphs() + " ADD COLUMN portmanteau varchar(max) default null;";
+    return "ALTER TABLE " + tableAllomorphs() + " ADD portmanteau nvarchar(max) COLLATE Latin1_General_100_CI_AS_SC_UTF8 default null;";
 }
 
 QString SqlServerStemList::qCreateForms() const
 {
-    return "IF OBJECT_ID(N'dbo.Forms', N'U') IS NULL BEGIN create table Forms ( _id bigint IDENTITY(1,1) PRIMARY KEY, allomorph_id bigint, Form varchar(max), WritingSystem varchar(max) ) END;";
+    return "IF OBJECT_ID(N'dbo." + tableForms() + "', N'U') IS NULL BEGIN create table " + tableForms() + " ( _id bigint IDENTITY(1,1) PRIMARY KEY, allomorph_id bigint, Form nvarchar(max) COLLATE Latin1_General_100_CI_AS_SC_UTF8, WritingSystem nvarchar(max) COLLATE Latin1_General_100_CI_AS_SC_UTF8 ) END;";
 }
 
 QString SqlServerStemList::qCreateGlosses() const
 {
-    return "IF OBJECT_ID(N'dbo.Glosses', N'U') IS NULL BEGIN create table Glosses ( _id bigint IDENTITY(1,1) PRIMARY KEY, stem_id bigint, Form varchar(max), WritingSystem varchar(max) ) END;";
+    return "IF OBJECT_ID(N'dbo." + tableGlosses() + "', N'U') IS NULL BEGIN create table " + tableGlosses() + " ( _id bigint IDENTITY(1,1) PRIMARY KEY, stem_id bigint, Form nvarchar(max) COLLATE Latin1_General_100_CI_AS_SC_UTF8, WritingSystem nvarchar(max) COLLATE Latin1_General_100_CI_AS_SC_UTF8 ) END;";
 }
 
 QString SqlServerStemList::qCreateTags() const
 {
-    return "IF OBJECT_ID(N'dbo.Tags', N'U') IS NULL BEGIN create table Tags ( _id bigint IDENTITY(1,1) PRIMARY KEY, Label varchar(max) ) END;";
+    return "IF OBJECT_ID(N'dbo." + tableTags() + "', N'U') IS NULL BEGIN create table " + tableTags() + " ( _id bigint IDENTITY(1,1) PRIMARY KEY, Label nvarchar(max) COLLATE Latin1_General_100_CI_AS_SC_UTF8 ) END;";
 }
 
 QString SqlServerStemList::qCreateTagMembers() const
 {
-    return "IF OBJECT_ID(N'dbo.TagMembers', N'U') IS NULL BEGIN create table TagMembers ( tag_id bigint, allomorph_id bigint ) END;";
+    return "IF OBJECT_ID(N'dbo." + tableTagMembers() + "', N'U') IS NULL BEGIN create table " + tableTagMembers() + " ( tag_id bigint, allomorph_id bigint ) END;";
 }
 
 QString SqlServerStemList::qCreateAllomorphsIdx() const
 {
-    return "IF NOT EXISTS(SELECT * FROM sys.indexes WHERE name = 'stemIdIdx' AND object_id = OBJECT_ID('Allomorphs')) BEGIN CREATE INDEX stemIdIdx ON Allomorphs (stem_id) END;";
+    return "IF NOT EXISTS(SELECT * FROM sys.indexes WHERE name = 'stemIdIdx' AND object_id = OBJECT_ID('" + tableAllomorphs() + "')) BEGIN CREATE INDEX stemIdIdx ON " + tableAllomorphs() + " (stem_id) END;";
 }
 
 QString SqlServerStemList::qCreateGlossesIdx() const
 {
-    return "IF NOT EXISTS(SELECT * FROM sys.indexes WHERE name = 'glossIdx' AND object_id = OBJECT_ID('Glosses')) BEGIN CREATE INDEX glossIdx ON Glosses (stem_id) END;";
+    return "IF NOT EXISTS(SELECT * FROM sys.indexes WHERE name = 'glossIdx' AND object_id = OBJECT_ID('" + tableGlosses() + "')) BEGIN CREATE INDEX glossIdx ON " + tableGlosses() + " (stem_id) END;";
 }
 
 QString SqlServerStemList::qCreateFormsIdx() const
 {
-    return "IF NOT EXISTS(SELECT * FROM sys.indexes WHERE name = 'formIdx' AND object_id = OBJECT_ID('Forms')) BEGIN CREATE INDEX formIdx ON Forms (allomorph_id) END;";
+    return "IF NOT EXISTS(SELECT * FROM sys.indexes WHERE name = 'formIdx' AND object_id = OBJECT_ID('" + tableForms() + "')) BEGIN CREATE INDEX formIdx ON " + tableForms() + " (allomorph_id) END;";
 }
 
 QString SqlServerStemList::qCreateTagsIdx1() const
 {
-    return "IF NOT EXISTS(SELECT * FROM sys.indexes WHERE name = 'tagIdx' AND object_id = OBJECT_ID('TagMembers')) BEGIN CREATE INDEX tagIdx ON TagMembers (allomorph_id) END;";
+    return "IF NOT EXISTS(SELECT * FROM sys.indexes WHERE name = 'tagIdx' AND object_id = OBJECT_ID('" + tableTagMembers() + "')) BEGIN CREATE INDEX tagIdx ON " + tableTagMembers() + " (allomorph_id) END;";
 }
 
 QString SqlServerStemList::qCreateTagsIdx2() const
 {
-    return "IF NOT EXISTS(SELECT * FROM sys.indexes WHERE name = 'tagIdxTwo' AND object_id = OBJECT_ID('TagMembers')) BEGIN CREATE INDEX tagIdxTwo ON TagMembers (tag_id) END;";
+    return "IF NOT EXISTS(SELECT * FROM sys.indexes WHERE name = 'tagIdxTwo' AND object_id = OBJECT_ID('" + tableTagMembers() + "')) BEGIN CREATE INDEX tagIdxTwo ON " + tableTagMembers() + " (tag_id) END;";
 }
 
 QString SqlServerStemList::qSelectStemIdsWithTags(const QString &taglist) const
 {
-    return "SELECT DISTINCT stem_id, liftGuid from TagMembers LEFT JOIN Tags ON Tags._id=TagMembers.tag_id LEFT JOIN Allomorphs ON Allomorphs._id=TagMembers.allomorph_id LEFT JOIN Stems ON Stems._id=Allomorphs.stem_id WHERE Label IN ("+taglist+");";
+    return "SELECT DISTINCT stem_id, liftGuid from " + tableTagMembers() + " LEFT JOIN " + tableTags() + " ON " + tableTags() + "._id=" + tableTagMembers() + ".tag_id LEFT JOIN " + tableAllomorphs() + " ON " + tableAllomorphs() + "._id=" + tableTagMembers() + ".allomorph_id LEFT JOIN " + tableStems() + " ON " + tableStems() + "._id=" + tableAllomorphs() + ".stem_id WHERE Label IN ("+taglist+");";
 }
 
 QString SqlServerStemList::qInsertStem() const
 {
-    return "INSERT INTO stems (liftGuid) VALUES (?);";
+    return "INSERT INTO " + tableStems() + " (liftGuid) VALUES (?);";
 }
 
 /// DEBUG BEGIN UNTESTED METHODS
@@ -276,7 +275,7 @@ QString SqlServerStemList::qSelectFormsFromAllomorphId() const
 
 QString SqlServerStemList::qSelectTagLabelsFromAllomorphId() const
 {
-    return "SELECT label from " + tableTagMembers() + " LEFT JOIN Tags ON Tags._id=TagMembers.tag_id WHERE allomorph_id=?;";
+    return "SELECT label from " + tableTagMembers() + " LEFT JOIN " + tableTags() + " ON " + tableTags() + "._id=" + tableTagMembers() + ".tag_id WHERE allomorph_id=?;";
 }
 
 QString SqlServerStemList::qInsertAllomorph() const
