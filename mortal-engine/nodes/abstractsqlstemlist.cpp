@@ -97,6 +97,7 @@ void AbstractSqlStemList::readStemsMultipleQueries(const QHash<QString, WritingS
 
     /// this is where the tag filtering takes place
     QSqlQuery query(db);
+    query.setForwardOnly(true);
     if( mTags.isEmpty() )
     {
         query.prepare(qSelectStemIds());
@@ -128,6 +129,7 @@ void AbstractSqlStemList::readStemsSingleQuery(const QHash<QString, WritingSyste
 
     /// this is where the tag filtering takes place
     QSqlQuery query(db);
+    query.setForwardOnly(true);
     if( mTags.isEmpty() )
     {
         query.prepare(qSelectStemsSingleQuery());
@@ -215,6 +217,7 @@ void AbstractSqlStemList::removeStemFromDataModel(qlonglong id)
     db.transaction();
 
     QSqlQuery query(db);
+    query.setForwardOnly(true);
 
     query.prepare(qDeleteFromTagMembers());
     query.bindValue(0, id );
@@ -273,6 +276,7 @@ LexicalStem *AbstractSqlStemList::lexicalStemFromId(qlonglong stemId, const QStr
 
     QSqlDatabase db = QSqlDatabase::database(mDbName);
     QSqlQuery query(db);
+    query.setForwardOnly(true);
 
     query.prepare(qSelectAllomorphsFromStemId());
     query.bindValue( 0, stemId );
@@ -308,6 +312,7 @@ LexicalStem *AbstractSqlStemList::lexicalStemFromId(qlonglong stemId, const QStr
     {
         qWarning() << "AbstractSqlStemList::readStems()" << query.lastError().text() << query.executedQuery();
     }
+    query.finish();
 
     return ls;
 }
@@ -316,6 +321,7 @@ Allomorph AbstractSqlStemList::allomorphFromId(qlonglong allomorphId, const QHas
 {
     QSqlDatabase db = QSqlDatabase::database(mDbName);
     QSqlQuery query(db);
+    query.setForwardOnly(true);
 
     Allomorph a(Allomorph::Original);
     a.setId(allomorphId);
@@ -360,6 +366,7 @@ Allomorph AbstractSqlStemList::allomorphFromId(qlonglong allomorphId, const QHas
 void AbstractSqlStemList::createTables()
 {
     QSqlQuery q(QSqlDatabase::database(mDbName));
+    q.setForwardOnly(true);
 
     if( !q.exec(qCreateStems()) )
         qWarning() << "AbstractSqlStemList::createTables()" << q.lastError().text() << q.executedQuery();
@@ -410,6 +417,7 @@ void AbstractSqlStemList::addStemToDatabase(LexicalStem *stem)
 
     /// first insert a row into the stems table to get a stem_id
     QSqlQuery stemQuery(db);
+    stemQuery.setForwardOnly(true);
     stemQuery.prepare(qInsertStem());
     stemQuery.bindValue(0, stem->liftGuid() );
     if(stemQuery.exec())
@@ -425,13 +433,16 @@ void AbstractSqlStemList::addStemToDatabase(LexicalStem *stem)
     }
 
     QSqlQuery allomorphQuery(db);
+    allomorphQuery.setForwardOnly(true);
     allomorphQuery.prepare(qInsertAllomorph());
     allomorphQuery.bindValue(0, stem_id ); /// this will be the same for all subsequent calls
 
     QSqlQuery formQuery(db);
+    formQuery.setForwardOnly(true);
     formQuery.prepare(qInsertForm());
 
     QSqlQuery tagQuery(db);
+    tagQuery.setForwardOnly(true);
     tagQuery.prepare(qInsertTagMember());
 
     QListIterator<Allomorph> ai = stem->allomorphIterator();
@@ -485,6 +496,7 @@ void AbstractSqlStemList::addStemToDatabase(LexicalStem *stem)
     }
 
     QSqlQuery glossQuery(db);
+    glossQuery.setForwardOnly(true);
     glossQuery.prepare(qInsertGloss());
     glossQuery.bindValue(0, stem_id ); /// this will be the same for all subsequent calls
     QHashIterator<WritingSystem, Form> gi( stem->glosses() );
@@ -509,6 +521,7 @@ qlonglong AbstractSqlStemList::ensureTagInDatabase(const QString &tag)
     QSqlDatabase db = QSqlDatabase::database(mDbName);
 
     QSqlQuery query(db);
+    query.setForwardOnly(true);
     query.prepare(qSelectTagIdFromLabel());
     query.bindValue(0, tag);
     if(query.exec())
@@ -608,6 +621,7 @@ QString AbstractSqlStemList::tagIdsInSqlList() const
     {
         QSqlDatabase db = QSqlDatabase::database(mDbName);
         QSqlQuery query(db);
+        query.setForwardOnly(true);
         query.prepare(qSelectTagIdFromLabel());
 
         QStringList ids;
