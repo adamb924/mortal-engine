@@ -51,6 +51,7 @@ void SqlServerStemList::openSqlServerDatabase(const QString &connectionString, c
     }
 
     QSqlQuery q(db);
+    q.setForwardOnly(true);
     if( !q.exec("use " + databaseName + ";") )
     {
         qWarning() << "SqlServerStemList::openDatabase()" << "Could not select database: " << databaseName;
@@ -210,27 +211,46 @@ QString SqlServerStemList::qSelectStemIds() const
 
 QString SqlServerStemList::qSelectStemsSingleQuery() const
 {
-    return "SELECT stem_id, liftGuid," + tableAllomorphs() + "._id AS allomorph_id,use_in_generations,Form,writingsystem,group_concat(label),portmanteau "
-                                                             "FROM " + tableStems() + ", " + tableAllomorphs() + ", " + tableForms() + ", " + tableTags() + ", " + tableTagMembers() + " "
-                                                                                                                             "ON "
-                                                                                                                             "" + tableStems() + "._id=" + tableAllomorphs() + ".stem_id "
-                                                          "AND " + tableAllomorphs() + "._id=" + tableForms() + ".allomorph_id "
-                                                          "AND " + tableTags() + "._id=" + tableTagMembers() + ".tag_id "
-                                                         "AND " + tableTagMembers() + ".allomorph_id=" + tableForms() + ".allomorph_id "
-                                                                   "GROUP BY " + tableForms() + "._id;";
+    return "SELECT stem_id, liftGuid, " + tableAllomorphs() + "._id AS allomorph_id, use_in_generations, Form, writingsystem, STRING_AGG(label, ','), portmanteau "
+              "FROM " + tableStems() +
+              " INNER JOIN " + tableAllomorphs() + " ON " + tableStems() + "._id = " + tableAllomorphs() + ".stem_id "
+                                 "INNER JOIN " + tableForms() + " ON " + tableAllomorphs() + "._id = " + tableForms() + ".allomorph_id "
+                 "INNER JOIN " + tableTagMembers() + " ON " + tableTagMembers() + ".allomorph_id = " + tableForms() + ".allomorph_id "
+                 "INNER JOIN " + tableTags() + " ON " + tableTags() + "._id = " + tableTagMembers() + ".tag_id "
+                 "GROUP BY " + tableAllomorphs() + ".stem_id, "
+                   + tableStems() + ".liftGuid, "
+                   + tableAllomorphs() + "._id, "
+                   + tableAllomorphs() + ".use_in_generations, "
+                   + tableForms() + "._id, "
+                   + tableForms() + ".Form, "
+                   + tableForms() + ".writingsystem, "
+           + tableAllomorphs() + ".portmanteau;";
 }
 
 QString SqlServerStemList::qSelectStemsSingleQueryWithTags(const QString &taglist) const
 {
-    return "SELECT stem_id, liftGuid,allomorphs._id AS allomorph_id,use_in_generations,Form,writingsystem,group_concat(label),portmanteau "
-           "FROM " + tableStems() + ", " + tableAllomorphs() + ", " + tableForms() + ", " + " + tableTags() + " + ", " + tableTagMembers() + " "
-                                                                                                                                     "ON "
-                                                                                                                                     "" + tableStems() + "._id=" + tableAllomorphs() + ".stem_id "
-                                                          "AND " + tableAllomorphs() + "._id=" + tableForms() + ".allomorph_id "
-                                                          "AND " + tableTags() + "._id=" + tableTagMembers() + ".tag_id "
-                                                         "AND " + tableTagMembers() + ".allomorph_id=" + tableForms() + ".allomorph_id "
-                                                                   "WHERE " + tableTagMembers() + ".allomorph_id IN (SELECT allomorph_id FROM " + tableTagMembers() + " WHERE tag_id IN ( " + taglist + " ) ) "
-                                                                                                                                       "GROUP BY " + tableForms() + "._id;";
+    return "SELECT stem_id, liftGuid," + tableAllomorphs() + "._id AS allomorph_id,use_in_generations,Form,writingsystem,STRING_AGG(label, ','),portmanteau "
+           "FROM  "
+           "" + tableStems() + " "
+           "INNER JOIN  "
+           "" + tableAllomorphs() + " ON " + tableStems() + "._id = " + tableAllomorphs() + ".stem_id "
+           "INNER JOIN  "
+           "" + tableForms() + " ON " + tableAllomorphs() + "._id = " + tableForms() + ".allomorph_id "
+           "INNER JOIN  "
+           "" + tableTagMembers() + " ON " + tableTagMembers() + ".allomorph_id = " + tableForms() + ".allomorph_id "
+           "INNER JOIN  "
+           "" + tableTags() + " ON " + tableTags() + "._id = " + tableTagMembers() + ".tag_id "
+           "WHERE  "
+           "" + tableTagMembers() + ".allomorph_id IN (SELECT allomorph_id FROM " + tableTagMembers() + " WHERE tag_id IN ( " + taglist + " )) "
+           "GROUP BY  "
+           "" + tableAllomorphs() + ".stem_id,  "
+           "" + tableStems() + ".liftGuid, "
+           "" + tableAllomorphs() + "._id, "
+           "" + tableAllomorphs() + ".use_in_generations, "
+           "" + tableForms() + "._id, "
+           "" + tableForms() + ".Form, "
+           "" + tableForms() + ".writingsystem, "
+           "" + tableAllomorphs() + ".portmanteau; ";
 }
 
 QString SqlServerStemList::qDeleteFromTagMembers() const
