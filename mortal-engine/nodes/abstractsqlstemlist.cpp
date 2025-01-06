@@ -574,8 +574,10 @@ qlonglong AbstractSqlStemList::ensureTagInDatabase(const QString &tag)
 
 void AbstractSqlStemList::openAlternateConnections() const
 {
-    cloneDatabase(mDbName, stemConnectionName());
-    cloneDatabase(mDbName, allomorphConnectionName());
+    if( !QSqlDatabase::database(stemConnectionName()).isOpen() )
+        cloneDatabase(mDbName, stemConnectionName());
+    if( !QSqlDatabase::database(allomorphConnectionName()).isOpen() )
+        cloneDatabase(mDbName, allomorphConnectionName());
 }
 
 QString AbstractSqlStemList::stemConnectionName() const
