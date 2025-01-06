@@ -14,6 +14,8 @@
 class QXmlStreamReader;
 class QXmlStreamAttributes;
 
+typedef QPair<QRegularExpression, QString> RegularExpressionReplacement;
+
 namespace ME {
 
 class Morphology;
@@ -73,6 +75,7 @@ private:
     //! These get a special function because it provides a list rather than a linked list
     void readMorphologicalModels(QXmlStreamReader &in);
 
+    void readNormalizationFunction(QXmlStreamReader &in);
     void readSharedConditions(QXmlStreamReader &in);
     void readSharedCreateAllomorphs(QXmlStreamReader &in);
 
@@ -97,6 +100,10 @@ private:
     static QString XML_LANG;
     static QString XML_FUNCTION;
     static QString XML_LOWERCASE;
+    static QString XML_REPLACEMENTS;
+    static QString XML_REPLACE;
+    static QString XML_THIS;
+    static QString XML_WITH;
 
 public:
     /// these methods should be public so that Mortal Engine can be extended without building the source

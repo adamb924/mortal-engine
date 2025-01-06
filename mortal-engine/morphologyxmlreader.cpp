@@ -51,6 +51,10 @@ QString MorphologyXmlReader::XML_NORMALIZATION_FUNCTION = "normalization-functio
 QString MorphologyXmlReader::XML_LANG = "lang";
 QString MorphologyXmlReader::XML_FUNCTION = "function";
 QString MorphologyXmlReader::XML_LOWERCASE = "lowercase";
+QString MorphologyXmlReader::XML_REPLACEMENTS = "replacements";
+QString MorphologyXmlReader::XML_REPLACE = "replace";
+QString MorphologyXmlReader::XML_THIS = "this";
+QString MorphologyXmlReader::XML_WITH = "with";
 
 MorphologyXmlReader::MorphologyXmlReader(Morphology *morphology) : mMorphology(morphology)
 {
@@ -150,18 +154,7 @@ void MorphologyXmlReader::parseXml(const QString &path)
                 }
                 else if ( name == XML_NORMALIZATION_FUNCTION )
                 {
-                    WritingSystem ws = mMorphology->mWritingSystems.value(attr.value(XML_LANG).toString());
-                    if( ws.isNull() )
-                    {
-                        qWarning() << "Unknown writing system:" << attr.value(XML_LANG).toString();
-                    }
-                    else
-                    {
-                        if( attr.value(XML_FUNCTION).toString() == XML_LOWERCASE )
-                        {
-                            mMorphology->setNormalizationFunction( ws, [](QString s) { return s.toLower(); } );
-                        }
-                    }
+                    readNormalizationFunction(in);
                 }
                 else if( name == "shared-conditions" )
                 {
@@ -357,6 +350,47 @@ void MorphologyXmlReader::readMorphologicalModels(QXmlStreamReader &in)
 
         /// try to read the next one
         node = dynamic_cast<MorphologicalModel *>( tryToReadMorphemeNode( in, nullptr ) );
+    }
+}
+
+void MorphologyXmlReader::readNormalizationFunction(QXmlStreamReader &in)
+{
+    WritingSystem ws = mMorphology->mWritingSystems.value( in.attributes().value(XML_LANG).toString());
+    if( ws.isNull() )
+    {
+        qWarning() << "Unknown writing system in normalization function:" << in.attributes().value(XML_LANG).toString();
+        return;
+    }
+
+    if( in.attributes().value(XML_FUNCTION).toString() == XML_LOWERCASE )
+    {
+        mMorphology->setNormalizationFunction( ws, [](QString s) { return s.toLower(); } );
+    }
+    else if( in.attributes().value(XML_FUNCTION).toString() == XML_REPLACEMENTS )
+    {
+        QList<RegularExpressionReplacement> replacements;
+        while( !( in.name() == XML_NORMALIZATION_FUNCTION && in.isEndElement() ) )
+        {
+            in.readNext();
+            if( in.isStartElement() && in.name() == XML_REPLACE )
+            {
+                if( in.attributes().hasAttribute(XML_THIS) && in.attributes().hasAttribute(XML_WITH) )
+                {
+                    const QRegularExpression re( in.attributes().value(XML_THIS).toString() );
+                    const QString replaceWith = in.attributes().value(XML_WITH).toString();
+                    replacements << RegularExpressionReplacement(re, replaceWith);
+                }
+            }
+        }
+        InputNormalizer n = [replacements](QString s) {
+            QString result = s;
+            for (const auto& replacement : replacements)
+            {
+                result.replace(replacement.first, replacement.second);
+            }
+            return result;
+        };
+        mMorphology->setNormalizationFunction( ws, n );
     }
 }
 

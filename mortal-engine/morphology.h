@@ -20,7 +20,8 @@ class MorphemeSequenceConstraint;
 class AbstractStemList;
 class LexicalStemInsertResult;
 
-typedef QString (*InputNormalizer)(QString);
+using InputNormalizer = std::function<QString(QString)>;
+
 
 class MORTAL_ENGINE_EXPORT Morphology
 {
