@@ -247,10 +247,9 @@
     <!-- sqlserver-stem-list -->
     <xs:complexType name="sqlserver-stem-list">
         <xs:sequence>
-            <xs:choice>
-                <xs:element name="connection-string" type="xs:string"/>
-                <xs:element name="external-database" type="xs:string"/>
-            </xs:choice>
+            <xs:element name="table-prefix" type="xs:string" minOccurs="0"/>
+            <xs:element name="database-name" type="xs:string"/>
+            <xs:element name="connection-string" type="xs:string"/>
             <xs:element name="matching-tag" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="create-allomorphs" type="me:create-allomorphs" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="add-allomorphs" type="me:create-allomorphs-link" minOccurs="0" maxOccurs="unbounded"/>
