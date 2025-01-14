@@ -301,7 +301,7 @@ LexicalStemInsertResult Morphology::replaceLexicalStem(const LexicalStem &stem)
 LexicalStem * Morphology::getLexicalStem(qlonglong id) const
 {
     LexicalStemInsertResult result;
-    QSetIterator<AbstractStemList*> iter( mStemAcceptingStemLists );
+    QSetIterator<AbstractStemList*> iter( mStemLists );
     while( iter.hasNext() )
     {
         AbstractStemList* asl = iter.next();
