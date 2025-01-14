@@ -218,7 +218,7 @@ QString SqliteStemList::qSelectFormsFromAllomorphId() const
 
 QString SqliteStemList::qSelectTagLabelsFromAllomorphId() const
 {
-    return "SELECT label from " + tableTagMembers() + " LEFT JOIN Tags ON Tags._id=TagMembers.tag_id WHERE allomorph_id=?;";
+    return "SELECT label from " + tableTagMembers() + " LEFT JOIN Tags ON " + tableTags() + "._id=" + tableTagMembers() + ".tag_id WHERE allomorph_id=?;";
 }
 
 QString SqliteStemList::qInsertStem() const
