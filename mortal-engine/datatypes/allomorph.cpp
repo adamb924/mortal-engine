@@ -465,7 +465,7 @@ QString Allomorph::summary() const
     QString dbgString;
     Debug dbg(&dbgString);
     
-    dbg << "Allomorph(" << typeToString( mType ) << ", " << mForms.count() << " form(s), Use in generations: " << (mUseInGenerations ? "true" : "false") << newline;
+    dbg << "Allomorph(ID: " << mId << ", "  << typeToString( mType ) << ", " << mForms.count() << " form(s), Use in generations: " << (mUseInGenerations ? "true" : "false") << newline;
     dbg.indent();
     if( mPortmanteau.isValid() )
     {
