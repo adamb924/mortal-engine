@@ -25,7 +25,7 @@ void SqlServerStemList::openSqlServerDatabase(const QString &connectionString, c
 {
     if(!QSqlDatabase::isDriverAvailable("QODBC"))
     {
-        qWarning() << "SqlServerStemList::openDatabase()" << "Driver failed to open.";
+        qWarning() << "SqlServerStemList::openDatabase()" << "Driver failed to open. Available drivers:" << QSqlDatabase::drivers();
         return;
     }
 
