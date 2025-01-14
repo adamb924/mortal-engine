@@ -98,7 +98,6 @@ AbstractNode *SqlServerStemList::readFromXml(QXmlStreamReader &in, MorphologyXml
     /// the default here is true
     if( in.attributes().value("include-glosses").toString() == "false" )
     {
-        qCritical() << "The include-glosses=\"false\" is giving errors. Do not use it until it is fixed.";
         sl->setReadGlosses(false);
     }
 
@@ -257,26 +256,30 @@ QString SqlServerStemList::qSelectStemsSingleQueryWithTags(const QString &taglis
 {
     return "SELECT stem_id, liftGuid," + tableAllomorphs() + "._id AS allomorph_id,use_in_generations,Form,writingsystem,STRING_AGG(label, ','),portmanteau "
            "FROM  "
-           "" + tableStems() + " "
+           + tableStems() + " "
            "INNER JOIN  "
-           "" + tableAllomorphs() + " ON " + tableStems() + "._id = " + tableAllomorphs() + ".stem_id "
+           + tableAllomorphs() + " ON " + tableStems() + "._id = " + tableAllomorphs() + ".stem_id "
            "INNER JOIN  "
-           "" + tableForms() + " ON " + tableAllomorphs() + "._id = " + tableForms() + ".allomorph_id "
+           + tableForms() + " ON " + tableAllomorphs() + "._id = " + tableForms() + ".allomorph_id "
            "INNER JOIN  "
-           "" + tableTagMembers() + " ON " + tableTagMembers() + ".allomorph_id = " + tableForms() + ".allomorph_id "
+           + tableTagMembers() + " ON " + tableTagMembers() + ".allomorph_id = " + tableForms() + ".allomorph_id "
            "INNER JOIN  "
-           "" + tableTags() + " ON " + tableTags() + "._id = " + tableTagMembers() + ".tag_id "
+           + tableTags() + " ON " + tableTags() + "._id = " + tableTagMembers() + ".tag_id "
            "WHERE  "
-           "" + tableTagMembers() + ".allomorph_id IN (SELECT allomorph_id FROM " + tableTagMembers() + " WHERE tag_id IN ( " + taglist + " )) "
+           + tableTagMembers() + ".allomorph_id IN (SELECT allomorph_id FROM " + tableTagMembers() + " WHERE tag_id IN ( " + taglist + " )) "
            "GROUP BY  "
-           "" + tableAllomorphs() + ".stem_id,  "
-           "" + tableStems() + ".liftGuid, "
-           "" + tableAllomorphs() + "._id, "
-           "" + tableAllomorphs() + ".use_in_generations, "
-           "" + tableForms() + "._id, "
-           "" + tableForms() + ".Form, "
-           "" + tableForms() + ".writingsystem, "
-           "" + tableAllomorphs() + ".portmanteau; ";
+           + tableAllomorphs() + ".stem_id,  "
+           + tableStems() + ".liftGuid, "
+           + tableAllomorphs() + "._id, "
+           + tableAllomorphs() + ".use_in_generations, "
+           + tableForms() + "._id, "
+           + tableForms() + ".Form, "
+           + tableForms() + ".writingsystem, "
+           + tableAllomorphs() + ".portmanteau "
+           + "ORDER BY "
+           + tableAllomorphs() + ".stem_id ASC,  "
+           + tableAllomorphs() + "._id ASC, "
+           + tableForms() + "._id ASC;";
 }
 
 QString SqlServerStemList::qDeleteFromTagMembers() const

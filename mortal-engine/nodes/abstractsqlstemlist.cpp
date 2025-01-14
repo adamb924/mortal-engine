@@ -162,9 +162,9 @@ void AbstractSqlStemList::readStemsSingleQuery(const QHash<QString, WritingSyste
 
     if(query.exec())
     {
+        qlonglong previousStemId = -1;
         qlonglong previousAllomorphId = -1;
         Allomorph allomorph(Allomorph::Original);
-        qlonglong previousStemId = -1;
         LexicalStem * stem = nullptr;
 
         while(query.next())
@@ -172,6 +172,23 @@ void AbstractSqlStemList::readStemsSingleQuery(const QHash<QString, WritingSyste
             /// every row has a new form
             const WritingSystem ws = writingSystems.value( query.value(5).toString() );
             const Form f( ws, query.value(4).toString() );
+
+            const qlonglong allomorphId = query.value(2).toLongLong();
+            if( allomorphId != previousAllomorphId )
+            {
+                /// first, save the previous allomorph, if it has forms
+                if( ! allomorph.isEmpty() )
+                {
+                    stem->insert( allomorph );
+                }
+                /// then reset the allomorph object, and add this form
+                allomorph = Allomorph(Allomorph::Original);
+                allomorph.setId(allomorphId);
+                allomorph.setTags( Tag::fromString( query.value(6).toString() ) );
+                if( query.value(7).toString().length() > 0 )
+                    allomorph.setPortmanteau(Portmanteau( query.value(7).toString() ));
+            }
+            allomorph.setForm( f );
 
             const qlonglong stemId = query.value(0).toLongLong();
             if( stemId != previousStemId )
@@ -185,28 +202,13 @@ void AbstractSqlStemList::readStemsSingleQuery(const QHash<QString, WritingSyste
                 stem = new LexicalStem;
                 stem->setId(stemId);
             }
-            previousStemId = stemId;
 
-            const qlonglong allomorphId = query.value(2).toLongLong();
-            if( allomorphId != previousAllomorphId )
-            {
-                /// first, save the previous allomorph, if it has forms
-                if( ! allomorph.isEmpty() )
-                {
-                    stem->insert( allomorph );
-                }
-                /// then reset the allomorph object, and add this form
-                allomorph = Allomorph(Allomorph::Original);
-                allomorph.setTags( Tag::fromString( query.value(6).toString() ) );
-                if( query.value(7).toString().length() > 0 )
-                    allomorph.setPortmanteau(Portmanteau( query.value(7).toString() ));
-            }
-            allomorph.setForm( f );
+            previousStemId = stemId;
             previousAllomorphId = allomorphId;
         }
 
         /// now at the end, add the allomorph to the stem, and the stem to the list
-        if( stem != nullptr )
+        if( stem != nullptr && !allomorph.isEmpty() )
         {
             stem->insert( allomorph );
             mStems << stem;

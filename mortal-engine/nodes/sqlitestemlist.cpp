@@ -36,7 +36,6 @@ AbstractNode *SqliteStemList::readFromXml(QXmlStreamReader &in, MorphologyXmlRea
     /// the default here is true
     if( in.attributes().value("include-glosses").toString() == "false" )
     {
-        qCritical() << "The include-glosses=\"false\" is giving errors. Do not use it until it is fixed.";
         sl->setReadGlosses(false);
     }
 
@@ -160,7 +159,11 @@ QString SqliteStemList::qSelectStemsSingleQuery() const
                                                           "AND " + tableAllomorphs() + "._id=" + tableForms() + ".allomorph_id "
                                                           "AND " + tableTags() + "._id=" + tableTagMembers() + ".tag_id "
                                                          "AND " + tableTagMembers() + ".allomorph_id=" + tableForms() + ".allomorph_id "
-                                                                   "GROUP BY " + tableForms() + "._id;";
+                                                                   "GROUP BY " + tableForms() + "._id "
+           + "ORDER BY "
+           + tableAllomorphs() + ".stem_id ASC,  "
+           + tableAllomorphs() + "._id ASC, "
+           + tableForms() + "._id ASC;";
 }
 
 QString SqliteStemList::qSelectStemsSingleQueryWithTags(const QString &taglist) const
@@ -173,7 +176,11 @@ QString SqliteStemList::qSelectStemsSingleQueryWithTags(const QString &taglist) 
                                                           "AND " + tableTags() + "._id=" + tableTagMembers() + ".tag_id "
                                                          "AND " + tableTagMembers() + ".allomorph_id=" + tableForms() + ".allomorph_id "
                                                                    "WHERE " + tableTagMembers() + ".allomorph_id IN (SELECT allomorph_id FROM " + tableTagMembers() + " WHERE tag_id IN ( " + taglist + " ) ) "
-                                                                                                                                       "GROUP BY " + tableForms() + "._id;";
+                                                                                                                                       "GROUP BY " + tableForms() + "._id "
+           + "ORDER BY "
+           + tableAllomorphs() + ".stem_id ASC,  "
+           + tableAllomorphs() + "._id ASC, "
+           + tableForms() + "._id ASC;";
 }
 
 QString SqliteStemList::qDeleteFromTagMembers() const
