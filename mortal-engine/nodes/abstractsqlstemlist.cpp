@@ -391,42 +391,74 @@ void AbstractSqlStemList::createTables()
     q.setForwardOnly(true);
 
     if( !q.exec(qCreateStems()) )
+    {
         qWarning() << "AbstractSqlStemList::createTables()" << q.lastError().text() << q.executedQuery();
+        return;
+    }
 
     if( !q.exec(qCreateAllomorphs()) )
+    {
         qWarning() << "AbstractSqlStemList::createTables()" << q.lastError().text() << q.executedQuery();
+        return;
+    }
 
     /// ignoring errors on this, since it will produce an error when it applies vaccuously
     q.exec(qUpdateAllomorphsA());
 
     if( !q.exec(qCreateForms()) )
+    {
         qWarning() << "AbstractSqlStemList::createTables()" << q.lastError().text() << q.executedQuery();
+        return;
+    }
 
     if( !q.exec(qCreateGlosses()) )
+    {
         qWarning() << "AbstractSqlStemList::createTables()" << q.lastError().text() << q.executedQuery();
+        return;
+    }
 
     if( !q.exec(qCreateTags()) )
+    {
         qWarning() << "AbstractSqlStemList::createTables()" << q.lastError().text() << q.executedQuery();
+        return;
+    }
 
     if( !q.exec(qCreateTagMembers()) )
+    {
         qWarning() << "AbstractSqlStemList::createTables()" << q.lastError().text() << q.executedQuery();
+        return;
+    }
 
     /// indices
     if( !q.exec(qCreateAllomorphsIdx()) )
+    {
         qWarning() << "AbstractSqlStemList::createTables()" << q.lastError().text() << q.executedQuery();
+        return;
+    }
 
     if( !q.exec(qCreateGlossesIdx()) )
+    {
         qWarning() << "AbstractSqlStemList::createTables()" << q.lastError().text() << q.executedQuery();
+        return;
+    }
 
     if( !q.exec(qCreateFormsIdx()) )
+    {
         qWarning() << "AbstractSqlStemList::createTables()" << q.lastError().text() << q.executedQuery();
+        return;
+    }
 
     if( !q.exec(qCreateTagsIdx1()) )
+    {
         qWarning() << "AbstractSqlStemList::createTables()" << q.lastError().text() << q.executedQuery();
+        return;
+    }
 
     if( !q.exec(qCreateTagsIdx2()) )
+    {
         qWarning() << "AbstractSqlStemList::createTables()" << q.lastError().text() << q.executedQuery();
-
+        return;
+    }
 }
 
 void AbstractSqlStemList::addStemToDatabase(LexicalStem *stem)
