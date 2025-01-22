@@ -95,6 +95,9 @@ AbstractNode *SqlServerStemList::readFromXml(QXmlStreamReader &in, MorphologyXml
     if( in.attributes().value("accepts-stems").toString() == "true" )
         morphologyReader->recordStemAcceptingNewStems( sl );
 
+    if( in.attributes().value("create-tables").toString() == "false" )
+        sl->mCreateTables = false;
+
     /// the default here is true
     if( in.attributes().value("include-glosses").toString() == "false" )
     {

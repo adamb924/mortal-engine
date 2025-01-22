@@ -241,6 +241,7 @@
         </xs:sequence>
         <xs:attributeGroup ref="me:node-attributes"/>
         <xs:attribute name="accepts-stems" type="xs:boolean" use="optional"></xs:attribute>
+        <xs:attribute name="create-tables" type="xs:boolean" use="optional" default="true"></xs:attribute>
         <xs:attribute name="include-glosses" type="xs:boolean" use="optional" default="true"></xs:attribute>
     </xs:complexType>
 
@@ -256,6 +257,7 @@
         </xs:sequence>
         <xs:attributeGroup ref="me:node-attributes"/>
         <xs:attribute name="accepts-stems" type="xs:boolean" use="optional"></xs:attribute>
+        <xs:attribute name="create-tables" type="xs:boolean" use="optional" default="true"></xs:attribute>
         <xs:attribute name="include-glosses" type="xs:boolean" use="optional" default="true"></xs:attribute>
     </xs:complexType>
 

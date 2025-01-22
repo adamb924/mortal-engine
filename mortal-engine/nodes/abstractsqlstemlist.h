@@ -117,6 +117,7 @@ private:
 protected:
     QString mDbName;
     bool mReadGlosses;
+    bool mCreateTables;
 
     void createTables();
     QString tagsInSqlList() const;

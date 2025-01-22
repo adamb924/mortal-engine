@@ -29,7 +29,8 @@ QString AbstractSqlStemList::ALLOMORPH_CONNECTION = "allomorph-connection";
 AbstractSqlStemList::AbstractSqlStemList(const MorphologicalModel *model) :
     AbstractStemList(model),
     mDbName(DEFAULT_DBNAME),
-    mReadGlosses(true)
+    mReadGlosses(true),
+    mCreateTables(true)
 {
 
 }
@@ -53,7 +54,8 @@ void AbstractSqlStemList::setConnectionString(const QString &connectionString)
     //                     QT_POINTER_SIZE * 2, 16, QChar('0'));
 
     openDatabase(connectionString, mDbName);
-    createTables();
+    if( mCreateTables )
+        createTables();
 }
 
 void AbstractSqlStemList::setReadGlosses(bool newReadGlosses)
@@ -101,7 +103,8 @@ void AbstractSqlStemList::setExternalDatabase(const QString &dbName)
     if( !db.isOpen() )
         qWarning() << QString("The database %1 returns false for isOpen().").arg(dbName);
 
-    createTables();
+    if( mCreateTables )
+        createTables();
 }
 
 void AbstractSqlStemList::readStemsMultipleQueries(const QHash<QString, WritingSystem> &writingSystems)
