@@ -267,11 +267,7 @@ QString LexicalStem::summary() const
     }
 
     dbg << newline;
-    if( mGlosses.count() == 0 )
-    {
-        dbg << QString("No glosses") << newline;
-    }
-    else
+    if( mGlosses.count() > 0 )
     {
         foreach( Form f, mGlosses )
         {
