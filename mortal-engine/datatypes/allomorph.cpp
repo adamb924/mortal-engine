@@ -477,22 +477,21 @@ QString Allomorph::summary() const
         i.next();
         dbg << "(" << i.key().abbreviation() << ", " << i.value().text() << ")" << newline;
     }
-    dbg << "Tags: ";
-    QSetIterator<Tag> ti(mTags);
-    while( ti.hasNext() )
+    if( ! mTags.isEmpty() )
     {
-        dbg << ti.next().summary();
-        if( ti.hasNext() )
+        dbg << "Tags: ";
+        QSetIterator<Tag> ti(mTags);
+        while( ti.hasNext() )
         {
-            dbg << ", ";
+            dbg << ti.next().summary();
+            if( ti.hasNext() )
+            {
+                dbg << ", ";
+            }
         }
+        dbg << newline;
     }
-    dbg << newline;
-    if( mConstraints.count() == 0 )
-    {
-        dbg << "Constraints ( none )" << newline;
-    }
-    else
+    if( mConstraints.count() > 0 )
     {
         dbg << "Constraints (" << mConstraints.count() << ":" << newline;
         dbg.indent();
