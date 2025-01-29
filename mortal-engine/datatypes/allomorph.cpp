@@ -466,7 +466,7 @@ QString Allomorph::summary() const
     Debug dbg(&dbgString);
     
     dbg << "Allomorph(";
-    if( mId != -1 )
+    if( mId != -1 && mType == Allomorph::Original )
         dbg << "ID: " << mId << ", ";
     dbg << typeToString( mType ) << ", " << mForms.count() << " form(s), Use in generations: " << (mUseInGenerations ? "true" : "false") << newline;
     dbg.indent();
