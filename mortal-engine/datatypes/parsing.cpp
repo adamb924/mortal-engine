@@ -879,11 +879,11 @@ void Parsing::allomorphConditionMatchStringSummary(const Allomorph &allomorph) c
     {
         if( c->matches(this, nullptr, allomorph ) )
         {
-            qInfo() << qPrintable("\t\t") << "Condition satisfied: " + c->satisfactionSummary(this, nullptr, allomorph);
+            qInfo().noquote() << qPrintable("\t\t") << "Condition satisfied: " + c->satisfactionSummary(this, nullptr, allomorph);
         }
         else
         {
-            qInfo() << qPrintable("\t\t") << "Condition failed: " + c->satisfactionSummary(this, nullptr, allomorph);
+            qInfo().noquote() << qPrintable("\t\t") << "Condition failed: " + c->satisfactionSummary(this, nullptr, allomorph);
         }
     }
 }
