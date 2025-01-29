@@ -35,7 +35,7 @@ Allomorph CreateAllomorphsCase::createAllomorph(const Allomorph & input, const Q
     ///
 
     /// if the allomorph doesn't match the tags for this case, return nullptr (i.e., don't apply)
-    if( ! input.tags().contains( mMatchTags ) || ( !mNotMatchTags.isEmpty() && input.tags().contains( mNotMatchTags ) ) )
+    if( ! input.tags().contains( mMatchTags ) || ( !mNotMatchTags.isEmpty() && input.tags().intersects( mNotMatchTags ) ) )
     {
         return Allomorph(Allomorph::Null);
     }
