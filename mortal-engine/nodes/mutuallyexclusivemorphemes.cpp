@@ -84,6 +84,20 @@ QList<Generation> MutuallyExclusiveMorphemes::generateFormsUsingThisNode(const G
     return candidates;
 }
 
+QSet<const MorphemeNode *> MutuallyExclusiveMorphemes::morphemes() const
+{
+    QSet<const MorphemeNode *> constMorphemes;
+    for (MorphemeNode *node : mMorphemes) {
+        constMorphemes.insert(static_cast<const MorphemeNode *>(node));
+    }
+    return constMorphemes;
+}
+
+bool MutuallyExclusiveMorphemes::isMutuallyExclusiveMorphemes() const
+{
+    return true;
+}
+
 void MutuallyExclusiveMorphemes::setNext(AbstractNode *next)
 {
     AbstractNode::setNext( next );

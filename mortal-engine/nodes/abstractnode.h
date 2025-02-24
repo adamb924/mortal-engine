@@ -105,6 +105,7 @@ public:
     virtual bool isSequence() const;
     virtual bool isModel() const;
     virtual bool isMorphemeNode() const;
+    virtual bool isMutuallyExclusiveMorphemes() const;
     virtual bool isJump() const;
 
     virtual bool nodeCanAppendMorphemes() const;

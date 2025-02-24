@@ -4,13 +4,14 @@
 #include "abstractnode.h"
 #include <QSet>
 #include "datatypes/parsing.h"
+#include "mortal-engine_global.h"
 
 namespace ME {
 
 class MorphemeNode;
 class Form;
 
-class MutuallyExclusiveMorphemes : public AbstractNode
+class MORTAL_ENGINE_EXPORT MutuallyExclusiveMorphemes : public AbstractNode
 {
 public:
     explicit MutuallyExclusiveMorphemes(const MorphologicalModel * model);
@@ -38,6 +39,10 @@ public:
     void addConstraintsToAllMorphemes(const QSet<const AbstractConstraint *> &constraints);
 
     QList<const AbstractNode *> availableMorphemeNodes(QHash<const Jump*,int> &jumps) const override;
+
+    QSet<const MorphemeNode *> morphemes() const;
+
+    bool isMutuallyExclusiveMorphemes() const override;
 
 private:
     QList<Parsing> parsingsUsingThisNode(const Parsing & parsing, Parsing::Flags flags) const override;

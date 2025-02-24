@@ -418,6 +418,11 @@ bool AbstractNode::isMorphemeNode() const
     return false;
 }
 
+bool AbstractNode::isMutuallyExclusiveMorphemes() const
+{
+    return false;
+}
+
 bool AbstractNode::isJump() const
 {
     return false;
