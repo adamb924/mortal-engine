@@ -453,6 +453,15 @@ void Morphology::setPath(const QString &path)
     QDir::setCurrent(path);
 }
 
+QSet<const AbstractNode *> Morphology::nodes() const
+{
+    QSet<const AbstractNode *> constNodeSet;
+    for (AbstractNode *node : mNodes) {
+        constNodeSet.insert(static_cast<const AbstractNode *>(node));
+    }
+    return constNodeSet;
+}
+
 QString Morphology::summary() const
 {
     QString dbgString;

@@ -101,6 +101,8 @@ public:
 
     static void setPath(const QString & path);
 
+    QSet<const AbstractNode *> nodes() const;
+
 private:
     QList<MorphologicalModel*> mMorphologicalModels;
     QHash<QString,WritingSystem> mWritingSystems;
