@@ -182,19 +182,14 @@ bool Jump::matchesElement(QXmlStreamReader &in)
     return in.isStartElement() && in.name() == elementName();
 }
 
-const AbstractNode *Jump::followingNodeHavingLabel(const MorphemeLabel &targetLabel) const
+const AbstractNode *Jump::followingNodeHavingLabel(const MorphemeLabel &targetLabel, QHash<const Jump *, int> &jumps) const
 {
-    /// if the target node is in the same model as the current node
-    /// we've got a circularity situation. in that case, just return
-    /// the answer for this node
-    if( mNodeTarget->model() == model() )
+    if( jumps.value(this,0) < Parsing::MAXIMUM_JUMPS )
     {
-        return AbstractNode::followingNodeHavingLabel(targetLabel);
+        jumps[ this ] = jumps.value(this,0) + 1;
+        return mNodeTarget->followingNodeHavingLabel(targetLabel, jumps);
     }
-    else
-    {
-        return mNodeTarget->followingNodeHavingLabel(targetLabel);
-    }
+    return nullptr;
 }
 
 bool Jump::checkHasOptionalCompletionPath() const

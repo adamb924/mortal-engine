@@ -94,7 +94,16 @@ public:
 
     void setNextNodeIfFinalNode(AbstractNode *nextNode);
 
-    virtual const AbstractNode *followingNodeHavingLabel(const MorphemeLabel & targetLabel) const;
+    /**
+     * @brief Returns the first node in the same model following this node that has the label \a targetLabel, or nullptr if it is not found.
+     *
+     * @param targetLabel The node label to match
+     *
+     * This function is used in processing portmanteau strings. The fact that it does not
+     * search for a node outside the current model implies that portmanteau can only be
+     * valid for nodes within the same model.
+     */
+    virtual const AbstractNode *followingNodeHavingLabel(const MorphemeLabel & targetLabel, QHash<const Jump *, int> &jumps) const;
 
     void calculateModelProperties();
     bool hasPathToEnd() const;

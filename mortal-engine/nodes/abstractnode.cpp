@@ -352,7 +352,7 @@ void AbstractNode::setNextNodeIfFinalNode(AbstractNode *nextNode)
     }
 }
 
-const AbstractNode *AbstractNode::followingNodeHavingLabel(const MorphemeLabel &targetLabel) const
+const AbstractNode *AbstractNode::followingNodeHavingLabel(const MorphemeLabel &targetLabel, QHash<const Jump *, int> &jumps) const
 {
     if( label() == targetLabel )
     {
@@ -364,7 +364,7 @@ const AbstractNode *AbstractNode::followingNodeHavingLabel(const MorphemeLabel &
     }
     else
     {
-        return mNext->followingNodeHavingLabel(targetLabel);
+        return mNext->followingNodeHavingLabel(targetLabel, jumps);
     }
 }
 

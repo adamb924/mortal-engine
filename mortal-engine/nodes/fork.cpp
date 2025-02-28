@@ -123,12 +123,12 @@ bool Fork::matchesElement(QXmlStreamReader &in)
     return in.isStartElement() && in.name() == elementName();
 }
 
-const AbstractNode *Fork::followingNodeHavingLabel(const MorphemeLabel &targetLabel) const
+const AbstractNode *Fork::followingNodeHavingLabel(const MorphemeLabel &targetLabel, QHash<const Jump *, int> &jumps) const
 {
     /// NB: this will just return the first one, not all possible ones
     foreach(Path * p, mPaths)
     {
-        const AbstractNode * n = p->followingNodeHavingLabel(targetLabel);
+        const AbstractNode * n = p->followingNodeHavingLabel(targetLabel, jumps);
         if( n != nullptr )
         {
             return n;

@@ -36,9 +36,9 @@ void AbstractPath::setNext(AbstractNode *nextNode)
     AbstractNode::setNext(nextNode);
 }
 
-const AbstractNode *AbstractPath::followingNodeHavingLabel(const MorphemeLabel &targetLabel) const
+const AbstractNode *AbstractPath::followingNodeHavingLabel(const MorphemeLabel &targetLabel, QHash<const Jump *, int> &jumps) const
 {
-    return mInitialNode->followingNodeHavingLabel(targetLabel);
+    return mInitialNode->followingNodeHavingLabel(targetLabel, jumps);
 }
 
 bool AbstractPath::checkHasOptionalCompletionPath() const

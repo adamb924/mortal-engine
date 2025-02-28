@@ -76,7 +76,8 @@ bool Portmanteau::initialize(const AbstractNode *parent)
     {
         /// the current node is the (first?) node following the most recently added node node that has the label in question
         const AbstractNode * startingFrom = mNodes.last(); /// i.e., either the first node or the last one added in a previous loop iteration
-        const AbstractNode * current = startingFrom->followingNodeHavingLabel( mMorphemes.at(i) );
+        QHash<const Jump *, int> jumps;
+        const AbstractNode * current = startingFrom->followingNodeHavingLabel( mMorphemes.at(i), jumps );
 
         /// fail if no node has that label
         if( current == nullptr )

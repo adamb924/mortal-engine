@@ -38,9 +38,11 @@ QList<Generation> CopyNode::generateFormsUsingThisNode(const Generation &generat
     return mCopy->generateForms(generation);
 }
 
-const AbstractNode *CopyNode::followingNodeHavingLabel(const MorphemeLabel &targetLabel) const
+const AbstractNode *CopyNode::followingNodeHavingLabel(const MorphemeLabel &targetLabel, QHash<const Jump *, int> &jumps) const
 {
-    return mCopy->followingNodeHavingLabel(targetLabel);
+    /// 2024-02-28: I wonder if this is correct. Wouldn't it make more sense to look at the following nodes of the present node?
+    /// i.e., AbstractNode::followingNodeHavingLabel(...)? I doubt this has been tested.
+    return mCopy->followingNodeHavingLabel(targetLabel, jumps);
 }
 
 bool CopyNode::checkHasOptionalCompletionPath() const

@@ -30,7 +30,7 @@ public:
     static AbstractNode *readFromXml(QXmlStreamReader &in, MorphologyXmlReader * morphologyReader, const MorphologicalModel * model);
     static bool matchesElement(QXmlStreamReader &in);
 
-    const AbstractNode *followingNodeHavingLabel(const MorphemeLabel & targetLabel) const override;
+    const AbstractNode *followingNodeHavingLabel(const MorphemeLabel & targetLabel, QHash<const Jump*,int> &jumps) const override;
 
     bool checkHasOptionalCompletionPath() const override;
 
