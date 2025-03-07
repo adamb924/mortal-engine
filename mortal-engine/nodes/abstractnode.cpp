@@ -205,7 +205,7 @@ QString AbstractNode::typeToString(AbstractNode::Type type)
     return "null";
 }
 
-const AbstractNode *AbstractNode::next() const
+AbstractNode *AbstractNode::next() const
 {
     return mNext;
 }
@@ -342,7 +342,7 @@ void AbstractNode::setNextNodeIfFinalNode(AbstractNode *nextNode)
 {
     if( hasNext() )
     {
-        mNext->setNextNodeIfFinalNode( nextNode );
+        next()->setNextNodeIfFinalNode( nextNode );
     }
     else
     {

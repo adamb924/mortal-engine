@@ -26,12 +26,18 @@ public:
     const AbstractNode *followingNodeHavingLabel(const MorphemeLabel & targetLabel, QHash<const Jump *, int> &jumps) const override;
     bool checkHasOptionalCompletionPath() const override;
 
+    QString id() const override;
+    MorphemeLabel label() const override;
+
     static QString elementName();
     static AbstractNode *readFromXml(QXmlStreamReader &in, MorphologyXmlReader * morphologyReader, const MorphologicalModel * model);
     static bool matchesElement(QXmlStreamReader &in);
 
     void setCopy(AbstractNode *copy);
     void setNext(AbstractNode *next) override;
+
+    AbstractNode *next() const override;
+    bool hasNext() const override;
 
     QString summary(const AbstractNode *doNotFollow) const override;
 

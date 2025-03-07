@@ -62,7 +62,7 @@ public:
     /// Virtual Functions
     virtual void setNext(AbstractNode *next);
 
-    MorphemeLabel label() const;
+    virtual MorphemeLabel label() const;
     void setLabel(const MorphemeLabel &label);
 
     AbstractNode::Type type() const;
@@ -70,8 +70,8 @@ public:
 
     static QString typeToString(AbstractNode::Type type);
 
-    const AbstractNode *next() const;
-    bool hasNext() const;
+    virtual AbstractNode *next() const;
+    virtual bool hasNext() const;
 
     virtual bool optional() const;
     void setOptional(bool optional);
@@ -87,7 +87,7 @@ public:
 
     void readInitialNodeAttributes(QXmlStreamReader &in, MorphologyXmlReader *morphologyReader);
 
-    QString id() const;
+    virtual QString id() const;
     void setId(const QString &id);
 
     bool isStemNode() const;

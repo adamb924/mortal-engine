@@ -7,6 +7,7 @@
 #include "morphologyxmlreader.h"
 
 #include "datatypes/generation.h"
+#include "debug.h"
 
 using namespace ME;
 
@@ -48,6 +49,16 @@ const AbstractNode *CopyNode::followingNodeHavingLabel(const MorphemeLabel &targ
 bool CopyNode::checkHasOptionalCompletionPath() const
 {
     return mCopy->checkHasOptionalCompletionPath();
+}
+
+QString CopyNode::id() const
+{
+    return mCopy->id();
+}
+
+MorphemeLabel CopyNode::label() const
+{
+    return mCopy->label();
 }
 
 QString CopyNode::elementName()
@@ -100,6 +111,16 @@ void CopyNode::setCopy(AbstractNode *copy)
 void CopyNode::setNext(AbstractNode *next)
 {
     mCopy->setNext(next);
+}
+
+AbstractNode *CopyNode::next() const
+{
+    return mCopy->next();
+}
+
+bool CopyNode::hasNext() const
+{
+    return mCopy->hasNext();
 }
 
 QString CopyNode::summary(const AbstractNode *doNotFollow) const
