@@ -64,14 +64,14 @@ QList<Parsing> MorphemeNode::parsingsUsingThisNode(const Parsing &parsing, Parsi
 
     if( Morphology::DebugOutput )
     {
-        qInfo().noquote() << "In " << label().toString() << "with" << parsing.intermediateSummary();
+        qInfo().noquote() << "In " << debugIdentifier() << "with" << parsing.intermediateSummary();
     }
 
     QSet<Allomorph> matches = matchingAllomorphs(parsing);
 
     if( Morphology::DebugOutput )
     {
-        qInfo().noquote() << label().toString() << " has " << matches.count() << " allomorph matches.";
+        qInfo().noquote() << debugIdentifier() << " has " << matches.count() << " allomorph matches.";
     }
 
     QSetIterator<Allomorph> matchesIterator( matches );
@@ -88,7 +88,7 @@ QList<Parsing> MorphemeNode::parsingsUsingThisNode(const Parsing &parsing, Parsi
         {
             if( Morphology::DebugOutput )
             {
-                qInfo().noquote() << "Moving from" << debugIdentifier() << " to " << next(a, p.writingSystem())->label().toString() << "having appended" << a.oneLineSummary();
+                qInfo().noquote() << "Moving from" << debugIdentifier() << " to " << next(a, p.writingSystem())->debugIdentifier() << "having appended" << a.oneLineSummary();
             }
             candidates.append( next(a, p.writingSystem())->possibleParsings( p, flags ) );
             MAYBE_RETURN_EARLY
@@ -239,7 +239,7 @@ QList<Generation> MorphemeNode::generateFormsWithAllomorphs(const Generation &ge
         {
             if( Morphology::DebugOutput )
             {
-                qInfo().noquote() << "Moving from" << debugIdentifier() << " to " << next(a, g.writingSystem())->label().toString() << "having appended" << a.oneLineSummary();
+                qInfo().noquote() << "Moving from" << debugIdentifier() << " to " << next(a, g.writingSystem())->debugIdentifier() << "having appended" << a.oneLineSummary();
             }
             candidates.append( next(a, g.writingSystem())->generateForms(g) );
         }

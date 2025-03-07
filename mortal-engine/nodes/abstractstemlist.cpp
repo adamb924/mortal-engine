@@ -157,7 +157,7 @@ QList<Parsing> AbstractStemList::parsingsUsingThisNode(const Parsing &parsing, P
     }
     if( Morphology::DebugOutput )
     {
-        qInfo() << label().toString() << "has" << allomorphMatches.count() << "candidate stem matches.";
+        qInfo() << debugIdentifier() << "has" << allomorphMatches.count() << "candidate stem matches.";
     }
 
     QListIterator< QPair<Allomorph, LexicalStem> > ai(allomorphMatches);
