@@ -54,11 +54,12 @@ QString Jump::summary(const AbstractNode *doNotFollow) const
     Debug dbg(&dbgString);
     Debug::atBeginning = false;
 
-    dbg << QObject::tr("Jump(ID: %1, Pointer: %2, optional: %3, target node required: %4)")
-            .arg(mTargetId,
-                 mNodeTarget == nullptr ? "null" : "not null",
-                 optional() ? "true" : "false",
-                 mTargetNodeRequired ? "true" : "false" );
+    dbg << QObject::tr("Jump(Label: %1, Target ID: %2, Pointer: %3, optional: %4, target node required: %5)")
+            .arg(label().toString(),
+                mTargetId,
+                mNodeTarget == nullptr ? "null" : "not null",
+                optional() ? "true" : "false",
+                mTargetNodeRequired ? "true" : "false" );
 
     Debug::atBeginning = true;
     return dbgString;
