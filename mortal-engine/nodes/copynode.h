@@ -1,3 +1,17 @@
+/**
+ * @file copynode.h
+ * @author Adam Baker (adam@adambaker.org)
+ * @brief A node that copies another node in the model.
+ * The key to understanding the logic of this model is to recognize that the
+ * node created a deep copy of whatever node is targeted and stores it in
+ * mCopy. (This happens in CopyNode::readFromXml.) All of the functions
+ * that access the node data just pass the call on to mCopy.
+ * @version 0.1
+ * @date 2020-10-26
+ *
+ *
+ */
+
 #ifndef COPYNODE_H
 #define COPYNODE_H
 
