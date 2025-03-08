@@ -274,7 +274,7 @@ Parsing Parsing::readFromXml(QXmlStreamReader &in, const Morphology *morphology,
     QString text = in.attributes().value("text").toString();
     QString status = in.attributes().value("status").toString();
     int position = in.attributes().value("position").toInt();
-    QString modelLabel = in.attributes().value("morphological-model").toString();
+    MorphemeLabel modelLabel( in.attributes().value("morphological-model").toString() );
     MorphologicalModel * model = morphology->getMorphologicalModelFromLabel(modelLabel);
     Q_ASSERT(model != nullptr);
 
@@ -331,7 +331,7 @@ Parsing Parsing::readFromXml(QDomElement parsing, const Morphology *morphology)
     WritingSystem ws = morphology->writingSystems().value( parsing.attribute("lang") );
     QString status = parsing.attribute("status");
     int position = parsing.attribute("position").toInt();
-    QString modelLabel = parsing.attribute("morphological-model");
+    MorphemeLabel modelLabel(parsing.attribute("morphological-model"));
     MorphologicalModel * model = morphology->getMorphologicalModelFromLabel(modelLabel);
     Q_ASSERT(model != nullptr);
 

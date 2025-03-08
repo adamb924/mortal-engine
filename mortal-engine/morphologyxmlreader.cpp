@@ -100,15 +100,19 @@ void MorphologyXmlReader::readXmlFile(const QString &path)
 
     /// for every jump pointer, fill in the pointer to the target of the to="node-id" attribute
     fillInJumpPointers();
+
     /// for every constraint pointer, fill in the pointer to the target of the id="constraint-id" attribute
     fillInConstraintPointers();
 
     /// call generateAllomorphs for every node
     generateAllomorphsFromRules();
+
     /// call initializePortmanteaux for every node with portmanteau. can't recall right now whether the ordering here is significant but I think it is.
     parsePortmanteaux();
+
     /// call calculateModelProperties for every node. At this point it only ends up calling checkHasOptionalCompletionPath, but it might do more in the future.
     calculateModelProperties();
+
     /// need to check here whether there are inconsistent nested constraints, i.e., once the pointers have been filled in
     checkNestedConstraintConsistency();
 
@@ -183,23 +187,23 @@ void MorphologyXmlReader::populateNodeHashes()
 {
     foreach(AbstractNode * n, mMorphology->mNodes)
     {
-        mMorphology->mNodesByLabel.insert( n->label().toString(), n );
+        mMorphology->mNodesByLabel.insert( n->label(), n );
         if( n->isMorphemeNode() )
         {
-            mMorphology->mMorphemeNodesByLabel.insert( n->label().toString(), dynamic_cast<MorphemeNode*>(n) );
+            mMorphology->mMorphemeNodesByLabel.insert( n->label(), dynamic_cast<MorphemeNode*>(n) );
         }
         if( n->isModel() )
         {
-            mMorphology->mMorphologicalModelsByLabel.insert( n->label().toString(), dynamic_cast<MorphologicalModel*>(n) );
+            mMorphology->mMorphologicalModelsByLabel.insert( n->label(), dynamic_cast<MorphologicalModel*>(n) );
         }
     }
 }
 
 void MorphologyXmlReader::checkForNonUniqueIdsAndLabels()
 {
-    QSet<QString> ambiguous;
-    QStringList labels = mMorphology->mMorphemeNodesByLabel.keys();
-    foreach(QString label, labels)
+    QHash<MorphemeLabel,QPair<MorphemeNode*,MorphemeNode*>> ambiguous;
+    QList<MorphemeLabel> labels = mMorphology->mMorphemeNodesByLabel.keys();
+    foreach(MorphemeLabel label, labels)
     {
         QList<MorphemeNode*> nodes = mMorphology->mMorphemeNodesByLabel.values(label);
         for(int i=0; i<nodes.count(); i++)
@@ -208,14 +212,14 @@ void MorphologyXmlReader::checkForNonUniqueIdsAndLabels()
             {
                 if( nodes.at(i)->id() == nodes.at(j)->id() || nodes.at(i)->id().isEmpty() || nodes.at(j)->id().isEmpty() )
                 {
-                    ambiguous << label;
+                    ambiguous[label] = QPair<MorphemeNode*,MorphemeNode*>( nodes.at(i), nodes.at(j) );
                 }
             }
         }
     }
-    foreach(QString label, ambiguous)
+    for (const auto &value : ambiguous)
     {
-        qWarning() << "Morpheme nodes with both the same label and non-distinct (or missing) IDs:" << label;
+        qWarning() << QString("Morpheme nodes with both the same label and non-distinct (or missing) IDs: %1, %2").arg(value.first->debugIdentifier()).arg(value.second->debugIdentifier());
     }
 }
 

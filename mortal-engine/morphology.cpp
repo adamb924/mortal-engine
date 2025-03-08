@@ -336,17 +336,17 @@ AbstractNode *Morphology::getNodeFromId(const QString &id) const
     return mNodesById.value(id, nullptr);
 }
 
-QList<AbstractNode *> Morphology::getNodesFromLabel(const QString &label) const
+QList<AbstractNode *> Morphology::getNodesFromLabel(const MorphemeLabel &label) const
 {
     return mNodesByLabel.values(label);
 }
 
-QList<MorphemeNode *> Morphology::getMorphemeNodeFromLabel(const QString &label) const
+QList<MorphemeNode *> Morphology::getMorphemeNodeFromLabel(const MorphemeLabel &label) const
 {
     return mMorphemeNodesByLabel.values(label);
 }
 
-MorphologicalModel *Morphology::getMorphologicalModelFromLabel(const QString &label) const
+MorphologicalModel *Morphology::getMorphologicalModelFromLabel(const MorphemeLabel &label) const
 {
     return mMorphologicalModelsByLabel.value(label);
 }

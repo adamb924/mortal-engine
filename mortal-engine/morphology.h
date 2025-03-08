@@ -88,9 +88,9 @@ public:
     AbstractNode* getNodeFromId(const QString & id) const;
 
     //! \brief Returns a list of pointers to nodes with the given label, or an empty list if none exist
-    QList<AbstractNode*> getNodesFromLabel(const QString & label) const;
-    QList<MorphemeNode*> getMorphemeNodeFromLabel(const QString & label) const;
-    MorphologicalModel *getMorphologicalModelFromLabel(const QString & label) const;
+    QList<AbstractNode*> getNodesFromLabel(const MorphemeLabel &label) const;
+    QList<MorphemeNode*> getMorphemeNodeFromLabel(const MorphemeLabel &label) const;
+    MorphologicalModel *getMorphologicalModelFromLabel(const MorphemeLabel &label) const;
     void setNodeId(const QString & id, AbstractNode * node);
     QSet<AbstractStemList *> stemLists() const;
 
@@ -107,9 +107,9 @@ private:
     QList<MorphologicalModel*> mMorphologicalModels;
     QHash<QString,WritingSystem> mWritingSystems;
     QHash<QString,AbstractNode*> mNodesById;
-    QMultiHash<QString,AbstractNode*> mNodesByLabel;
-    QMultiHash<QString,MorphemeNode*> mMorphemeNodesByLabel;
-    QMultiHash<QString,MorphologicalModel*> mMorphologicalModelsByLabel;
+    QMultiHash<MorphemeLabel,AbstractNode*> mNodesByLabel;
+    QMultiHash<MorphemeLabel,MorphemeNode*> mMorphemeNodesByLabel;
+    QMultiHash<MorphemeLabel,MorphologicalModel*> mMorphologicalModelsByLabel;
     QSet<AbstractNode*> mNodes;
     QSet<AbstractStemList*> mStemAcceptingStemLists;
     QSet<AbstractStemList*> mStemLists;
