@@ -47,7 +47,10 @@ bool Portmanteau::initialize(const AbstractNode *parent, QHash<MorphemeLabel, co
     mNodes.clear();
 
     if( mInitializationString.isEmpty() )
-        return false;
+    {
+        std::string is = mInitializationString.toUtf8().constData();
+        throw std::runtime_error( "A portmanteau string cannot be empty: " + is );
+    }
 
     mMorphemes = MorphemeSequence::fromString(mInitializationString);
 
@@ -93,6 +96,11 @@ bool Portmanteau::initialize(const AbstractNode *parent, QHash<MorphemeLabel, co
     while( i < mMorphemes.count() );
 
     Q_ASSERT(mNodes.count() > 1);
+
+    if( mMorphemes.count() > 1 && mMorphemes.count() == mNodes.count() )
+        mStatus = Valid;
+    else
+        mStatus = Invalid;
 
     return mMorphemes.count() > 1;
 }

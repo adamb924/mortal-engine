@@ -404,7 +404,7 @@ bool MorphemeNode::matchesElement(QXmlStreamReader &in)
 void MorphemeNode::initializePortmanteaux()
 {
     QHash<MorphemeLabel,const AbstractNode *> cache;
-    for( const auto& allomorph : mAllomorphs )
+    for( auto& allomorph : mAllomorphs )
     {
         const auto& writingSystems = allomorph.writingSystems();
         for (const auto& ws : writingSystems)
