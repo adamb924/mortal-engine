@@ -42,7 +42,7 @@ bool Portmanteau::operator==(const Portmanteau &other) const
     return mInitializationString == other.mInitializationString;
 }
 
-bool Portmanteau::initialize(const AbstractNode *parent, QHash<MorphemeLabel,const AbstractNode *> &cache)
+bool Portmanteau::initialize(const AbstractNode *parent, QHash<MorphemeLabel, const AbstractNode *> &cache)
 {
     mNodes.clear();
 
@@ -76,17 +76,7 @@ bool Portmanteau::initialize(const AbstractNode *parent, QHash<MorphemeLabel,con
     {
         /// the current node is the (first?) node following the most recently added node node that has the label in question
         const AbstractNode * startingFrom = mNodes.last(); /// i.e., either the first node or the last one added in a previous loop iteration
-        QHash<const Jump *, int> jumps;
-        const AbstractNode * current;
-        if( cache.contains(mMorphemes.at(i)) )
-        {
-            current = cache.value(mMorphemes.at(i));
-        }
-        else
-        {
-            current = startingFrom->followingNodeHavingLabel( mMorphemes.at(i), jumps );
-            cache.insert( mMorphemes.at(i), current );
-        }
+        const AbstractNode * current = getFollowingNode(startingFrom, mMorphemes.at(i), cache);
 
         /// fail if no node has that label
         if( current == nullptr )
@@ -140,6 +130,44 @@ MorphemeSequence Portmanteau::morphemes() const
 QList<const AbstractNode *> Portmanteau::nodes() const
 {
     return mNodes;
+}
+
+const AbstractNode *Portmanteau::getFollowingNode(const AbstractNode *startingFrom, const MorphemeLabel &label, QHash<MorphemeLabel, const AbstractNode *> &cache) const
+{
+    /// if the cache contains the label already, return the cached value
+    if( cache.contains(label) )
+    {
+        return cache.value(label);
+    }
+    else
+    {
+        /// For models with lots of jumps and high number of
+        /// maximum jumps, this search can be quite expensive.
+        /// Therefore try limiting to one jump and search with
+        /// that; if it fails, search with all allowed jumps.
+
+        /// Store the user-defined value and temporarily set to 1
+        int originalMaximumJumps = Parsing::MAXIMUM_JUMPS;
+        Parsing::MAXIMUM_JUMPS = 1;
+
+        /// try with just one jump permitted (to each node)
+        QHash<const Jump *, int> jumps;
+        const AbstractNode * current = startingFrom->followingNodeHavingLabel(label, jumps);
+
+        /// restore the user-supplied value
+        Parsing::MAXIMUM_JUMPS = originalMaximumJumps;
+
+        /// try again if we need
+        if( current == nullptr )
+        {
+            jumps.clear();
+            current = startingFrom->followingNodeHavingLabel(label, jumps);
+        }
+
+        /// Save the search result in the cache
+        cache.insert(label, current);
+        return current;
+    }
 }
 
 QString Portmanteau::summary() const

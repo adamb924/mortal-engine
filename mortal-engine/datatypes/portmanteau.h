@@ -49,6 +49,8 @@ public:
     QList<const AbstractNode *> nodes() const;
 
 private:
+    const AbstractNode * getFollowingNode(const AbstractNode * startingFrom, const MorphemeLabel & label, QHash<MorphemeLabel, const AbstractNode *> &cache) const;
+
     Portmanteau::Status mStatus;
     QString mInitializationString;
     MorphemeSequence mMorphemes;
