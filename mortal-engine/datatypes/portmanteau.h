@@ -26,7 +26,7 @@ public:
     bool operator==(const Portmanteau & other) const;
 
     /// this needs to be called after all the nodes are read, so they can be searched
-    bool initialize(const AbstractNode * parent);
+    bool initialize(const AbstractNode * parent, QHash<MorphemeLabel, const AbstractNode *> &cache);
 
     Portmanteau::Status status() const;
     bool isValid() const;

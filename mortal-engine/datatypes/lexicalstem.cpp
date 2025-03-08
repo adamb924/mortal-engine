@@ -222,6 +222,7 @@ Allomorph LexicalStem::displayAllomorph() const
 
 void LexicalStem::initializePortmanteaux(const AbstractNode *parent)
 {
+    QHash<MorphemeLabel,const AbstractNode *> cache;
     for(int i=0; i<mAllomorphs.count(); i++)
     {
         QSetIterator<WritingSystem> wsIter( mAllomorphs.at(i).writingSystems() );
@@ -230,7 +231,7 @@ void LexicalStem::initializePortmanteaux(const AbstractNode *parent)
             const WritingSystem ws = wsIter.next();
             if( mAllomorphs.at(i).hasPortmanteau(ws) )
             {
-                if( mAllomorphs[i].portmanteau().initialize(parent) )
+                if( mAllomorphs[i].portmanteau().initialize(parent,cache) )
                 {
                     mPortmanteaux.insert(ws, mAllomorphs[i].portmanteau().morphemes() );
                 }

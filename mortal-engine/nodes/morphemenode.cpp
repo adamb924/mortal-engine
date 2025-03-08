@@ -403,17 +403,17 @@ bool MorphemeNode::matchesElement(QXmlStreamReader &in)
 
 void MorphemeNode::initializePortmanteaux()
 {
-    for(int i=0; i<mAllomorphs.count(); i++)
+    QHash<MorphemeLabel,const AbstractNode *> cache;
+    for( const auto& allomorph : mAllomorphs )
     {
-        QSetIterator<WritingSystem> wsIter( mAllomorphs.at(i).writingSystems() );
-        while( wsIter.hasNext() )
+        const auto& writingSystems = allomorph.writingSystems();
+        for (const auto& ws : writingSystems)
         {
-            const WritingSystem ws = wsIter.next();
-            if( mAllomorphs.at(i).hasPortmanteau(ws) )
+            if( allomorph.hasPortmanteau(ws) )
             {
-                mAllomorphs[i].portmanteau().initialize(this);
+                allomorph.portmanteau().initialize(this, cache);
                 /// also keep a list of the portmanteau for later
-                mPortmanteauSequences.insert(ws, mAllomorphs.at(i).portmanteau().morphemes() );
+                mPortmanteauSequences.insert(ws, allomorph.portmanteau().morphemes() );
             }
         }
     }
