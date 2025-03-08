@@ -40,8 +40,12 @@ Path *Path::copy(MorphologyXmlReader *morphologyReader, const QString &idSuffix)
     p->setInitialNode( mInitialNode->copy(morphologyReader, idSuffix) );
     AbstractNode * previous = p->initialNode();
     const AbstractNode * current = mInitialNode->next(); /// this needs to refer to mInitialNode, because p->initialNode()->next() will be zero
-    /// as long as the current node has a next node, copy it
-    while( current != nullptr )
+
+    /// The next node must (1) exist, and (2) not
+    /// be the next node of the path. That would indicate
+    /// that we're past the path.
+    while( current != nullptr
+           && current != next() )
     {
         AbstractNode * copyOfCurrent = current->copy(morphologyReader, idSuffix);
         previous->setNext(copyOfCurrent);
