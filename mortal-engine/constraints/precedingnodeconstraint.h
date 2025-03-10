@@ -9,6 +9,7 @@ class PrecedingNodeConstraint : public AbstractConstraint
 {
 public:
     enum Identifier { Null, Id, Label };
+    enum Scope { AnyPreceding, ImmediatelyPreceding };
 
     PrecedingNodeConstraint();
 
@@ -30,8 +31,12 @@ public:
     void setIdentifier(const Identifier &identifier);
 
 private:
+    bool matchImmediatelyPreceding(const Parsing * parsing) const;
+    bool matchAnyPreceding(const Parsing * parsing) const;
+
     QString mIdentifierString;
     Identifier mIdentifier;
+    Scope mScope;
 };
 
 } // namespace ME

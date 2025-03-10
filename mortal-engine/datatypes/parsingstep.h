@@ -21,9 +21,12 @@ public:
     ParsingStep(const AbstractNode* node, const Allomorph & allomorph, const LexicalStem &lexicalStem);
 
     const AbstractNode *node() const;
+    QList<const AbstractNode *> nodes(const WritingSystem &ws) const;
     const AbstractNode *lastNode(const WritingSystem &ws) const;
     bool lastNodeMatchesId(const QString & id) const;
     bool lastNodeMatchesLabel(const class MorphemeLabel & label) const;
+    bool anyNodeMatchesId(const QString & id) const;
+    bool anyNodeMatchesLabel(const class MorphemeLabel & label) const;
 
     Allomorph allomorph() const;
 

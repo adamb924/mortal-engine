@@ -9,7 +9,7 @@
 
 using namespace ME;
 
-PrecedingNodeConstraint::PrecedingNodeConstraint() : AbstractConstraint(AbstractConstraint::MatchCondition), mIdentifier(Null)
+PrecedingNodeConstraint::PrecedingNodeConstraint() : AbstractConstraint(AbstractConstraint::MatchCondition), mIdentifier(Null), mScope(ImmediatelyPreceding)
 {
 
 }
@@ -25,6 +25,17 @@ bool PrecedingNodeConstraint::matchesThisConstraint(const Parsing *parsing, cons
         return false;
     }
 
+    switch(mScope)
+    {
+    case AnyPreceding:
+        return matchAnyPreceding(parsing);
+    case ImmediatelyPreceding:
+        return matchImmediatelyPreceding(parsing);
+    }
+}
+
+bool PrecedingNodeConstraint::matchImmediatelyPreceding(const Parsing *parsing) const
+{
     switch( mIdentifier )
     {
     case PrecedingNodeConstraint::Null:
@@ -34,7 +45,19 @@ bool PrecedingNodeConstraint::matchesThisConstraint(const Parsing *parsing, cons
     case PrecedingNodeConstraint::Label:
         return parsing->steps().constLast().lastNodeMatchesLabel( MorphemeLabel(mIdentifierString) );
     }
-    return false;
+}
+
+bool PrecedingNodeConstraint::matchAnyPreceding(const Parsing *parsing) const
+{
+    switch( mIdentifier )
+    {
+    case PrecedingNodeConstraint::Null:
+        return false;
+    case PrecedingNodeConstraint::Id:
+        return parsing->steps().constLast().anyNodeMatchesId( mIdentifierString );
+    case PrecedingNodeConstraint::Label:
+        return parsing->steps().constLast().anyNodeMatchesLabel( MorphemeLabel(mIdentifierString) );
+    }
 }
 
 QString PrecedingNodeConstraint::summary(const QString &suffix) const
@@ -88,6 +111,18 @@ AbstractConstraint *PrecedingNodeConstraint::readFromXml(QXmlStreamReader &in, M
     {
         std::string en = elementName().toUtf8().constData();
         throw std::runtime_error( "Error: no id or name attribute in " + en );
+    }
+
+    if( attr.hasAttribute("scope") )
+    {
+        if( attr.value("scope").toString() == "immediately-preceding" )
+        {
+            c->mScope = ImmediatelyPreceding;
+        }
+        else if( attr.value("scope").toString() == "any-preceding" )
+        {
+            c->mScope = AnyPreceding;
+        }
     }
 
     /// get to the end element

@@ -31,6 +31,18 @@ const AbstractNode *ParsingStep::node() const
     return mNode;
 }
 
+QList<const AbstractNode *> ParsingStep::nodes(const WritingSystem &ws) const
+{
+    if( mAllomorph.hasPortmanteau(ws) )
+    {
+        return mAllomorph.portmanteau().nodes();
+    }
+    else
+    {
+        return QList<const AbstractNode *>() << mNode;
+    }
+}
+
 const AbstractNode *ParsingStep::lastNode(const WritingSystem & ws) const
 {
     if( mAllomorph.hasPortmanteau(ws) )
@@ -66,6 +78,42 @@ bool ParsingStep::lastNodeMatchesLabel(const MorphemeLabel &label) const
         if( lastNode(ws)->label() == label )
         {
             return true;
+        }
+    }
+    return false;
+}
+
+bool ParsingStep::anyNodeMatchesId(const QString &id) const
+{
+    QSetIterator<WritingSystem> wsIter( mAllomorph.writingSystems() );
+    while(wsIter.hasNext())
+    {
+        const WritingSystem ws = wsIter.next();
+        QList<const AbstractNode *> ns(nodes(ws));
+        for( const auto& n : ns )
+        {
+            if( n->id() == id )
+            {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+bool ParsingStep::anyNodeMatchesLabel(const MorphemeLabel &label) const
+{
+    QSetIterator<WritingSystem> wsIter( mAllomorph.writingSystems() );
+    while(wsIter.hasNext())
+    {
+        const WritingSystem ws = wsIter.next();
+        QList<const AbstractNode *> ns(nodes(ws));
+        for( const auto& n : ns )
+        {
+            if( n->label() == label )
+            {
+                return true;
+            }
         }
     }
     return false;

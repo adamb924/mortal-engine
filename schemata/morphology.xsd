@@ -171,9 +171,16 @@
         <xs:complexContent>
             <xs:extension base="me:condition-base">
                 <xs:attribute name="label" type="xs:string" use="required"></xs:attribute>
+                <xs:attribute type="me:preceding-node-scope" name="scope" default="immediately-preceding"/>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
+    <xs:simpleType name="preceding-node-scope">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="immediately-preceding"/>
+            <xs:enumeration value="any-preceding"/>
+       </xs:restriction>
+    </xs:simpleType>
 
     <!-- model -->
     <xs:complexType name="model">
