@@ -13,7 +13,7 @@ MorphologicalModel::MorphologicalModel() : AbstractPath(nullptr), mHasZeroLength
 
 }
 
-MorphologicalModel *MorphologicalModel::copy(MorphologyXmlReader *morphologyReader, const QString & idSuffix) const
+MorphologicalModel *MorphologicalModel::copy(MorphologyXmlReader *morphologyReader, const NodeId & idSuffix) const
 {
     Q_UNUSED(morphologyReader)
     Q_UNUSED(idSuffix)

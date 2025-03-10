@@ -331,7 +331,7 @@ void Morphology::printModelCheck(QTextStream &out) const
     checker.printCheck(out);
 }
 
-AbstractNode *Morphology::getNodeFromId(const QString &id) const
+AbstractNode *Morphology::getNodeFromId(const NodeId &id) const
 {
     return mNodesById.value(id, nullptr);
 }
@@ -356,7 +356,7 @@ QHash<QString, WritingSystem> Morphology::writingSystems() const
     return mWritingSystems;
 }
 
-void Morphology::setNodeId(const QString &id, AbstractNode *node)
+void Morphology::setNodeId(const NodeId &id, AbstractNode *node)
 {
     mNodesById.insert( id, node );
 }

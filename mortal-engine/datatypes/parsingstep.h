@@ -3,6 +3,7 @@
 
 #include "allomorph.h"
 #include "lexicalstem.h"
+#include "datatypes/nodeid.h"
 
 #include "mortal-engine_global.h"
 
@@ -23,9 +24,9 @@ public:
     const AbstractNode *node() const;
     QList<const AbstractNode *> nodes(const WritingSystem &ws) const;
     const AbstractNode *lastNode(const WritingSystem &ws) const;
-    bool lastNodeMatchesId(const QString & id) const;
+    bool lastNodeMatchesId(const NodeId &id) const;
     bool lastNodeMatchesLabel(const class MorphemeLabel & label) const;
-    bool anyNodeMatchesId(const QString & id) const;
+    bool anyNodeMatchesId(const NodeId & id) const;
     bool anyNodeMatchesLabel(const class MorphemeLabel & label) const;
 
     Allomorph allomorph() const;

@@ -21,7 +21,7 @@ class MorphologicalModel : public AbstractPath
 {
 public:
     MorphologicalModel();
-    MorphologicalModel * copy(MorphologyXmlReader *morphologyReader, const QString & idSuffix) const override;
+    MorphologicalModel * copy(MorphologyXmlReader *morphologyReader, const NodeId &idSuffix) const override;
 
     /**
      * @brief Returns a string representation of the Form for logging purposes.

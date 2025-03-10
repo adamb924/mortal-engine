@@ -16,7 +16,7 @@ Path::~Path()
 
 }
 
-Path *Path::copy(MorphologyXmlReader *morphologyReader, const QString &idSuffix) const
+Path *Path::copy(MorphologyXmlReader *morphologyReader, const NodeId &idSuffix) const
 {
     Path * p = new Path( model() );
 
@@ -25,7 +25,7 @@ Path *Path::copy(MorphologyXmlReader *morphologyReader, const QString &idSuffix)
     /// mType will be set by the constructor
     /// mNext will be set by the constructor
     p->setOptional( optional() );
-    if( !id().isEmpty() )
+    if( !id().isNull() )
     {
         p->setId( id() + idSuffix );
     }

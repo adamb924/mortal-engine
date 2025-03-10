@@ -59,7 +59,7 @@ int main(int argc, char *argv[])
     Morphology::DebugOutput = parser.isSet(debugOption);
     const bool check = parser.isSet(checkOption);
     QString logfile = parser.value(debugOutputOption);
-    const QString inspectId = parser.value(inspectOption);
+    const NodeId inspectId = NodeId( parser.value(inspectOption) );
     const QString path = parser.value(pathOption);
 
     /// set the path here to read the files in the correct location

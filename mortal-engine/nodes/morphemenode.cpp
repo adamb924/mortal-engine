@@ -27,7 +27,7 @@ MorphemeNode::~MorphemeNode()
 {
 }
 
-MorphemeNode *MorphemeNode::copy(MorphologyXmlReader *morphologyReader, const QString &idSuffix) const
+MorphemeNode *MorphemeNode::copy(MorphologyXmlReader *morphologyReader, const NodeId &idSuffix) const
 {
     MorphemeNode * m = new MorphemeNode( model() );
 
@@ -36,7 +36,7 @@ MorphemeNode *MorphemeNode::copy(MorphologyXmlReader *morphologyReader, const QS
     /// mType will be set by the constructor
     /// mNext will be set by the constructor
     m->setOptional( optional() );
-    if( !id().isEmpty() )
+    if( !id().isNull() )
     {
         m->setId( id() + idSuffix );
     }
@@ -461,7 +461,7 @@ QString MorphemeNode::summaryWithoutFollowing() const
     dbg << "MorphemeNode(" << newline;
     dbg.indent();
     dbg << "Label: " << label().toString() << newline;
-    dbg << "ID: " << id() << newline;
+    dbg << "ID: " << id().toString() << newline;
     dbg << "Type: " << AbstractNode::typeToString(type()) << newline;
     dbg << "Optional: " << (optional() ? "true" : "false" ) << newline;
     dbg << "Has optional completion path: " << ( hasPathToEnd() ? "true" : "false" ) << newline;

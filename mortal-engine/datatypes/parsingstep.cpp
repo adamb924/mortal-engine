@@ -55,7 +55,7 @@ const AbstractNode *ParsingStep::lastNode(const WritingSystem & ws) const
     }
 }
 
-bool ParsingStep::lastNodeMatchesId(const QString &id) const
+bool ParsingStep::lastNodeMatchesId(const NodeId &id) const
 {
     QSetIterator<WritingSystem> wsIter( mAllomorph.writingSystems() );
     while(wsIter.hasNext())
@@ -83,7 +83,7 @@ bool ParsingStep::lastNodeMatchesLabel(const MorphemeLabel &label) const
     return false;
 }
 
-bool ParsingStep::anyNodeMatchesId(const QString &id) const
+bool ParsingStep::anyNodeMatchesId(const NodeId &id) const
 {
     QSetIterator<WritingSystem> wsIter( mAllomorph.writingSystems() );
     while(wsIter.hasNext())
@@ -212,7 +212,7 @@ ParsingStep ParsingStep::readFromXml(QXmlStreamReader &in, const Morphology *mor
     /// prefer to use the id
     if( in.attributes().hasAttribute("id") )
     {
-        node = morphology->getNodeFromId( in.attributes().value("id").toString() );
+        node = morphology->getNodeFromId( NodeId(in.attributes().value("id").toString()) );
         if( node == nullptr )
         {
             qCritical() << "ParsingStep::readFromXml: Null node for id" << in.attributes().value("id").toString();
@@ -314,7 +314,7 @@ ParsingStep ParsingStep::readFromXml(QDomElement parsing, const Morphology *morp
     /// prefer to use the id
     if( nodeElement.hasAttribute("id") )
     {
-        node = morphology->getNodeFromId( nodeElement.attribute("id") );
+        node = morphology->getNodeFromId( NodeId(nodeElement.attribute("id")) );
         if( node == nullptr )
         {
             qCritical() << "ParsingStep::readFromXml(QDomElement): Null node for id" << nodeElement.attribute("id");

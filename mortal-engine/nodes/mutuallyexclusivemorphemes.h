@@ -16,7 +16,7 @@ class MORTAL_ENGINE_EXPORT MutuallyExclusiveMorphemes : public AbstractNode
 public:
     explicit MutuallyExclusiveMorphemes(const MorphologicalModel * model);
     ~MutuallyExclusiveMorphemes() override;
-    MutuallyExclusiveMorphemes * copy(MorphologyXmlReader *morphologyReader, const QString & idSuffix) const override;
+    MutuallyExclusiveMorphemes * copy(MorphologyXmlReader *morphologyReader, const NodeId &idSuffix) const override;
 
     void addMorpheme( MorphemeNode * m );
 

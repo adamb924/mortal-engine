@@ -10,7 +10,7 @@ class Jump : public AbstractNode
 public:
     explicit Jump(const MorphologicalModel * model);
     ~Jump() override;
-    Jump * copy(MorphologyXmlReader *morphologyReader, const QString &idSuffix) const override;
+    Jump * copy(MorphologyXmlReader *morphologyReader, const NodeId &idSuffix) const override;
 
     /**
      * @brief Returns a string representation of the Form for logging purposes.
@@ -22,9 +22,9 @@ public:
 
     void setNodeTarget(const AbstractNode *nodeTarget);
 
-    void setTargetId(const QString &targetId);
+    void setTargetId(const NodeId &targetId);
 
-    QString targetId() const;
+    NodeId targetId() const;
 
     static QString elementName();
     static AbstractNode *readFromXml(QXmlStreamReader &in, MorphologyXmlReader * morphologyReader, const MorphologicalModel * model);
@@ -46,7 +46,7 @@ private:
 
 private:
     const AbstractNode * mNodeTarget;
-    QString mTargetId;
+    NodeId mTargetId;
     bool mTargetNodeRequired;
 };
 

@@ -23,7 +23,7 @@ AbstractStemList::~AbstractStemList()
     qDeleteAll(mStems);
 }
 
-AbstractStemList *AbstractStemList::copy(MorphologyXmlReader *morphologyReader, const QString &idSuffix) const
+AbstractStemList *AbstractStemList::copy(MorphologyXmlReader *morphologyReader, const NodeId &idSuffix) const
 {
     Q_UNUSED(morphologyReader)
     Q_UNUSED(idSuffix)

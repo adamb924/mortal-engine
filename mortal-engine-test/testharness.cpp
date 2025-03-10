@@ -21,7 +21,7 @@ void TestHarness::readTestFile(const QString &filename)
     reader.readTestFile(filename);
 }
 
-void TestHarness::printReport(QTextStream &out, VerbosityLevel verbosity, bool showModel, bool check, const QString &inspectId)
+void TestHarness::printReport(QTextStream &out, VerbosityLevel verbosity, bool showModel, bool check, const NodeId &inspectId)
 {
     foreach(TestSchema *ts, mSchemata)
     {
@@ -31,12 +31,12 @@ void TestHarness::printReport(QTextStream &out, VerbosityLevel verbosity, bool s
         {
             out << ts->morphology()->summary() << Qt::endl << Qt::endl;
         }
-        if( !inspectId.isEmpty() )
+        if( !inspectId.isNull() )
         {
             AbstractNode * node = ts->morphology()->getNodeFromId(inspectId);
             if( node == nullptr )
             {
-                out << "Could not find node with ID: " << inspectId;
+                out << "Could not find node with ID: " << inspectId.toString();
             }
             else
             {

@@ -19,7 +19,7 @@ Fork::~Fork()
 {
 }
 
-Fork *Fork::copy(MorphologyXmlReader *morphologyReader, const QString &idSuffix) const
+Fork *Fork::copy(MorphologyXmlReader *morphologyReader, const NodeId &idSuffix) const
 {
     Fork * f = new Fork( model() );
 
@@ -28,7 +28,7 @@ Fork *Fork::copy(MorphologyXmlReader *morphologyReader, const QString &idSuffix)
     /// mType will be set by the constructor
     /// mNext will be set by the constructor
     f->setOptional( optional() );
-    if( !id().isEmpty() )
+    if( !id().isNull() )
     {
         f->setId( id() + idSuffix );
     }
@@ -196,7 +196,7 @@ QString Fork::summary(const AbstractNode *doNotFollow) const
     dbg << "Fork(" << newline;
     dbg.indent();
     dbg << "Label: " << label().toString() << newline;
-    dbg << "ID: " << id() << newline;
+    dbg << "ID: " << id().toString() << newline;
     dbg << "Type: " << AbstractNode::typeToString(type()) << newline;
     dbg << "Optional: " << (optional() ? "true" : "false" ) << newline;
     dbg << "Has optional completion path: " << ( hasPathToEnd() ? "true" : "false" ) << newline << newline;

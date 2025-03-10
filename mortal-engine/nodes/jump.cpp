@@ -20,7 +20,7 @@ Jump::~Jump()
 
 }
 
-Jump *Jump::copy(MorphologyXmlReader *morphologyReader, const QString &idSuffix) const
+Jump *Jump::copy(MorphologyXmlReader *morphologyReader, const NodeId &idSuffix) const
 {
     Jump * j = new Jump( model() );
 
@@ -29,7 +29,7 @@ Jump *Jump::copy(MorphologyXmlReader *morphologyReader, const QString &idSuffix)
     /// mType will be set by the constructor
     /// mNext will be set by the constructor
     j->setOptional( optional() );
-    if( !id().isEmpty() )
+    if( !id().isNull() )
     {
         j->setId( id() + idSuffix );
     }
@@ -56,7 +56,7 @@ QString Jump::summary(const AbstractNode *doNotFollow) const
 
     dbg << QObject::tr("Jump(Label: %1, Target ID: %2, Pointer: %3, optional: %4, target node required: %5)")
             .arg(label().toString(),
-                mTargetId,
+                mTargetId.toString(),
                 mNodeTarget == nullptr ? "null" : "not null",
                 optional() ? "true" : "false",
                 mTargetNodeRequired ? "true" : "false" );
@@ -136,12 +136,12 @@ void Jump::setNodeTarget(const AbstractNode *nodeTarget)
     mNodeTarget = nodeTarget;
 }
 
-void Jump::setTargetId(const QString &targetId)
+void Jump::setTargetId(const NodeId &targetId)
 {
     mTargetId = targetId;
 }
 
-QString Jump::targetId() const
+NodeId Jump::targetId() const
 {
     return mTargetId;
 }
@@ -157,7 +157,7 @@ AbstractNode *Jump::readFromXml(QXmlStreamReader &in, MorphologyXmlReader *morph
     Q_ASSERT( in.isStartElement() );
     Jump * j = new Jump(model);
     j->readInitialNodeAttributes(in, morphologyReader);
-    j->setTargetId( in.attributes().value("to").toString() );
+    j->setTargetId( NodeId(in.attributes().value("to").toString()) );
 
     if( in.attributes().value(AbstractNode::XML_OPTIONAL).toString() == "false" )
     {

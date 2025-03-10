@@ -20,7 +20,7 @@ MutuallyExclusiveMorphemes::~MutuallyExclusiveMorphemes()
 {
 }
 
-MutuallyExclusiveMorphemes *MutuallyExclusiveMorphemes::copy(MorphologyXmlReader *morphologyReader, const QString &idSuffix) const
+MutuallyExclusiveMorphemes *MutuallyExclusiveMorphemes::copy(MorphologyXmlReader *morphologyReader, const NodeId &idSuffix) const
 {
     MutuallyExclusiveMorphemes * mem = new MutuallyExclusiveMorphemes( model() );
 
@@ -29,7 +29,7 @@ MutuallyExclusiveMorphemes *MutuallyExclusiveMorphemes::copy(MorphologyXmlReader
     /// mType will be set by the constructor
     /// mNext will be set by the constructor
     mem->setOptional( optional() );
-    if( !id().isEmpty() )
+    if( !id().isNull() )
     {
         mem->setId( id() + idSuffix );
     }
@@ -214,7 +214,7 @@ QString MutuallyExclusiveMorphemes::summary(const AbstractNode *doNotFollow) con
     dbg << "MutuallyExclusiveMorphemes(" << newline;
     dbg.indent();
     dbg << "Label: " << label().toString() << newline;
-    dbg << "ID: " << id() << newline;
+    dbg << "ID: " << id().toString() << newline;
     dbg << "Type: " << AbstractNode::typeToString(type()) << newline;
     dbg << "Optional: " << (optional() ? "true" : "false" ) << newline;
     dbg << "Has optional completion path: " << ( hasPathToEnd() ? "true" : "false" ) << newline;

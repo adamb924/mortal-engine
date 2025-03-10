@@ -14,6 +14,7 @@
 #include <QMap>
 
 #include "datatypes/morphemelabel.h"
+#include "datatypes/nodeid.h"
 #include "datatypes/parsing.h"
 #include "mortal-engine_global.h"
 
@@ -44,7 +45,7 @@ public:
     /**
      * @brief Returns a deep copy of the object.
      */
-    virtual AbstractNode * copy(MorphologyXmlReader *morphologyReader, const QString & idSuffix) const = 0;
+    virtual AbstractNode * copy(MorphologyXmlReader *morphologyReader, const NodeId & idSuffix) const = 0;
 
     /**
      * @brief Returns a string representation of the Form for logging purposes.
@@ -87,8 +88,8 @@ public:
 
     void readInitialNodeAttributes(QXmlStreamReader &in, MorphologyXmlReader *morphologyReader);
 
-    virtual QString id() const;
-    void setId(const QString &id);
+    virtual NodeId id() const;
+    void setId(const NodeId &id);
 
     bool isStemNode() const;
 
@@ -149,7 +150,7 @@ private:
     AbstractNode::Type mType;
     AbstractNode* mNext;
     bool mOptional;
-    QString mId;
+    NodeId mId;
     bool mHasPathToEnd;
 };
 

@@ -71,6 +71,7 @@ add_library(mortalengine SHARED
     datatypes/tag.h datatypes/tag.cpp
     datatypes/writingsystem.h datatypes/writingsystem.cpp
     nodes/sqlitestemlist.h nodes/sqlitestemlist.cpp
+    datatypes/nodeid.h datatypes/nodeid.cpp
 )
 
 target_include_directories(mortalengine PUBLIC ".")

@@ -135,7 +135,7 @@ void MorphologyChecker::missingGlossCheck(QTextStream &out) const
     {
         if( n->glossCount() == 0 )
         {
-            out << QObject::tr("No glosses. Label: %1, ID: %2, Model: %3").arg( n->label().toString(), n->id(), n->model()->label().toString() ) << Qt::endl;
+            out << QObject::tr("No glosses. Label: %1, ID: %2, Model: %3").arg( n->label().toString(), n->id().toString(), n->model()->label().toString() ) << Qt::endl;
         }
     }
 }

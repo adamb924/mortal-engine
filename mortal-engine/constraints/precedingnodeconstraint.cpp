@@ -41,7 +41,7 @@ bool PrecedingNodeConstraint::matchImmediatelyPreceding(const Parsing *parsing) 
     case PrecedingNodeConstraint::Null:
         return false;
     case PrecedingNodeConstraint::Id:
-        return parsing->steps().constLast().lastNodeMatchesId( mIdentifierString );
+        return parsing->steps().constLast().lastNodeMatchesId( NodeId(mIdentifierString) );
     case PrecedingNodeConstraint::Label:
         return parsing->steps().constLast().lastNodeMatchesLabel( MorphemeLabel(mIdentifierString) );
     }
@@ -54,7 +54,7 @@ bool PrecedingNodeConstraint::matchAnyPreceding(const Parsing *parsing) const
     case PrecedingNodeConstraint::Null:
         return false;
     case PrecedingNodeConstraint::Id:
-        return parsing->steps().constLast().anyNodeMatchesId( mIdentifierString );
+        return parsing->steps().constLast().anyNodeMatchesId( NodeId(mIdentifierString) );
     case PrecedingNodeConstraint::Label:
         return parsing->steps().constLast().anyNodeMatchesLabel( MorphemeLabel(mIdentifierString) );
     }

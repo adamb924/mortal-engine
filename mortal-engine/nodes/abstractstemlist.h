@@ -21,7 +21,7 @@ public:
     AbstractStemList(const AbstractStemList &) = delete;
     AbstractStemList &operator=(const AbstractStemList &) = delete;
 
-    AbstractStemList * copy(MorphologyXmlReader *morphologyReader, const QString & idSuffix) const override;
+    AbstractStemList * copy(MorphologyXmlReader *morphologyReader, const NodeId &idSuffix) const override;
 
     virtual void readStems( const QHash<QString,WritingSystem> &writingSystems ) = 0;
 

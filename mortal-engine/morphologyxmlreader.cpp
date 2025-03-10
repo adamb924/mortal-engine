@@ -210,7 +210,7 @@ void MorphologyXmlReader::checkForNonUniqueIdsAndLabels()
         {
             for(int j=i+1; j<nodes.count(); j++)
             {
-                if( nodes.at(i)->id() == nodes.at(j)->id() || nodes.at(i)->id().isEmpty() || nodes.at(j)->id().isEmpty() )
+                if( nodes.at(i)->id() == nodes.at(j)->id() || nodes.at(i)->id().isNull() || nodes.at(j)->id().isNull() )
                 {
                     ambiguous[label] = QPair<MorphemeNode*,MorphemeNode*>( nodes.at(i), nodes.at(j) );
                 }
@@ -482,7 +482,7 @@ void MorphologyXmlReader::fillInJumpPointers()
         }
         else
         {
-            std::string label = j->targetId().toUtf8().constData();
+            std::string label = j->targetId().toString().toUtf8().constData();
             throw std::runtime_error( "Jump tag with no corresponding id: " + label );
         }
     }

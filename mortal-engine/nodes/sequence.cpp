@@ -16,7 +16,7 @@ Sequence::~Sequence()
 
 }
 
-Sequence *Sequence::copy(MorphologyXmlReader *morphologyReader, const QString &idSuffix) const
+Sequence *Sequence::copy(MorphologyXmlReader *morphologyReader, const NodeId &idSuffix) const
 {
     Sequence * s = new Sequence( model() );
 
@@ -25,7 +25,7 @@ Sequence *Sequence::copy(MorphologyXmlReader *morphologyReader, const QString &i
     /// mType will be set by the constructor
     /// mNext will be set by the constructor
     s->setOptional( optional() );
-    if( !id().isEmpty() )
+    if( !id().isNull() )
     {
         s->setId( id() + idSuffix );
     }

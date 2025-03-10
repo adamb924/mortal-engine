@@ -21,7 +21,7 @@ CopyNode::~CopyNode()
 
 }
 
-AbstractNode *CopyNode::copy(MorphologyXmlReader *morphologyReader, const QString &idSuffix) const
+AbstractNode *CopyNode::copy(MorphologyXmlReader *morphologyReader, const NodeId &idSuffix) const
 {
     Q_UNUSED(morphologyReader)
     Q_UNUSED(idSuffix)
@@ -49,7 +49,7 @@ bool CopyNode::checkHasOptionalCompletionPath() const
     return mCopy->checkHasOptionalCompletionPath();
 }
 
-QString CopyNode::id() const
+NodeId CopyNode::id() const
 {
     return mCopy->id();
 }
@@ -71,15 +71,16 @@ AbstractNode *CopyNode::readFromXml(QXmlStreamReader &in, MorphologyXmlReader *m
 
     if( in.attributes().hasAttribute("target-id") )
     {
-        AbstractNode * targetNode = morphologyReader->morphology()->getNodeFromId( in.attributes().value("target-id").toString() );
+        const NodeId id(in.attributes().value("target-id").toString());
+        AbstractNode * targetNode = morphologyReader->morphology()->getNodeFromId( id );
         if( targetNode == nullptr )
         {
-            qCritical() << "No preceding node with id " << in.attributes().value("target-id").toString() << "found.";
+            qCritical() << "No preceding node with id " << id.toString() << "found.";
             return copy;
         }
         else
         {
-            copy->setCopy( targetNode->copy(morphologyReader, in.attributes().value("id-suffix").toString()) );
+            copy->setCopy( targetNode->copy(morphologyReader, NodeId(in.attributes().value("id-suffix").toString()) ) );
         }
     }
     else

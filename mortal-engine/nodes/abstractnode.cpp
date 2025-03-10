@@ -35,7 +35,7 @@ QList<Parsing> AbstractNode::possibleParsings(const Parsing &parsing, Parsing::F
     if( Morphology::DebugOutput )
     {
         /// only add this data if we're in debug mode; no reason to slow down all those deep copies
-        p.addToStackTrace( QString("%1, %2").arg(debugIdentifier(), id()) );
+        p.addToStackTrace( QString("%1, %2").arg(debugIdentifier(), id().toString()) );
     }
 
     /// TODO keep thinking about this logic. This means that we only stop requiring a node when a
@@ -89,10 +89,10 @@ QList<Generation> AbstractNode::generateForms(const Generation &generation) cons
 {
     if( Morphology::DebugOutput )
     {
-        qInfo() << "GENERATION CURRENT NODE:" << debugIdentifier() << id();
+        qInfo() << "GENERATION CURRENT NODE:" << debugIdentifier();
         if( next() != nullptr )
         {
-            qInfo() << qPrintable("\t") << "NEXT NODE:" << next()->debugIdentifier() << next()->id();
+            qInfo() << qPrintable("\t") << "NEXT NODE:" << next()->debugIdentifier();
         }
     }
 
@@ -291,9 +291,9 @@ void AbstractNode::serialize(QXmlStreamWriter &out) const
     out.writeStartElement("node");
     out.writeAttribute("label", mLabel.toString());
     out.writeAttribute("type", typeToString(mType) );
-    if( ! mId.isEmpty() )
+    if( ! mId.isNull() )
     {
-        out.writeAttribute("id", mId);
+        out.writeAttribute("id", mId.toString());
     }
     out.writeAttribute(AbstractNode::XML_OPTIONAL, (mOptional ? "true" : "false" ) );
     out.writeEndElement(); /// node
@@ -303,9 +303,9 @@ void AbstractNode::serialize(QDomElement &out) const
 {
     out.setAttribute("label", mLabel.toString());
     out.setAttribute("type", typeToString(mType) );
-    if( ! mId.isEmpty() )
+    if( ! mId.isNull() )
     {
-        out.setAttribute("id", mId);
+        out.setAttribute("id", mId.toString());
     }
     out.setAttribute(AbstractNode::XML_OPTIONAL, (mOptional ? "true" : "false" ) );
 }
@@ -318,17 +318,17 @@ void AbstractNode::readInitialNodeAttributes(QXmlStreamReader &in, MorphologyXml
 
     if( attr.hasAttribute("id") )
     {
-        setId( attr.value("id").toString() );
+        setId( NodeId(attr.value("id").toString()) );
         morphologyReader->morphology()->setNodeId( id(), this );
     }
 }
 
-QString AbstractNode::id() const
+NodeId AbstractNode::id() const
 {
     return mId;
 }
 
-void AbstractNode::setId(const QString &id)
+void AbstractNode::setId(const NodeId &id)
 {
     mId = id;
 }
@@ -450,10 +450,10 @@ QHash<WritingSystem, Form> AbstractNode::glosses() const
 
 QString AbstractNode::debugIdentifier() const
 {
-    if( id().isEmpty() )
+    if( id().isNull() )
         return label().toString();
     else
-        return QString("%1[%2]").arg( label().toString(), id() );
+        return QString("%1[%2]").arg( label().toString(), id().toString() );
 }
 
 bool AbstractNode::hasPathToEnd() const

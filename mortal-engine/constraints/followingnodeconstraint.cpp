@@ -32,7 +32,7 @@ bool FollowingNodeConstraint::matchesThisConstraint(const Parsing *parsing, cons
         qWarning() << "FollowingNodeConstraint type is Null, which should not happen.";
         break;
     case FollowingNodeConstraint::Id:
-        return node->id() == mIdentifierString;
+        return node->id() == NodeId(mIdentifierString);
     case FollowingNodeConstraint::Label:
         return node->label() == MorphemeLabel(mIdentifierString);
     }

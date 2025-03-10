@@ -32,7 +32,7 @@ class CopyNode : public AbstractNode
 public:
     explicit CopyNode(const MorphologicalModel * model);
     ~CopyNode() override;
-    AbstractNode * copy(MorphologyXmlReader *morphologyReader, const QString & idSuffix) const override;
+    AbstractNode * copy(MorphologyXmlReader *morphologyReader, const NodeId &idSuffix) const override;
 
     QList<Parsing> parsingsUsingThisNode( const Parsing & parsing, Parsing::Flags flags) const override;
     QList<Generation> generateFormsUsingThisNode( const Generation & generation ) const override;
@@ -40,7 +40,7 @@ public:
     const AbstractNode *followingNodeHavingLabel(const MorphemeLabel & targetLabel, QHash<const Jump *, int> &jumps) const override;
     bool checkHasOptionalCompletionPath() const override;
 
-    QString id() const override;
+    NodeId id() const override;
     MorphemeLabel label() const override;
 
     static QString elementName();
