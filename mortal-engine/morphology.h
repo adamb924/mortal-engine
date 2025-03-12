@@ -60,6 +60,7 @@ public:
     void setNormalizationFunction(const WritingSystem & forWs, InputNormalizer n);
 
     /// Lexicon functions
+    QSet<const AbstractStemList *> getMatchingStemLists(const LexicalStem & stem) const;
     LexicalStemInsertResult addLexicalStem(const LexicalStem & stem);
     LexicalStemInsertResult replaceLexicalStem(const LexicalStem & stem);
     LexicalStem * getLexicalStem(qlonglong id) const;

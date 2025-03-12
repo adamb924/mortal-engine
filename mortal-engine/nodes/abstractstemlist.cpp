@@ -33,17 +33,7 @@ AbstractStemList *AbstractStemList::copy(MorphologyXmlReader *morphologyReader, 
 
 bool AbstractStemList::addStem(LexicalStem *stem)
 {
-    bool shouldInsert = false;
-    QListIterator<Allomorph> iter = stem->allomorphIterator();
-    while( iter.hasNext() )
-    {
-        Allomorph a = iter.next();
-        if( match( a ) )
-        {
-            shouldInsert = true;
-            break;
-        }
-    }
+    bool shouldInsert = matchesForInsert(*stem);
 
     if( shouldInsert )
     {
@@ -80,6 +70,20 @@ LexicalStem *AbstractStemList::getStem(qlonglong id) const
         }
     }
     return nullptr;
+}
+
+bool AbstractStemList::matchesForInsert(const LexicalStem &stem) const
+{
+    QListIterator<Allomorph> iter = stem.allomorphIterator();
+    while( iter.hasNext() )
+    {
+        Allomorph a = iter.next();
+        if( match( a ) )
+        {
+            return true;
+        }
+    }
+    return false;
 }
 
 QList<LexicalStem *> AbstractStemList::stemsFromAllomorph(const Form &form, const QSet<Tag> containingTags, const QSet<Tag> withoutTags, bool includeDerivedAllomorphs) const

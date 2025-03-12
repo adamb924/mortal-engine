@@ -272,6 +272,21 @@ void Morphology::setNormalizationFunction(const WritingSystem &forWs, InputNorma
     mNormalizationFunctions[forWs] = n;
 }
 
+QSet<const AbstractStemList *> Morphology::getMatchingStemLists(const LexicalStem &stem) const
+{
+    QSet<const AbstractStemList *> result;
+    QSetIterator<AbstractStemList*> iter(mStemAcceptingStemLists);
+    while( iter.hasNext() )
+    {
+        AbstractStemList* asl = iter.next();
+        if( asl->matchesForInsert(stem) )
+        {
+            result << asl;
+        }
+    }
+    return result;
+}
+
 LexicalStemInsertResult Morphology::addLexicalStem(const LexicalStem &stem)
 {
     LexicalStemInsertResult result;
