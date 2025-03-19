@@ -128,6 +128,11 @@ MorphemeSequence MorphemeSequence::replace(const MorphemeSequence &replaceThis, 
     }
 }
 
+MorphemeSequence MorphemeSequence::mid(int pos, int length) const
+{
+    return MorphemeSequence( QList::mid(pos,length) );
+}
+
 /*
 qDebug() << "Should be xyz" << MorphemeSequence::fromString("[a][b][c]").replace( MorphemeSequence::fromString("[a][b][c]"), MorphemeSequence::fromString("[x][y][z]") ).toString();
 qDebug() << "Should be xyzdef" << MorphemeSequence::fromString("[a][b][c][d][e][f]").replace( MorphemeSequence::fromString("[a][b][c]"), MorphemeSequence::fromString("[x][y][z]") ).toString();
