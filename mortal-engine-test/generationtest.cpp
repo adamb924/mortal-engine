@@ -26,6 +26,27 @@ void GenerationTest::runTest()
     }
 }
 
+QString GenerationTest::message() const
+{
+    if( succeeds() )
+    {
+        return QObject::tr("%1Lexical stem ID %2 and morphological string %3 generated %4, which is correct.")
+        .arg( summaryStub())
+             .arg(mLexicalStemId)
+             .arg(mMorphemeSequence.toString(),
+             setToString(mActualOutputs) );
+    }
+    else
+    {
+        return QObject::tr("%1Lexical stem ID %2 and morphological string %3 generated %4, but it should have been %5.")
+            .arg( summaryStub())
+             .arg(mLexicalStemId)
+            .arg(mMorphemeSequence.toString(),
+             setToString(mActualOutputs),
+             setToString(mTargetOutputs) );
+    }
+}
+
 void GenerationTest::setLexicalStemId(const qlonglong &lexicalStemId)
 {
     mLexicalStemId = lexicalStemId;

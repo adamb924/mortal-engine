@@ -14,6 +14,9 @@ public:
     //! \brief Runs the test.
     void runTest() override;
 
+    //! \brief Returns a summary of results of the test.
+    QString message() const override;
+
     void setLexicalStemId(const qlonglong &lexicalStemId);
 
     void setMorphologicalString(const QString &morphologicalString);
