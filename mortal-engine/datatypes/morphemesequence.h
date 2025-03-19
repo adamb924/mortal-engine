@@ -24,6 +24,7 @@ public:
     bool contains(const MorphemeSequence & needle, int *at = nullptr) const;
     MorphemeSequence replace(const MorphemeSequence & replaceThis, const MorphemeSequence & withThis) const;
     MorphemeSequence mid(int pos, int length = -1) const;
+    bool beginsWith(const MorphemeSequence & needle) const;
 
     QString toString() const;
     static MorphemeSequence fromString(const QString & str);
