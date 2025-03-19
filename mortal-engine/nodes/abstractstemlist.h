@@ -72,7 +72,9 @@ public:
     QSet<LexicalStem *> stems() const;
 
     void initializePortmanteaux();
-    void filterOutPortmanteauClashes(QList<Parsing> &candidates) const;
+
+    template<typename T>
+    void filterOutPortmanteauClashes(QList<T> &candidates) const;
 
 private:
     QList<Parsing> parsingsUsingThisNode(const Parsing & parsing, Parsing::Flags flags) const override;

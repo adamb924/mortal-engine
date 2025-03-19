@@ -191,7 +191,7 @@ QList<Parsing> AbstractStemList::parsingsUsingThisNode(const Parsing &parsing, P
         }
     }
 
-    filterOutPortmanteauClashes(candidates);
+    filterOutPortmanteauClashes<Parsing>(candidates);
 
     return candidates;
 }
@@ -235,6 +235,8 @@ QList<Generation> AbstractStemList::generateFormsUsingThisNode(const Generation 
             }
         }
     }
+
+    filterOutPortmanteauClashes<Generation>(candidates);
 
     return candidates;
 }
@@ -336,7 +338,8 @@ void AbstractStemList::initializePortmanteaux()
     }
 }
 
-void AbstractStemList::filterOutPortmanteauClashes(QList<Parsing> &candidates) const
+template<typename T>
+void AbstractStemList::filterOutPortmanteauClashes(QList<T> &candidates) const
 {
     for(int i=0; i<candidates.count(); i++)
     {

@@ -25,7 +25,12 @@ Generation::Generation()
 
 void Generation::append(const AbstractNode *node, const Allomorph & allomorph, const LexicalStem & lexicalStem, bool isStem)
 {
-    if( constraintsSetSatisfied( mLocalConstraints, node, allomorph) )
+    /// the portmanteau matches if either (1) there is no portmanteau in the allomorph
+    /// (2) the allomorph's portmanteau matches the MSC's remaining morphemes
+    bool portmanteauMatch = ! allomorph.hasPortmanteau( writingSystem() ) ||  mMorphemeSequenceConstraint.remainingMorphemes().beginsWith( allomorph.portmanteau().morphemes() );
+
+    if( constraintsSetSatisfied( mLocalConstraints, node, allomorph)
+        && portmanteauMatch )
     {
         /// the local constraints are kept in the parsing object,
         /// so they need to be cleared if the allomorph satisfies them
