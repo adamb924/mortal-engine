@@ -275,9 +275,25 @@
         <reject lang="wk-LA">atalarym</reject>
         <accept lang="wk-LA">gözleeeeeem</accept>
         <reject lang="wk-LA">gözlerim</reject>
-        <message>The wk-AR writing system is unaffect (these are 'atalarym' and 'gözlerim'):</message>
+        <message>The wk-AR writing system is unaffected (these are 'atalarym' and 'gözlerim'):</message>
         <accept lang="wk-AR">آتالارېم</accept>
         <accept lang="wk-AR">گؤزلريم</accept>
+        <transduction-test>
+            <input lang="wk-AR">آتالارېم</input>
+            <output lang="wk-LA">atalaaaaaam</output>
+        </transduction-test>
+        <transduction-test>
+            <input lang="wk-AR">گؤزلريم</input>
+            <output lang="wk-LA">gözleeeeeem</output>
+        </transduction-test>
+        <transduction-test>
+            <input lang="wk-LA">atalaaaaaam</input>
+            <output lang="wk-AR">آتالارېم</output>
+        </transduction-test>
+        <transduction-test>
+            <input lang="wk-LA">gözleeeeeem</input>
+            <output lang="wk-AR">گؤزلريم</output>
+        </transduction-test>
     </schema>
     <schema>
         <morphology-file>19-Create-Allomorphs-5.xml</morphology-file>
@@ -421,5 +437,29 @@
         <accept lang="wk-LA">dona</accept>
         <accept lang="wk-LA">shunga</accept>
         <reject lang="wk-LA">shua</reject>
+        <transduction-test>
+            <input lang="wk-AR">دونا</input>
+            <output lang="wk-LA">dona</output>
+        </transduction-test>
+        <transduction-test>
+            <input lang="wk-LA">dona</input>
+            <output lang="wk-AR">دونا</output>
+        </transduction-test>
+        <transduction-test>
+            <input lang="wk-AR">شو</input>
+            <output lang="wk-LA">shu</output>
+        </transduction-test>
+        <transduction-test>
+            <input lang="wk-LA">shu</input>
+            <output lang="wk-AR">شو</output>
+        </transduction-test>
+        <transduction-test>
+            <input lang="wk-AR">شونگا</input>
+            <output lang="wk-LA">shunga</output>
+        </transduction-test>
+        <transduction-test>
+            <input lang="wk-LA">shunga</input>
+            <output lang="wk-AR">شونگا</output>
+        </transduction-test>
     </schema>
 </tests>

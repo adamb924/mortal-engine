@@ -3,15 +3,18 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="../schemata stems.xsd">
     <stem>
         <form lang="wk-LA">don</form>
+        <form lang="wk-AR">دون</form>
         <tag>noun</tag>
     </stem>
     <stem>
         <allomorph portmanteau="[Stem][Dative]">
             <form lang="wk-LA">shunga</form>
+            <form lang="wk-AR">شونگا</form>
             <tag>noun</tag>
         </allomorph>
         <allomorph>
             <form lang="wk-LA">shu</form>
+            <form lang="wk-AR">شو</form>
             <tag>noun</tag>
         </allomorph>
     </stem>
