@@ -24,7 +24,8 @@ public:
     MorphemeLabel currentMorpheme() const;
     void removeCurrentMorpheme(int n = 1);
     bool hasNoMoreMorphemes() const;
-    int remainingMorphemes() const;
+    int remainingMorphemeCount() const;
+    MorphemeSequence remainingMorphemes() const;
 
     bool satisfied( const AbstractNode *node, const Allomorph &allomorph ) const override;
 

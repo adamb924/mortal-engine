@@ -29,7 +29,7 @@ bool WordFinalCondition::matchesThisConstraint(const Parsing *parsing, const Abs
         /// this seems hackish, but I'm not sure how else to make it work
         /// for generations the
         const Generation * g = dynamic_cast<const Generation*>( parsing );
-        return g->morphemeSequenceConstraint()->remainingMorphemes() == 0;
+        return g->morphemeSequenceConstraint()->remainingMorphemeCount() == 0;
     }
     else
     {

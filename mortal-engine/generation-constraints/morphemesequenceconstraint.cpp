@@ -59,9 +59,14 @@ bool MorphemeSequenceConstraint::hasNoMoreMorphemes() const
     return mMorphemeNames.isEmpty();
 }
 
-int MorphemeSequenceConstraint::remainingMorphemes() const
+int MorphemeSequenceConstraint::remainingMorphemeCount() const
 {
     return mMorphemeNames.count();
+}
+
+MorphemeSequence MorphemeSequenceConstraint::remainingMorphemes() const
+{
+    return mMorphemeNames;
 }
 
 bool MorphemeSequenceConstraint::satisfied(const AbstractNode *node, const Allomorph &allomorph) const
