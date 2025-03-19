@@ -1,6 +1,7 @@
 #include "morphemesequence.h"
 
 #include <QRegularExpression>
+#include <QtDebug>
 
 using namespace ME;
 
@@ -135,7 +136,7 @@ MorphemeSequence MorphemeSequence::mid(int pos, int length) const
 
 bool MorphemeSequence::beginsWith(const MorphemeSequence &needle) const
 {
-    return length() <= needle.length()
+    return length() >= needle.length()
            && needle == mid(0,needle.length());
 }
 
