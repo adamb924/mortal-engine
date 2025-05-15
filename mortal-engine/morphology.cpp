@@ -477,6 +477,11 @@ QSet<const AbstractNode *> Morphology::nodes() const
     return constNodeSet;
 }
 
+QString Morphology::morphologyPath() const
+{
+    return mMorphologyPath;
+}
+
 QString Morphology::summary() const
 {
     QString dbgString;

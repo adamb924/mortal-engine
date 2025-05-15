@@ -92,6 +92,8 @@ MorphologyXmlReader::MorphologyXmlReader(Morphology *morphology) : mMorphology(m
 
 void MorphologyXmlReader::readXmlFile(const QString &path)
 {
+    mMorphology->mMorphologyPath = path;
+
     /// read the xml from the file
     parseXml(path);
 

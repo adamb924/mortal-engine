@@ -104,6 +104,8 @@ public:
 
     QSet<const AbstractNode *> nodes() const;
 
+    QString morphologyPath() const;
+
 private:
     QList<MorphologicalModel*> mMorphologicalModels;
     QHash<QString,WritingSystem> mWritingSystems;
@@ -118,6 +120,7 @@ private:
     bool mIsOk;
     QHash<WritingSystem,InputNormalizer> mNormalizationFunctions;
     static QRegularExpression endingStemId;
+    QString mMorphologyPath;
 };
 
 } // namespace ME
