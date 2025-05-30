@@ -2,6 +2,7 @@
 
 #include <QXmlStreamWriter>
 #include <QDomElement>
+#include <algorithm>
 
 #include "nodes/abstractnode.h"
 #include "datatypes/portmanteau.h"
@@ -90,13 +91,8 @@ bool ParsingStep::anyNodeMatchesId(const NodeId &id) const
     {
         const WritingSystem ws = wsIter.next();
         QList<const AbstractNode *> ns(nodes(ws));
-        for( const auto& n : ns )
-        {
-            if( n->id() == id )
-            {
-                return true;
-            }
-        }
+        if( std::any_of(ns.begin(), ns.end(), [id](const AbstractNode * n) { return n->id() == id; }) )
+            return true;
     }
     return false;
 }
@@ -108,13 +104,8 @@ bool ParsingStep::anyNodeMatchesLabel(const MorphemeLabel &label) const
     {
         const WritingSystem ws = wsIter.next();
         QList<const AbstractNode *> ns(nodes(ws));
-        for( const auto& n : ns )
-        {
-            if( n->label() == label )
-            {
-                return true;
-            }
-        }
+        if( std::any_of(ns.begin(), ns.end(), [label](const AbstractNode * n) { return n->label() == label; }) )
+            return true;
     }
     return false;
 }
