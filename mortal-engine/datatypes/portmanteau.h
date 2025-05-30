@@ -22,7 +22,7 @@ public:
     Portmanteau(const Portmanteau &other);
     Portmanteau &operator=(const Portmanteau & other);
 
-    Portmanteau(const QString & initializationString);
+    explicit Portmanteau(const QString & initializationString);
     bool operator==(const Portmanteau & other) const;
 
     /// this needs to be called after all the nodes are read, so they can be searched
