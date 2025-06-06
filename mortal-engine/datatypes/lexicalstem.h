@@ -59,8 +59,12 @@ public:
     QString liftGuid() const;
     void setLiftGuid(const QString &liftGuid);
 
-    /// I don't like this, but I need a quick way to get a display form
-    Allomorph displayAllomorph() const;
+    /// Returns an allomorph that returns true for Allomorph::isOriginal()
+    /// If \a forWs is specified, then it returns an allomorph that is Allomorph::isOriginal()
+    /// and contains a Form for that WritingSystem.
+    /// If \a forWs is specified, it will return an Allomorph for which Allomorph::isOriginal()
+    /// is false, but that has a form with the given WritingSystem
+    Allomorph displayAllomorph(const WritingSystem & forWs = WritingSystem() ) const;
 
     void initializePortmanteaux(const AbstractNode * parent);
     QList<MorphemeSequence> portmanteaux(const WritingSystem & ws);
@@ -70,7 +74,6 @@ private:
     QHash<WritingSystem,Form> mGlosses;
     qlonglong mId;
     QString mLiftGuid;
-    Allomorph mOriginalAllomorph;
     QMultiHash<WritingSystem,MorphemeSequence> mPortmanteaux;
 };
 

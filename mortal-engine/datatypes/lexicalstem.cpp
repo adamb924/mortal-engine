@@ -9,19 +9,17 @@
 
 using namespace ME;
 
-LexicalStem::LexicalStem() : mId(-1), mOriginalAllomorph(Allomorph::Null)
+LexicalStem::LexicalStem() : mId(-1)
 {
 
 }
 
-LexicalStem::LexicalStem(const Allomorph & allomorph) : mId(-1), mOriginalAllomorph(Allomorph::Null)
+LexicalStem::LexicalStem(const Allomorph & allomorph) : mId(-1)
 {
     mAllomorphs << allomorph;
-    if( allomorph.isOriginal() )
-        mOriginalAllomorph = allomorph;
 }
 
-LexicalStem::LexicalStem(const LexicalStem &other) : mOriginalAllomorph(other.mOriginalAllomorph)
+LexicalStem::LexicalStem(const LexicalStem &other)
 {
     /// make a deep copy of the Allomorphs since those are pointers
     mAllomorphs.clear();
@@ -48,7 +46,6 @@ LexicalStem &LexicalStem::operator=(const LexicalStem &other)
 
     mGlosses = other.mGlosses;
     mId = other.mId;
-    mOriginalAllomorph = other.mOriginalAllomorph;
     mPortmanteaux = other.mPortmanteaux;
     return *this;
 }
@@ -67,8 +64,6 @@ bool LexicalStem::operator==(qlonglong stemId) const
 void LexicalStem::insert(const Allomorph & allomorph)
 {
     mAllomorphs << allomorph;
-    if( allomorph.isOriginal() )
-        mOriginalAllomorph = allomorph;
 }
 
 void LexicalStem::remove(const Allomorph &allomorph)
@@ -215,9 +210,28 @@ void LexicalStem::setLiftGuid(const QString &liftGuid)
     mLiftGuid = liftGuid;
 }
 
-Allomorph LexicalStem::displayAllomorph() const
+Allomorph LexicalStem::displayAllomorph(const WritingSystem & forWs) const
 {
-    return mOriginalAllomorph;
+    /// try to return an original allomorph that has a form for \a forWs
+    for( auto & a : mAllomorphs )
+    {
+        if( a.isOriginal() && ( forWs.isNull() || a.hasForm(forWs) ) )
+            return a;
+    }
+    /// try to return any allomorph that has \a forWs
+    for( auto & a : mAllomorphs )
+    {
+        if( forWs.isNull() || a.hasForm(forWs) )
+            return a;
+    }
+    /// try to return any original allomorph
+    for( auto & a : mAllomorphs )
+    {
+        if( a.isOriginal() )
+            return a;
+    }
+    /// fallback
+    return Allomorph(Allomorph::Null);
 }
 
 void LexicalStem::initializePortmanteaux(const AbstractNode *parent)
