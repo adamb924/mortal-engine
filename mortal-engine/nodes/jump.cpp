@@ -131,6 +131,11 @@ QList<const AbstractNode *> Jump::availableMorphemeNodes(QHash<const Jump *, int
     return list;
 }
 
+QString Jump::debugIdentifier() const
+{
+    return QString("Jump(to=%1,optional=%2)").arg( mTargetId.toString() ).arg( optional() ? "true" : "false" );
+}
+
 void Jump::setNodeTarget(const AbstractNode *nodeTarget)
 {
     mNodeTarget = nodeTarget;

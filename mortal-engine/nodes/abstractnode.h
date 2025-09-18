@@ -128,7 +128,7 @@ public:
     static QString XML_OPTIONAL;
     static QString XML_ADD_ALLOMORPHS;
 
-    QString debugIdentifier() const;
+    virtual QString debugIdentifier() const;
 
     /// NB: in these function names "morpheme nodes" refers to morphemes that can contribute segments
     QList<const AbstractNode*> nextMorphemeNodes() const;
