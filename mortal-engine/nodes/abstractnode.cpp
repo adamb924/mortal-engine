@@ -89,11 +89,10 @@ QList<Generation> AbstractNode::generateForms(const Generation &generation) cons
 {
     if( Morphology::DebugOutput )
     {
-        qInfo() << "GENERATION CURRENT NODE:" << debugIdentifier();
         if( next() != nullptr )
-        {
-            qInfo() << qPrintable("\t") << "NEXT NODE:" << next()->debugIdentifier();
-        }
+            qInfo().noquote() << QString("GENERATION CURRENT NODE: %1 (NEXT NODE: %2)").arg( debugIdentifier(), next()->debugIdentifier() );
+        else
+            qInfo().noquote() << QString("GENERATION CURRENT NODE: %1").arg( debugIdentifier() );
     }
 
     QList<Generation> candidates;
