@@ -226,11 +226,17 @@ QList<Generation> AbstractStemList::generateFormsUsingThisNode(const Generation 
 
                 if( g.isOngoing() && hasNext() ) /// more morphemes remain in the model
                 {
+                    const AbstractNode * nextNode;
+                    if( g.steps().last().allomorph().hasPortmanteau( g.writingSystem() ) )
+                        nextNode = g.steps().last().allomorph().portmanteau().next();
+                    else
+                        nextNode = next();
+
                     if( Morphology::DebugOutput )
                     {
-                        qInfo().noquote() << QString("\tMoving on to %1, having appended: %2").arg( next()->debugIdentifier() ).arg( a.oneLineSummary() );
+                        qInfo().noquote() << QString("\tMoving on to %1, having appended: %2").arg( nextNode->debugIdentifier() ).arg( a.oneLineSummary() );
                     }
-                    candidates.append( next()->generateForms( g ) );
+                    candidates.append( nextNode->generateForms( g ) );
                 }
             }
         }
