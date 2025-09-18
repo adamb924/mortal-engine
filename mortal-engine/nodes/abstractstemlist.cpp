@@ -228,7 +228,7 @@ QList<Generation> AbstractStemList::generateFormsUsingThisNode(const Generation 
                 {
                     if( Morphology::DebugOutput )
                     {
-                        qInfo() << "GENERATION Moving on, having appended:" << a.oneLineSummary();
+                        qInfo().noquote() << QString("\tMoving on to %1, having appended: %2").arg( next()->debugIdentifier() ).arg( a.oneLineSummary() );
                     }
                     candidates.append( next()->generateForms( g ) );
                 }
