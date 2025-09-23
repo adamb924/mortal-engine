@@ -236,6 +236,11 @@ QString SqliteStemList::qInsertStem() const
     return "INSERT INTO " + tableStems() + " (_id, liftGuid) VALUES (null, ?);";
 }
 
+QString SqliteStemList::qReplaceStem() const
+{
+    return "INSERT OR REPLACE INTO " + tableStems() + " (_id, liftGuid) VALUES (?, ?);";
+}
+
 QString SqliteStemList::qInsertAllomorph() const
 {
     return "INSERT INTO " + tableAllomorphs() + " (stem_id,use_in_generations,portmanteau) VALUES (?,?,?);";

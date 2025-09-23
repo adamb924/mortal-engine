@@ -40,6 +40,7 @@ public:
     QString qSelectTagLabelsFromAllomorphId() const override;
 
     QString qInsertStem() const override;
+    QString qReplaceStem() const override;
     QString qInsertAllomorph() const override;
     QString qInsertForm() const override;
     QString qInsertTagMember() const override;

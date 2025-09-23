@@ -230,6 +230,11 @@ QString SqlServerStemList::qInsertStem() const
     return "INSERT INTO " + tableStems() + " (liftGuid) VALUES (?);";
 }
 
+QString SqlServerStemList::qReplaceStem() const
+{
+    return "REPLACE INTO " + tableStems() + " (_id, liftGuid) VALUES (?, ?);";
+}
+
 /// DEBUG BEGIN UNTESTED METHODS
 
 QString SqlServerStemList::qSelectStemIds() const

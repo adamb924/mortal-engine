@@ -60,6 +60,8 @@ protected:
     virtual QString qSelectTagLabelsFromAllomorphId() const = 0;
 
     virtual QString qInsertStem() const = 0;
+    virtual QString qReplaceStem() const = 0;
+
     virtual QString qInsertAllomorph() const = 0;
     virtual QString qInsertForm() const = 0;
     virtual QString qInsertTagMember() const = 0;
@@ -95,6 +97,7 @@ private:
     Allomorph allomorphFromId(qlonglong allomorphId, const QHash<QString, WritingSystem> &writingSystems, bool useInGenerations, const QString & portmanteau);
 
     void addStemToDatabase( LexicalStem * stem );
+    qlonglong insertOrReplaceStemRow( LexicalStem * stem );
     qlonglong ensureTagInDatabase( const QString & tag );
 
     void openAlternateConnections() const;

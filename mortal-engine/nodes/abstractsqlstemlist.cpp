@@ -468,26 +468,9 @@ void AbstractSqlStemList::addStemToDatabase(LexicalStem *stem)
 {
     QSqlDatabase db = QSqlDatabase::database(mDbName);
 
-    qlonglong stem_id = 0;
-
     db.transaction();
 
-    /// first insert a row into the stems table to get a stem_id
-    QSqlQuery stemQuery(db);
-    stemQuery.setForwardOnly(true);
-    stemQuery.prepare(qInsertStem());
-    stemQuery.bindValue(0, stem->liftGuid() );
-    if(stemQuery.exec())
-    {
-        stem_id = stemQuery.lastInsertId().toLongLong();
-        stem->setId(stem_id);
-    }
-    else
-    {
-        qWarning() << "AbstractSqlStemList::addStemToDatabase()" << stemQuery.lastError().text() << stemQuery.executedQuery();
-        db.rollback();
-        return;
-    }
+    qlonglong stem_id = insertOrReplaceStemRow(stem);
 
     QSqlQuery allomorphQuery(db);
     allomorphQuery.setForwardOnly(true);
@@ -571,6 +554,46 @@ void AbstractSqlStemList::addStemToDatabase(LexicalStem *stem)
     }
 
     db.commit();
+}
+
+qlonglong AbstractSqlStemList::insertOrReplaceStemRow(LexicalStem *stem)
+{
+    QSqlDatabase db = QSqlDatabase::database(mDbName);
+
+    QSqlQuery stemQuery(db);
+    stemQuery.setForwardOnly(true);
+
+    if( stem->id() == -1 )
+    {
+        stemQuery.prepare(qInsertStem());
+        stemQuery.bindValue(0, stem->liftGuid() );
+    }
+    else
+    {
+        stemQuery.prepare(qReplaceStem());
+        stemQuery.bindValue(0, stem->id() );
+        stemQuery.bindValue(1, stem->liftGuid() );
+    }
+
+    if(stemQuery.exec())
+    {
+        if( stem->id() == -1 )
+        {
+            qlonglong stem_id = stemQuery.lastInsertId().toLongLong();
+            stem->setId(stem_id);
+            return stem_id;
+        }
+        else
+        {
+            return stem->id();
+        }
+    }
+    else
+    {
+        qWarning() << "AbstractSqlStemList::addStemToDatabase()" << stemQuery.lastError().text() << stemQuery.executedQuery();
+        db.rollback();
+        return -1;
+    }
 }
 
 qlonglong AbstractSqlStemList::ensureTagInDatabase(const QString &tag)
