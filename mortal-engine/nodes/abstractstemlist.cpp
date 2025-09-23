@@ -48,7 +48,8 @@ bool AbstractStemList::addStem(LexicalStem *stem)
 bool AbstractStemList::replaceStem(const LexicalStem & stem)
 {
     bool removed = removeLexicalStem(stem.id());
-    if( removed )
+    bool shouldInsert = matchesForInsert(stem);
+    if( shouldInsert )
     {
         LexicalStem * newStem = new LexicalStem(stem);
         newStem->initializePortmanteaux(this);
@@ -138,9 +139,9 @@ bool AbstractStemList::removeLexicalStem(qlonglong id)
         LexicalStem * current = i.next();
         if( current->id() == id )
         {            
-            mStems.remove(current);
+            bool result = mStems.remove(current);
             removeStemFromDataModel(id);
-            return true;
+            return result;
         }
     }
     return false;
