@@ -23,6 +23,7 @@ QString Allomorph::XML_STEM = "stem";
 QString Allomorph::XML_USE_IN_GENERATIONS = "use-in-generations";
 QString Allomorph::XML_TRUE = "true";
 QString Allomorph::XML_PORTMANTEAU = "portmanteau";
+QString Allomorph::XML_ID = "id";
 
 Allomorph::Allomorph(Allomorph::Type type) : mType(type), mId(-1), mUseInGenerations(true)
 {
@@ -262,6 +263,10 @@ Allomorph Allomorph::readFromXml(QXmlStreamReader &in, const Morphology *morphol
     {
         allomorph.setPortmanteau( Portmanteau( in.attributes().value(XML_PORTMANTEAU).toString() ) );
     }
+    if( in.attributes().hasAttribute(XML_ID) )
+    {
+        allomorph.setId( in.attributes().value(XML_ID).toLongLong() );
+    }
 
     while(!in.atEnd() && !(in.tokenType() == QXmlStreamReader::EndElement && in.name() == elementName ) )
     {
@@ -297,6 +302,14 @@ Allomorph Allomorph::readFromXml(QDomElement element, const Morphology *morpholo
     if( element.hasAttribute(XML_USE_IN_GENERATIONS) )
     {
         allomorph.setUseInGenerations( element.attribute(XML_USE_IN_GENERATIONS) == XML_TRUE );
+    }
+    if( element.hasAttribute(XML_PORTMANTEAU) )
+    {
+        allomorph.setPortmanteau( Portmanteau( element.attribute(XML_PORTMANTEAU) ) );
+    }
+    if( element.hasAttribute(XML_ID) )
+    {
+        allomorph.setId( element.attribute(XML_ID).toLongLong() );
     }
 
     QDomNodeList forms = element.elementsByTagName("form");

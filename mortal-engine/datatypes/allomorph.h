@@ -242,6 +242,7 @@ public:
     static QString XML_USE_IN_GENERATIONS;
     static QString XML_TRUE;
     static QString XML_PORTMANTEAU;
+    static QString XML_ID;
 
     uint hash() const;
 
