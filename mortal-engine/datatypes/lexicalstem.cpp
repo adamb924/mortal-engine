@@ -112,17 +112,32 @@ bool LexicalStem::hasAllomorph(const Allomorph & allomorph, bool matchConstraint
     {
         while( i.hasNext() )
         {
-            if( i.next() == allomorph )
+            const Allomorph current = i.next();
+            if( allomorph.id() != -1 )
+            {
+                if( allomorph.id() == current.id() )
+                    return true;
+            }
+            else if( current == allomorph )
+            {
                 return true;
+            }
         }
     }
     else
     {
         while( i.hasNext() )
         {
-            Allomorph a = i.next();
-            if( a.forms() == allomorph.forms() && a.tags() == allomorph.tags() )
+            const Allomorph a = i.next();
+            if( allomorph.id() != -1 )
+            {
+                if( allomorph.id() == a.id() )
+                    return true;
+            }
+            else if( a.forms() == allomorph.forms() && a.tags() == allomorph.tags() )
+            {
                 return true;
+            }
         }
     }
     return false;
