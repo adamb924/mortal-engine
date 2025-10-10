@@ -347,11 +347,11 @@ ParsingStep ParsingStep::readFromXml(QDomElement parsing, const Morphology *morp
         }
         else if( lss.size() > 1 )
         {
-            qCritical() << "ParsingStep::readFromXml(QDomElement): Multiple stems for allomorph:" << a.summary() << "(choosing first)";
+            qCritical().noquote() << "ParsingStep::readFromXml(QDomElement): Multiple stems for allomorph:" << a.summary() << "(choosing first)";
             ok = false;
             foreach(LexicalStem * s, lss)
             {
-                qCritical() << "\t" << s->oneLineSummary();
+                qCritical().noquote() << "\t" << s->oneLineSummary();
             }
         }
 
