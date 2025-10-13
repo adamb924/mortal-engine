@@ -2,7 +2,7 @@
 
 using namespace ME;
 
-SuggestionTest::SuggestionTest(const Morphology *morphology) : AbstractTest(morphology)
+SuggestionTest::SuggestionTest(Morphology *morphology) : AbstractTest(morphology)
 {
 
 }

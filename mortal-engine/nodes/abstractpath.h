@@ -8,7 +8,7 @@ namespace ME {
 class MORTAL_ENGINE_EXPORT AbstractPath : public AbstractNode
 {
 public:
-    explicit AbstractPath(const MorphologicalModel * model);
+    explicit AbstractPath(const Morphology * morphology, const MorphologicalModel * model);
     ~AbstractPath() override;
 
     AbstractNode *initialNode() const;

@@ -9,7 +9,7 @@ namespace ME {
 class StemReplacementTest : public AbstractInputOutputTest
 {
 public:
-    explicit StemReplacementTest(const Morphology * morphology);
+    explicit StemReplacementTest(Morphology * morphology);
 
     //! \brief Evaluate the function using the input provided by setInput().
     void runTest() override;

@@ -2,7 +2,7 @@
 
 using namespace ME;
 
-AbstractInputOutputTest::AbstractInputOutputTest(const Morphology *morphology) : AbstractTest(morphology)
+AbstractInputOutputTest::AbstractInputOutputTest(Morphology *morphology) : AbstractTest(morphology)
 {
 
 }

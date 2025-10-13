@@ -3,6 +3,7 @@
 #include <QTextStream>
 
 #include "datatypes/generation.h"
+#include "nodes/morphologicalmodel.h"
 
 #include "morphologyxmlreader.h"
 #include <QXmlStreamReader>
@@ -10,7 +11,7 @@
 
 using namespace ME;
 
-Fork::Fork(const MorphologicalModel *model) : AbstractNode(model)
+Fork::Fork(const MorphologicalModel *model) : AbstractNode(model->morphology(), model)
 {
 
 }

@@ -27,6 +27,7 @@ class AbstractConstraint;
 class Jump;
 class Morphology;
 class MorphemeSequence;
+class ParsingLog;
 
 #include "mortal-engine_global.h"
 
@@ -121,8 +122,6 @@ public:
     bool allomorphMatches(const Allomorph &allomorph) const;
     bool allomorphMatchConditionsSatisfied(const Allomorph &allomorph) const;
 
-    void allomorphConditionMatchStringSummary(const Allomorph &allomorph) const;
-
     void positionsForStep(int parsingStepIndex, int &start, int &end) const;
 
     bool atEnd() const;
@@ -197,6 +196,12 @@ public:
 
     static int MAXIMUM_JUMPS;
 
+    QSet<const AbstractConstraint *> longDistanceConstraints() const;
+
+    bool allomorphMatchesSegmentally(const Allomorph &allomorph) const;
+
+    QStringList stackTrace() const;
+
 protected:
     void setPosition(int position);
 
@@ -205,15 +210,9 @@ protected:
 
     void setStatus(const Status &status);
 
-    /// make these private to discourage finding partial matches
-    bool allomorphMatchesSegmentally(const Allomorph &allomorph) const;
-
     bool constraintsSetSatisfied(const QSet<const AbstractConstraint *> & set, const AbstractNode *node, const Allomorph &allomorph) const;
-    QString constraintsSetSatisfactionSummary(const QSet<const AbstractConstraint *> & set, const AbstractNode *node, const Allomorph &allomorph) const;
 
     bool longDistanceConstraintsSatisfied() const;
-    QString longDistanceConstraintsSatisfactionSummary() const;
-
 
     QList<ParsingStep> mSteps;
     Form mForm;
@@ -223,6 +222,8 @@ protected:
     QSet<const AbstractConstraint *> mLongDistanceConstraints;
 
     void calculateHash();
+
+    const ParsingLog * parsingLog() const;
 
 private:
     Status mStatus;

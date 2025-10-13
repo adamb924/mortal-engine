@@ -9,7 +9,7 @@ namespace ME {
 class GenerationTest : public AbstractInputOutputTest
 {
 public:
-    explicit GenerationTest(const Morphology *morphology);
+    explicit GenerationTest(Morphology *morphology);
 
     //! \brief Runs the test.
     void runTest() override;

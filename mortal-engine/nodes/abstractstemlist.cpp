@@ -4,6 +4,7 @@
 #include "generation-constraints/stemidentityconstraint.h"
 #include "datatypes/generation.h"
 #include "morphology.h"
+#include "logging/parsinglog.h"
 
 #include "debug.h"
 
@@ -13,7 +14,7 @@ QString AbstractStemList::XML_FILENAME = "filename";
 QString AbstractStemList::XML_MATCHING_TAG = "matching-tag";
 
 
-AbstractStemList::AbstractStemList(const MorphologicalModel *model) : AbstractNode(model, AbstractNode::StemNodeType)
+AbstractStemList::AbstractStemList(const MorphologicalModel *model) : AbstractNode(model->morphology(), model, AbstractNode::StemNodeType)
 {
 
 }
@@ -160,10 +161,8 @@ QList<Parsing> AbstractStemList::parsingsUsingThisNode(const Parsing &parsing, P
     {
         allomorphMatches.append( possibleStemForms(parsing) );
     }
-    if( Morphology::DebugOutput )
-    {
-        qInfo() << debugIdentifier() << "has" << allomorphMatches.count() << "candidate stem matches.";
-    }
+
+    parsingLog()->info( QObject::tr("%1 candidate stem matches.").arg( allomorphMatches.count() ) );
 
     QListIterator< QPair<Allomorph, LexicalStem> > ai(allomorphMatches);
     while(ai.hasNext())
@@ -173,10 +172,11 @@ QList<Parsing> AbstractStemList::parsingsUsingThisNode(const Parsing &parsing, P
         LexicalStem ls = pair.second;
         Parsing p = parsing;
         p.append(this, a, ls, true);
+        parsingLog()->parsingStatus(p);
 
-        if( Morphology::DebugOutput && p.hasNotFailed() )
+        if( p.hasNotFailed() )
         {
-            qInfo().noquote() << "\n\nStem match:" << a.oneLineSummary();
+            parsingLog()->output("stem-match", a.oneLineSummary());
         }
 
         /// we want to move to the next node either 1) the parse hasn't been completed, or 2) there
@@ -213,10 +213,7 @@ QList<Generation> AbstractStemList::generateFormsUsingThisNode(const Generation 
             /// make sure that the Allomorph has a form for the generation's writing system
             if( a.useInGenerations() && a.hasForm( generation.writingSystem() ) && generation.allomorphMatchConditionsSatisfied(a) ) /// this just checks for match conditions (e.g., tags)
             {
-                if( Morphology::DebugOutput )
-                {
-                    qInfo().noquote() << "GENERATION Stem Match:" << a.oneLineSummary();
-                }
+                parsingLog()->output("stem-match", a.oneLineSummary());
 
                 Generation g = generation;
                 g.append(this, a, s, true);
@@ -233,10 +230,7 @@ QList<Generation> AbstractStemList::generateFormsUsingThisNode(const Generation 
                     else
                         nextNode = next();
 
-                    if( Morphology::DebugOutput )
-                    {
-                        qInfo().noquote() << QString("\tMoving on to %1, having appended: %2").arg( nextNode->debugIdentifier() ).arg( a.oneLineSummary() );
-                    }
+                    parsingLog()->info( QObject::tr("Appended: %1").arg( a.oneLineSummary() ) );
                     candidates.append( nextNode->generateForms( g ) );
                 }
             }
@@ -252,12 +246,6 @@ QList<QPair<Allomorph, LexicalStem> > AbstractStemList::matchingAllomorphs(const
 {
     QList<QPair<Allomorph, LexicalStem> > list;
 
-    /// disable debug output for the stem search, unless StemDebugOutput
-    /// has been explicitly enabled
-    bool oldDebugValue = Morphology::DebugOutput;
-    if( Morphology::StemDebugOutput == false )
-        Morphology::DebugOutput = false;
-
     /// cycle through each form
     foreach( LexicalStem *s, mStems )
     {
@@ -272,9 +260,6 @@ QList<QPair<Allomorph, LexicalStem> > AbstractStemList::matchingAllomorphs(const
             }
         }
     }
-
-    if( Morphology::StemDebugOutput == false )
-        Morphology::DebugOutput = oldDebugValue;
 
     return list;
 }

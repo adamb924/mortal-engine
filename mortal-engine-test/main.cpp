@@ -36,9 +36,6 @@ int main(int argc, char *argv[])
     QCommandLineOption showModelOption(QStringList() << "m" << "model", QCoreApplication::translate("main", "Display the model."));
     parser.addOption(showModelOption);
 
-    QCommandLineOption debugOption(QStringList() << "d" << "debug", QCoreApplication::translate("main", "Print exhaustive debug information."));
-    parser.addOption(debugOption);
-
     QCommandLineOption checkOption(QStringList() << "c" << "check", QCoreApplication::translate("main", "Perform checks on the model."));
     parser.addOption(checkOption);
 
@@ -56,7 +53,6 @@ int main(int argc, char *argv[])
     const bool showModel = parser.isSet(showModelOption);
     const bool verbose = parser.isSet(verborseOutputOption);
     const bool barebones = parser.isSet(barebonesOutputOption);
-    Morphology::DebugOutput = parser.isSet(debugOption);
     const bool check = parser.isSet(checkOption);
     QString logfile = parser.value(debugOutputOption);
     const NodeId inspectId = NodeId( parser.value(inspectOption) );

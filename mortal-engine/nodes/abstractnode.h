@@ -29,13 +29,14 @@ class Form;
 class Generation;
 class MorphologyXmlReader;
 class MorphologicalModel;
+class ParsingLog;
 
 class MORTAL_ENGINE_EXPORT AbstractNode
 {
 public:
     enum Type { StemNodeType, MorphemeNodeType, PathNodeType };
 
-    AbstractNode(const MorphologicalModel * model, Type t = AbstractNode::MorphemeNodeType);
+    AbstractNode(const Morphology * morphology, const MorphologicalModel * model, Type t = AbstractNode::MorphemeNodeType);
     AbstractNode(const AbstractNode &) = delete;
     AbstractNode &operator=(const AbstractNode &) = delete;
 
@@ -138,8 +139,11 @@ public:
     bool hasNext(const Allomorph & appendedAllomorph, const WritingSystem &ws) const;
     const AbstractNode *next(const Allomorph & appendedAllomorph, const WritingSystem & ws) const;
 
+    const ParsingLog * parsingLog() const;
+
 protected:
     QHash<WritingSystem,Form> mGlosses;
+    const Morphology * mMorphology;
 
 private:
     virtual QList<Parsing> parsingsUsingThisNode( const Parsing & parsing, Parsing::Flags flags) const = 0;

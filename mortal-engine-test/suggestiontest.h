@@ -8,7 +8,7 @@ namespace ME {
 class SuggestionTest : public AbstractTest
 {
 public:
-    explicit SuggestionTest(const Morphology *morphology);
+    explicit SuggestionTest(Morphology *morphology);
     ~SuggestionTest() override;
 
     //! \brief The test succeeds if the set of generated parsings exactly matches the set of target parsings.

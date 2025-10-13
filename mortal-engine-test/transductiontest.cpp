@@ -4,7 +4,7 @@
 
 using namespace ME;
 
-TransductionTest::TransductionTest(const Morphology *morphology) : AbstractInputOutputTest(morphology)
+TransductionTest::TransductionTest(Morphology *morphology) : AbstractInputOutputTest(morphology)
 {
 
 }

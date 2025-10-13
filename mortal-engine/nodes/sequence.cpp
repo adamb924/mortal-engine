@@ -3,10 +3,11 @@
 #include "morphologyxmlreader.h"
 #include <QXmlStreamReader>
 #include "debug.h"
+#include "nodes/morphologicalmodel.h"
 
 using namespace ME;
 
-Sequence::Sequence(const MorphologicalModel *model) : AbstractPath(model)
+Sequence::Sequence(const MorphologicalModel *model) : AbstractPath(model->morphology(), model)
 {
 
 }

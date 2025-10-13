@@ -11,20 +11,21 @@
 #include "morphologyxmlreader.h"
 #include "morphology.h"
 #include "datatypes/generation.h"
+#include "logging/parsinglog.h"
 
 using namespace ME;
 
 QString AbstractNode::XML_OPTIONAL = "optional";
 QString AbstractNode::XML_ADD_ALLOMORPHS = "add-allomorphs";
 
-AbstractNode::AbstractNode(const MorphologicalModel *model, Type t) :
+AbstractNode::AbstractNode(const Morphology *morphology, const MorphologicalModel *model, Type t) :
+    mMorphology(morphology),
     mModel(model),
     mType(t),
     mNext(nullptr),
     mOptional(false),
     mHasPathToEnd(false)
 {
-
 }
 
 QList<Parsing> AbstractNode::possibleParsings(const Parsing &parsing, Parsing::Flags flags) const
@@ -32,24 +33,15 @@ QList<Parsing> AbstractNode::possibleParsings(const Parsing &parsing, Parsing::F
     bool nodeRequired = parsing.nextNodeRequired();
     Parsing p = parsing;
 
-    if( Morphology::DebugOutput )
-    {
-        /// only add this data if we're in debug mode; no reason to slow down all those deep copies
-        p.addToStackTrace( QString("%1, %2").arg(debugIdentifier(), id().toString()) );
-    }
+    /// Parsing::addToStackTrace is only actually called in the XmlParsingLog implementation
+    parsingLog()->addToStackTrace( p, QString("%1, %2").arg(debugIdentifier(), id().toString()) );
 
     /// TODO keep thinking about this logic. This means that we only stop requiring a node when a
     /// morpheme is appended. At the least the input should be something like next-morpheme-required="true"
     if( nodeCanAppendMorphemes() )
         p.setNextNodeRequired(false);
 
-    if( Morphology::DebugOutput )
-    {
-        if( next() != nullptr )
-            qInfo().noquote() << QString("CURRENT NODE: %1 (NEXT NODE: %2)").arg( debugIdentifier(), next()->debugIdentifier() );
-        else
-            qInfo().noquote() << QString("CURRENT NODE: %1").arg( debugIdentifier() );
-    }
+    parsingLog()->beginNode(this, p);
 
     QList<Parsing> candidates;
     if( optional() && ! nodeRequired )
@@ -59,41 +51,29 @@ QList<Parsing> AbstractNode::possibleParsings(const Parsing &parsing, Parsing::F
         bool shouldTryToContinue = p.isOngoing() || p.isNull() || model()->hasZeroLengthForms();
         if( AbstractNode::hasNext() && shouldTryToContinue )
         {
-            if( Morphology::DebugOutput )
-            {
-                qInfo().noquote() << "Attempting parse without optional node:" << debugIdentifier() << "with" << p.intermediateSummary();
-            }
+            parsingLog()->begin("without-this-node");
             candidates.append( AbstractNode::next()->possibleParsings( p, flags ) );
+            parsingLog()->end(); /// without-this-node
             MAYBE_RETURN_EARLY
         }
         else
         {
-            if( Morphology::DebugOutput )
-            {
-                qInfo().noquote() << "No following node here:" << debugIdentifier() << typeToString(type()) << "with" << p.intermediateSummary();
-            }
             appendIfComplete(candidates, p);
         }
     }
 
-    if( Morphology::DebugOutput )
-    {
-        qInfo().noquote() << "Attempting parse with node:" << debugIdentifier() << "with" << p.intermediateSummary();
-    }
+    parsingLog()->begin("with-this-node");
     candidates.append( parsingsUsingThisNode(p, flags) );
+    parsingLog()->end(); /// with-this-node
+
+    parsingLog()->end(); /// beginNode
 
     return candidates;
 }
 
 QList<Generation> AbstractNode::generateForms(const Generation &generation) const
 {
-    if( Morphology::DebugOutput )
-    {
-        if( next() != nullptr )
-            qInfo().noquote() << QString("GENERATION CURRENT NODE: %1 (NEXT NODE: %2)").arg( debugIdentifier(), next()->debugIdentifier() );
-        else
-            qInfo().noquote() << QString("GENERATION CURRENT NODE: %1").arg( debugIdentifier() );
-    }
+    parsingLog()->beginNode(this, generation);
 
     QList<Generation> candidates;
 
@@ -106,28 +86,22 @@ QList<Generation> AbstractNode::generateForms(const Generation &generation) cons
     {
         if( AbstractNode::hasNext() )
         {
-            if( Morphology::DebugOutput )
-            {
-                qInfo() << "Attempting generate without optional node:" << debugIdentifier() << "with" << generation.intermediateSummary();
-            }
+            parsingLog()->begin("without-this-node");
             candidates.append( AbstractNode::next()->generateForms( generation ) );
+            parsingLog()->end(); /// without-this-node
         }
         else
         {
-            if( Morphology::DebugOutput )
-            {
-                qInfo() << "No following node here:" << debugIdentifier() << "with" << generation.intermediateSummary();
-            }
             appendIfComplete(candidates, generation);
         }
 
     }
 
-    if( Morphology::DebugOutput )
-    {
-        qInfo() << "Attempting generation with node:" << debugIdentifier() << "with" << generation.intermediateSummary();
-    }
+    parsingLog()->begin("with-this-node");
     candidates << generateFormsUsingThisNode(generation);
+    parsingLog()->end(); /// with-this-node
+
+    parsingLog()->end();
 
     return candidates;
 
@@ -143,10 +117,7 @@ bool AbstractNode::appendIfComplete(QList<Generation> &candidates, const Generat
         g.setCompleteIfAllConstraintsSatisfied();
         if( g.isCompleted() )
         {
-            if( Morphology::DebugOutput )
-            {
-                qInfo() << "Completed generation:" << generation.oneLineSummary();
-            }
+            parsingLog()->completed(generation);
             candidates.append( g );
             return true;
         }
@@ -158,10 +129,7 @@ void AbstractNode::appendIfComplete(QList<Parsing> &candidates, const Parsing &p
 {
     if( parsing.isCompleted() &&  parsing.allConstraintsSatisfied() ) /// the parsing only succeeds if there's nothing left to parse
     {
-        if( Morphology::DebugOutput )
-        {
-            qInfo() << "Completed parsing:" << parsing.form().summary() << parsing.labelSummary() << parsing.summary();
-        }
+        parsingLog()->completed(parsing);
         candidates.append(parsing);
     }
 }
@@ -249,6 +217,11 @@ const AbstractNode *AbstractNode::next(const Allomorph &appendedAllomorph, const
     {
         return AbstractNode::next();
     }
+}
+
+const ParsingLog *AbstractNode::parsingLog() const
+{
+    return mMorphology->parsingLog();
 }
 
 void AbstractNode::setNext(AbstractNode *next)

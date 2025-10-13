@@ -14,7 +14,7 @@ namespace ME {
 class ParsingTest : public AbstractTest
 {
 public:
-    explicit ParsingTest(const Morphology *morphology);
+    explicit ParsingTest(Morphology *morphology);
     ~ParsingTest() override;
 
     //! \brief The test succeeds if the set of generated parsings exactly matches the set of target parsings.

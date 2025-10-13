@@ -13,7 +13,7 @@ namespace ME {
 class Message : public AbstractTest
 {
 public:
-    Message(const QString & message, const Morphology * morphology);
+    Message(const QString & message, Morphology *morphology);
     ~Message() override;
 
     //! \brief Returns false (to encourage the message's being displayed.

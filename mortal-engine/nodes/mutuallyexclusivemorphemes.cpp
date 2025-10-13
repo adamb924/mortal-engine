@@ -4,6 +4,7 @@
 
 #include "morphemenode.h"
 #include "datatypes/generation.h"
+#include "morphologicalmodel.h"
 
 #include "morphologyxmlreader.h"
 #include <QXmlStreamReader>
@@ -11,7 +12,7 @@
 
 using namespace ME;
 
-MutuallyExclusiveMorphemes::MutuallyExclusiveMorphemes(const MorphologicalModel *model) : AbstractNode(model)
+MutuallyExclusiveMorphemes::MutuallyExclusiveMorphemes(const MorphologicalModel *model) : AbstractNode(model->morphology(), model)
 {
 
 }

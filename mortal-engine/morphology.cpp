@@ -13,21 +13,23 @@
 #include "morphologychecker.h"
 
 #include "debug.h"
+#include "logging/xmlparsinglog.h"
 
 using namespace ME;
 
-bool Morphology::DebugOutput = false;
-bool Morphology::StemDebugOutput = false;
 QRegularExpression Morphology::endingStemId("##(\\d+)$", QRegularExpression::UseUnicodePropertiesOption);
+ParsingLog Morphology::NULL_PARSING_LOG;
 
-Morphology::Morphology() : mIsOk(true)
+Morphology::Morphology() : mIsOk(true), mDebugOutput(false), mStemDebugOutput(false)
 {
-
+    /// TODO this isn't quite right b/c maybe we don't want to initialize it at all
+    mParsingLog = new XmlParsingLog;
 }
 
 Morphology::~Morphology()
 {
     clearData();
+    delete mParsingLog;
 }
 
 void Morphology::readXmlFile(const QString &path)
@@ -92,17 +94,20 @@ QList<Parsing> Morphology::possibleParsings(const Form &form, Parsing::Flags fla
 {
     QList<Parsing> candidates;
 
-    if( Morphology::DebugOutput )
-    {
-        qInfo() << "Beginning parse for:" << form.summary();
-    }
+    parsingLog()->beginParse(form);
 
     foreach(MorphologicalModel *model,  mMorphologicalModels)
     {
+        parsingLog()->beginModel(model);
+
         Parsing p( normalize(form), model );
         QList<Parsing> parsings = model->possibleParsings(p, flags);
         candidates.append( parsings );
+
+        parsingLog()->end(); /// beginModel
     }
+
+    parsingLog()->end(); /// beginParse
 
     return candidates;
 }
@@ -130,20 +135,21 @@ QList<Generation> Morphology::generateForms( const WritingSystem & ws, StemIdent
 {
     QList<Generation> forms;
 
-    if( Morphology::DebugOutput )
-    {
-        qInfo() << "Beginning generation for:" << sic.summary() << msc.summary();
-    }
+    parsingLog()->beginGenerate(ws, sic, msc, model);
 
     /// if no model is specified, try it with every model
     if( model == nullptr )
     {
         foreach(MorphologicalModel *mm,  mMorphologicalModels)
         {
+            parsingLog()->beginModel(mm);
+
             Generation p( ws, mm );
             p.setStemIdentityConstraint( sic );
             p.setMorphemeSequenceConstraint( msc );
             forms.append( mm->generateForms(p) );
+
+            parsingLog()->end(); /// beginModel
         }
     }
     /// otherwise use the model that was specified
@@ -155,6 +161,7 @@ QList<Generation> Morphology::generateForms( const WritingSystem & ws, StemIdent
         forms.append( model->generateForms(p) );
     }
 
+    parsingLog()->end(); /// beginGenerate
 
     return forms;
 }
@@ -480,6 +487,38 @@ QSet<const AbstractNode *> Morphology::nodes() const
 QString Morphology::morphologyPath() const
 {
     return mMorphologyPath;
+}
+
+const ParsingLog *Morphology::parsingLog() const
+{
+    if( mDebugOutput )
+    {
+        return mParsingLog;
+    }
+    else
+    {
+        return &NULL_PARSING_LOG;
+    }
+}
+
+void Morphology::setDebugOutput(bool newDebugOutput)
+{
+    mDebugOutput = newDebugOutput;
+}
+
+bool Morphology::debugOutput() const
+{
+    return mDebugOutput;
+}
+
+bool Morphology::stemDebugOutput() const
+{
+    return mStemDebugOutput;
+}
+
+void Morphology::setStemDebugOutput(bool newStemDebugOutput)
+{
+    mStemDebugOutput = newStemDebugOutput;
 }
 
 QString Morphology::summary() const

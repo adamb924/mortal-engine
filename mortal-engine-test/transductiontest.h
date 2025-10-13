@@ -13,7 +13,7 @@ namespace ME {
 class TransductionTest : public AbstractInputOutputTest
 {
 public:
-    explicit TransductionTest(const Morphology *morphology);
+    explicit TransductionTest(Morphology *morphology);
 
     //! \brief Runs the test.
     void runTest() override;

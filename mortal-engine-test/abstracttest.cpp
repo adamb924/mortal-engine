@@ -8,7 +8,7 @@
 
 using namespace ME;
 
-AbstractTest::AbstractTest(const Morphology *morphology) : mMorphology(morphology), mShowDebug(false), mShowStemDebug(false)
+AbstractTest::AbstractTest(Morphology *morphology) : mMorphology(morphology), mShowDebug(false), mShowStemDebug(false)
 {
 
 }
@@ -25,18 +25,18 @@ bool AbstractTest::fails() const
 
 void AbstractTest::evaluate()
 {
-    bool oldShowDebugValue = Morphology::DebugOutput;
-    bool oldShowStemDebugValue = Morphology::StemDebugOutput;
+    bool oldShowDebugValue = mMorphology->debugOutput();
+    bool oldShowStemDebugValue = mMorphology->stemDebugOutput();
 
-    Morphology::DebugOutput = mShowDebug;
-    Morphology::StemDebugOutput = mShowStemDebug;
+    mMorphology->setDebugOutput(mShowDebug);
+    mMorphology->setStemDebugOutput(mShowStemDebug);
     Debug::indentLevel = 0;
     Debug::atBeginning = true;
 
     runTest();
 
-    Morphology::DebugOutput = oldShowDebugValue;
-    Morphology::StemDebugOutput = oldShowStemDebugValue;
+    mMorphology->setDebugOutput(oldShowDebugValue);
+    mMorphology->setStemDebugOutput(oldShowStemDebugValue);
 }
 
 void AbstractTest::setInput(const Form &input)

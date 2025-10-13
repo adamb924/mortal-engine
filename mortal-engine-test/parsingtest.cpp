@@ -2,7 +2,7 @@
 
 using namespace ME;
 
-ParsingTest::ParsingTest(const Morphology *morphology) : AbstractTest(morphology), mTotalParsingCount(-1), mUniqueParsingCount(-1)
+ParsingTest::ParsingTest(Morphology *morphology) : AbstractTest(morphology), mTotalParsingCount(-1), mUniqueParsingCount(-1)
 {
 
 }

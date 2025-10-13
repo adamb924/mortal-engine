@@ -8,7 +8,7 @@ namespace ME {
 class InterlinearGlossTest : public AbstractInputOutputTest
 {
 public:
-    explicit InterlinearGlossTest(const Morphology *morphology);
+    explicit InterlinearGlossTest(Morphology *morphology);
 
     //! \brief Runs the test.
     void runTest() override;

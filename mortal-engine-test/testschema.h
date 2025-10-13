@@ -43,7 +43,7 @@ public:
     void addTest(AbstractTest * test);
 
     //! \brief Get the Morphology object of the TestSchema.
-    const Morphology *morphology() const;
+    Morphology *morphology() const;
 
     //! \brief Returns filename of the morphology file of the TestSchema.
     QString morphologyFile() const;

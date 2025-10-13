@@ -8,7 +8,7 @@
 
 using namespace ME;
 
-MorphologicalModel::MorphologicalModel() : AbstractPath(nullptr), mHasZeroLengthForms(false)
+MorphologicalModel::MorphologicalModel(const Morphology *morphology) : AbstractPath(morphology, nullptr), mHasZeroLengthForms(false), mMorphology(morphology)
 {
 
 }
@@ -30,7 +30,8 @@ AbstractNode *MorphologicalModel::readFromXml(QXmlStreamReader &in, MorphologyXm
 {
     Q_UNUSED(model)
     Q_ASSERT( in.isStartElement() );
-    MorphologicalModel * node = new MorphologicalModel();
+
+    MorphologicalModel * node = new MorphologicalModel(morphologyReader->morphology());
     node->readInitialNodeAttributes(in, morphologyReader);
 
     /// move past the initial node
@@ -65,6 +66,11 @@ bool MorphologicalModel::hasZeroLengthForms() const
 void MorphologicalModel::setHasZeroLengthForms(bool hasNullForms)
 {
     mHasZeroLengthForms = hasNullForms;
+}
+
+const Morphology *MorphologicalModel::morphology() const
+{
+    return mMorphology;
 }
 
 QString MorphologicalModel::summary(const AbstractNode *doNotFollow) const

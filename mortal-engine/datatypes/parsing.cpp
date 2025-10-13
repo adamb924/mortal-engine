@@ -4,6 +4,7 @@
 #include <QRegularExpression>
 #include <QDomElement>
 
+#include "logging/parsinglog.h"
 #include "nodes/morphologicalmodel.h"
 #include "allomorph.h"
 #include "constraints/abstractconstraint.h"
@@ -178,39 +179,9 @@ bool Parsing::allConstraintsSatisfied() const
     bool finalAllomorphConstraintsResolved = constraintsSetSatisfied( mSteps.last().allomorph().localConstraints(), mSteps.last().node(), Allomorph(Allomorph::Null) );
     bool longDistanceConstraintsResolved = longDistanceConstraintsSatisfied();
 
-    if( Morphology::DebugOutput )
-    {
-        if( localConstraintsResolved )
-        {
-            qInfo() << qPrintable("\t") << "Local constraints satisfied";
-            qInfo() << qPrintable("\t\t") << constraintsSetSatisfactionSummary( mLocalConstraints, mSteps.last().node(), Allomorph(Allomorph::Null) );
-        }
-        else
-        {
-            qInfo() << qPrintable("\t") << "Local constraints failed";
-            qInfo() << qPrintable("\t\t") << constraintsSetSatisfactionSummary( mLocalConstraints, mSteps.last().node(), Allomorph(Allomorph::Null) );
-        }
-        if( finalAllomorphConstraintsResolved )
-        {
-            qInfo() << qPrintable("\t") << "Final allomorph's constraints satisfied";
-            qInfo() << qPrintable("\t\t") << constraintsSetSatisfactionSummary( mSteps.last().allomorph().localConstraints(), mSteps.last().node(), Allomorph(Allomorph::Null) );
-        }
-        else
-        {
-            qInfo() << qPrintable("\t") << "Final allomorph's constraints failed";
-            qInfo() << qPrintable("\t\t") << constraintsSetSatisfactionSummary( mSteps.last().allomorph().localConstraints(), mSteps.last().node(), Allomorph(Allomorph::Null) );
-        }
-        if( longDistanceConstraintsResolved )
-        {
-            qInfo() << qPrintable("\t") << "Long distance constraints satisfied";
-            qInfo() << qPrintable("\t\t") << longDistanceConstraintsSatisfactionSummary();
-        }
-        else
-        {
-            qInfo() << qPrintable("\t") << "Long distance constraints failed";
-            qInfo() << qPrintable("\t\t") << longDistanceConstraintsSatisfactionSummary();
-        }
-    }
+    parsingLog()->constraintsSetSatisfactionSummary("local-constraints", this, mLocalConstraints, mSteps.last().node(), Allomorph(Allomorph::Null));
+    parsingLog()->constraintsSetSatisfactionSummary("final-allomorphs-constraints", this, mSteps.last().allomorph().localConstraints(), mSteps.last().node(), Allomorph(Allomorph::Null) );
+    parsingLog()->longDistanceConstraintsSatisfactionSummary(this);
 
     return localConstraintsResolved && finalAllomorphConstraintsResolved && longDistanceConstraintsResolved;
 }
@@ -373,13 +344,10 @@ void Parsing::append(const AbstractNode *node, const Allomorph &allomorph, const
 {
     if( constraintsSetSatisfied( mLocalConstraints, node, allomorph) )
     {
-        if( Morphology::DebugOutput )
+        /// add a plus to any node that appends
+        if( mStackTrace.count() > 0 )
         {
-            /// add a plus to any node that appends
-            if( mStackTrace.count() > 0 )
-            {
-                mStackTrace.replace( mStackTrace.count() - 1, mStackTrace.last() + " +" );
-            }
+            mStackTrace.replace( mStackTrace.count() - 1, mStackTrace.last() + " +" );
         }
 
         /// the local constraints are kept in the parsing object,
@@ -402,38 +370,22 @@ void Parsing::append(const AbstractNode *node, const Allomorph &allomorph, const
             if( allConstraintsSatisfied() )
             {
                 setStatus( Parsing::Completed );
-                if( Morphology::DebugOutput )
-                {
-                    qInfo().noquote() << "Parse completed:" << intermediateSummary();
-                    qInfo() << "------ Stack Trace ------\n" << qPrintable( mStackTrace.join("\n") ) << "\n-------------------------";
-                }
             }
             else
             {
-                if( Morphology::DebugOutput )
-                {
-                    qInfo().noquote() << "Parse failed because not all constraints were satisfied:" << intermediateSummary() << "Trying to append:" << allomorph.focusedSummary( writingSystem() );
-                }
                 setStatus( Parsing::Failed );
             }
         }
         else
         {
-            if( Morphology::DebugOutput )
-            {
-                qInfo().noquote() << "Parse continuing:" << intermediateSummary();
-            }
             setStatus( Parsing::Ongoing );
         }
     }
     else
     {
         setStatus( Parsing::Failed );
-        if( Morphology::DebugOutput )
-        {
-            qInfo().noquote() << "Parse failed because local constraints were not satisfied:" << intermediateSummary() << "Trying to append:" << allomorph.focusedSummary( writingSystem() );
-            qInfo().noquote() << qPrintable("\t\t") << constraintsSetSatisfactionSummary( mLocalConstraints, node, allomorph);
-        }
+        parsingLog()->info( QObject::tr("Parse failed because local constraints were not satisfied: %1. Trying to append: %2").arg(intermediateSummary()).arg(allomorph.focusedSummary( writingSystem() )) );
+        parsingLog()->constraintsSetSatisfactionSummary("constraint-satisfaction-summary", this, mLocalConstraints, node, allomorph);
     }
     calculateHash();
 }
@@ -457,26 +409,6 @@ bool Parsing::constraintsSetSatisfied(const QSet<const AbstractConstraint *> &se
     return true;
 }
 
-QString Parsing::constraintsSetSatisfactionSummary(const QSet<const AbstractConstraint *> &set, const AbstractNode *node, const Allomorph &allomorph) const
-{
-    QString summary;
-    QSetIterator<const AbstractConstraint *> i( set );
-    while( i.hasNext() )
-    {
-        const AbstractConstraint * c = i.next();
-        if( c->matches(this, node, allomorph) )
-        {
-            summary += "Condition satisfied: " + c->satisfactionSummary(this,node,allomorph) + "\n";
-        }
-        else
-        {
-            summary += "Condition failed: " + c->satisfactionSummary(this,node,allomorph) + "\n";
-        }
-
-    }
-    return summary;
-}
-
 bool Parsing::longDistanceConstraintsSatisfied() const
 {
     QSetIterator<const AbstractConstraint *> i( mLongDistanceConstraints );
@@ -491,28 +423,24 @@ bool Parsing::longDistanceConstraintsSatisfied() const
     return true;
 }
 
-QString Parsing::longDistanceConstraintsSatisfactionSummary() const
+QSet<const AbstractConstraint *> Parsing::longDistanceConstraints() const
 {
-    QString summary;
-    QSetIterator<const AbstractConstraint *> i( mLongDistanceConstraints );
-    while( i.hasNext() )
-    {
-        const AbstractLongDistanceConstraint * c = i.next()->toLongDistanceConstraint();
-        if( ! c->satisfied(this) )
-        {
-            summary += "Condition satisfied: " + c->summary() + "\n";
-        }
-        else
-        {
-            summary += "Condition failed: " + c->summary() + "\n";
-        }
-    }
-    return summary;
+    return mLongDistanceConstraints;
 }
 
 void Parsing::calculateHash()
 {
     mHash = qHash(labelSummary(), HASH_SEED);
+}
+
+const ParsingLog *Parsing::parsingLog() const
+{
+    return mMorphologicalModel->parsingLog();
+}
+
+QStringList Parsing::stackTrace() const
+{
+    return mStackTrace;
 }
 
 uint Parsing::hash() const
@@ -819,34 +747,11 @@ bool Parsing::allomorphMatches(const Allomorph &allomorph) const
     bool segmentalMatch = allomorphMatchesSegmentally(allomorph);
     if( !segmentalMatch )
     {
-        if( Morphology::DebugOutput )
-        {
-            qInfo().noquote() << qPrintable("\t") << allomorph.form( writingSystem() ).text() << "Segmental Fail: " << allomorph.oneLineSummary();
-        }
+        parsingLog()->allomorphMatchSummary(this,allomorph);
         return false;
     }
     bool conditionMatch = allomorphMatchConditionsSatisfied(allomorph);
-    if( Morphology::DebugOutput )
-    {
-        if( segmentalMatch && conditionMatch )
-        {
-            qInfo().noquote() << qPrintable("\t") << allomorph.form( writingSystem() ).text() << "Segmental and Condition Match:" << allomorph.oneLineSummary();
-        }
-        else if( segmentalMatch && !conditionMatch )
-        {
-            qInfo().noquote() << qPrintable("\t") << allomorph.form( writingSystem() ).text() << "Segmental Match but Conditional Fail:" << allomorph.oneLineSummary();
-            allomorphConditionMatchStringSummary(allomorph);
-        }
-        else if( !segmentalMatch && conditionMatch )
-        {
-            qInfo().noquote() << qPrintable("\t") << allomorph.form( writingSystem() ).text() << "Conditional Match but Segmental Fail:" << allomorph.oneLineSummary();
-        }
-        else if( !segmentalMatch && !conditionMatch )
-        {
-            qInfo().noquote() << qPrintable("\t") << allomorph.form( writingSystem() ).text() << "Segmental Fail and Conditional Fail:" << allomorph.oneLineSummary();
-            allomorphConditionMatchStringSummary(allomorph);
-        }
-    }
+    parsingLog()->allomorphMatchSummary(this,allomorph);
     return segmentalMatch && conditionMatch;
 }
 
@@ -857,35 +762,13 @@ bool Parsing::allomorphMatchConditionsSatisfied(const Allomorph &allomorph) cons
         bool satisfied = c->matches(this, nullptr, allomorph );
         if( ! satisfied )
         {
-            if( Morphology::DebugOutput )
-            {
-                qInfo().noquote() << qPrintable("\t") << allomorph.form(writingSystem()).text() << "Match conditions failed:";
-                allomorphConditionMatchStringSummary(allomorph);
-            }
+            // parsingLog()->info("Allomorph match conditions failed:");
+            // parsingLog()->allomorphConditionMatchSummary(this,allomorph);
             return false;
         }
     }
-    if( Morphology::DebugOutput )
-    {
-        qInfo().noquote() << qPrintable("\t") << allomorph.form(writingSystem()).text() << "Match conditions satisfied:";
-        allomorphConditionMatchStringSummary(allomorph);
-    }
+    // parsingLog()->allomorphConditionMatchSummary(this,allomorph);
     return true;
-}
-
-void Parsing::allomorphConditionMatchStringSummary(const Allomorph &allomorph) const
-{
-    foreach(const AbstractConstraint * c, allomorph.matchConditions() )
-    {
-        if( c->matches(this, nullptr, allomorph ) )
-        {
-            qInfo().noquote() << qPrintable("\t\t") << "Condition satisfied: " + c->satisfactionSummary(this, nullptr, allomorph);
-        }
-        else
-        {
-            qInfo().noquote() << qPrintable("\t\t") << "Condition failed: " + c->satisfactionSummary(this, nullptr, allomorph);
-        }
-    }
 }
 
 void Parsing::positionsForStep(int parsingStepIndex, int &start, int &end) const

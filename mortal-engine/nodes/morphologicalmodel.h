@@ -20,7 +20,7 @@ class Form;
 class MorphologicalModel : public AbstractPath
 {
 public:
-    MorphologicalModel();
+    MorphologicalModel(const Morphology * morphology);
     MorphologicalModel * copy(MorphologyXmlReader *morphologyReader, const NodeId &idSuffix) const override;
 
     /**
@@ -41,9 +41,11 @@ public:
     bool hasZeroLengthForms() const;
     void setHasZeroLengthForms(bool hasNullForms);
 
+    const Morphology *morphology() const;
+
 private:
     bool mHasZeroLengthForms;
-
+    const Morphology * mMorphology;
 };
 
 } // namespace ME

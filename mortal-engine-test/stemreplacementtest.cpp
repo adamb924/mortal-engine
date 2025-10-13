@@ -5,7 +5,7 @@
 
 using namespace ME;
 
-StemReplacementTest::StemReplacementTest(const Morphology *morphology) : AbstractInputOutputTest(morphology)
+StemReplacementTest::StemReplacementTest(Morphology *morphology) : AbstractInputOutputTest(morphology)
 {
 
 }

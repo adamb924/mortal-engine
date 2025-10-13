@@ -1,7 +1,6 @@
 #include "morphemesequenceconstraint.h"
 
 #include <QRegularExpression>
-#include <stdexcept>
 
 #include "datatypes/allomorph.h"
 #include "nodes/abstractnode.h"

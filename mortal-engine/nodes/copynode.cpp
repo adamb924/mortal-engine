@@ -11,7 +11,7 @@
 
 using namespace ME;
 
-CopyNode::CopyNode(const MorphologicalModel *model) : AbstractNode(model), mCopy(nullptr)
+CopyNode::CopyNode(const MorphologicalModel *model) : AbstractNode(model->morphology(), model), mCopy(nullptr)
 {
 
 }

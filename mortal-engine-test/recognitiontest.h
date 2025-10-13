@@ -13,7 +13,7 @@ namespace ME {
 class RecognitionTest : public AbstractTest
 {
 public:
-    explicit RecognitionTest(const Morphology * morphology);
+    explicit RecognitionTest(Morphology * morphology);
     ~RecognitionTest() override;
 
     //! \brief Returns true if the input should be accepted and is accepted, or if it should be rejected and was rejected.

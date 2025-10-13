@@ -4,7 +4,7 @@
 
 using namespace ME;
 
-AbstractPath::AbstractPath(const MorphologicalModel *model) : AbstractNode(model, AbstractNode::PathNodeType), mInitialNode(nullptr)
+AbstractPath::AbstractPath(const Morphology *morphology, const MorphologicalModel *model) : AbstractNode(morphology, model, AbstractNode::PathNodeType), mInitialNode(nullptr)
 {
 
 }

@@ -2,7 +2,7 @@
 
 using namespace ME;
 
-Message::Message(const QString &message, const Morphology *morphology) : AbstractTest(morphology), mMessage(message)
+Message::Message(const QString &message, Morphology *morphology) : AbstractTest(morphology), mMessage(message)
 {
 
 }

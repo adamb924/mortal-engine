@@ -4,7 +4,7 @@
 
 using namespace ME;
 
-GenerationTest::GenerationTest(const Morphology *morphology) : AbstractInputOutputTest(morphology)
+GenerationTest::GenerationTest(Morphology *morphology) : AbstractInputOutputTest(morphology)
 {
 
 }

@@ -22,7 +22,7 @@ class Morphology;
 class AbstractTest
 {
 public:
-    AbstractTest(const Morphology * morphology);
+    AbstractTest(Morphology * morphology);
     virtual ~AbstractTest();
 
     //! \brief Return true if the test succeeds, otherwise returns false.
@@ -58,7 +58,7 @@ protected:
     QString setToBarebonesString( const QSet<QString> forms ) const;
     QString setToBarebonesString( const QSet<MorphemeSequence> forms ) const;
 
-    const Morphology * mMorphology;
+    Morphology * mMorphology;
     Form mInput;
     QString mLabel;
     bool mShowDebug;

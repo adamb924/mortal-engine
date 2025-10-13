@@ -12,13 +12,14 @@
 #include "morphologyxmlreader.h"
 #include <QXmlStreamReader>
 #include "debug.h"
+#include "logging/parsinglog.h"
 
 using namespace ME;
 
 QString MorphemeNode::XML_ALLOMORPH = "allomorph";
 QString MorphemeNode::XML_GLOSS = "gloss";
 
-MorphemeNode::MorphemeNode(const MorphologicalModel *model) : AbstractNode(model)
+MorphemeNode::MorphemeNode(const MorphologicalModel *model) : AbstractNode(model->morphology(), model)
 {
 
 }
@@ -62,17 +63,9 @@ QList<Parsing> MorphemeNode::parsingsUsingThisNode(const Parsing &parsing, Parsi
 {
     QList<Parsing> candidates;
 
-    if( Morphology::DebugOutput )
-    {
-        qInfo().noquote() << "In " << debugIdentifier() << "with" << parsing.intermediateSummary();
-    }
-
     QSet<Allomorph> matches = matchingAllomorphs(parsing);
 
-    if( Morphology::DebugOutput )
-    {
-        qInfo().noquote() << debugIdentifier() << " has " << matches.count() << " allomorph matches.";
-    }
+    parsingLog()->info( QObject::tr("%1 allomorph matches.").arg(matches.count()) );
 
     QSetIterator<Allomorph> matchesIterator( matches );
     while( matchesIterator.hasNext() )
@@ -80,16 +73,14 @@ QList<Parsing> MorphemeNode::parsingsUsingThisNode(const Parsing &parsing, Parsi
         Allomorph a = matchesIterator.next();
         Parsing p = parsing;
         p.append( this, a );
+        parsingLog()->parsingStatus(p);
 
         appendIfComplete(candidates, p);
         MAYBE_RETURN_EARLY
 
         if( hasNext(a, p.writingSystem()) && p.isOngoing() )/// there are further morphemes in the model
         {
-            if( Morphology::DebugOutput )
-            {
-                qInfo().noquote() << "Moving from" << debugIdentifier() << " to " << next(a, p.writingSystem())->debugIdentifier() << "having appended" << a.oneLineSummary();
-            }
+            parsingLog()->info( QObject::tr("Appended: %1").arg( a.oneLineSummary() ) );
             candidates.append( next(a, p.writingSystem())->possibleParsings( p, flags ) );
             MAYBE_RETURN_EARLY
         }
@@ -110,10 +101,7 @@ QList<Generation> MorphemeNode::generateFormsUsingThisNode(const Generation &gen
     /// test whether this node fits the morpheme sequence constraint
     if( ! generation.ableToAppend(label()) )
     {
-        if( Morphology::DebugOutput )
-        {
-            qInfo() << qPrintable("\t") << "Current node does not match the morpheme sequence constraint. The line above this one should have more information.";
-        }
+        parsingLog()->info("Current node does not match the morpheme sequence constraint.");
         return candidates;
     }
 
@@ -122,20 +110,7 @@ QList<Generation> MorphemeNode::generateFormsUsingThisNode(const Generation &gen
     QSet<Allomorph> nonPortmanteau;
     matchingAllomorphs(generation, portmanteaux, nonPortmanteau );
 
-    if( Morphology::DebugOutput )
-    {
-        qInfo().noquote() << qPrintable("\t") << QObject::tr("%1 allomorph matches (%2 normal, %3 portmanteau)").arg( portmanteaux.count() + nonPortmanteau.count() ).arg( nonPortmanteau.count() ).arg( portmanteaux.count() );
-        QSetIterator<Allomorph> matchesIterator( nonPortmanteau );
-        while( matchesIterator.hasNext() )
-        {
-            qInfo().noquote() << "\t\t" << matchesIterator.next().oneLineSummary();
-        }
-        matchesIterator = QSetIterator<Allomorph>( portmanteaux );
-        while( matchesIterator.hasNext() )
-        {
-            qInfo().noquote() << "\t\t" << matchesIterator.next().oneLineSummary();
-        }
-    }
+    parsingLog()->summarizeMatchingAllomorphs(portmanteaux, nonPortmanteau);
 
     QList<Generation> portmanteuGenerations = generateFormsWithAllomorphs(generation, portmanteaux);
     /// only consider non-portmanteau generations if there are no successful portmanteau generations
@@ -237,10 +212,6 @@ QList<Generation> MorphemeNode::generateFormsWithAllomorphs(const Generation &ge
 
         if( hasNext(a, g.writingSystem()) && g.isOngoing() )
         {
-            if( Morphology::DebugOutput )
-            {
-                qInfo().noquote() << "Moving from" << debugIdentifier() << " to " << next(a, g.writingSystem())->debugIdentifier() << "having appended" << a.oneLineSummary();
-            }
             candidates.append( next(a, g.writingSystem())->generateForms(g) );
         }
         else

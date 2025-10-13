@@ -2,6 +2,7 @@
 
 #include "datatypes/generation.h"
 
+#include "logging/parsinglog.h"
 #include "morphology.h"
 #include "morphologyxmlreader.h"
 #include <QXmlStreamReader>
@@ -10,7 +11,7 @@
 
 using namespace ME;
 
-Jump::Jump(const MorphologicalModel *model) : AbstractNode(model), mNodeTarget(nullptr), mTargetNodeRequired(false)
+Jump::Jump(const MorphologicalModel *model) : AbstractNode(model->morphology(), model), mNodeTarget(nullptr), mTargetNodeRequired(false)
 {
     setOptional(true);
 }
@@ -72,18 +73,12 @@ QList<Parsing> Jump::parsingsUsingThisNode(const Parsing &parsing, Parsing::Flag
         Parsing p = parsing;
         p.incrementJumpCounter(this);
         p.setNextNodeRequired( mTargetNodeRequired );
-        if( Morphology::DebugOutput )
-        {
-            qInfo() << "\tJumping to:" << mNodeTarget->debugIdentifier();
-        }
+        parsingLog()->info( QObject::tr("Jumping to: %1").arg( mNodeTarget->debugIdentifier() ) );
         return mNodeTarget->possibleParsings( p, flags );
     }
     else
     {
-        if( Morphology::DebugOutput )
-        {
-            qInfo() << "\tJump not permitted. To:" << mNodeTarget->debugIdentifier() << "Number of jumps:" << parsing.jumpCounter(this) << "out of" << Parsing::MAXIMUM_JUMPS;
-        }
+        parsingLog()->info( QObject::tr("Jump not permitted. To: %1. Number of jumps: %2 out of %3").arg( mNodeTarget->debugIdentifier() ).arg(parsing.jumpCounter(this)).arg(Parsing::MAXIMUM_JUMPS) );
         return QList<Parsing>();
     }
 }

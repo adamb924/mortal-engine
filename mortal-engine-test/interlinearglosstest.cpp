@@ -4,7 +4,7 @@
 
 using namespace ME;
 
-InterlinearGlossTest::InterlinearGlossTest(const Morphology *morphology) : AbstractInputOutputTest(morphology)
+InterlinearGlossTest::InterlinearGlossTest(Morphology *morphology) : AbstractInputOutputTest(morphology)
 {
 
 }

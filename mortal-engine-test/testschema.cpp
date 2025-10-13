@@ -62,7 +62,7 @@ void TestSchema::addTest(AbstractTest *test)
     mTests.append(test);
 }
 
-const Morphology *TestSchema::morphology() const
+Morphology *TestSchema::morphology() const
 {
     return mMorphology;
 }

@@ -19,6 +19,7 @@ class StemIdentityConstraint;
 class MorphemeSequenceConstraint;
 class AbstractStemList;
 class LexicalStemInsertResult;
+class XmlParsingLog;
 
 using InputNormalizer = std::function<QString(QString)>;
 
@@ -30,7 +31,7 @@ public:
     friend class MorphologyChecker;
 
     Morphology();
-    ~Morphology();
+    virtual ~Morphology();
     Morphology(const Morphology &) = delete;
     Morphology &operator=(const Morphology &) = delete;
 
@@ -95,9 +96,6 @@ public:
     void setNodeId(const NodeId &id, AbstractNode * node);
     QSet<AbstractStemList *> stemLists() const;
 
-    static bool DebugOutput;
-    static bool StemDebugOutput;
-
     bool isOk() const;
 
     static void setPath(const QString & path);
@@ -105,6 +103,15 @@ public:
     QSet<const AbstractNode *> nodes() const;
 
     QString morphologyPath() const;
+
+    const ParsingLog *parsingLog() const;
+
+    void setDebugOutput(bool newDebugOutput);
+
+    bool debugOutput() const;
+
+    bool stemDebugOutput() const;
+    void setStemDebugOutput(bool newStemDebugOutput);
 
 private:
     QList<MorphologicalModel*> mMorphologicalModels;
@@ -121,6 +128,11 @@ private:
     QHash<WritingSystem,InputNormalizer> mNormalizationFunctions;
     static QRegularExpression endingStemId;
     QString mMorphologyPath;
+    const XmlParsingLog * mParsingLog;
+    bool mDebugOutput;
+    bool mStemDebugOutput;
+
+    static ParsingLog NULL_PARSING_LOG;
 };
 
 } // namespace ME
