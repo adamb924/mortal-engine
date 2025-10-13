@@ -17,11 +17,15 @@ MorphemeSequenceConstraint::MorphemeSequenceConstraint() : AbstractGenerationCon
 
 MorphemeSequenceConstraint::MorphemeSequenceConstraint(const MorphemeSequence &sequence)
     : AbstractGenerationConstraint(AbstractGenerationConstraint::MorphemeSequenceConstraint),
-      mMorphemeNames(sequence), mOriginalSequence(sequence)
+      mMorphemeNames(sequence),
+      mOriginalSequence(sequence)
 {
 }
 
-MorphemeSequenceConstraint::MorphemeSequenceConstraint(const MorphemeSequenceConstraint &other) : AbstractGenerationConstraint(AbstractGenerationConstraint::MorphemeSequenceConstraint), mMorphemeNames(other.mMorphemeNames)
+MorphemeSequenceConstraint::MorphemeSequenceConstraint(const MorphemeSequenceConstraint &other)
+    : AbstractGenerationConstraint(AbstractGenerationConstraint::MorphemeSequenceConstraint),
+    mMorphemeNames(other.mMorphemeNames),
+    mOriginalSequence(other.mOriginalSequence)
 {
 
 }
@@ -29,6 +33,7 @@ MorphemeSequenceConstraint::MorphemeSequenceConstraint(const MorphemeSequenceCon
 MorphemeSequenceConstraint &MorphemeSequenceConstraint::operator=(const MorphemeSequenceConstraint & other)
 {
     mMorphemeNames = other.mMorphemeNames;
+    mOriginalSequence = other.mOriginalSequence;
     return *this;
 }
 
