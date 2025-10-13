@@ -31,6 +31,7 @@ public:
      * @return QString The logging output.
      */
     virtual QString summary() const = 0;
+    QString oneLineSummary() const;
 
 private:
     ContraintType mConstraintType;

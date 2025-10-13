@@ -1,5 +1,7 @@
 #include "abstractgenerationconstraint.h"
 
+#include <QRegularExpression>
+
 using namespace ME;
 
 AbstractGenerationConstraint::AbstractGenerationConstraint(ContraintType constraintType) : mConstraintType(constraintType)
@@ -27,4 +29,9 @@ AbstractGenerationConstraint &AbstractGenerationConstraint::operator=(const Abst
 AbstractGenerationConstraint::ContraintType AbstractGenerationConstraint::constraintType() const
 {
     return mConstraintType;
+}
+
+QString AbstractGenerationConstraint::oneLineSummary() const
+{
+    return summary().replace(QRegularExpression("\\s+")," ").trimmed();
 }
