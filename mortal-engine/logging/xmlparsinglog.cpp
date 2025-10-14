@@ -97,7 +97,6 @@ void XmlParsingLog::beginNode(const AbstractNode *node, const Generation &genera
 
     xml.writeStartElement("status");
     xml.writeAttribute("generated", generation.form().text() );
-    qDebug() << generation.morphemeSequenceConstraint()->remainingMorphemes().toString() << generation.morphemeSequenceConstraint()->originalSequence().toString();
     xml.writeAttribute("from", generation.morphemeSequenceConstraint()->originalSequence().toString() );
     xml.writeAttribute("summary", generation.morphemeDelimitedSummary( generation.form().writingSystem() ) );
 
