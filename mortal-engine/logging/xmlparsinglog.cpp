@@ -228,6 +228,7 @@ void XmlParsingLog::completed(const Parsing &p) const
     xml.writeTextElement("form", p.form().summary() );
     xml.writeTextElement("label-summary", p.labelSummary() );
     xml.writeTextElement("complete-summary", p.oneLineSummary() );
+    xml.writeEndElement(); /// completed-parsing
 }
 
 void XmlParsingLog::parsingStatus(const Parsing &p) const
