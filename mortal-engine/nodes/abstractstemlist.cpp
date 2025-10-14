@@ -262,7 +262,7 @@ QList<QPair<Allomorph, LexicalStem> > AbstractStemList::matchingAllomorphs(const
         {
             Allomorph a = ai.next();
             /// stems should never be null morphemes, so we can check for that
-            if( a.form( parsing.writingSystem() ).text().length() > 0 && parsing.allomorphMatches( a ) )
+            if( a.form( parsing.writingSystem() ).text().length() > 0 && parsing.allomorphMatches( a, mMorphology->stemDebugOutput() ) )
             {
                 list << QPair<Allomorph, LexicalStem>( a, * s );
             }

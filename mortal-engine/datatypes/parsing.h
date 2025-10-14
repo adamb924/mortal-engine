@@ -119,7 +119,8 @@ public:
 
     QList<ParsingStep> steps() const;
 
-    bool allomorphMatches(const Allomorph &allomorph) const;
+    /// \a logMatches can be used to disable logging for contexts in which that may be inappropriate (e.g., long lists of stems)
+    bool allomorphMatches(const Allomorph &allomorph, bool logMatches = true) const;
     bool allomorphMatchConditionsSatisfied(const Allomorph &allomorph) const;
 
     void positionsForStep(int parsingStepIndex, int &start, int &end) const;

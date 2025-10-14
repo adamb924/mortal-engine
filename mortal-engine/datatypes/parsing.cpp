@@ -742,16 +742,18 @@ QList<ParsingStep> Parsing::steps() const
     return mSteps;
 }
 
-bool Parsing::allomorphMatches(const Allomorph &allomorph) const
+bool Parsing::allomorphMatches(const Allomorph &allomorph, bool logMatches) const
 {
     bool segmentalMatch = allomorphMatchesSegmentally(allomorph);
     if( !segmentalMatch )
     {
-        parsingLog()->allomorphMatchSummary(this,allomorph);
+        if( logMatches )
+            parsingLog()->allomorphMatchSummary(this,allomorph);
         return false;
     }
     bool conditionMatch = allomorphMatchConditionsSatisfied(allomorph);
-    parsingLog()->allomorphMatchSummary(this,allomorph);
+    if( logMatches )
+        parsingLog()->allomorphMatchSummary(this,allomorph);
     return segmentalMatch && conditionMatch;
 }
 
