@@ -44,6 +44,10 @@ QList<Parsing> AbstractNode::possibleParsings(const Parsing &parsing, Parsing::F
     parsingLog()->beginNode(this, p);
 
     QList<Parsing> candidates;
+    candidates.append( parsingsUsingThisNode(p, flags) );
+
+    parsingLog()->end(); /// beginNode
+
     if( optional() && ! nodeRequired )
     {
         /// we want to move to the next node either 1) the parse hasn't been completed, or 2) there
@@ -51,9 +55,7 @@ QList<Parsing> AbstractNode::possibleParsings(const Parsing &parsing, Parsing::F
         bool shouldTryToContinue = p.isOngoing() || p.isNull() || model()->hasZeroLengthForms();
         if( AbstractNode::hasNext() && shouldTryToContinue )
         {
-            parsingLog()->begin("without-this-node");
             candidates.append( AbstractNode::next()->possibleParsings( p, flags ) );
-            parsingLog()->end(); /// without-this-node
             MAYBE_RETURN_EARLY
         }
         else
@@ -61,12 +63,6 @@ QList<Parsing> AbstractNode::possibleParsings(const Parsing &parsing, Parsing::F
             appendIfComplete(candidates, p);
         }
     }
-
-    parsingLog()->begin("with-this-node");
-    candidates.append( parsingsUsingThisNode(p, flags) );
-    parsingLog()->end(); /// with-this-node
-
-    parsingLog()->end(); /// beginNode
 
     return candidates;
 }
