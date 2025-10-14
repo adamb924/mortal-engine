@@ -71,35 +71,28 @@ QList<Generation> AbstractNode::generateForms(const Generation &generation) cons
     parsingLog()->beginNode(this, generation);
 
     QList<Generation> candidates;
+    candidates << generateFormsUsingThisNode(generation);
 
     if( appendIfComplete(candidates, generation) )
     {
         return candidates;
     }
 
+    parsingLog()->end(); /// beginNode
+
     if( optional() )
     {
         if( AbstractNode::hasNext() )
         {
-            parsingLog()->begin("without-this-node");
             candidates.append( AbstractNode::next()->generateForms( generation ) );
-            parsingLog()->end(); /// without-this-node
         }
         else
         {
             appendIfComplete(candidates, generation);
         }
-
     }
 
-    parsingLog()->begin("with-this-node");
-    candidates << generateFormsUsingThisNode(generation);
-    parsingLog()->end(); /// with-this-node
-
-    parsingLog()->end();
-
     return candidates;
-
 }
 
 bool AbstractNode::appendIfComplete(QList<Generation> &candidates, const Generation &generation) const
