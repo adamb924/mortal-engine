@@ -127,7 +127,7 @@ private:
     bool mIsOk;
     QHash<WritingSystem,InputNormalizer> mNormalizationFunctions;
     QString mMorphologyPath;
-    const XmlParsingLog * mParsingLog;
+    XmlParsingLog * mParsingLog;
     bool mDebugOutput;
     bool mStemDebugOutput;
 

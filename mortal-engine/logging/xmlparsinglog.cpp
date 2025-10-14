@@ -1,5 +1,6 @@
 #include "xmlparsinglog.h"
 
+#include "messages.h"
 #include "constraints/abstractlongdistanceconstraint.h"
 #include "datatypes/form.h"
 #include "datatypes/generation.h"
@@ -14,28 +15,25 @@ QXmlStreamWriter XmlParsingLog::xml;
 
 XmlParsingLog::XmlParsingLog()
 {
-    mFile.setFileName("log.xml");
-    if (mFile.open(QFile::WriteOnly))
-    {
-        xml.setDevice(&mFile);
-        xml.setCodec("UTF-8");
-    }
-    else
-    {
-        qCritical() << "Could not open log.xml to write";
-    }
-    xml.writeStartDocument();
-    xml.setAutoFormatting(true);
-    xml.setAutoFormattingIndent(2);
 }
 
 XmlParsingLog::~XmlParsingLog()
 {
-    xml.writeEndElement();
-    xml.writeEndDocument();
-    mFile.close();
+    /// it's possible the file was never opened (e.g., if debug output is not requested)
+    if( xml.device()->isOpen() )
+    {
+        xml.writeEndElement();
+        xml.writeEndDocument();
+    }
 }
 
+void XmlParsingLog::setDevice(QIODevice *device)
+{
+    xml.setDevice(device);
+    xml.setCodec("UTF-8");
+    xml.setAutoFormatting(true);
+    xml.setAutoFormattingIndent(2);
+}
 
 void ME::XmlParsingLog::beginParse(const Form &f) const
 {

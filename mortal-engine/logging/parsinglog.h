@@ -24,6 +24,8 @@ public:
     ParsingLog();
     virtual ~ParsingLog();
 
+    virtual void setDevice(QIODevice *device) {}
+
     virtual void beginParse(const Form & f) const {}
     virtual void beginGenerate(const WritingSystem & ws, const StemIdentityConstraint & sic, const MorphemeSequenceConstraint & msc, const MorphologicalModel *model) const {}
     virtual void beginModel(const MorphologicalModel *model) const {}

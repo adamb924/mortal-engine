@@ -6,6 +6,10 @@
 #include <QTextStream>
 #include <QFile>
 
+using namespace MortalEngineDebug;
+
+QFile MortalEngineDebug::DEBUG_FILE;
+QTextStream MortalEngineDebug::STREAM;
 QString MortalEngineDebug::logFilename("log");
 
 void myMessageHandler(QtMsgType type, const QMessageLogContext &, const QString & msg)
@@ -28,40 +32,35 @@ void myMessageHandler(QtMsgType type, const QMessageLogContext &, const QString 
         txt = msg;
     break;
     }
-    QFile outFile(MortalEngineDebug::logFilename);
-    outFile.open(QIODevice::WriteOnly | QIODevice::Append);
-    QTextStream ts(&outFile);
-
-#if (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
-    ts.setEncoding( QStringConverter::Utf8 );
-#else
-    ts.setCodec("UTF-8");
-#endif
-
-    ts << txt << Qt::endl;
+    STREAM << txt << Qt::endl;
 }
 
 void redirectMessagesTo(const QString &outfile, bool resetFile)
 {
-    MortalEngineDebug::logFilename = outfile;
+    logFilename = outfile;
 
     qInstallMessageHandler(myMessageHandler);
 
     if( resetFile )
     {
+        DEBUG_FILE.setFileName(logFilename);
+
         /// Reset the debug file
-        QFile debugFile(MortalEngineDebug::logFilename);
-        debugFile.open(QIODevice::WriteOnly);
-        QTextStream ts(&debugFile);
+        DEBUG_FILE.open(QIODevice::WriteOnly);
+        STREAM.setDevice(&DEBUG_FILE);
+        STREAM << "";
+        DEBUG_FILE.close();
 
-#if (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
-        ts.setEncoding( QStringConverter::Utf8 );
-#else
-        ts.setCodec("UTF-8");
-#endif
+        /// open the file for subsequent writing
+        DEBUG_FILE.open(QIODevice::WriteOnly | QIODevice::Append);
+        STREAM.setDevice(&DEBUG_FILE);
 
-        ts << "";
-        debugFile.close();
+        #if (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
+            STREAM.setEncoding( QStringConverter::Utf8 );
+        #else
+            STREAM.setCodec("UTF-8");
+        #endif
+        STREAM << "";
     }
 }
 

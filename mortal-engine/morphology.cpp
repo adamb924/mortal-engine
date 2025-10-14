@@ -7,6 +7,7 @@
 #include "returns/lexicalsteminsertresult.h"
 #include "datatypes/lexicalstem.h"
 #include <stdexcept>
+#include "messages.h"
 
 #include <QDir>
 
@@ -21,8 +22,8 @@ ParsingLog Morphology::NULL_PARSING_LOG;
 
 Morphology::Morphology() : mIsOk(true), mDebugOutput(false), mStemDebugOutput(false)
 {
-    /// TODO this isn't quite right b/c maybe we don't want to initialize it at all
     mParsingLog = new XmlParsingLog;
+    mParsingLog->setDevice(&MortalEngineDebug::DEBUG_FILE);
 }
 
 Morphology::~Morphology()
@@ -503,6 +504,8 @@ const ParsingLog *Morphology::parsingLog() const
 
 void Morphology::setDebugOutput(bool newDebugOutput)
 {
+    // if( newDebugOutput )
+    //     mParsingLog->ensureOpen();
     mDebugOutput = newDebugOutput;
 }
 
