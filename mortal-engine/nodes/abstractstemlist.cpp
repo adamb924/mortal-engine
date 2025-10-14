@@ -226,12 +226,20 @@ QList<Generation> AbstractStemList::generateFormsUsingThisNode(const Generation 
                 {
                     const AbstractNode * nextNode;
                     if( g.steps().last().allomorph().hasPortmanteau( g.writingSystem() ) )
+                    {
                         nextNode = g.steps().last().allomorph().portmanteau().next();
+                    }
                     else
+                    {
                         nextNode = next();
+                    }
 
-                    parsingLog()->info( QObject::tr("Appended: %1").arg( a.oneLineSummary() ) );
-                    candidates.append( nextNode->generateForms( g ) );
+                    /// nextNode can be null, e.g., if the last node of a portmanteau stem has no following node
+                    if( nextNode != nullptr )
+                    {
+                        parsingLog()->info( QObject::tr("Appended: %1").arg( a.oneLineSummary() ) );
+                        candidates.append( nextNode->generateForms( g ) );
+                    }
                 }
             }
         }

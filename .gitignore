@@ -13,3 +13,4 @@ diagrams/**.png
 mortal-engine.code-workspace
 build/**
 *.user
+examples/log.xml
