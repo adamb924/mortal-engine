@@ -219,7 +219,6 @@ public:
 
 private:
     void calculateHash();
-    static QRegularExpression whitespaceAndNonWordExpression;
 
 private:
     WritingSystem mWritingSystem;

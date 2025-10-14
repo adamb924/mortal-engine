@@ -1,7 +1,6 @@
 #include "parsing.h"
 
 #include <QXmlStreamWriter>
-#include <QRegularExpression>
 #include <QDomElement>
 
 #include "logging/parsinglog.h"
@@ -936,7 +935,7 @@ QString Parsing::summary() const
 
 QString Parsing::oneLineSummary() const
 {
-    return summary().replace(QRegularExpression("\\s+")," ").trimmed();
+    return toOneLine(summary());
 }
 
 bool parsingLessThanStepwise(const Parsing &p1, const Parsing &p2)

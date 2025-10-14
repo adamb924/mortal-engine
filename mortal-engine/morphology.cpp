@@ -17,7 +17,6 @@
 
 using namespace ME;
 
-QRegularExpression Morphology::endingStemId("##(\\d+)$", QRegularExpression::UseUnicodePropertiesOption);
 ParsingLog Morphology::NULL_PARSING_LOG;
 
 Morphology::Morphology() : mIsOk(true), mDebugOutput(false), mStemDebugOutput(false)
@@ -385,6 +384,7 @@ void Morphology::setNodeId(const NodeId &id, AbstractNode *node)
 
 QList<LexicalStem *> Morphology::searchLexicalStems(const Form &formSearchString) const
 {
+    static QRegularExpression endingStemId("##(\\d+)$", QRegularExpression::UseUnicodePropertiesOption);
     QRegularExpressionMatch finalIdMatch = endingStemId.match(formSearchString.text());
     if( finalIdMatch.hasMatch() )
     {

@@ -126,7 +126,6 @@ private:
     QSet<MorphemeNode*> mMorphemeNodes;
     bool mIsOk;
     QHash<WritingSystem,InputNormalizer> mNormalizationFunctions;
-    static QRegularExpression endingStemId;
     QString mMorphologyPath;
     const XmlParsingLog * mParsingLog;
     bool mDebugOutput;

@@ -10,8 +10,6 @@
 
 using namespace ME;
 
-QRegularExpression Form::whitespaceAndNonWordExpression("^[\\W\\s\\d]+$", QRegularExpression::UseUnicodePropertiesOption);
-
 Form::Form() : mId(-1)
 {
     calculateHash();
@@ -128,6 +126,7 @@ void Form::setId(const qlonglong &id)
 
 bool Form::isWhitespaceAndNonWordCharacters() const
 {
+    static QRegularExpression whitespaceAndNonWordExpression("^[\\W\\s\\d]+$", QRegularExpression::UseUnicodePropertiesOption);
     return whitespaceAndNonWordExpression.match(mText).hasMatch();
 }
 

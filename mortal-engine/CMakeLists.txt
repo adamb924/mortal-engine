@@ -14,6 +14,7 @@ find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core Sql Xml)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Sql Xml)
 
 add_library(mortalengine SHARED
+    mortal-engine_global.h
     constraints/ignoreflag.h constraints/ignoreflag.cpp
     constraints/precedingnodeconstraint.h constraints/precedingnodeconstraint.cpp
     constraints/satisfiedcondition.h constraints/satisfiedcondition.cpp
@@ -74,6 +75,7 @@ add_library(mortalengine SHARED
     datatypes/nodeid.h datatypes/nodeid.cpp
     logging/parsinglog.h logging/parsinglog.cpp
     logging/xmlparsinglog.h logging/xmlparsinglog.cpp
+    mortal-engine_global.cpp
 )
 
 target_include_directories(mortalengine PUBLIC ".")

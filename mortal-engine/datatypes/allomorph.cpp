@@ -11,7 +11,6 @@
 
 #include <QXmlStreamWriter>
 #include <QtDebug>
-#include <QRegularExpression>
 #include <QDomElement>
 
 using namespace ME;
@@ -526,7 +525,7 @@ QString Allomorph::summary() const
 
 QString Allomorph::oneLineSummary() const
 {
-    return summary().replace(QRegularExpression("\\s+")," ").trimmed();
+    return toOneLine(summary());
 }
 
 QString Allomorph::focusedSummary(const WritingSystem &ws) const

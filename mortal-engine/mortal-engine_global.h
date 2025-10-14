@@ -3,10 +3,14 @@
 
 #include <QtCore/qglobal.h>
 
+class QString;
+
 #if defined(MORTALENGINE_LIBRARY)
 #  define MORTAL_ENGINE_EXPORT Q_DECL_EXPORT
 #else
 #  define MORTAL_ENGINE_EXPORT Q_DECL_IMPORT
 #endif
+
+QString toOneLine(QString string);
 
 #endif // MORTALENGINE_GLOBAL_H

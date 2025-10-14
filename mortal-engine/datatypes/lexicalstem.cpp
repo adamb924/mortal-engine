@@ -312,7 +312,7 @@ QString LexicalStem::summary() const
 
 QString LexicalStem::oneLineSummary() const
 {
-    return summary().replace(QRegularExpression("\\s+")," ").trimmed();
+    return toOneLine(summary());
 }
 
 uint ME::qHash(const LexicalStem &key)

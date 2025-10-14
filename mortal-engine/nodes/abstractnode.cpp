@@ -5,7 +5,6 @@
 #include <QXmlStreamWriter>
 #include <QXmlStreamReader>
 #include <QXmlStreamAttributes>
-#include <QRegularExpression>
 #include <QDomElement>
 
 #include "morphologyxmlreader.h"
@@ -251,7 +250,7 @@ QString AbstractNode::summary(const AbstractNode *doNotFollow) const
 
 QString AbstractNode::oneLineSummary() const
 {
-    return summary().replace(QRegularExpression("\\s+")," ").trimmed();
+    return toOneLine(summary());
 }
 
 void AbstractNode::serialize(QXmlStreamWriter &out) const

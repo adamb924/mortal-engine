@@ -7,8 +7,6 @@
 
 using namespace ME;
 
-QRegularExpression MorphemeSequenceConstraint::morphemeStringFormat = QRegularExpression("^(\\[.*\\])+$");
-
 MorphemeSequenceConstraint::MorphemeSequenceConstraint() : AbstractGenerationConstraint(AbstractGenerationConstraint::MorphemeSequenceConstraint)
 {
 

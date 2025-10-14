@@ -30,7 +30,6 @@ public:
     static MorphemeSequence fromString(const QString & str);
 
     static QString STEM_LABEL;
-    static QRegularExpression morphemeStringFormat;
 };
 
 } // namespace ME

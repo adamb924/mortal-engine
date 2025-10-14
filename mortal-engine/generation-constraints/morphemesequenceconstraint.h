@@ -43,8 +43,6 @@ public:
      */
     QString summary() const override;
 
-    static QRegularExpression morphemeStringFormat;
-
     MorphemeSequence originalSequence() const;
 
 private:

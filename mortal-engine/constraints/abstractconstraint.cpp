@@ -4,7 +4,6 @@
 #include "abstractnestedconstraint.h"
 
 #include <QXmlStreamReader>
-#include <QRegularExpression>
 
 using namespace ME;
 
@@ -34,7 +33,7 @@ QString AbstractConstraint::satisfactionSummary(const Parsing *parsing, const Ab
 
 QString AbstractConstraint::oneLineSummary(const QString &suffix) const
 {
-    return summary(suffix).replace(QRegularExpression("\\s+")," ").trimmed();
+    return toOneLine(summary(suffix));
 }
 
 AbstractConstraint::~AbstractConstraint()
