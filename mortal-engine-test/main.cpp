@@ -94,7 +94,7 @@ int main(int argc, char *argv[])
         verbosity = TestHarness::ErrorsOnly;
     }
 
-    redirectMessagesTo(logfile);
+    Messages::redirectMessagesTo(logfile);
 
     TestHarness harness;
     harness.readTestFile( input );

@@ -84,6 +84,10 @@ target_link_libraries(mortalengine PRIVATE Qt${QT_VERSION_MAJOR}::Core Qt${QT_VE
 
 target_compile_definitions(mortalengine PRIVATE MORTALENGINE_LIBRARY)
 
+target_compile_options(mortalengine PRIVATE
+    -Wno-switch-enum
+)
+
 install(TARGETS mortalengine
     LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
     RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin

@@ -5,20 +5,37 @@
 
 #include <QTextStream>
 #include <QFile>
+#include <QXmlStreamWriter>
 class QMessageLogContext;
 class QString;
 
-/// I'm just putting this in a special namespace because it's a global
-namespace MortalEngineDebug {
-    MORTAL_ENGINE_EXPORT extern QString logFilename;
-    extern QFile DEBUG_FILE;
-    extern QTextStream STREAM;
+namespace ME {
+
+class MORTAL_ENGINE_EXPORT Messages {
+public:
+
+    static void redirectMessagesTo(const QString & outfile, bool resetFile = true);
+    static void redirectMessagesToDefault();
+    static QXmlStreamWriter &stream();
+
+    static QString logFilename;
+
+private:
+    Messages();
+    ~Messages();
+
+    static Messages& instance();
+
+    static void handler(QtMsgType type, const QMessageLogContext &, const QString & msg);
+
+    void openLogFile();
+    void resetLogFile();
+    void closeLogFile();
+
+    QFile logFile;
+    QXmlStreamWriter xml;
+};
+
 }
-
-void myMessageHandler(QtMsgType type, const QMessageLogContext &, const QString & msg);
-
-MORTAL_ENGINE_EXPORT void redirectMessagesTo(const QString & outfile, bool resetFile = true);
-MORTAL_ENGINE_EXPORT void redirectMessagesToDefault();
-
 
 #endif // MESSAGES_H

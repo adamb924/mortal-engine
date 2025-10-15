@@ -6,65 +6,108 @@
 #include <QTextStream>
 #include <QFile>
 
-using namespace MortalEngineDebug;
+using namespace ME;
 
-QFile MortalEngineDebug::DEBUG_FILE;
-QTextStream MortalEngineDebug::STREAM;
-QString MortalEngineDebug::logFilename("log");
+QString Messages::logFilename("log.xml");
 
-void myMessageHandler(QtMsgType type, const QMessageLogContext &, const QString & msg)
+ME::Messages::Messages()
 {
-    QString txt;
+}
+
+ME::Messages::~Messages()
+{
+    /// closeLogFile() will be called here:
+    redirectMessagesToDefault();
+}
+
+Messages &Messages::instance()
+{
+    static Messages messages;
+    return messages;
+}
+
+void ME::Messages::handler(QtMsgType type, const QMessageLogContext &, const QString &msg)
+{
     switch (type) {
     case QtDebugMsg:
-        txt = QString("Debug: %1").arg(msg);
+        instance().xml.writeTextElement("debug",msg);
         break;
     case QtWarningMsg:
-        txt = QString("Warning: %1").arg(msg);
-    break;
+        instance().xml.writeTextElement("warning",msg);
+        break;
     case QtCriticalMsg:
-        txt = QString("Critical: %1").arg(msg);
-    break;
+        instance().xml.writeTextElement("critical",msg);
+        break;
     case QtFatalMsg:
-        txt = QString("Fatal: %1").arg(msg);
-    break;
+        instance().xml.writeTextElement("fatal",msg);
+        break;
     case QtInfoMsg:
-        txt = msg;
-    break;
+        instance().xml.writeTextElement("info",msg);
+        break;
     }
-    STREAM << txt << Qt::endl;
 }
 
-void redirectMessagesTo(const QString &outfile, bool resetFile)
+void Messages::redirectMessagesTo(const QString &outfile, bool resetFile)
 {
     logFilename = outfile;
-
-    qInstallMessageHandler(myMessageHandler);
-
     if( resetFile )
+        instance().openLogFile();
+    qInstallMessageHandler( Messages::handler );
+}
+
+void Messages::redirectMessagesToDefault()
+{
+    qInstallMessageHandler(nullptr);
+    instance().closeLogFile();
+}
+
+QXmlStreamWriter &Messages::stream()
+{
+    return instance().xml;
+}
+
+void Messages::openLogFile()
+{
+    logFile.setFileName(logFilename);
+
+    resetLogFile();
+
+    /// open the file for subsequent writing
+    if( ! logFile.open(QIODevice::WriteOnly | QIODevice::Append) )
     {
-        DEBUG_FILE.setFileName(logFilename);
+        qCritical() << "Could not open log:" << logFilename;
+        return;
+    }
 
-        /// Reset the debug file
-        DEBUG_FILE.open(QIODevice::WriteOnly);
-        STREAM.setDevice(&DEBUG_FILE);
-        STREAM << "";
-        DEBUG_FILE.close();
+    xml.setDevice(&logFile);
 
-        /// open the file for subsequent writing
-        DEBUG_FILE.open(QIODevice::WriteOnly | QIODevice::Append);
-        STREAM.setDevice(&DEBUG_FILE);
+#if (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
+    STREAM.setEncoding( QStringConverter::Utf8 );
+#else
+    xml.setCodec("UTF-8");
+#endif
+    xml.setAutoFormatting(true);
+    xml.setAutoFormattingIndent(2);
+    xml.writeStartDocument();
 
-        #if (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
-            STREAM.setEncoding( QStringConverter::Utf8 );
-        #else
-            STREAM.setCodec("UTF-8");
-        #endif
-        STREAM << "";
+    xml.writeStartElement("mortal-engine-log");
+}
+
+void Messages::resetLogFile()
+{
+    QFile f(logFilename);
+    f.open(QIODevice::WriteOnly);
+    QTextStream textStream(&f);
+    textStream << "";
+    f.close();
+}
+
+void Messages::closeLogFile()
+{
+    if( logFile.isOpen() )
+    {
+        xml.writeEndDocument();
+        logFile.close();
     }
 }
 
-void redirectMessagesToDefault()
-{
-    qInstallMessageHandler(nullptr);
-}

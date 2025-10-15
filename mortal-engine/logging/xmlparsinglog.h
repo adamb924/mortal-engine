@@ -14,7 +14,7 @@ public:
     XmlParsingLog();
     virtual ~XmlParsingLog() override;
 
-    void setDevice(QIODevice *device) override;
+    void setStream(QXmlStreamWriter *stream) override;
 
     void beginParse(const Form & f) const override;
     void beginGenerate(const WritingSystem & ws, const StemIdentityConstraint & sic, const MorphemeSequenceConstraint & msc, const MorphologicalModel *model) const override;
@@ -44,7 +44,7 @@ public:
 private:
     void writeNodeAttributes(const AbstractNode * node) const;
 
-    static QXmlStreamWriter xml;
+    QXmlStreamWriter * xml;
 };
 
 }

@@ -23,7 +23,7 @@ ParsingLog Morphology::NULL_PARSING_LOG;
 Morphology::Morphology() : mIsOk(true), mDebugOutput(false), mStemDebugOutput(false)
 {
     mParsingLog = new XmlParsingLog;
-    mParsingLog->setDevice(&MortalEngineDebug::DEBUG_FILE);
+    mParsingLog->setStream(&Messages::stream());
 }
 
 Morphology::~Morphology()
