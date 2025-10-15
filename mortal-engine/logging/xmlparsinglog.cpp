@@ -99,11 +99,11 @@ void XmlParsingLog::begin(const QString &elementName) const
 
 void XmlParsingLog::summarizeMatchingAllomorphs(QSet<Allomorph> &portmanteaux, QSet<Allomorph> &nonPortmanteaux) const
 {
-    xml->writeStartElement("allomorph-matches");
+    xml->writeStartElement("allomorph");
     info( QObject::tr("%1 allomorph matches (%2 normal, %3 portmanteau)").arg( portmanteaux.count() + nonPortmanteaux.count() ).arg( nonPortmanteaux.count() ).arg( portmanteaux.count() ) );
     if( nonPortmanteaux.count() > 0 )
     {
-        xml->writeStartElement("non-portmanteau-matches");
+        xml->writeStartElement("non-portmanteau");
         QSetIterator<Allomorph> matchesIterator( nonPortmanteaux );
         while( matchesIterator.hasNext() )
         {
@@ -114,7 +114,7 @@ void XmlParsingLog::summarizeMatchingAllomorphs(QSet<Allomorph> &portmanteaux, Q
 
     if( portmanteaux.count() > 0 )
     {
-        xml->writeStartElement("portmanteau-matches");
+        xml->writeStartElement("portmanteau");
         QSetIterator<Allomorph> matchesIterator( portmanteaux );
         while( matchesIterator.hasNext() )
         {
@@ -123,7 +123,7 @@ void XmlParsingLog::summarizeMatchingAllomorphs(QSet<Allomorph> &portmanteaux, Q
         xml->writeEndElement(); /// portmanteau-matches
     }
 
-    xml->writeEndElement(); /// allomorph-matches
+    xml->writeEndElement(); /// allomorph
 }
 
 void XmlParsingLog::constraintsSetSatisfactionSummary(const QString &elementName, const Parsing * parsing, const QSet<const AbstractConstraint *> &set, const AbstractNode *node, const Allomorph &allomorph) const
