@@ -20,10 +20,12 @@ using namespace ME;
 
 ParsingLog Morphology::NULL_PARSING_LOG;
 
-Morphology::Morphology() : mIsOk(true), mDebugOutput(false), mStemDebugOutput(false)
+Morphology::Morphology()
+    : mIsOk(true),
+    mParsingLog(new XmlParsingLog(&Messages::stream())),
+    mDebugOutput(false),
+    mStemDebugOutput(false)
 {
-    mParsingLog = new XmlParsingLog;
-    mParsingLog->setStream(&Messages::stream());
 }
 
 Morphology::~Morphology()

@@ -11,7 +11,7 @@ namespace ME {
 class XmlParsingLog : public ParsingLog
 {
 public:
-    XmlParsingLog();
+    explicit XmlParsingLog(QXmlStreamWriter *stream);
     virtual ~XmlParsingLog() override;
 
     void setStream(QXmlStreamWriter *stream) override;

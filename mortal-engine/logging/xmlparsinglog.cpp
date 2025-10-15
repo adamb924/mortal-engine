@@ -11,7 +11,7 @@
 
 using namespace ME;
 
-XmlParsingLog::XmlParsingLog()
+XmlParsingLog::XmlParsingLog(QXmlStreamWriter *stream) : xml(stream)
 {
 }
 

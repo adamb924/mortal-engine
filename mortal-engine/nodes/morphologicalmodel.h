@@ -20,7 +20,7 @@ class Form;
 class MorphologicalModel : public AbstractPath
 {
 public:
-    MorphologicalModel(const Morphology * morphology);
+    explicit MorphologicalModel(const Morphology * morphology);
     MorphologicalModel * copy(MorphologyXmlReader *morphologyReader, const NodeId &idSuffix) const override;
 
     /**
