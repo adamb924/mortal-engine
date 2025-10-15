@@ -123,11 +123,15 @@ bool Generation::ableToAppend(const MorphemeLabel &label) const
 {
     bool mscHasNoMoreMorphemes = mMorphemeSequenceConstraint.hasNoMoreMorphemes();
     bool mscFailed = mMorphemeSequenceConstraint.currentMorpheme() != label;
-    parsingLog()->info( QString("MSC has no more morphemes: %1; MSC failed: %2 (expecting: %3, trying to append %4).").arg(mscHasNoMoreMorphemes ? "true" : "false").arg(mscFailed ? "true" : "false").arg(mMorphemeSequenceConstraint.currentMorpheme().toString()).arg(label.toString()) );
     if( mscHasNoMoreMorphemes || mscFailed )
+    {
+        parsingLog()->info( QString("MSC has no more morphemes: %1; MSC failed: %2 (expecting: %3, trying to append %4).").arg(mscHasNoMoreMorphemes ? "true" : "false").arg(mscFailed ? "true" : "false").arg(mMorphemeSequenceConstraint.currentMorpheme().toString()).arg(label.toString()) );
         return false;
+    }
     else
+    {
         return true;
+    }
 }
 
 QString Generation::intermediateSummary() const
