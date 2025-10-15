@@ -150,7 +150,7 @@ void XmlParsingLog::constraintsSetSatisfactionSummary(const QString &elementName
 
 void XmlParsingLog::longDistanceConstraintsSatisfactionSummary(const Parsing *parsing) const
 {
-    xml->writeStartElement("long-distance-constraints");
+    xml->writeStartElement("long-distance");
     xml->writeAttribute("count", QString::number( parsing->longDistanceConstraints().count() ) );
 
     QSetIterator<const AbstractConstraint *> i( parsing->longDistanceConstraints() );

@@ -178,9 +178,11 @@ bool Parsing::allConstraintsSatisfied() const
     bool finalAllomorphConstraintsResolved = constraintsSetSatisfied( mSteps.last().allomorph().localConstraints(), mSteps.last().node(), Allomorph(Allomorph::Null) );
     bool longDistanceConstraintsResolved = longDistanceConstraintsSatisfied();
 
-    parsingLog()->constraintsSetSatisfactionSummary("local-constraints", this, mLocalConstraints, mSteps.last().node(), Allomorph(Allomorph::Null));
-    parsingLog()->constraintsSetSatisfactionSummary("final-allomorphs-constraints", this, mSteps.last().allomorph().localConstraints(), mSteps.last().node(), Allomorph(Allomorph::Null) );
+    parsingLog()->begin("constraints");
+    parsingLog()->constraintsSetSatisfactionSummary("local", this, mLocalConstraints, mSteps.last().node(), Allomorph(Allomorph::Null));
+    parsingLog()->constraintsSetSatisfactionSummary("final-allomorphs", this, mSteps.last().allomorph().localConstraints(), mSteps.last().node(), Allomorph(Allomorph::Null) );
     parsingLog()->longDistanceConstraintsSatisfactionSummary(this);
+    parsingLog()->end();
 
     return localConstraintsResolved && finalAllomorphConstraintsResolved && longDistanceConstraintsResolved;
 }
