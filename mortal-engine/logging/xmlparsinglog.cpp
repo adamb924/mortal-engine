@@ -172,6 +172,9 @@ void XmlParsingLog::longDistanceConstraintsSatisfactionSummary(const Parsing *pa
 
 void XmlParsingLog::allomorphMatchSummary(const Parsing *parsing, const Allomorph &allomorph) const
 {
+    if( !allomorph.hasForm( parsing->writingSystem() ) )
+        return;
+
     bool segmentalMatch = parsing->allomorphMatchesSegmentally(allomorph);
     bool conditionMatch = parsing->allomorphMatchConditionsSatisfied(allomorph);
 
