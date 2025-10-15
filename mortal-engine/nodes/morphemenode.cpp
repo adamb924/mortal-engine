@@ -210,7 +210,9 @@ QList<Generation> MorphemeNode::generateFormsWithAllomorphs(const Generation &ge
         Generation g = generation;
         g.append( this, a );
 
-        if( hasNext(a, g.writingSystem()) && g.isOngoing() )
+        /// don't keep searching if there are no steps left in the generation
+        const bool mscHasNoMoreMorphemes = g.morphemeSequenceConstraint()->hasNoMoreMorphemes();
+        if( ( hasNext(a, g.writingSystem()) && g.isOngoing() ) && !mscHasNoMoreMorphemes )
         {
             candidates.append( next(a, g.writingSystem())->generateForms(g) );
         }
