@@ -64,6 +64,8 @@ void Generation::append(const AbstractNode *node, const Allomorph & allomorph, c
     }
     else
     {
+        /// helpful debug if a parsing fails
+        parsingLog()->constraintsSetSatisfactionSummary("constraints",this, mLocalConstraints, node, allomorph);
         setStatus( Parsing::Failed );
     }
     calculateHash();
