@@ -1,8 +1,10 @@
 #ifndef PARSINGLOG_H
 #define PARSINGLOG_H
 
+#if defined(__GNUC__) || defined(__clang__)
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-parameter"
+#endif
 
 class QString;
 #include <QSet>
@@ -54,6 +56,8 @@ public:
 
 }
 
+#if defined(__GNUC__) || defined(__clang__)
 #pragma GCC diagnostic pop
+#endif
 
 #endif // PARSINGLOG_H
