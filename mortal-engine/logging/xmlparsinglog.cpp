@@ -59,7 +59,7 @@ void ME::XmlParsingLog::beginModel(const MorphologicalModel *model) const
 
 void XmlParsingLog::beginNode(const AbstractNode *node, const Parsing & parsing) const
 {
-    xml->writeStartElement("node");
+    xml->writeStartElement("at-node");
     writeNodeAttributes(node);
     if( node->optional() )
     {
@@ -76,7 +76,7 @@ void XmlParsingLog::beginNode(const AbstractNode *node, const Parsing & parsing)
 
 void XmlParsingLog::beginNode(const AbstractNode *node, const Generation &generation) const
 {
-    xml->writeStartElement("node");
+    xml->writeStartElement("at-node");
     writeNodeAttributes(node);
     if( node->optional() )
     {
@@ -175,7 +175,7 @@ void XmlParsingLog::allomorphMatchSummary(const Parsing *parsing, const Allomorp
     bool segmentalMatch = parsing->allomorphMatchesSegmentally(allomorph);
     bool conditionMatch = parsing->allomorphMatchConditionsSatisfied(allomorph);
 
-    xml->writeStartElement("allomorph-match");
+    xml->writeStartElement("allomorph");
     xml->writeAttribute("form", allomorph.form( parsing->writingSystem() ).text());
     xml->writeAttribute("segmental-match", segmentalMatch ? "true" : "false");
     xml->writeAttribute("condition-match", conditionMatch ? "true" : "false");
@@ -183,14 +183,14 @@ void XmlParsingLog::allomorphMatchSummary(const Parsing *parsing, const Allomorp
     // if( !conditionMatch )
     allomorphConditionMatchSummary(parsing, allomorph);
 
-    xml->writeEndElement(); /// allomorph-match
+    xml->writeEndElement(); /// allomorph
 }
 
 void XmlParsingLog::allomorphConditionMatchSummary(const Parsing *parsing, const Allomorph &allomorph) const
 {
     if( allomorph.matchConditions().count() > 0 )
     {
-        xml->writeStartElement("allomorph-match-conditions");
+        xml->writeStartElement("conditions");
 
         foreach(const AbstractConstraint * c, allomorph.matchConditions() )
         {
@@ -204,7 +204,7 @@ void XmlParsingLog::allomorphConditionMatchSummary(const Parsing *parsing, const
             }
         }
 
-        xml->writeEndElement(); /// allomorph-match-conditions
+        xml->writeEndElement(); /// conditions
     }
 }
 
