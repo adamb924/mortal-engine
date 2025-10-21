@@ -189,21 +189,21 @@ void MutuallyExclusiveMorphemes::addConstraintsToAllMorphemes(const QSet<const A
     }
 }
 
-QList<const AbstractNode *> MutuallyExclusiveMorphemes::availableMorphemeNodes(QHash<const Jump *, int> &jumps) const
+QSet<const AbstractNode *> MutuallyExclusiveMorphemes::availableMorphemeNodes(QHash<const Jump *, int> &jumps) const
 {
-    QList<const AbstractNode *> list;
+    QSet<const AbstractNode *> set;
     foreach(MorphemeNode * node, mMorphemes)
     {
-        list << node;
+        set << node;
     }
 
     /// move on to the next node if this one is optional
     if( optional() && next() != nullptr )
     {
-        list.append( next()->availableMorphemeNodes(jumps) );
+        set.unite( next()->availableMorphemeNodes(jumps) );
     }
 
-    return list;
+    return set;
 }
 
 QString MutuallyExclusiveMorphemes::summary(const AbstractNode *doNotFollow) const

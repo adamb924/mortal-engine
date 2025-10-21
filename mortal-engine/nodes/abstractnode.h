@@ -132,8 +132,8 @@ public:
     virtual QString debugIdentifier() const;
 
     /// NB: in these function names "morpheme nodes" refers to morphemes that can contribute segments
-    QList<const AbstractNode*> nextMorphemeNodes() const;
-    virtual QList<const AbstractNode*> availableMorphemeNodes(QHash<const Jump*,int> &jumps) const = 0;
+    QSet<const AbstractNode*> nextMorphemeNodes() const;
+    virtual QSet<const AbstractNode*> availableMorphemeNodes(QHash<const Jump*,int> &jumps) const = 0;
 
     /// these are special methods for handling portmanteau
     bool hasNext(const Allomorph & appendedAllomorph, const WritingSystem &ws) const;

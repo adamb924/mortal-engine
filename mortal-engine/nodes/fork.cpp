@@ -169,23 +169,23 @@ bool Fork::isFork() const
     return true;
 }
 
-QList<const AbstractNode *> Fork::availableMorphemeNodes(QHash<const Jump *, int> &jumps) const
+QSet<const AbstractNode *> Fork::availableMorphemeNodes(QHash<const Jump *, int> &jumps) const
 {
-    QList<const AbstractNode *> list;
+    QSet<const AbstractNode *> set;
     foreach(Path * path, mPaths)
     {
-        list << path->availableMorphemeNodes(jumps);
+        set.unite( path->availableMorphemeNodes(jumps) );
     }
 
 
     /// move on to the next node if this one is optional
     if( optional() && next() != nullptr )
     {
-        list.append( next()->availableMorphemeNodes(jumps) );
+        set.unite( next()->availableMorphemeNodes(jumps) );
     }
 
 
-    return list;
+    return set;
 }
 
 QString Fork::summary(const AbstractNode *doNotFollow) const

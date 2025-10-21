@@ -38,7 +38,7 @@ public:
 
     void addConstraintsToAllMorphemes(const QSet<const AbstractConstraint *> &constraints);
 
-    QList<const AbstractNode *> availableMorphemeNodes(QHash<const Jump*,int> &jumps) const override;
+    QSet<const AbstractNode *> availableMorphemeNodes(QHash<const Jump*,int> &jumps) const override;
 
     QSet<const MorphemeNode *> morphemes() const;
 

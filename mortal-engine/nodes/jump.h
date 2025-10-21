@@ -38,7 +38,7 @@ public:
 
     bool isJump() const override;
 
-    QList<const AbstractNode *> availableMorphemeNodes(QHash<const Jump*,int> &jumps) const override;
+    QSet<const AbstractNode *> availableMorphemeNodes(QHash<const Jump*,int> &jumps) const override;
 
     QString debugIdentifier() const override;
 

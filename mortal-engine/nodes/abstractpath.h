@@ -20,7 +20,7 @@ public:
 
     bool checkHasOptionalCompletionPath() const override;
 
-    QList<const AbstractNode *> availableMorphemeNodes(QHash<const Jump*,int> &jumps) const override;
+    QSet<const AbstractNode *> availableMorphemeNodes(QHash<const Jump*,int> &jumps) const override;
 
 private:
     QList<Parsing> parsingsUsingThisNode(const Parsing & parsing, Parsing::Flags flags) const override;

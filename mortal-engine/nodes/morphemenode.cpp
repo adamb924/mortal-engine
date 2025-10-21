@@ -185,18 +185,18 @@ bool MorphemeNode::hasZeroLengthForms() const
     return false;
 }
 
-QList<const AbstractNode *> MorphemeNode::availableMorphemeNodes(QHash<const Jump *, int> &jumps) const
+QSet<const AbstractNode *> MorphemeNode::availableMorphemeNodes(QHash<const Jump *, int> &jumps) const
 {
-    QList<const AbstractNode *> list;
-    list << this;
+    QSet<const AbstractNode *> set;
+    set << this;
 
     /// move on to the next node if this one is optional
     if( optional() && AbstractNode::next() != nullptr )
     {
-        list.append( AbstractNode::next()->availableMorphemeNodes(jumps) );
+        set.unite( AbstractNode::next()->availableMorphemeNodes(jumps) );
     }
 
-    return list;
+    return set;
 }
 
 QList<Generation> MorphemeNode::generateFormsWithAllomorphs(const Generation &generation, QSet<Allomorph> &potentialAllomorphs) const
