@@ -117,9 +117,14 @@ QSet<const AbstractNode *> Jump::availableMorphemeNodes(QHash<const Jump *, int>
 
         /// if the target node is required, that is the only following node
         if( mTargetNodeRequired )
-            set << mNodeTarget;
+        {
+            if( mNodeTarget->nodeCanAppendMorphemes() )
+                set << mNodeTarget;
+        }
         else
+        {
             set.unite( mNodeTarget->availableMorphemeNodes(jumps) );
+        }
 
         /// move on to the next node if this one is optional
         if( optional() && AbstractNode::next() != nullptr )
