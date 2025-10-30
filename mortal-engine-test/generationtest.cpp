@@ -1,6 +1,7 @@
 #include "generationtest.h"
 
 #include "datatypes/generation.h"
+#include <QObject>
 
 using namespace ME;
 

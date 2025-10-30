@@ -1,5 +1,7 @@
 #include "recognitiontest.h"
 
+#include <QObject>
+
 using namespace ME;
 
 RecognitionTest::RecognitionTest(Morphology *morphology) : AbstractTest(morphology), mShouldBeAccepted(true), mInputIsAccepted(false), mTestSucceeds(false), mTotalParsingCount(-1), mUniqueParsingCount(-1)

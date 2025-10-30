@@ -2,6 +2,8 @@
 
 using namespace ME;
 
+#include <QObject>
+
 AbstractInputOutputTest::AbstractInputOutputTest(Morphology *morphology) : AbstractTest(morphology)
 {
 

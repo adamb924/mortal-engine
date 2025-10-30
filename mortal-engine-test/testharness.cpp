@@ -1,5 +1,7 @@
 #include "testharness.h"
 
+#include <QObject>
+
 #include "testschema.h"
 #include "harnessxmlreader.h"
 

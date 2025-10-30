@@ -1,5 +1,7 @@
 #include "suggestiontest.h"
 
+#include <QObject>
+
 using namespace ME;
 
 SuggestionTest::SuggestionTest(Morphology *morphology) : AbstractTest(morphology)

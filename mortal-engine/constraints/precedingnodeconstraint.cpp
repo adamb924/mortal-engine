@@ -32,6 +32,7 @@ bool PrecedingNodeConstraint::matchesThisConstraint(const Parsing *parsing, cons
     case ImmediatelyPreceding:
         return matchImmediatelyPreceding(parsing);
     }
+    return false;
 }
 
 bool PrecedingNodeConstraint::matchImmediatelyPreceding(const Parsing *parsing) const
@@ -45,6 +46,7 @@ bool PrecedingNodeConstraint::matchImmediatelyPreceding(const Parsing *parsing) 
     case PrecedingNodeConstraint::Label:
         return parsing->steps().constLast().lastNodeMatchesLabel( MorphemeLabel(mIdentifierString) );
     }
+    return false;
 }
 
 bool PrecedingNodeConstraint::matchAnyPreceding(const Parsing *parsing) const
@@ -58,6 +60,7 @@ bool PrecedingNodeConstraint::matchAnyPreceding(const Parsing *parsing) const
     case PrecedingNodeConstraint::Label:
         return parsing->steps().constLast().anyNodeMatchesLabel( MorphemeLabel(mIdentifierString) );
     }
+    return false;
 }
 
 QString PrecedingNodeConstraint::summary(const QString &suffix) const

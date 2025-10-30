@@ -81,9 +81,7 @@ void Messages::openLogFile()
 
     xml.setDevice(&logFile);
 
-#if (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
-    STREAM.setEncoding( QStringConverter::Utf8 );
-#else
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
     xml.setCodec("UTF-8");
 #endif
     xml.setAutoFormatting(true);
@@ -96,7 +94,8 @@ void Messages::openLogFile()
 void Messages::resetLogFile()
 {
     QFile f(logFilename);
-    f.open(QIODevice::WriteOnly);
+    if( !f.open(QIODevice::WriteOnly) )
+        return;
     QTextStream textStream(&f);
     textStream << "";
     f.close();

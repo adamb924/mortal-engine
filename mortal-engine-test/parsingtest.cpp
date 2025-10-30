@@ -1,5 +1,7 @@
 #include "parsingtest.h"
 
+#include <QObject>
+
 using namespace ME;
 
 ParsingTest::ParsingTest(Morphology *morphology) : AbstractTest(morphology), mTotalParsingCount(-1), mUniqueParsingCount(-1)
