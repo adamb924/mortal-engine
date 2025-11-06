@@ -298,10 +298,7 @@ QString AbstractStemList::summary(const AbstractNode *doNotFollow) const
 
     foreach( CreateAllomorphs ca, mCreateAllomorphs )
     {
-        if( ca.hasCases() )
-        {
-            dbg << ca.summary() << newline;
-        }
+        dbg << ca.summary() << newline;
     }
 
     dbg.unindent();

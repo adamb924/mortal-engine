@@ -21,12 +21,6 @@ public:
 
     QSet<Allomorph> generateAllomorphs(const Allomorph &original) const;
 
-    void setOtherwiseMode(OtherwiseMode mode);
-
-    void addCase( CreateAllomorphsCase c );
-
-    bool hasCases() const;
-
     static QString elementName();
     static CreateAllomorphs readFromXml(QXmlStreamReader &in, MorphologyXmlReader * morphologyReader);
     static bool matchesElement(QXmlStreamReader &in);
@@ -39,18 +33,18 @@ public:
      */
     QString summary() const;
 
+private:
+    void setOtherwiseMode(OtherwiseMode mode);
+    void addCase( CreateAllomorphsCase c );
+    void setOtherwiseOverride(const CreateAllomorphsCase &otherwiseOverride);
+    QString overrideModeAsString() const;
+    Allomorph createOtherwiseAllomorph(const Allomorph &original, QSet<Allomorph> allomorphs ) const;
+
     QString id() const;
     void setId(const QString &id);
 
-    void setOtherwiseOverride(const CreateAllomorphsCase &otherwiseOverride);
-
-    QString overrideModeAsString() const;
-
     static QString XML_NO_OTHERWISE;
     static QString XML_OVERRIDE_OTHERWISE;
-
-private:
-    Allomorph createOtherwiseAllomorph(const Allomorph &original, QSet<Allomorph> allomorphs ) const;
 
     QList<CreateAllomorphsCase> mCases;
     CreateAllomorphsCase mOtherwiseOverride;

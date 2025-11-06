@@ -79,11 +79,6 @@ void CreateAllomorphs::addCase(CreateAllomorphsCase c)
     mCases << c;
 }
 
-bool CreateAllomorphs::hasCases() const
-{
-    return mCases.count() > 0;
-}
-
 QString CreateAllomorphs::elementName()
 {
     return "create-allomorphs";
