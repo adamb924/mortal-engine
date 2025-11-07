@@ -15,7 +15,7 @@ void CreateAllomorphsReplacement::setReplaceThis(const QList<Form> &replaceThis)
 {
     foreach(Form f, replaceThis)
     {
-        mReplaceThis.insert( f.writingSystem(), QRegularExpression( f.text() ) );
+        mReplaceThis.insert( f.writingSystem(), QRegularExpression( f.text(), QRegularExpression::UseUnicodePropertiesOption ) );
     }
 }
 

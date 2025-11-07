@@ -5,6 +5,6 @@
 
 QString toOneLine(QString string)
 {
-    static QRegularExpression REGEX("\\s+");
+    static QRegularExpression REGEX("\\s+", QRegularExpression::UseUnicodePropertiesOption);
     return string.replace(REGEX," ").trimmed();
 }

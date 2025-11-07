@@ -382,7 +382,7 @@ void MorphologyXmlReader::readNormalizationFunction(QXmlStreamReader &in)
             {
                 if( in.attributes().hasAttribute(XML_THIS) && in.attributes().hasAttribute(XML_WITH) )
                 {
-                    const QRegularExpression re( in.attributes().value(XML_THIS).toString() );
+                    const QRegularExpression re( in.attributes().value(XML_THIS).toString(), QRegularExpression::UseUnicodePropertiesOption );
                     const QString replaceWith = in.attributes().value(XML_WITH).toString();
                     replacements << RegularExpressionReplacement(re, replaceWith);
                 }
