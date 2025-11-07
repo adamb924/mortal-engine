@@ -1,6 +1,5 @@
 #include "morphemesequence.h"
 
-#include <QRegularExpression>
 #include <QtDebug>
 
 using namespace ME;
