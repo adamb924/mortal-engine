@@ -18,6 +18,7 @@ public:
     MorphemeSequence operator<<(const MorphemeLabel & newLabel);
     MorphemeSequence operator<<(const MorphemeSequence & newSequence);
     MorphemeSequence operator+(const MorphemeLabel & newLabel) const;
+    bool operator<(const MorphemeSequence & other) const;
 
     bool isEmpty() const;
 
@@ -31,6 +32,8 @@ public:
 
     static QString STEM_LABEL;
 };
+
+Q_DECL_EXPORT uint qHash(const ME::MorphemeSequence &key);
 
 } // namespace ME
 

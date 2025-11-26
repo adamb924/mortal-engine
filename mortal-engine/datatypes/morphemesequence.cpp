@@ -37,6 +37,11 @@ MorphemeSequence MorphemeSequence::operator+(const MorphemeLabel &newLabel) cons
     return MorphemeSequence( *this ) << newLabel;
 }
 
+bool MorphemeSequence::operator<(const MorphemeSequence &other) const
+{
+    return qHash(*this) < qHash(other);
+}
+
 bool MorphemeSequence::isEmpty() const
 {
     return length() == 0;
@@ -168,4 +173,9 @@ MorphemeSequence MorphemeSequence::fromString(const QString &str)
     foreach(QString label, labels)
         retval << MorphemeLabel(label);
     return retval;
+}
+
+uint ME::qHash(const MorphemeSequence &key)
+{
+    return qHash(key.toString());
 }
