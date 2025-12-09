@@ -27,36 +27,23 @@ int main(int argc, char *argv[])
     parser.addPositionalArgument("input", QCoreApplication::translate("main", "Input file."));
     parser.addPositionalArgument("output", QCoreApplication::translate("main", "Output file."));
 
-    QCommandLineOption verborseOutputOption(QStringList() << "f" << "verbose", QCoreApplication::translate("main", "Verbose output."));
-    parser.addOption(verborseOutputOption);
-
-    QCommandLineOption barebonesOutputOption(QStringList() << "b" << "barebones", QCoreApplication::translate("main", "Barebones output."));
-    parser.addOption(barebonesOutputOption);
-
-    QCommandLineOption showModelOption(QStringList() << "m" << "model", QCoreApplication::translate("main", "Display the model."));
-    parser.addOption(showModelOption);
-
-    QCommandLineOption checkOption(QStringList() << "c" << "check", QCoreApplication::translate("main", "Perform checks on the model."));
-    parser.addOption(checkOption);
-
-    QCommandLineOption debugOutputOption(QStringList() << "l" << "log", QCoreApplication::translate("main", "File for debug output."), "log");
-    parser.addOption(debugOutputOption);
-
-    QCommandLineOption inspectOption(QStringList() << "i" << "inspect", QCoreApplication::translate("main", "Element ID to print summary for."));
-    parser.addOption(inspectOption);
-
-    QCommandLineOption pathOption(QStringList() << "p" << "path", QCoreApplication::translate("main", "Path with data files."), "path");
-    parser.addOption(pathOption);
+    parser.addOption({"verbose", QCoreApplication::translate("main", "Verbose output.")});
+    parser.addOption({"barebones", QCoreApplication::translate("main", "Barebones output.")});
+    parser.addOption({"model", QCoreApplication::translate("main", "Display the model.")});
+    parser.addOption({"check", QCoreApplication::translate("main", "Perform checks on the model.")});
+    parser.addOption({"log", QCoreApplication::translate("main", "File for debug output."), "log"});
+    parser.addOption({"inspect", QCoreApplication::translate("main", "Element ID to print summary for."), "inpect"});
+    parser.addOption({"path", QCoreApplication::translate("main", "Path with data files."), "path"});
 
     parser.process(a);
 
-    const bool showModel = parser.isSet(showModelOption);
-    const bool verbose = parser.isSet(verborseOutputOption);
-    const bool barebones = parser.isSet(barebonesOutputOption);
-    const bool check = parser.isSet(checkOption);
-    QString logfile = parser.value(debugOutputOption);
-    const NodeId inspectId = NodeId( parser.value(inspectOption) );
-    const QString path = parser.value(pathOption);
+    const bool showModel = parser.isSet("model");
+    const bool verbose = parser.isSet("verbose");
+    const bool barebones = parser.isSet("barebones");
+    const bool check = parser.isSet("check");
+    QString logfile = parser.value("log");
+    const NodeId inspectId = NodeId( parser.value("inspect") );
+    const QString path = parser.value("path");
 
     /// set the path here to read the files in the correct location
     if( !path.isEmpty() )
