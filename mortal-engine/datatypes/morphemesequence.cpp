@@ -166,7 +166,9 @@ QString MorphemeSequence::toString() const
 
 MorphemeSequence MorphemeSequence::fromString(const QString &str)
 {
-    Q_ASSERT(str.length() > 2);
+    if( str.length() < 3 )
+        throw std::runtime_error( "Invalid morpheme sequence: " + str.toStdString() );
+
     MorphemeSequence retval;
     /// ignore the opening and closing bracket
     QStringList labels = str.mid(1, str.length() - 2).split("][");
