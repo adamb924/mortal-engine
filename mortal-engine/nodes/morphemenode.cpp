@@ -294,7 +294,7 @@ AbstractNode *MorphemeNode::readFromXml(QXmlStreamReader &in, MorphologyXmlReade
             }
             else if( in.name() == XML_ALLOMORPH )
             {
-                morpheme->addAllomorph( readAllomorphTag(in, morphologyReader) );
+                morpheme->addAllomorph( Allomorph::readFromXml(in, morphologyReader) );
             }
             else if( in.name() == AbstractNode::XML_ADD_ALLOMORPHS )
             {
@@ -320,53 +320,6 @@ AbstractNode *MorphemeNode::readFromXml(QXmlStreamReader &in, MorphologyXmlReade
 
     Q_ASSERT( in.isEndElement() && in.name() == elementName() );
     return morpheme;
-}
-
-/// TODO probably this belongs in the Allomorph class
-Allomorph MorphemeNode::readAllomorphTag(QXmlStreamReader &in, MorphologyXmlReader *morphologyReader)
-{
-    Q_ASSERT( in.isStartElement() );
-    Allomorph allomorph(Allomorph::Original);
-
-    if( in.attributes().hasAttribute("portmanteau") )
-    {
-        allomorph.setPortmanteau( Portmanteau( in.attributes().value("portmanteau").toString() ) );
-    }
-
-    if( in.attributes().hasAttribute( Allomorph::XML_USE_IN_GENERATIONS) )
-    {
-        allomorph.setUseInGenerations( in.attributes().value(Allomorph::XML_USE_IN_GENERATIONS) == Allomorph::XML_TRUE );
-    }
-
-
-    while(!in.atEnd() && !(in.tokenType() == QXmlStreamReader::EndElement && in.name() == XML_ALLOMORPH ) )
-    {
-        in.readNext();
-
-        if( in.tokenType() == QXmlStreamReader::StartElement )
-        {
-            if( in.name() == Allomorph::XML_FORM )
-            {
-                QXmlStreamAttributes attr = in.attributes();
-                if( attr.hasAttribute("lang") )
-                {
-                    WritingSystem ws = morphologyReader->morphology()->writingSystem( attr.value("lang").toString() );
-                    allomorph.setForm( Form( ws, in.readElementText() ) );
-                }
-            }
-            else if( in.name() == Allomorph::XML_TAG )
-            {
-                allomorph.addTag( in.readElementText() );
-            }
-            else
-            {
-                allomorph.addConstraint( morphologyReader->tryToReadConstraint(in) );
-            }
-        }
-    }
-
-    Q_ASSERT( in.isEndElement() && in.name() == XML_ALLOMORPH );
-    return allomorph;
 }
 
 bool MorphemeNode::matchesElement(QXmlStreamReader &in)

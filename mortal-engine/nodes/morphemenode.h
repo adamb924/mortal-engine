@@ -39,8 +39,6 @@ public:
 
     static QString elementName();
     static AbstractNode *readFromXml(QXmlStreamReader &in, MorphologyXmlReader * morphologyReader, const MorphologicalModel * model);
-    /// this lives here because Allomorph is not a node; perhaps should be reconsidered
-    static Allomorph readAllomorphTag(QXmlStreamReader &in, MorphologyXmlReader *morphologyReader);
     static bool matchesElement(QXmlStreamReader &in);
 
     void initializePortmanteaux();

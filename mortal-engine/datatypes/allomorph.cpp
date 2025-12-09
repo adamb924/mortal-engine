@@ -8,6 +8,8 @@
 #include "hashseed.h"
 
 #include "constraints/abstractconstraint.h"
+#include "morphology.h"
+#include "morphologyxmlreader.h"
 
 #include <QXmlStreamWriter>
 #include <QtDebug>
@@ -323,6 +325,51 @@ Allomorph Allomorph::readFromXml(QDomElement element, const Morphology *morpholo
         allomorph.addTag( tags.at(i).toElement().text() );
     }
 
+    return allomorph;
+}
+
+Allomorph Allomorph::readFromXml(QXmlStreamReader &in, MorphologyXmlReader *morphologyReader)
+{
+    Q_ASSERT( in.isStartElement() );
+    Allomorph allomorph(Allomorph::Original);
+
+    if( in.attributes().hasAttribute( Allomorph::XML_USE_IN_GENERATIONS) )
+    {
+        allomorph.setUseInGenerations( in.attributes().value(Allomorph::XML_USE_IN_GENERATIONS) == Allomorph::XML_TRUE );
+    }
+
+    if( in.attributes().hasAttribute("portmanteau") )
+    {
+        allomorph.setPortmanteau( Portmanteau( in.attributes().value("portmanteau").toString() ) );
+    }
+
+    while(!in.atEnd() && !(in.tokenType() == QXmlStreamReader::EndElement && in.name() == XML_ALLOMORPH ) )
+    {
+        in.readNext();
+
+        if( in.tokenType() == QXmlStreamReader::StartElement )
+        {
+            if( in.name() == Allomorph::XML_FORM )
+            {
+                QXmlStreamAttributes attr = in.attributes();
+                if( attr.hasAttribute("lang") )
+                {
+                    WritingSystem ws = morphologyReader->morphology()->writingSystem( attr.value("lang").toString() );
+                    allomorph.setForm( Form( ws, in.readElementText() ) );
+                }
+            }
+            else if( in.name() == Allomorph::XML_TAG )
+            {
+                allomorph.addTag( in.readElementText() );
+            }
+            else
+            {
+                allomorph.addConstraint( morphologyReader->tryToReadConstraint(in) );
+            }
+        }
+    }
+
+    Q_ASSERT( in.isEndElement() && in.name() == XML_ALLOMORPH );
     return allomorph;
 }
 

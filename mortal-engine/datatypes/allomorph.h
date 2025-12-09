@@ -200,6 +200,8 @@ public:
 
     static Allomorph readFromXml(QDomElement element, const Morphology *morphology);
 
+    static Allomorph readFromXml(QXmlStreamReader &in, MorphologyXmlReader *morphologyReader);
+
     /**
      * @brief Returns true if this is a hypothetical Allomorph rather than an actual allomorph.
      * 
