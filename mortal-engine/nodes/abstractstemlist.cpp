@@ -204,41 +204,45 @@ QList<Generation> AbstractStemList::generateFormsUsingThisNode(const Generation 
     /// if there is a stem identity constraint, then we know what stem to try
     if( generation.stemIdentityConstraint()->hasStemRequirement() )
     {
-        LexicalStem s = generation.stemIdentityConstraint()->currentLexicalStem();
-        /// check all the allomorphs of the stem
-        QListIterator<Allomorph> ai = s.allomorphIterator();
-        while(ai.hasNext())
+        const LexicalStem s = generation.stemIdentityConstraint()->currentLexicalStem();
+        /// only proceed if the specified stem is found in this stem list
+        if( getStem( s.id() ) != nullptr )
         {
-            Allomorph a = ai.next();
-            /// make sure that the Allomorph has a form for the generation's writing system
-            if( a.useInGenerations() && a.hasForm( generation.writingSystem() ) && generation.allomorphMatchConditionsSatisfied(a) ) /// this just checks for match conditions (e.g., tags)
+            /// check all the allomorphs of the stem
+            QListIterator<Allomorph> ai = s.allomorphIterator();
+            while(ai.hasNext())
             {
-                parsingLog()->output("stem-match", a.oneLineSummary());
-
-                Generation g = generation;
-                g.append(this, a, s, true);
-
-                g.stemIdentityConstraint()->resolveCurrentStemRequirement();
-
-                appendIfComplete( candidates, g );
-
-                if( g.isOngoing() && hasNext() ) /// more morphemes remain in the model
+                Allomorph a = ai.next();
+                /// make sure that the Allomorph has a form for the generation's writing system
+                if( a.useInGenerations() && a.hasForm( generation.writingSystem() ) && generation.allomorphMatchConditionsSatisfied(a) ) /// this just checks for match conditions (e.g., tags)
                 {
-                    const AbstractNode * nextNode;
-                    if( g.steps().last().allomorph().hasPortmanteau( g.writingSystem() ) )
-                    {
-                        nextNode = g.steps().last().allomorph().portmanteau().next();
-                    }
-                    else
-                    {
-                        nextNode = next();
-                    }
+                    parsingLog()->output("stem-match", a.oneLineSummary());
 
-                    /// nextNode can be null, e.g., if the last node of a portmanteau stem has no following node
-                    if( nextNode != nullptr )
+                    Generation g = generation;
+                    g.append(this, a, s, true);
+
+                    g.stemIdentityConstraint()->resolveCurrentStemRequirement();
+
+                    appendIfComplete( candidates, g );
+
+                    if( g.isOngoing() && hasNext() ) /// more morphemes remain in the model
                     {
-                        parsingLog()->info( QObject::tr("Appended: %1").arg( a.oneLineSummary() ) );
-                        candidates.append( nextNode->generateForms( g ) );
+                        const AbstractNode * nextNode;
+                        if( g.steps().last().allomorph().hasPortmanteau( g.writingSystem() ) )
+                        {
+                            nextNode = g.steps().last().allomorph().portmanteau().next();
+                        }
+                        else
+                        {
+                            nextNode = next();
+                        }
+
+                        /// nextNode can be null, e.g., if the last node of a portmanteau stem has no following node
+                        if( nextNode != nullptr )
+                        {
+                            parsingLog()->info( QObject::tr("Appended: %1").arg( a.oneLineSummary() ) );
+                            candidates.append( nextNode->generateForms( g ) );
+                        }
                     }
                 }
             }
