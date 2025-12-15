@@ -96,8 +96,6 @@ public:
     void setNodeId(const NodeId &id, AbstractNode * node);
     QSet<AbstractStemList *> stemLists() const;
 
-    bool isOk() const;
-
     static void setPath(const QString & path);
 
     QSet<const AbstractNode *> nodes() const;
@@ -124,7 +122,6 @@ private:
     QSet<AbstractStemList*> mStemAcceptingStemLists;
     QSet<AbstractStemList*> mStemLists;
     QSet<MorphemeNode*> mMorphemeNodes;
-    bool mIsOk;
     QHash<WritingSystem,InputNormalizer> mNormalizationFunctions;
     QString mMorphologyPath;
     XmlParsingLog * mParsingLog;

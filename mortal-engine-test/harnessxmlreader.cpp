@@ -79,11 +79,6 @@ void HarnessXmlReader::readTestFile(const QString &filename)
                 else if ( name == "morphology-file" )
                 {
                     mHarness->mSchemata.last()->setMorphologyFile( in.readElementText() );
-                    if( ! mHarness->mSchemata.last()->morphology()->isOk() )
-                    {
-                        qCritical() << "Error reading morphology file. (There should be an error above.)";
-                        return;
-                    }
                 }
                 else if ( name == XML_RECOGNITION_TEST )
                 {

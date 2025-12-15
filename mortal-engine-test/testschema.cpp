@@ -53,7 +53,13 @@ void TestSchema::setMorphologyFile(const QString &morphologyFile)
 
     QElapsedTimer timer;
     timer.start();
-    mMorphology->readXmlFile(mMorphologyFile);
+
+    try {
+        mMorphology->readXmlFile(mMorphologyFile);
+    } catch (const std::runtime_error &e) {
+        qCritical() << e.what() << "(" << mMorphologyFile << ")";
+    }
+
     qInfo().noquote() << QString("Mortal Engine initialized in %1 ms").arg(timer.elapsed());
 }
 

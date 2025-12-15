@@ -21,10 +21,9 @@ using namespace ME;
 ParsingLog Morphology::NULL_PARSING_LOG;
 
 Morphology::Morphology()
-    : mIsOk(true),
-    mParsingLog(new XmlParsingLog(&Messages::stream())),
-    mDebugOutput(false),
-    mStemDebugOutput(false)
+    : mParsingLog(new XmlParsingLog(&Messages::stream()))
+    , mDebugOutput(false)
+    , mStemDebugOutput(false)
 {
 }
 
@@ -41,12 +40,7 @@ void Morphology::readXmlFile(const QString &path)
     clearData();
 
     MorphologyXmlReader reader(this);
-    try {
-        reader.readXmlFile(path);
-    }  catch (const std::runtime_error& e) {
-        mIsOk = false;
-        qCritical() << e.what() << "(" << path << ")";
-    }
+    reader.readXmlFile(path);
 }
 
 bool Morphology::isWellFormed(const Form & form) const
@@ -466,11 +460,6 @@ LexicalStem *Morphology::uniqueLexicalStem(const Form &formSearchString) const
 QSet<AbstractStemList *> Morphology::stemLists() const
 {
     return mStemLists;
-}
-
-bool Morphology::isOk() const
-{
-    return mIsOk;
 }
 
 void Morphology::setPath(const QString &path)

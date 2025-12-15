@@ -574,11 +574,6 @@ Morphology *MorphologyXmlReader::readMorphology(const QString &path)
 {
     Morphology *m = new Morphology;
     MorphologyXmlReader reader(m);
-    try {
-        reader.readXmlFile(path);
-    }  catch (const std::runtime_error& e) {
-        m->mIsOk = false;
-        qCritical() << e.what() << "(" << path << ")";
-    }
+    reader.readXmlFile(path);
     return m;
 }
