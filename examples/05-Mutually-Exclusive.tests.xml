@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="https://www.adambaker.org/mortal-engine/tests"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="https://www.adambaker.org/mortal-engine/tests ../schemata/tests.xsd"
+	label="Mutually Exclusive Morphemes Example">
+    <morphology-file>05-Mutually-Exclusive.xml</morphology-file>
+    <accept lang="wk-LA">ata</accept>
+    <accept lang="wk-LA">atalar</accept>
+    <accept lang="wk-LA">atalary</accept>
+    <accept lang="wk-LA">atalarym</accept>
+    <reject lang="wk-LA">atalarymy</reject>
+</schema>

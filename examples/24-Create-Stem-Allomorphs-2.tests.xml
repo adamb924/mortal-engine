@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="https://www.adambaker.org/mortal-engine/tests"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="https://www.adambaker.org/mortal-engine/tests ../schemata/tests.xsd"
+	label="Create Stem Allomorphs 2">
+    <morphology-file>24-Create-Stem-Allomorphs-2.xml</morphology-file>
+    <message>Identical results as '23-Create-Stem-Allomorphs-1.xml' (but with additons below)</message>
+    <accept lang="wk-LA">sit</accept>
+    <accept lang="wk-LA">mot</accept>
+    <accept lang="wk-LA">sɪn</accept>
+    <accept lang="wk-LA">sidu</accept>
+    <accept lang="wk-LA">modu</accept>
+    <accept lang="wk-LA">sɪnu</accept>
+    <reject lang="wk-LA">situ</reject>
+    <reject lang="wk-LA">motu</reject>
+    <message>Nasal place assimilation</message>
+    <accept lang="wk-LA">sɪn</accept>
+    <accept lang="wk-LA">sɪŋka</accept>
+    <accept lang="wk-LA">kɛm</accept>
+    <accept lang="wk-LA">kɛŋka</accept>
+    <message>Assimilation is obligatory</message>
+    <reject lang="wk-LA">sɪnka</reject>
+    <reject lang="wk-LA">kɛmka</reject>
+</schema>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="https://www.adambaker.org/mortal-engine/tests"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="https://www.adambaker.org/mortal-engine/tests ../schemata/tests.xsd"
+	label="Create Allomorphs 4">
+    <morphology-file>17-Create-Allomorphs-4.xml</morphology-file>
+    <message>Consonants don't occur at the end of a word</message>
+    <reject lang="wk-LA">sit</reject>
+    <reject lang="wk-LA">ben</reject>
+    <message>Epenthetic vowels:</message>
+    <accept lang="wk-LA">site</accept>
+    <accept lang="wk-LA">bene</accept>
+    <message>A case suffix:</message>
+    <accept lang="wk-LA">sitana</accept>
+    <accept lang="wk-LA">benana</accept>
+</schema>

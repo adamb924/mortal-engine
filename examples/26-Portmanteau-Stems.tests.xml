@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="https://www.adambaker.org/mortal-engine/tests"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="https://www.adambaker.org/mortal-engine/tests ../schemata/tests.xsd"
+	label="Portmanteau Stems">
+    <morphology-file>26-Portmanteau-Stems.xml</morphology-file>
+    <accept lang="wk-LA">don</accept>
+    <accept lang="wk-LA">dona</accept>
+    <accept lang="wk-LA">shunga</accept>
+    <reject lang="wk-LA">shua</reject>
+    <transduction-test>
+        <input lang="wk-AR">دونا</input>
+        <output lang="wk-LA">dona</output>
+    </transduction-test>
+    <transduction-test>
+        <input lang="wk-LA">dona</input>
+        <output lang="wk-AR">دونا</output>
+    </transduction-test>
+    <transduction-test>
+        <input lang="wk-AR">شو</input>
+        <output lang="wk-LA">shu</output>
+    </transduction-test>
+    <transduction-test>
+        <input lang="wk-LA">shu</input>
+        <output lang="wk-AR">شو</output>
+    </transduction-test>
+    <transduction-test>
+        <input lang="wk-AR">شونگا</input>
+        <output lang="wk-LA">shunga</output>
+    </transduction-test>
+    <transduction-test>
+        <input lang="wk-LA">shunga</input>
+        <output lang="wk-AR">شونگا</output>
+    </transduction-test>
+</schema>

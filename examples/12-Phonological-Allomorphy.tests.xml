@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="https://www.adambaker.org/mortal-engine/tests"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="https://www.adambaker.org/mortal-engine/tests ../schemata/tests.xsd"
+	label="Phonological Allomorphy">
+    <morphology-file>12-Phonological-Allomorphy.xml</morphology-file>
+    <message>Classifiers are obligatory (i.e., no bare stems)</message>
+    <reject lang="wk-LA">sɪn</reject>
+    <message>Words with ATR vowels get an ATR classifier</message>
+    <accept lang="wk-LA">esit</accept>
+    <accept lang="wk-LA">eben</accept>
+    <accept lang="wk-LA">emot</accept>
+    <message>Words with ATR vowels can't take a non-ATR classifier</message>
+    <reject lang="wk-LA">ɛsit</reject>
+    <reject lang="wk-LA">ɛben</reject>
+    <reject lang="wk-LA">ɛmot</reject>
+    <message>Non-ATR words take a non-ATR classifier</message>
+    <accept lang="wk-LA">ɛsɪn</accept>
+    <accept lang="wk-LA">ɛkɛm</accept>
+    <accept lang="wk-LA">ɛkɔŋ</accept>
+    <message>Non-ATR words cannot take an ATR classifier</message>
+    <reject lang="wk-LA">esɪn</reject>
+    <reject lang="wk-LA">ekɛm</reject>
+    <reject lang="wk-LA">ekɔŋ</reject>
+</schema>

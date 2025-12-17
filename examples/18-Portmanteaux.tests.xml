@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="https://www.adambaker.org/mortal-engine/tests"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="https://www.adambaker.org/mortal-engine/tests ../schemata/tests.xsd"
+	label="Portmanteau Morphemes">
+    <morphology-file>18-Portmanteaux.xml</morphology-file>
+    <message>Same behavior as 06-Mutually-Exclusive-2.xml</message>
+    <accept lang="wk-LA">ata</accept>
+    <accept lang="wk-LA">atalar</accept>
+    <accept lang="wk-LA">atalary</accept>
+    <reject lang="wk-LA">atalarymy</reject>
+    <accept lang="wk-LA">göz</accept>
+    <accept lang="wk-LA">gözler</accept>
+    <accept lang="wk-LA">gözleri</accept>
+    <reject lang="wk-LA">gözlarim</reject>
+    <reject lang="wk-LA">gözlerym</reject>
+    <reject lang="wk-LA">gözlerimi</reject>
+    <message>The [Plural][1s-Possessive] can only be parsed with a portmanteau form:</message>
+    <accept lang="wk-LA">atalaaaaaam</accept>
+    <reject lang="wk-LA">atalarym</reject>
+    <accept lang="wk-LA">gözleeeeeem</accept>
+    <reject lang="wk-LA">gözlerim</reject>
+    <message>The wk-AR writing system is unaffected (these are 'atalarym' and 'gözlerim'):</message>
+    <accept lang="wk-AR">آتالارېم</accept>
+    <accept lang="wk-AR">گؤزلريم</accept>
+    <transduction-test>
+        <input lang="wk-AR">آتالارېم</input>
+        <output lang="wk-LA">atalaaaaaam</output>
+    </transduction-test>
+    <transduction-test>
+        <input lang="wk-AR">گؤزلريم</input>
+        <output lang="wk-LA">gözleeeeeem</output>
+    </transduction-test>
+    <transduction-test>
+        <input lang="wk-LA">atalaaaaaam</input>
+        <output lang="wk-AR">آتالارېم</output>
+    </transduction-test>
+    <transduction-test>
+        <input lang="wk-LA">gözleeeeeem</input>
+        <output lang="wk-AR">گؤزلريم</output>
+    </transduction-test>
+</schema>

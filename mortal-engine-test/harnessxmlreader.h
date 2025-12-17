@@ -32,16 +32,21 @@ public:
     void readTestFile(const QString & filename);
 
 private:
-    RecognitionTest *readRecognitionTest(QXmlStreamReader &in, const TestSchema * schema);
-    RecognitionTest *readQuickAcceptanceTest(QXmlStreamReader &in, const TestSchema * schema);
-    RecognitionTest *readQuickRejectionTest(QXmlStreamReader &in, const TestSchema * schema);
-    TransductionTest *readTransductionTest(QXmlStreamReader &in, const TestSchema * schema);
-    ParsingTest *readParsingTest(QXmlStreamReader &in, const TestSchema * schema);
-    StemReplacementTest *readStemReplacementTest(QXmlStreamReader &in, const TestSchema * schema);
-    SuggestionTest *readSuggestionTest(QXmlStreamReader &in, const TestSchema * schema);
-    GenerationTest *readGenerationTest(QXmlStreamReader &in, const TestSchema * schema);
-    GenerationTest *readQuickGenerationTest(QXmlStreamReader &in, const TestSchema * schema);
-    InterlinearGlossTest * readInterlinearGlossTest(QXmlStreamReader &in, const TestSchema * schema);
+    static TestSchema *readSchema(QXmlStreamReader &in);
+    static TestSchema *readSchema(const QString &path);
+
+    static RecognitionTest *readRecognitionTest(QXmlStreamReader &in, const TestSchema *schema);
+    static RecognitionTest *readQuickAcceptanceTest(QXmlStreamReader &in, const TestSchema *schema);
+    static RecognitionTest *readQuickRejectionTest(QXmlStreamReader &in, const TestSchema *schema);
+    static TransductionTest *readTransductionTest(QXmlStreamReader &in, const TestSchema *schema);
+    static ParsingTest *readParsingTest(QXmlStreamReader &in, const TestSchema *schema);
+    static StemReplacementTest *readStemReplacementTest(QXmlStreamReader &in,
+                                                        const TestSchema *schema);
+    static SuggestionTest *readSuggestionTest(QXmlStreamReader &in, const TestSchema *schema);
+    static GenerationTest *readGenerationTest(QXmlStreamReader &in, const TestSchema *schema);
+    static GenerationTest *readQuickGenerationTest(QXmlStreamReader &in, const TestSchema *schema);
+    static InterlinearGlossTest *readInterlinearGlossTest(QXmlStreamReader &in,
+                                                          const TestSchema *schema);
 
     TestHarness *mHarness;
 
@@ -69,6 +74,17 @@ public:
     static QString XML_DEBUG;
     static QString XML_STEM_DEBUG;
     static QString XML_INTERLINEAR_GLOSS_TEST;
+    static QString XML_INCLUDE;
+    static QString XML_SCHEMA;
+    static QString XML_BLANK;
+    static QString XML_MESSAGE;
+    static QString XML_ACCEPT;
+    static QString XML_REJECT;
+    static QString XML_MORPHOLOGY_FILE;
+    static QString XML_SQLITE_DATABASE;
+    static QString XML_SRC;
+    static QString XML_FILENAME;
+    static QString XML_DATABASE_NAME;
 };
 
 } // namespace ME

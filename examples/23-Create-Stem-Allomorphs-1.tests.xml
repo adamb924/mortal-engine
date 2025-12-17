@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="https://www.adambaker.org/mortal-engine/tests"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="https://www.adambaker.org/mortal-engine/tests ../schemata/tests.xsd"
+	label="Create Stem Allomorphs 1">
+    <morphology-file>23-Create-Stem-Allomorphs-1.xml</morphology-file>
+    <message>Unaffixed nouns</message>
+    <accept lang="wk-LA">sit</accept>
+    <accept lang="wk-LA">mot</accept>
+    <accept lang="wk-LA">sɪn</accept>
+    <message>Voicing when followed by a vowel-initial suffix</message>
+    <accept lang="wk-LA">sidu</accept>
+    <accept lang="wk-LA">modu</accept>
+    <accept lang="wk-LA">sɪnu</accept>
+    <message>Voiceless outputs are ungrammatical in this context</message>
+    <reject lang="wk-LA">situ</reject>
+    <reject lang="wk-LA">motu</reject>
+</schema>

@@ -2,7 +2,7 @@
 <morphology
     xmlns="https://www.adambaker.org/mortal-engine"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="https://www.adambaker.org/mortal-engine morphology.xsd">
+    xsi:schemaLocation="https://www.adambaker.org/mortal-engine ../schemata/morphology.xsd">
     <writing-systems src="writing-systems.xml"/>
     <!-- these conditions/constraints can be referenced elsewhere by their id attributes -->
     <shared-conditions>

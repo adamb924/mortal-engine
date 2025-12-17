@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="https://www.adambaker.org/mortal-engine/tests"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="https://www.adambaker.org/mortal-engine/tests ../schemata/tests.xsd"
+	label="Phonological Allomorphy">
+    <morphology-file>13-Shared-Conditions.xml</morphology-file>
+    <message>Previous behavior from 12-Phonological-Allomorphy.xml</message>
+    <reject lang="wk-LA">sɪn</reject>
+    <accept lang="wk-LA">esit</accept>
+    <accept lang="wk-LA">eben</accept>
+    <accept lang="wk-LA">emot</accept>
+    <reject lang="wk-LA">ɛsit</reject>
+    <reject lang="wk-LA">ɛben</reject>
+    <reject lang="wk-LA">ɛmot</reject>
+    <accept lang="wk-LA">ɛsɪn</accept>
+    <accept lang="wk-LA">ɛkɛm</accept>
+    <accept lang="wk-LA">ɛkɔŋ</accept>
+    <reject lang="wk-LA">esɪn</reject>
+    <reject lang="wk-LA">ekɛm</reject>
+    <reject lang="wk-LA">ekɔŋ</reject>
+    <message>New behavior</message>
+    <accept lang="wk-LA">enosit</accept>
+    <accept lang="wk-LA">enoben</accept>
+    <accept lang="wk-LA">enomot</accept>
+    <reject lang="wk-LA">ɛnɔsit</reject>
+    <reject lang="wk-LA">ɛnɔben</reject>
+    <reject lang="wk-LA">ɛnɔmot</reject>
+    <accept lang="wk-LA">ɛnɔsɪn</accept>
+    <accept lang="wk-LA">ɛnɔkɛm</accept>
+    <accept lang="wk-LA">ɛnɔkɔŋ</accept>
+    <reject lang="wk-LA">enosɪn</reject>
+    <reject lang="wk-LA">enokɛm</reject>
+    <reject lang="wk-LA">enokɔŋ</reject>
+</schema>

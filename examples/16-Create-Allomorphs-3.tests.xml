@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="https://www.adambaker.org/mortal-engine/tests"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="https://www.adambaker.org/mortal-engine/tests ../schemata/tests.xsd"
+	label="Create Allomorphs 3">
+    <morphology-file>16-Create-Allomorphs-3.xml</morphology-file>
+    <message>Following coronals have nOn:</message>
+    <accept lang="wk-LA">enonsit</accept>
+    <accept lang="wk-LA">ɛnɔnsɪn</accept>
+    <message>Following labials have nOm:</message>
+    <accept lang="wk-LA">enomben</accept>
+    <accept lang="wk-LA">enommot</accept>
+    <message>Following velars have nOŋ</message>
+    <accept lang="wk-LA">ɛnɔŋkɛm</accept>
+    <accept lang="wk-LA">ɛnɔŋkɔŋ</accept>
+    <message>Non-assimilated nasals are not allowed</message>
+    <reject lang="wk-LA">enoŋsit</reject>
+    <reject lang="wk-LA">enoŋben</reject>
+    <reject lang="wk-LA">enoŋmot</reject>
+    <reject lang="wk-LA">ɛnɔŋsɪn</reject>
+    <reject lang="wk-LA">ɛnɔmkɛm</reject>
+    <reject lang="wk-LA">ɛnɔnkɔŋ</reject>
+</schema>

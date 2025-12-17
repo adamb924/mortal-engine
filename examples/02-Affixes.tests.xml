@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="https://www.adambaker.org/mortal-engine/tests"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="https://www.adambaker.org/mortal-engine/tests ../schemata/tests.xsd"
+	label="Affix Example">
+        <morphology-file>02-Affixes.xml</morphology-file>
+        <message>Admittedly, obligatory affixes are kind of silly:</message>
+        <reject lang="wk-LA">ata</reject>
+        <accept lang="wk-LA">atalar</accept>
+</schema>

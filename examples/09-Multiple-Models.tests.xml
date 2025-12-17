@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="https://www.adambaker.org/mortal-engine/tests"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="https://www.adambaker.org/mortal-engine/tests ../schemata/tests.xsd"
+	label="Multiple Models">
+    <morphology-file>09-Multiple-Models.xml</morphology-file>
+    <accept lang="wk-LA">bilTense</accept>
+    <reject lang="wk-LA">bilCase</reject>
+    <reject lang="wk-LA">ataTense</reject>
+    <accept lang="wk-LA">ataCase</accept>
+</schema>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="https://www.adambaker.org/mortal-engine/tests"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="https://www.adambaker.org/mortal-engine/tests ../schemata/tests.xsd"
+	label="Forks">
+    <morphology-file>07-Forks.xml</morphology-file>
+    <accept lang="wk-LA">bil_PRESENT_present.1s</accept>
+    <accept lang="wk-LA">bil_PRESENT_present.2s</accept>
+    <reject lang="wk-LA">bil_FUTURE_present.1s</reject>
+    <reject lang="wk-LA">bil_FUTURE_present.2s</reject>
+    <reject lang="wk-LA">bil_PRESENT_future.1s</reject>
+    <reject lang="wk-LA">bil_PRESENT_future.2s</reject>
+    <accept lang="wk-LA">bil_FUTURE_future.1s</accept>
+    <accept lang="wk-LA">bil_FUTURE_future.2s</accept>
+</schema>

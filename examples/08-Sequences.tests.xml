@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="https://www.adambaker.org/mortal-engine/tests"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="https://www.adambaker.org/mortal-engine/tests ../schemata/tests.xsd"
+	label="Forks">
+    <morphology-file>08-Sequences.xml</morphology-file>
+    <accept lang="wk-LA">bil</accept>
+    <accept lang="wk-LA">bilOneTwo</accept>
+    <reject lang="wk-LA">bilOne</reject>
+    <reject lang="wk-LA">bilTwo</reject>
+</schema>

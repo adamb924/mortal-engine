@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="https://www.adambaker.org/mortal-engine/tests"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="https://www.adambaker.org/mortal-engine/tests ../schemata/tests.xsd"
+	label="Missing Form Example">
+        <morphology-file>02a-Missing-Form.xml</morphology-file>
+        <accept lang="wk-LA">ata</accept>
+        <accept lang="wk-AR">آتا</accept>
+        <accept lang="wk-LA">atalar</accept>
+        <reject lang="wk-AR">آتالار</reject>
+</schema>

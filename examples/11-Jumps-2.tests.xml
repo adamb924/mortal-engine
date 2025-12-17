@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="https://www.adambaker.org/mortal-engine/tests"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="https://www.adambaker.org/mortal-engine/tests ../schemata/tests.xsd"
+	label="Jumps 2">
+    <morphology-file>11-Jumps-2.xml</morphology-file>
+    <message>Case suffixes go on nouns</message>
+    <accept lang="wk-LA">don</accept>
+    <accept lang="wk-LA">donCase</accept>
+    <message>Case suffixes don't go on verbs</message>
+    <reject lang="wk-LA">bilCase</reject>
+    <message>Infinitive suffixation, without a case suffix, is no longer possible</message>
+    <reject lang="wk-LA">bilinf</reject>
+    <message>Infinitive suffixation, with subsequent case affixation</message>
+    <accept lang="wk-LA">bilinfCase</accept>
+    <message>(Obviously) Infinitive suffixes don't go on nouns</message>
+    <reject lang="wk-LA">doninf</reject>
+</schema>

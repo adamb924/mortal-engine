@@ -43,7 +43,17 @@ QString HarnessXmlReader::XML_LANG = "lang";
 QString HarnessXmlReader::XML_DEBUG = "debug";
 QString HarnessXmlReader::XML_STEM_DEBUG = "stem-debug";
 QString HarnessXmlReader::XML_INTERLINEAR_GLOSS_TEST = "interlinear-gloss-test";
-
+QString HarnessXmlReader::XML_INCLUDE = "include";
+QString HarnessXmlReader::XML_SCHEMA = "schema";
+QString HarnessXmlReader::XML_BLANK = "blank";
+QString HarnessXmlReader::XML_MESSAGE = "message";
+QString HarnessXmlReader::XML_ACCEPT = "accept";
+QString HarnessXmlReader::XML_REJECT = "reject";
+QString HarnessXmlReader::XML_MORPHOLOGY_FILE = "morphology-file";
+QString HarnessXmlReader::XML_SQLITE_DATABASE = "sqlite-database";
+QString HarnessXmlReader::XML_SRC = "src";
+QString HarnessXmlReader::XML_FILENAME = "filename";
+QString HarnessXmlReader::XML_DATABASE_NAME = "database-name";
 
 HarnessXmlReader::HarnessXmlReader(TestHarness *harness) : mHarness(harness)
 {
@@ -63,79 +73,89 @@ void HarnessXmlReader::readTestFile(const QString &filename)
 
             if( in.tokenType() == QXmlStreamReader::StartElement )
             {
-                QString name = in.name().toString();
-                QXmlStreamAttributes attr = in.attributes();
-
-
-                if ( name == "schema" )
-                {
-                    TestSchema * schema = new TestSchema( attr.value(XML_LANG).toString() );
-                    if( attr.hasAttribute(XML_SHOW_MODEL) && attr.value(XML_SHOW_MODEL) == XML_TRUE )
-                    {
-                        schema->setShowModel(true);
-                    }
-                    mHarness->mSchemata.append( schema );
-                }
-                else if ( name == "morphology-file" )
-                {
-                    mHarness->mSchemata.last()->setMorphologyFile( in.readElementText() );
-                }
-                else if ( name == XML_RECOGNITION_TEST )
-                {
-                    mHarness->mSchemata.last()->addTest( readRecognitionTest(in, mHarness->mSchemata.last() ) );
-                }
-                else if ( name == XML_TRANSDUCTION_TEST )
-                {
-                    mHarness->mSchemata.last()->addTest( readTransductionTest(in, mHarness->mSchemata.last() ) );
-                }
-                else if ( name == XML_PARSING_TEST )
-                {
-                    mHarness->mSchemata.last()->addTest( readParsingTest(in, mHarness->mSchemata.last() ) );
-                }
-                else if ( name == "blank" )
-                {
-                    mHarness->mSchemata.last()->addTest( new Message( "", mHarness->mSchemata.last()->morphology()) );
-                }
-                else if ( name == "message" )
-                {
-                    mHarness->mSchemata.last()->addTest( new Message( in.readElementText(), mHarness->mSchemata.last()->morphology()) );
-                }
-                else if ( name == XML_STEM_REPLACEMENT_TEST )
-                {
-                    mHarness->mSchemata.last()->addTest( readStemReplacementTest(in, mHarness->mSchemata.last()) );
-                }
-                else if ( name == XML_SUGGESTION_TEST )
-                {
-                    mHarness->mSchemata.last()->addTest( readSuggestionTest(in, mHarness->mSchemata.last()) );
-                }
-                else if ( name == XML_GENERATION_TEST )
-                {
-                    mHarness->mSchemata.last()->addTest( readGenerationTest(in, mHarness->mSchemata.last()) );
-                }
-                else if ( name == XML_GENERATION_TEST_SHORT )
-                {
-                    mHarness->mSchemata.last()->addTest( readQuickGenerationTest(in, mHarness->mSchemata.last()) );
-                }
-                else if ( name == XML_INTERLINEAR_GLOSS_TEST )
-                {
-                    mHarness->mSchemata.last()->addTest( readInterlinearGlossTest(in, mHarness->mSchemata.last()) );
-                }
-                else if ( name == "accept" )
-                {
-                    mHarness->mSchemata.last()->addTest( readQuickAcceptanceTest( in, mHarness->mSchemata.last() ) );
-                }
-                else if ( name == "reject" )
-                {
-                    mHarness->mSchemata.last()->addTest( readQuickRejectionTest( in, mHarness->mSchemata.last() ) );
+                if (in.name() == XML_SCHEMA) {
+                    mHarness->mSchemata.append(readSchema(in));
+                } else if (in.name() == XML_INCLUDE) {
+                    auto *schema = readSchema(in.attributes().value(XML_SRC).toString());
+                    if (schema != nullptr)
+                        mHarness->mSchemata.append(schema);
                 }
 #ifndef Q_OS_WASM
-                else if ( name == "sqlite-database" )
-                {
-                    SqliteStemList::openSqliteDatabase( attr.value("filename").toString(), attr.value("database-name").toString() );
+                else if (in.name() == XML_SQLITE_DATABASE) {
+                    SqliteStemList::openSqliteDatabase(
+                        in.attributes().value(XML_FILENAME).toString(),
+                        in.attributes().value(XML_DATABASE_NAME).toString());
                 }
 #endif
             }
         }
+    }
+}
+
+TestSchema *HarnessXmlReader::readSchema(QXmlStreamReader &in)
+{
+    Q_ASSERT(in.name() == XML_SCHEMA && in.isStartElement());
+
+    TestSchema *schema = new TestSchema(in.attributes().value(XML_LANG).toString());
+    if (in.attributes().hasAttribute(XML_SHOW_MODEL)
+        && in.attributes().value(XML_SHOW_MODEL) == XML_TRUE) {
+        schema->setShowModel(true);
+    }
+
+    while (!in.atEnd()) {
+        in.readNext();
+
+        if (in.tokenType() == QXmlStreamReader::StartElement) {
+            QString name = in.name().toString();
+            QXmlStreamAttributes attr = in.attributes();
+
+            if (name == XML_MORPHOLOGY_FILE) {
+                schema->setMorphologyFile(in.readElementText());
+            } else if (name == XML_RECOGNITION_TEST) {
+                schema->addTest(readRecognitionTest(in, schema));
+            } else if (name == XML_TRANSDUCTION_TEST) {
+                schema->addTest(readTransductionTest(in, schema));
+            } else if (name == XML_PARSING_TEST) {
+                schema->addTest(readParsingTest(in, schema));
+            } else if (name == XML_BLANK) {
+                schema->addTest(new Message("", schema->morphology()));
+            } else if (name == XML_MESSAGE) {
+                schema->addTest(new Message(in.readElementText(), schema->morphology()));
+            } else if (name == XML_STEM_REPLACEMENT_TEST) {
+                schema->addTest(readStemReplacementTest(in, schema));
+            } else if (name == XML_SUGGESTION_TEST) {
+                schema->addTest(readSuggestionTest(in, schema));
+            } else if (name == XML_GENERATION_TEST) {
+                schema->addTest(readGenerationTest(in, schema));
+            } else if (name == XML_GENERATION_TEST_SHORT) {
+                schema->addTest(readQuickGenerationTest(in, schema));
+            } else if (name == XML_INTERLINEAR_GLOSS_TEST) {
+                schema->addTest(readInterlinearGlossTest(in, schema));
+            } else if (name == XML_ACCEPT) {
+                schema->addTest(readQuickAcceptanceTest(in, schema));
+            } else if (name == XML_REJECT) {
+                schema->addTest(readQuickRejectionTest(in, schema));
+            }
+        } else if (in.tokenType() == QXmlStreamReader::EndElement) {
+            break;
+        }
+    }
+
+    Q_ASSERT(in.name() == XML_SCHEMA && in.isEndElement());
+
+    return schema;
+}
+
+TestSchema *HarnessXmlReader::readSchema(const QString &path)
+{
+    QFile file(path);
+    if (file.open(QFile::ReadOnly)) {
+        QXmlStreamReader in(&file);
+        in.readNextStartElement();
+        return readSchema(in);
+    } else {
+        qWarning() << "Could not open included file:" << path;
+        return nullptr;
     }
 }
 

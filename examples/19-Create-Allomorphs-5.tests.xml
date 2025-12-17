@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="https://www.adambaker.org/mortal-engine/tests"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="https://www.adambaker.org/mortal-engine/tests ../schemata/tests.xsd"
+	label="Create Allomorphs 5">
+    <morphology-file>19-Create-Allomorphs-5.xml</morphology-file>
+    <message>Identical behavior to 17-Create-Allomorphs-4.xml</message>
+    <reject lang="wk-LA">sit</reject>
+    <reject lang="wk-LA">ben</reject>
+    <accept lang="wk-LA">site</accept>
+    <accept lang="wk-LA">bene</accept>
+    <accept lang="wk-LA">sitana</accept>
+    <accept lang="wk-LA">benana</accept>
+    <message>Analogous behavior for verbs as well:</message>
+    <reject lang="wk-LA">sep</reject>
+    <reject lang="wk-LA">pop</reject>
+    <accept lang="wk-LA">sepe</accept>
+    <accept lang="wk-LA">pope</accept>
+    <accept lang="wk-LA">sepono</accept>
+    <accept lang="wk-LA">popono</accept>
+</schema>

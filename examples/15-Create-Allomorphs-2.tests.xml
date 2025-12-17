@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="https://www.adambaker.org/mortal-engine/tests"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="https://www.adambaker.org/mortal-engine/tests ../schemata/tests.xsd"
+	label="Create Allomorphs 2">
+    <morphology-file>15-Create-Allomorphs-2.xml</morphology-file>
+    <message>Following non-velars have nOn:</message>
+    <accept lang="wk-LA">enonsit</accept>
+    <accept lang="wk-LA">enonben</accept>
+    <accept lang="wk-LA">enonmot</accept>
+    <accept lang="wk-LA">ɛnɔnsɪn</accept>
+    <message>Following non-velars cannot have nOŋ:</message>
+    <reject lang="wk-LA">enoŋsit</reject>
+    <reject lang="wk-LA">enoŋben</reject>
+    <reject lang="wk-LA">enoŋmot</reject>
+    <reject lang="wk-LA">ɛnɔŋsɪn</reject>
+    <message>Following velars show nasal place assimilation</message>
+    <accept lang="wk-LA">ɛnɔŋkɛm</accept>
+    <accept lang="wk-LA">ɛnɔŋkɔŋ</accept>
+    <message>Following velars cannot be preceded by coronals</message>
+    <reject lang="wk-LA">ɛnɔnkɛm</reject>
+    <reject lang="wk-LA">ɛnɔnkɔŋ</reject>
+</schema>

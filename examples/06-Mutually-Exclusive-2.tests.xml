@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="https://www.adambaker.org/mortal-engine/tests"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="https://www.adambaker.org/mortal-engine/tests ../schemata/tests.xsd"
+	label="Mutually Exclusive Morphemes Example 2">
+    <morphology-file>06-Mutually-Exclusive-2.xml</morphology-file>
+    <accept lang="wk-LA">ata</accept>
+    <accept lang="wk-LA">atalar</accept>
+    <accept lang="wk-LA">atalary</accept>
+    <accept lang="wk-LA">atalarym</accept>
+    <reject lang="wk-LA">atalarymy</reject>
+    <accept lang="wk-LA">göz</accept>
+    <accept lang="wk-LA">gözler</accept>
+    <accept lang="wk-LA">gözleri</accept>
+    <accept lang="wk-LA">gözlerim</accept>
+    <reject lang="wk-LA">gözlarim</reject>
+    <reject lang="wk-LA">gözlerym</reject>
+    <reject lang="wk-LA">gözlerimi</reject>
+</schema>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="https://www.adambaker.org/mortal-engine/tests"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="https://www.adambaker.org/mortal-engine/tests ../schemata/tests.xsd"
+	label="Copies 2">
+    <morphology-file>22-Copies-2.xml</morphology-file>
+    <message>Here's how nouns work:</message>
+    <accept lang="wk-LA">ataFooPlural</accept>
+    <accept lang="wk-LA">ataBar</accept>
+    <reject lang="wk-LA">ata</reject>
+    <accept lang="wk-LA">ataCaseFooPlural</accept>
+    <accept lang="wk-LA">ataCaseBar</accept>
+    <reject lang="wk-LA">ataCase</reject>
+    <message>With copies, verbs work the same way</message>
+    <accept lang="wk-LA">bilFooPlural</accept>
+    <accept lang="wk-LA">bilBar</accept>
+    <reject lang="wk-LA">bil</reject>
+    <accept lang="wk-LA">bilTenseFooPlural</accept>
+    <accept lang="wk-LA">bilTenseBar</accept>
+    <reject lang="wk-LA">bilTense</reject>
+    <message>And with a following suffix</message>
+    <accept lang="wk-LA">bilFooPluralMi</accept>
+    <accept lang="wk-LA">bilBarMi</accept>
+    <reject lang="wk-LA">bilMi</reject>
+    <accept lang="wk-LA">bilTenseFooPluralMi</accept>
+    <accept lang="wk-LA">bilTenseBarMi</accept>
+    <reject lang="wk-LA">bilTenseMi</reject>
+</schema>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="https://www.adambaker.org/mortal-engine/tests"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="https://www.adambaker.org/mortal-engine/tests ../schemata/tests.xsd"
+	label="Minimal Example" >
+	<morphology-file>00-Minimal.xml</morphology-file>
+	<accept lang="wk-LA">bil</accept>
+	<accept lang="wk-LA">ata</accept>
+	<message>Any writing system is accepted:</message>
+	<accept lang="wk-AR">آی</accept>
+	<message>Words not on the list are rejected:</message>
+	<reject lang="wk-LA">banana</reject>
+</schema>

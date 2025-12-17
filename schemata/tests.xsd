@@ -9,37 +9,44 @@ targetNamespace="https://www.adambaker.org/mortal-engine/tests">
                 <xs:element name="sqlite-database" type="met:database" minOccurs="0" maxOccurs="1"/>
                 <xs:choice>
                     <xs:choice maxOccurs="unbounded">
-                        <xs:element name="schema" type="met:schema"/>
+                        <xs:element ref="met:schema"/>
+                        <xs:element name="include">
+                            <xs:complexType>
+                                <xs:attribute name="src" type="xs:string"/>
+                            </xs:complexType>
+                        </xs:element>
                     </xs:choice>
                 </xs:choice>
             </xs:sequence>
         </xs:complexType>    
     </xs:element>
     
-    <xs:complexType name="schema" mixed="true">
-        <xs:sequence>
-            <xs:element name="morphology-file" type="xs:string"/>
-            <xs:choice>
-                <xs:choice maxOccurs="unbounded">
-                    <xs:element name="transduction-test" type="met:transduction-test"/>
-                    <xs:element name="parsing-test" type="met:parsing-test"/>
-                    <xs:element name="recognition-test" type="met:recognition-test"/>
-                    <xs:element name="suggestion-test" type="met:suggestion-test"/>
-                    <xs:element name="interlinear-gloss-test" type="met:interlinear-gloss-test"/>
-                    <xs:element name="stem-replacement-test" type="met:stem-replacement-test"/>
-                    <xs:element name="accept" type="met:acceptance-test"/>
-                    <xs:element name="reject" type="met:acceptance-test"/>
-                    <xs:element name="generation-test" type="met:generation-test"/>
-                    <xs:element name="generate" type="met:quick-generation-test"/>
-                    <xs:element name="blank" type="xs:string" fixed=""/>
-                    <xs:element name="message" type="xs:string"/>
-                </xs:choice>
-            </xs:choice>    
-        </xs:sequence>
-        <xs:attribute name="sound-and-fury" type="xs:string"/>
-        <xs:attribute name="label" type="xs:string" use="optional"/>
-        <xs:attribute name="show-model" type="met:true-false-type" use="optional" default="true"/>
-    </xs:complexType>
+    <xs:element name="schema">
+        <xs:complexType mixed="true">
+            <xs:sequence>
+                <xs:element name="morphology-file" type="xs:string"/>
+                <xs:choice>
+                    <xs:choice maxOccurs="unbounded">
+                        <xs:element name="transduction-test" type="met:transduction-test"/>
+                        <xs:element name="parsing-test" type="met:parsing-test"/>
+                        <xs:element name="recognition-test" type="met:recognition-test"/>
+                        <xs:element name="suggestion-test" type="met:suggestion-test"/>
+                        <xs:element name="interlinear-gloss-test" type="met:interlinear-gloss-test"/>
+                        <xs:element name="stem-replacement-test" type="met:stem-replacement-test"/>
+                        <xs:element name="accept" type="met:acceptance-test"/>
+                        <xs:element name="reject" type="met:acceptance-test"/>
+                        <xs:element name="generation-test" type="met:generation-test"/>
+                        <xs:element name="generate" type="met:quick-generation-test"/>
+                        <xs:element name="blank" type="xs:string" fixed=""/>
+                        <xs:element name="message" type="xs:string"/>
+                    </xs:choice>
+                </xs:choice>    
+            </xs:sequence>
+            <xs:attribute name="sound-and-fury" type="xs:string"/>
+            <xs:attribute name="label" type="xs:string" use="optional"/>
+            <xs:attribute name="show-model" type="met:true-false-type" use="optional" default="true"/>
+        </xs:complexType>
+    </xs:element>
 
     <xs:complexType name="test">
         <xs:attribute name="label" type="xs:string" use="optional"/>
