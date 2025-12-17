@@ -14,7 +14,7 @@ Message::~Message()
 
 bool Message::succeeds() const
 {
-    return false; /// so it will always be printed
+    return true;
 }
 
 QString Message::message() const
