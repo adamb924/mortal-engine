@@ -15,7 +15,7 @@ class MORTAL_ENGINE_EXPORT Messages {
 public:
 
     static void redirectMessagesTo(const QString & outfile, bool resetFile = true);
-    static void redirectMessagesToDefault();
+    static void redirectMessagesToDefault(bool closeFile = true);
     static QXmlStreamWriter &stream();
 
     static QString logFilename;

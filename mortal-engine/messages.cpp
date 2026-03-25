@@ -55,10 +55,11 @@ void Messages::redirectMessagesTo(const QString &outfile, bool resetFile)
     qInstallMessageHandler( Messages::handler );
 }
 
-void Messages::redirectMessagesToDefault()
+void Messages::redirectMessagesToDefault(bool closeFile)
 {
     qInstallMessageHandler(nullptr);
-    instance().closeLogFile();
+    if (closeFile)
+        instance().closeLogFile();
 }
 
 QXmlStreamWriter &Messages::stream()
