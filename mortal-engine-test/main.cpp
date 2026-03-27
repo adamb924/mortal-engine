@@ -46,8 +46,7 @@ int main(int argc, char *argv[])
     const QString path = parser.value("path");
 
     /// set the path here to read the files in the correct location
-    if( !path.isEmpty() )
-    {
+    if (!path.isEmpty()) {
         Morphology::setPath(path);
     }
 
@@ -59,63 +58,45 @@ int main(int argc, char *argv[])
     {
         parser.showHelp();
     }
-    const QString input = args.at(0);
-    const QString output = args.length() > 1 ? args.at(1) : "";
+    const QString inputFilename = args.at(0);
+    const QString outputFilename = args.length() > 1 ? args.at(1) : "";
 
     TestHarness::VerbosityLevel verbosity;
-    if( verbose && barebones )
-    {
+    if (verbose && barebones) {
         qInfo() << "You can't do verbose and barebones at the same time.";
         parser.showHelp();
-    }
-    else if ( verbose )
-    {
+    } else if (verbose) {
         verbosity = TestHarness::AllResults;
-    }
-    else if ( barebones )
-    {
+    } else if (barebones) {
         verbosity = TestHarness::BareBones;
-    }
-    else
-    {
+    } else {
         verbosity = TestHarness::ErrorsOnly;
     }
 
     Messages::redirectMessagesTo(logfile);
-
     TestHarness harness;
-    harness.readTestFile( input );
+    harness.readTestFile(inputFilename);
 
-    if( output.isEmpty() )
-    {
-        QTextStream out(stdout);
-
-#if (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
-        out.setEncoding( QStringConverter::Utf8 );
-#else
-        out.setCodec("UTF-8");
-#endif
-
-        harness.printReport(out, verbosity, showModel, check, inspectId );
-    }
-    else
-    {
-        QFile outFile( output );
-        if ( ! outFile.open(QFile::WriteOnly))
-        {
-            qCritical() << "Could not open output file:" << output;
+    QTextStream out(stdout);
+    /// if an output filename has been specified, send output to that instead
+    if (!outputFilename.isEmpty()) {
+        QFile *outFile = new QFile(outputFilename);
+        if (!outFile->open(QFile::WriteOnly)) {
+            qCritical() << "Could not open output file:" << outputFilename;
             return 1;
         }
-        QTextStream out(&outFile);
+        out.setDevice(outFile);
 
-#if (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
-        out.setEncoding( QStringConverter::Utf8 );
-#else
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
         out.setCodec("UTF-8");
 #endif
+    }
 
-        harness.printReport(out, verbosity, showModel, check, inspectId );
-        outFile.close();
+    harness.printReport(out, verbosity, showModel, check, inspectId);
+
+    /// close the file if we output to a file
+    if (out.device() != nullptr) {
+        out.device()->close();
     }
 
     qInfo().noquote() << QString("Completed in %1 ms").arg(timer.elapsed());
